@@ -17,6 +17,10 @@ class Echec():
 piece = Echec()
 
 print(piece.valeur)
+
+print("autre modification")
+
+
 ## à ne pas modifier
 
 print("Bonjour,il y a un problème")
