@@ -10,13 +10,16 @@ class AppliCanevas(tk.Tk):
         self.milieu = 00
         self.couleur = "Blanc"
 
+        self.tester = 0
+        self.text1 ="hello"
+        self._text = tk.StringVar(self)
+        
 
         self.bind("Escape",self.quit)
         self.creer_widgets()
 
-    def creer_widgets(self):
 
-        self.representationCyclo = []
+    def creer_widgets(self):
 
         # création canevas
         self.canv = tk.Canvas(self, bg="white", height=self.height,width=self.width)
@@ -25,110 +28,86 @@ class AppliCanevas(tk.Tk):
         self.canv.xview(tk.SCROLL, int(self.width*1.5), tk.UNITS)
         self.canv.yview(tk.SCROLL, int(self.height*1.5), tk.UNITS)
 
-        #Button Commencer
-        self.bouton_commencer = tk.Button(self, text="Commencer", command=self.commencer)
-       
-        #Button Quitter
-        self.bouton_quitter = tk.Button(self, text="Quitter",command=self.quit)
+        for ligne in range(5):
+            for colonne in range(5):
+                 Button(fenetre, text='L%s-C%s' % (ligne, colonne), borderwidth=1).grid(row=ligne, column=colonne)
 
-        #Button Save
-        self.bouton_abandonner = tk.Button(self, text="Abandon",command=self.save)
+        #variables de Tkinter
+        self._deplacement = tk.StringVar(self)
+        self._deplacement.set("E3")
+
+        self._coup =tk.StringVar(self)
+        self._coup.set("fouN2")
+
+        self._couleur =tk.StringVar(self)
+        self._couleur.set("blanc")
+
+        #Boutons
+        self._bouton_commencer = tk.Button(self, text="Commencer", command=self.commencer)
+        self._bouton_abandonner = tk.Button(self, text="Abandon",command=self.save)
+        self._bouton_valider = tk.Button(self, text="Valider",command=self.valider)
 
         #les labels
-        Lcouleurquijoue= tk.Label(self, text="Couleur qui joue")
-        LabelPieceabouger = tk.Label(self, text="Piece à bouger")
+        self._label_couleurquijoue= tk.Label(self, text="Couleur qui joue")
+        self._label_pieceabouger = tk.Label(self, text="Piece à bouger")
+        self._label_coupsuivant = tk.Label(self, text="Coup suivant")
 
 
+        #Entry (entrees)
+        self._entree_deplacement = tk.Entry(self, textvariable=self._deplacement)
+        self._entree_deplacement.get()
 
-        self.deplacement =tk.StringVar(self)
-        self.deplacement.set("E3")
-        self.button_deplacement = tk.Entry (self, textvariable=self.deplacement)
+        self._entree_coup = tk.Entry(self, textvariable=self._coup)
+        self._entree_coup.get()
+
+        #labels actualisés
+        self._label_couleuractualise = tk.Label(self, textvariable=self._couleur)
+        self._label_coupactualise = tk.Label(self, textvariable= self._deplacement)
+
+        #affichage de tous les elements du canvas
+
+        self._bouton_commencer.pack(side=tk.TOP) #commencer
+        self._label_couleurquijoue.pack(side=tk.TOP) #couleur qui joue
+        self._label_couleuractualise.pack(side=tk.TOP) #couleur actualisé
+
+        self._label_pieceabouger.pack(side=tk.TOP) #Piece a bouger
+        self._entree_coup.pack(side =tk.TOP) #coup à jouer 
         
-        self.button_deplacement.get()
-
-        self.coup =tk.StringVar(self)
-        self.coup.set("fouN2")
-        self.button_coup = tk.Entry (self, textvariable=self.coup)
-        
-        self.button_coup.get()
-
-
-        #Entry K2
-        Lcoupsuivant = tk.Label(self, text="Coup suivant")
-        
-        
-
-        self.couleur =tk.IntVar(self)
-        self.couleur.set("blanc")
-        self.button_couleur = tk.Entry (self, textvariable=self.couleur)
-        # self.button_couleur.pack(side = tk.TOP)
-        self.button_couleur.get()
-
-        self.bouton_valider = tk.Button(self, text="Valider",command=self.valider)
+        self._label_coupactualise.pack(side =tk.TOP) #coup à jouer
         
 
-        Lcouleuractualise = tk.Label(self, textvariable=self.couleur)
+        self._label_coupsuivant.pack(side=tk.TOP) #coup suivant
+        self._entree_deplacement.pack(side = tk.TOP) #entrée de ttes les pièces 
+        self._bouton_valider.pack(side=tk.TOP)#valider
 
+        self._bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
 
-        #affichage de tous 
-
-
-        self.bouton_commencer.pack(side=tk.TOP) #commencer
-        Lcouleurquijoue.pack(side=tk.TOP) #couleur qui joue
-        Lcouleuractualise.pack(side=tk.TOP) #couleur actualisé
-
-        LabelPieceabouger.pack(side=tk.TOP) #Piece a bouger
-        self.button_coup.pack(side =tk.TOP) #coup à jouer actualisé
-
-        Lcoupsuivant.pack(side=tk.TOP) #coup suivant
-        self.button_deplacement.pack(side = tk.TOP) #entrée de ttes les pièces 
-        self.bouton_valider.pack(side=tk.TOP)#valider
-
-        # self.bouton_quitter.pack(side=tk.BOTTOM)    
-        self.bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
-
-    def creer_Bouton(self, text, cmd):
-        self._text = text
-        return tk.Button(self, text= self._text, command=cmd)
     
     def test(self):
-        print("test")
+        if self._text.get() == "hello":
+            self._text.set("quoi")
+        else :
+            self._text.set("hello")
 
     def valider(self):
-        if self.button_couleur.get() == "blanc":
-            # self.couleur.("Noir")
-            self.couleur.set("noir")
-            # print("valider")
+        if self._couleur.get() == "blanc":
+            self._couleur.set("noir")
         else:
-            # self.couleur.set("Blanc")
-            self.couleur.set("blanc")
-            # print("valider2", type(self.button_couleur.get()))
+            self._couleur.set("blanc")
+
 
     def save(self):
         print("Save")
 
-    # def clear_screen(self):
-    #     # self.canv.delete("all")
-    #     for id in self.representationCyclo:
-    #         self.canv.delete(id)
-
-    def rd_col(self):
-        return rd.choice(("black", "red", "green", "blue", "yellow", "magenta",
-                          "cyan", "white", "purple"))
-
     def commencer (self):
             pass
-
-    def quit(self):
-        self.destroy()
-
 
 if __name__ == "__main__":
     Interface = AppliCanevas()
     Interface.title("Jeu echec")
-    bouton = Interface.creer_Bouton("hello",Interface.test())
-    bouton.pack(side=tk.TOP) #coup suivant
+
     Interface.mainloop()
+    print(Interface.tester)
 
 
 # import tkinter as tk
