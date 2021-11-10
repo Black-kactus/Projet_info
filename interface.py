@@ -7,6 +7,7 @@ class AppliCanevas(tk.Tk):
         self.height = 600
         self.width  = 1000
         self.milieu = 00
+        self.couleur = "Blanc"
 
 
         self.bind("Escape",self.quit)
@@ -25,125 +26,81 @@ class AppliCanevas(tk.Tk):
         self.canv.yview(tk.SCROLL, int(self.height*1.5), tk.UNITS)
 
         #Button Commencer
-        self.bouton_cercles = tk.Button(self, text="Commencer!", command=self.dessine_cercles)
-        self.bouton_cercles.pack(side=tk.TOP)
-
+        self.bouton_cercles = tk.Button(self, text="Commencer", command=self.commencer)
       
         #Button Quitter
         self.bouton_quitter = tk.Button(self, text="Quitter",command=self.quit)
-        self.bouton_quitter.pack(side=tk.BOTTOM)
 
         #Button Save
         self.bouton_save = tk.Button(self, text="Save",command=self.save)
-        self.bouton_save.pack(side=tk.BOTTOM)
-
-        #Button Pause
-        self.CheckPause = tk.IntVar()
-        self.CheckPause.set(0)
-        self.Pause= tk.Checkbutton (self, text = "Pause/Play", variable = self.CheckPause, onvalue = 1, offvalue = 0)
-        self.Pause.pack(side = tk.BOTTOM)
-
-        #Checkbutton Show All
-        self.CheckCercle5 = tk.IntVar()
-        self.CheckCercle5.set(0)
-        self.cercle5 = tk.Checkbutton (self, text = "Show all", variable = self.CheckCercle5, onvalue = 1, offvalue = 0)
-        self.cercle5.pack(side = tk.TOP)
-
-        #Checkbutton 1
-        self.CheckCercle1 = tk.IntVar()
-        self.CheckCercle1.set(1)
-        self.cercle1 = tk.Checkbutton (self, text = "Show circle 1", variable = self.CheckCercle1, onvalue = 1, offvalue = 0)
-        self.cercle1.pack(side = tk.TOP)
-
-        #Checkbutton 2
-        self.CheckCercle2 = tk.IntVar()
-        self.CheckCercle2.set(1)
-        self.cercle2 = tk.Checkbutton (self, text = "Show circle 2", variable = self.CheckCercle2, onvalue = 1, offvalue = 0)
-        self.cercle2.pack(side = tk.TOP)
-
-        #Checkbutton 3
-        self.CheckCercle3 = tk.IntVar()
-        self.CheckCercle3.set(1)
-        self.cercle3 = tk.Checkbutton (self, text = "Show circle 3", variable = self.CheckCercle3, onvalue = 1, offvalue = 0)
-        self.cercle3.pack(side = tk.TOP)
-
-        #Checkbutton Do not Show
-        self.CheckCercle4 = tk.IntVar()
-        self.CheckCercle4.set(0)
-        self.cercle4 = tk.Checkbutton (self, text = "No Circle", variable = self.CheckCercle4, onvalue = 1, offvalue = 0)
-        self.cercle4.pack(side = tk.TOP)
-
-        #Checkbutton Show Tracé 1
-        self.CheckCercle5 = tk.IntVar()
-        self.CheckCercle5.set(0)
-        self.cercle5 = tk.Checkbutton (self, text = "Show Tracé 1", variable = self.CheckCercle5, onvalue = 1, offvalue = 0)
-        self.cercle5.pack(side = tk.TOP)
-
-        #Checkbutton Show Tracé 2
-        self.CheckCercle6 = tk.IntVar()
-        self.CheckCercle6.set(0)
-        self.cercle6 = tk.Checkbutton (self, text = "Show Tracé 2", variable = self.CheckCercle6, onvalue = 1, offvalue = 0)
-        self.cercle6.pack(side = tk.TOP)
-
-        #Checkbutton Show Tracé 3
-        self.CheckCercle7 = tk.IntVar()
-        self.CheckCercle7.set(0)
-        self.cercle7 = tk.Checkbutton (self, text = "Show Tracé 3", variable = self.CheckCercle7, onvalue = 1, offvalue = 0)
-        self.cercle7.pack(side = tk.TOP)
-
-        #Button Clearscreen
-        self.bouton_clearscreen = tk.Button(self, text="Clear Screen !",command=self.clear_screen)
-        self.bouton_clearscreen.pack(side=tk.TOP)
-
 
         #Entry Speed
-        L1 = tk.Label(self, text="Speed :")
-        L1.pack(side=tk.TOP)
+        L1 = tk.Label(self, text="Couleur qui joue")
+        
+
+        
+
 
         self.speed =tk.StringVar(self)
-        self.speed.set(30)
-        self.button_speed = tk.Entry (self, textvariable=self.speed)
+        self.speed.set("blanc")
+        self.button_speed = tk.Entry (self, textvariable="test")
         self.button_speed.pack(side = tk.TOP)
         self.button_speed.get()
 
-        #Entry K1
-        L2 = tk.Label(self, text="Rayon cercle 1")
-        L2.pack(side=tk.TOP)
-
-        self.k =tk.IntVar(self)
-        self.k.set(100)
-        self.button_k = tk.Entry (self, textvariable=self.k)
-        self.button_k.pack(side = tk.TOP)
-        self.button_k.get()
-
         #Entry K2
         L3 = tk.Label(self, text="Coup suivant")
+        
+        
+
+        self.couleur =tk.IntVar(self)
+        self.couleur.set("blanc")
+        self.button_couleur = tk.Entry (self, textvariable=self.couleur)
+        # self.button_couleur.pack(side = tk.TOP)
+        self.button_couleur.get()
+
+        self.bouton_valider = tk.Button(self, text="Valider",command=self.valider)
+        
+
+        L4 = tk.Label(self, textvariable=self.couleur)
+
+        L1.pack(side=tk.TOP)
+        L4.pack(side=tk.TOP)
         L3.pack(side=tk.TOP)
-
-        self.k2 =tk.IntVar(self)
-        self.k2.set("E3")
-        self.button_k2 = tk.Entry (self, textvariable=self.k2)
-        self.button_k2.pack(side = tk.TOP)
-        self.button_k2.get()
+        self.bouton_valider.pack(side=tk.TOP)
 
 
+        self.bouton_quitter.pack(side=tk.BOTTOM)
+        self.bouton_cercles.pack(side=tk.TOP)
+        self.bouton_save.pack(side=tk.BOTTOM)
+        
+    
+       
+       
 
+    def valider(self):
+        if self.button_couleur.get() == "blanc":
+            # self.couleur.("Noir")
+            self.couleur.set("noir")
+            print("valider")
+        else:
+            # self.couleur.set("Blanc")
+            self.couleur.set("blanc")
+            print("valider2", type(self.button_couleur.get()))
 
     def save(self):
         print("Save")
 
-    def clear_screen(self):
-        # self.canv.delete("all")
-        for id in self.representationCyclo:
-            self.canv.delete(id)
+    # def clear_screen(self):
+    #     # self.canv.delete("all")
+    #     for id in self.representationCyclo:
+    #         self.canv.delete(id)
 
     def rd_col(self):
         return rd.choice(("black", "red", "green", "blue", "yellow", "magenta",
                           "cyan", "white", "purple"))
 
-    def dessine_cercles(self):
+    def commencer (self):
             pass
-
 
     def quit(self):
         self.destroy()
