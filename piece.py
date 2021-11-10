@@ -47,3 +47,8 @@ class piece():
     #coordonées sur le board
     #valeur
     #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
+def mouvement (self) :
+	if dans les règles :
+		mettre à jour les coordonnées et le tableau récapitulatif des positions des pièces 
+	else:
+		print("vous ne pouvez pas jouer ce coup") 
