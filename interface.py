@@ -27,7 +27,7 @@ class AppliCanevas(tk.Tk):
 
         #Button Commencer
         self.bouton_cercles = tk.Button(self, text="Commencer", command=self.commencer)
-      
+       
         #Button Quitter
         self.bouton_quitter = tk.Button(self, text="Quitter",command=self.quit)
 
@@ -35,17 +35,23 @@ class AppliCanevas(tk.Tk):
         self.bouton_save = tk.Button(self, text="Save",command=self.save)
 
         #Entry Speed
-        L1 = tk.Label(self, text="Couleur qui joue")
-        
+        L = tk.Label(self, text="Couleur qui joue")
+        LabelPieceabouger = tk.Label(self, text="Piece à bouger")
 
-        
 
 
         self.speed =tk.StringVar(self)
-        self.speed.set("blanc")
-        self.button_speed = tk.Entry (self, textvariable="test")
-        self.button_speed.pack(side = tk.TOP)
+        self.speed.set("E3")
+        self.button_speed = tk.Entry (self, textvariable=self.speed)
+        
         self.button_speed.get()
+
+        self.coup =tk.StringVar(self)
+        self.coup.set("fouN2")
+        self.button_coup = tk.Entry (self, textvariable=self.coup)
+        
+        self.button_coup.get()
+
 
         #Entry K2
         L3 = tk.Label(self, text="Coup suivant")
@@ -63,15 +69,31 @@ class AppliCanevas(tk.Tk):
 
         L4 = tk.Label(self, textvariable=self.couleur)
 
-        L1.pack(side=tk.TOP)
-        L4.pack(side=tk.TOP)
-        L3.pack(side=tk.TOP)
-        self.bouton_valider.pack(side=tk.TOP)
+
+        #affichage de tous 
 
 
-        self.bouton_quitter.pack(side=tk.BOTTOM)
-        self.bouton_cercles.pack(side=tk.TOP)
-        self.bouton_save.pack(side=tk.BOTTOM)
+        self.bouton_cercles.pack(side=tk.TOP) #commencer
+        L1.pack(side=tk.TOP) #couleur qui joue
+        L4.pack(side=tk.TOP) #couleur actualisé
+
+        LabelPieceabouger.pack(side=tk.TOP) #Piece a bouger
+        self.button_coup.pack(side =tk.TOP) #coup à jouer actualisé
+
+            
+        L3.pack(side=tk.TOP) #coup suivant
+        
+        self.button_speed.pack(side = tk.TOP) #entrée de ttes les pièces 
+        
+        
+       
+        self.bouton_valider.pack(side=tk.TOP)#valider
+
+
+        
+        # self.bouton_quitter.pack(side=tk.BOTTOM)    
+        self.bouton_save.pack(side=tk.BOTTOM)       #save
+        
         
     
        
