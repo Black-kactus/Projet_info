@@ -20,3 +20,4 @@ print(piece.valeur)
 ## à ne pas modifier
 
 print("Bonjour,il y a un problème")
+print("Problèmes")
