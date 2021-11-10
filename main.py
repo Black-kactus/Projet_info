@@ -18,6 +18,8 @@ piece = Echec()
 
 print("probleme n°2, commit 2")
 
+print("truc non sauvegarder")
+
 
 ## à ne pas modifier
 
