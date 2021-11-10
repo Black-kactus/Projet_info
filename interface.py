@@ -26,25 +26,25 @@ class AppliCanevas(tk.Tk):
         self.canv.yview(tk.SCROLL, int(self.height*1.5), tk.UNITS)
 
         #Button Commencer
-        self.bouton_cercles = tk.Button(self, text="Commencer", command=self.commencer)
+        self.bouton_commencer = tk.Button(self, text="Commencer", command=self.commencer)
        
         #Button Quitter
         self.bouton_quitter = tk.Button(self, text="Quitter",command=self.quit)
 
         #Button Save
-        self.bouton_save = tk.Button(self, text="Save",command=self.save)
+        self.bouton_abandonner = tk.Button(self, text="Abandon",command=self.save)
 
-        #Entry Speed
-        L = tk.Label(self, text="Couleur qui joue")
+        #les labels
+        Lcouleurquijoue= tk.Label(self, text="Couleur qui joue")
         LabelPieceabouger = tk.Label(self, text="Piece à bouger")
 
 
 
-        self.speed =tk.StringVar(self)
-        self.speed.set("E3")
-        self.button_speed = tk.Entry (self, textvariable=self.speed)
+        self.deplacement =tk.StringVar(self)
+        self.deplacement.set("E3")
+        self.button_deplacement = tk.Entry (self, textvariable=self.deplacement)
         
-        self.button_speed.get()
+        self.button_deplacement.get()
 
         self.coup =tk.StringVar(self)
         self.coup.set("fouN2")
@@ -54,7 +54,7 @@ class AppliCanevas(tk.Tk):
 
 
         #Entry K2
-        L3 = tk.Label(self, text="Coup suivant")
+        Lcoupsuivant = tk.Label(self, text="Coup suivant")
         
         
 
@@ -67,32 +67,25 @@ class AppliCanevas(tk.Tk):
         self.bouton_valider = tk.Button(self, text="Valider",command=self.valider)
         
 
-        L4 = tk.Label(self, textvariable=self.couleur)
+        Lcouleuractualise = tk.Label(self, textvariable=self.couleur)
 
 
         #affichage de tous 
 
 
-        self.bouton_cercles.pack(side=tk.TOP) #commencer
-        L1.pack(side=tk.TOP) #couleur qui joue
-        L4.pack(side=tk.TOP) #couleur actualisé
+        self.bouton_commencer.pack(side=tk.TOP) #commencer
+        Lcouleurquijoue.pack(side=tk.TOP) #couleur qui joue
+        Lcouleuractualise.pack(side=tk.TOP) #couleur actualisé
 
         LabelPieceabouger.pack(side=tk.TOP) #Piece a bouger
         self.button_coup.pack(side =tk.TOP) #coup à jouer actualisé
 
-            
-        L3.pack(side=tk.TOP) #coup suivant
-        
-        self.button_speed.pack(side = tk.TOP) #entrée de ttes les pièces 
-        
-        
-       
+        Lcoupsuivant.pack(side=tk.TOP) #coup suivant
+        self.button_deplacement.pack(side = tk.TOP) #entrée de ttes les pièces 
         self.bouton_valider.pack(side=tk.TOP)#valider
 
-
-        
         # self.bouton_quitter.pack(side=tk.BOTTOM)    
-        self.bouton_save.pack(side=tk.BOTTOM)       #save
+        self.bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
         
         
     
@@ -103,11 +96,11 @@ class AppliCanevas(tk.Tk):
         if self.button_couleur.get() == "blanc":
             # self.couleur.("Noir")
             self.couleur.set("noir")
-            print("valider")
+            # print("valider")
         else:
             # self.couleur.set("Blanc")
             self.couleur.set("blanc")
-            print("valider2", type(self.button_couleur.get()))
+            # print("valider2", type(self.button_couleur.get()))
 
     def save(self):
         print("Save")
