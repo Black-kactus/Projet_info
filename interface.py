@@ -16,21 +16,17 @@ class AppliCanevas(tk.Tk):
         
 
         self.bind("Escape",self.quit)
-        self.creer_widgets()
-
+        # self.initButtons()
+        self.creer_widgets() 
+        #commande qui permet de lancer l'initiation de la créeation de tous les widgets
 
     def creer_widgets(self):
-
         # création canevas
         self.canv = tk.Canvas(self, bg="white", height=self.height,width=self.width)
         self.canv.pack(side=tk.LEFT)
 
         self.canv.xview(tk.SCROLL, int(self.width*1.5), tk.UNITS)
         self.canv.yview(tk.SCROLL, int(self.height*1.5), tk.UNITS)
-
-        for ligne in range(5):
-            for colonne in range(5):
-                 Button(fenetre, text='L%s-C%s' % (ligne, colonne), borderwidth=1).grid(row=ligne, column=colonne)
 
         #variables de Tkinter
         self._deplacement = tk.StringVar(self)
@@ -41,6 +37,8 @@ class AppliCanevas(tk.Tk):
 
         self._couleur =tk.StringVar(self)
         self._couleur.set("blanc")
+
+        
 
         #Boutons
         self._bouton_commencer = tk.Button(self, text="Commencer", command=self.commencer)
@@ -59,10 +57,17 @@ class AppliCanevas(tk.Tk):
 
         self._entree_coup = tk.Entry(self, textvariable=self._coup)
         self._entree_coup.get()
+        y = str(self._entree_deplacement.get())+str(self._entree_coup.get())
+        
+        tk.IntVar(value='1')
+        self._both = tk.StringVar()
+        self._both.set(str(self._coup.get())+str(self._deplacement.get()))
 
         #labels actualisés
         self._label_couleuractualise = tk.Label(self, textvariable=self._couleur)
-        self._label_coupactualise = tk.Label(self, textvariable= self._deplacement)
+
+        self._label_bothactualise = tk.Label(self, textvariable= self._both)
+        self._label_coupactualise = tk.Label(self, textvariable= self._coup)
 
         #affichage de tous les elements du canvas
 
@@ -74,6 +79,7 @@ class AppliCanevas(tk.Tk):
         self._entree_coup.pack(side =tk.TOP) #coup à jouer 
         
         self._label_coupactualise.pack(side =tk.TOP) #coup à jouer
+        self._label_bothactualise.pack(side = tk.TOP)
         
 
         self._label_coupsuivant.pack(side=tk.TOP) #coup suivant
@@ -82,7 +88,8 @@ class AppliCanevas(tk.Tk):
 
         self._bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
 
-    
+    def deux(self):
+        self._both.get()
     def test(self):
         if self._text.get() == "hello":
             self._text.set("quoi")
