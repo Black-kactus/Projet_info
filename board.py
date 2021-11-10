@@ -23,21 +23,24 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
     a=type(piece)
     ligne=case[1]
     colonne=case[0]
-    if a.mouvementpossible(piece,case)==True:
-      if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-        if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-          prise.append(position[colonne][ligne])
-          piece.ligne=ligne
-          piece.colonne=colonne
-          position[colonne][ligne]=piece
-        else:
-          print("Il y a déjà une de vos pièces sur cette case.")
-      else: #s'il n'y a pas d'autre pièce sur la case
-          piece.ligne=ligne
-          piece.colonne=colonne
-          position[colonne][ligne]=piece
+    if ligne==piece.ligne and colonne==piece.colonne:
+      print("Votre pièce est déjà à cette position.")
     else:
-      print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+      if a.mouvementpossible(piece,case)==True:
+        if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+          if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+            prise.append(position[colonne][ligne])
+            piece.ligne=ligne
+            piece.colonne=colonne
+            position[colonne][ligne]=piece
+          else:
+            print("Il y a déjà une de vos pièces sur cette case.")
+        else: #s'il n'y a pas d'autre pièce sur la case
+            piece.ligne=ligne
+            piece.colonne=colonne
+            position[colonne][ligne]=piece
+      else:
+        print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
   else:
     print("Vous ne pouvez pas déplacer une pièce de l'adversaire.")
     
