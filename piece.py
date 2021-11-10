@@ -75,24 +75,42 @@ class tour (piece):
     self.ligne=ligne
     self.colonne=colonne
     self._numero=numero
-  def mouvementpossible(self,case):
+
+  def mouvementpossible(self,case): #indique si la tour peut bouger jusqu'à la case indiquée
     ligne=case[1]
     colonne=case[0]
     if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
-	return None
-    if ligne=self.ligne: #si la tour bouge en horizontale
+	return False
+    elif colonne==self.colonne and ligne==self.ligne:
+	return True
+    elif ligne=self.ligne: #si la tour bouge en horizontal
 	if colonne > self.colonne:
 	   for c in range(self.colonne,colonne):
-		
+		if position[c][ligne]!=0:
+		   return False
+	else:
+	   for c in range(colonne,self.colonne):
+        	if position[c][ligne]!=0:
+		   return False
+    elif colonne=self.colonne: #si la tour bouge en vertical
+	if ligne > self.ligne:
+	   for l in range(self.ligne,ligne):
+		if position[colonne][l]!=0:
+		   return False
+	else:
+	   for l in range(ligne,self.ligne):
+        	if position[colonne][l]!=0:
+		   return False
+    return True
 
 
 
 
   
-
-  #def mouvement (self) :
+#à faire pour chaque pièce :
+  #def mouvementpossible (self,case) :
 	  #if dans les règles :
-		  #mettre à jour les coordonnées et le tableau récapitulatif des positions des pièces 
+		  #return True 
 	  #else:
-		  #print("vous ne pouvez pas jouer ce coup") 
+		  #return False
 
