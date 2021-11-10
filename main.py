@@ -16,6 +16,8 @@ class Echec():
 
 piece = Echec()
 
+print("probleme n°2")
+
 
 ## à ne pas modifier
 
