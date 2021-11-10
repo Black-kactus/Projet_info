@@ -16,7 +16,7 @@ class Echec():
 
 piece = Echec()
 
-print("probleme n°2")
+print("probleme n°2, commit 2")
 
 
 ## à ne pas modifier
