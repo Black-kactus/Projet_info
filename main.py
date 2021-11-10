@@ -18,9 +18,16 @@ piece = Echec()
 
 print(piece.valeur)
 
+<<<<<<< Updated upstream
 print("autre modification")
 
 
 ## à ne pas modifier
 
 print("Bonjour,il y a un problème")
+=======
+piece.valeur +=1
+
+print(piece.valeur)
+## à ne pas modifier
+>>>>>>> Stashed changes
