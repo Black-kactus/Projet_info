@@ -44,6 +44,6 @@ class piece():
       self.numero=numero
   #attributs de chaque piece :
     #couleur
-    #coordonées
+    #coordonées sur le board
     #valeur
     #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
