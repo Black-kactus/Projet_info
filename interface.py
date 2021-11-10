@@ -1,4 +1,5 @@
 import tkinter as tk
+from typing import Text
 
 class AppliCanevas(tk.Tk):
     def __init__(self):
@@ -18,8 +19,7 @@ class AppliCanevas(tk.Tk):
         self.representationCyclo = []
 
         # création canevas
-        self.canv = tk.Canvas(self, bg="white", height=self.height,
-                              width=self.width)
+        self.canv = tk.Canvas(self, bg="white", height=self.height,width=self.width)
         self.canv.pack(side=tk.LEFT)
 
         self.canv.xview(tk.SCROLL, int(self.width*1.5), tk.UNITS)
@@ -86,11 +86,13 @@ class AppliCanevas(tk.Tk):
 
         # self.bouton_quitter.pack(side=tk.BOTTOM)    
         self.bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
-        
-        
+
+    def creer_Bouton(self, text, cmd):
+        self._text = text
+        return tk.Button(self, text= self._text, command=cmd)
     
-       
-       
+    def test(self):
+        print("test")
 
     def valider(self):
         if self.button_couleur.get() == "blanc":
@@ -122,8 +124,30 @@ class AppliCanevas(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = AppliCanevas()
-    app.title("Jeu echec")
-    app.mainloop()
+    Interface = AppliCanevas()
+    Interface.title("Jeu echec")
+    bouton = Interface.creer_Bouton("hello",Interface.test())
+    bouton.pack(side=tk.TOP) #coup suivant
+    Interface.mainloop()
 
 
+# import tkinter as tk
+
+# class Application(tk.Frame):
+#     def __init__(self, racine=None):
+#         tk.Frame.__init__(self, racine)
+#         self.racine = racine
+#         self.create_widgets()
+
+#     def create_widgets(self):
+#         self.label = tk.Label(self.racine, text="J'adore Python !")
+#         self.bouton = tk.Button(self.racine, text="Quitter",fg="green", command=self.quit)
+#         self.label.pack()
+#         self.bouton.pack()
+
+
+# if __name__ == "__main__":
+#     racine = tk.Tk()
+#     racine.title("Ma Première App :-)")
+#     app = Application(racine)
+#     racine.mainloop()
