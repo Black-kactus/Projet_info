@@ -16,11 +16,6 @@ class Echec():
 
 piece = Echec()
 
-print(piece.valeur)
-
-
-print("autre modification")
-
 
 ## à ne pas modifier
 
