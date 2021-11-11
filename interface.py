@@ -14,9 +14,6 @@ class AppliCanevas(tk.Tk):
         self.text1 ="hello"
         self._text = tk.StringVar(self)
         
-
-        self.bind("Escape",self.quit)
-        # self.initButtons()
         self.creer_widgets() 
         #commande qui permet de lancer l'initiation de la créeation de tous les widgets
 
@@ -50,22 +47,18 @@ class AppliCanevas(tk.Tk):
         self._label_pieceabouger = tk.Label(self, text="Piece à bouger")
         self._label_coupsuivant = tk.Label(self, text="Coup suivant")
 
-
-        #Entry (entrees)
-        self._entree_deplacement = tk.Entry(self, textvariable=self._deplacement)
-        self._entree_deplacement.get()
-
-        self._entree_coup = tk.Entry(self, textvariable=self._coup)
-        self._entree_coup.get()
-        y = str(self._entree_deplacement.get())+str(self._entree_coup.get())
-        
         tk.IntVar(value='1')
         self._both = tk.StringVar()
         self._both.set(str(self._coup.get())+str(self._deplacement.get()))
 
+        #Entry (entrees)
+        self._entree_deplacement = tk.Entry(self, textvariable=self._deplacement)
+        self._entree_coup = tk.Entry(self, textvariable=self._coup)
+    
+        # y = str(self._entree_deplacement.get())+str(self._entree_coup.get())
+        
         #labels actualisés
         self._label_couleuractualise = tk.Label(self, textvariable=self._couleur)
-
         self._label_bothactualise = tk.Label(self, textvariable= self._both)
         self._label_coupactualise = tk.Label(self, textvariable= self._coup)
 
@@ -78,12 +71,13 @@ class AppliCanevas(tk.Tk):
         self._label_pieceabouger.pack(side=tk.TOP) #Piece a bouger
         self._entree_coup.pack(side =tk.TOP) #coup à jouer 
         
-        self._label_coupactualise.pack(side =tk.TOP) #coup à jouer
-        self._label_bothactualise.pack(side = tk.TOP)
-        
+        # self._label_coupactualise.pack(side =tk.TOP) #coup à jouer ACTUALISE TEMPS REEL
+      
 
         self._label_coupsuivant.pack(side=tk.TOP) #coup suivant
         self._entree_deplacement.pack(side = tk.TOP) #entrée de ttes les pièces 
+        self._label_bothactualise.pack(side = tk.TOP) #affichage du coup choisit
+
         self._bouton_valider.pack(side=tk.TOP)#valider
 
         self._bouton_abandonner.pack(side=tk.BOTTOM)       #abandonner
@@ -93,14 +87,18 @@ class AppliCanevas(tk.Tk):
     def test(self):
         if self._text.get() == "hello":
             self._text.set("quoi")
+            
         else :
             self._text.set("hello")
+            
 
     def valider(self):
         if self._couleur.get() == "blanc":
             self._couleur.set("noir")
+            self._both.set(str(self._coup.get())+str(self._deplacement.get()))
         else:
             self._couleur.set("blanc")
+            self._both.set(str(self._coup.get())+str(self._deplacement.get()))
 
 
     def save(self):
@@ -114,26 +112,3 @@ if __name__ == "__main__":
     Interface.title("Jeu echec")
 
     Interface.mainloop()
-    print(Interface.tester)
-
-
-# import tkinter as tk
-
-# class Application(tk.Frame):
-#     def __init__(self, racine=None):
-#         tk.Frame.__init__(self, racine)
-#         self.racine = racine
-#         self.create_widgets()
-
-#     def create_widgets(self):
-#         self.label = tk.Label(self.racine, text="J'adore Python !")
-#         self.bouton = tk.Button(self.racine, text="Quitter",fg="green", command=self.quit)
-#         self.label.pack()
-#         self.bouton.pack()
-
-
-# if __name__ == "__main__":
-#     racine = tk.Tk()
-#     racine.title("Ma Première App :-)")
-#     app = Application(racine)
-#     racine.mainloop()
