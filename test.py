@@ -25,13 +25,36 @@ frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-for i in range(0,18,2):
-    for j in range(0,18,2):
-        print(i,j)
-        namelbl = ttk.Label(content, text= str(i)+","+str(j),relief="solid")
-        namelbl.grid(column=i, row=j, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-        
+# for i in range(0,18,2):
+#     for j in range(0,18,2):
+#         print(i,j)
+#         namelbl = ttk.Label(content, text= str(i)+","+str(j),relief="solid")
+#         namelbl.grid(column=i, row=j, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
+for i in range(0,18,2):
+    L = ["","A",'B',"C","D","E","F",'G','H']
+    namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid")
+    namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid")
+    namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+Listepiece = [] 
+L= []
+        
+for i in range(2,18,2):
+    for j in range(2,18,2):
+        Listepiece.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid"))
+        L.append((i,j))
+        #creation de la liste contenant les 64 pièces d'éches numérotés de 0 à 63
+
+for i in range(len(Listepiece)):
+   Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+   
+#  L.append(ttk.Label(content, text= "test1",relief="solid"))
+# # L.append(ttk.Label(content, text= "test2",relief="solid"))
+
+# # for i in range(len(L)):
+# #     L[i].grid(column=20,row=10+i, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -74,6 +97,21 @@ Lvalider.grid(column=20,row=8, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pa
 Labandonner= ttk.Label(content, text= "Abandonner",relief="solid")
 Labandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
+
+# L1= ttk.Label(content, text= "test1",relief="solid")
+# L1.grid(column=20,row=10, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+# L2= ttk.Label(content, text= "test2",relief="solid")
+# L2.grid(column=20,row=11, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+
+# test pour voir si on peut stocker tous les labels dans une liste 
+# L = []
+# L.append(ttk.Label(content, text= "test1",relief="solid"))
+# L.append(ttk.Label(content, text= "test2",relief="solid"))
+
+# for i in range(len(L)):
+#     L[i].grid(column=20,row=10+i, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 
 
