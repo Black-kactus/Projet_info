@@ -50,11 +50,6 @@ for i in range(2,18,2):
 for i in range(len(Listepiece)):
    Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
    
-#  L.append(ttk.Label(content, text= "test1",relief="solid"))
-# # L.append(ttk.Label(content, text= "test2",relief="solid"))
-
-# # for i in range(len(L)):
-# #     L[i].grid(column=20,row=10+i, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
