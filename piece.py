@@ -80,29 +80,29 @@ class tour (piece):
     ligne=case[1]
     colonne=case[0]
     if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
-	return False
-    elif colonne==self.colonne and ligne==self.ligne:
-	return True
-    elif ligne=self.ligne: #si la tour bouge en horizontal
-	if colonne > self.colonne:
-	   for c in range(self.colonne,colonne):
-		if position[c][ligne]!=0:
-		   return False
-	else:
-	   for c in range(colonne,self.colonne):
-        	if position[c][ligne]!=0:
-		   return False
-    elif colonne=self.colonne: #si la tour bouge en vertical
-	if ligne > self.ligne:
-	   for l in range(self.ligne,ligne):
-		if position[colonne][l]!=0:
-		   return False
-	else:
-	   for l in range(ligne,self.ligne):
-        	if position[colonne][l]!=0:
-		   return False
+	    return False
+    elif colonne==self.colonne and ligne==self.ligne: #si la tour ne bouge pas
+	    return True
+    elif ligne==self.ligne: #si la tour bouge en horizontal
+	    if colonne > self.colonne: #si la tour va vers le haut
+	      for c in range(self.colonne,colonne):
+		      if position[c][ligne]!=0: #s'il y a une autre piece en travers du chemin
+		        return False
+	    else: #si la tour va vers le bas
+	      for c in range(colonne,self.colonne):
+        	if position[c][ligne]!=0: #s'il y a une autre piece en travers du chemin
+		        return False
+    elif colonne==self.colonne: #si la tour bouge en vertical
+	    if ligne > self.ligne: #si la tour va vers la droite
+	      for l in range(self.ligne,ligne):
+		      if position[colonne][l]!=0: #s'il y a une autre piece en travers du chemin
+		        return False
+	    else: #si la tour va vers la gauche 
+	      for l in range(ligne,self.ligne):
+        	if position[colonne][l]!=0: #s'il y a une autre piece en travers du chemin
+		        return False
     return True
-
+#il faut importer la variable position du fichier board
 
 
 
@@ -113,4 +113,5 @@ class tour (piece):
 		  #return True 
 	  #else:
 		  #return False
+
 
