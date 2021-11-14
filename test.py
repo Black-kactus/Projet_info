@@ -1,11 +1,21 @@
 from tkinter import *
 from tkinter import ttk
 
+from PIL import ImageTk, Image
+
+
 root = Tk()
 root.title("Jeu d'échec")
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
+
+
+# myimg = ImageTk.PhotoImage(Image.open('fou_noir.png'))
+
+
+
+
 # namelbl = ttk.Label(content, text="Name")
 # name = ttk.Entry(content)
 
@@ -33,23 +43,46 @@ content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 for i in range(0,18,2):
     L = ["","A",'B',"C","D","E","F",'G','H']
-    namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid")
+    namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER)
     namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-    namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid")
+    namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
     namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Listepiece = [] 
 L= []
-        
+
+img = PhotoImage(file = 'fou_noir.png')
+img = img.subsample(15, 15)
+# img = img.zoom(10,10)
+  
 for i in range(2,18,2):
+    sousListe = []
     for j in range(2,18,2):
-        Listepiece.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid"))
+        if (i/2+j/2)%2 == 0:
+            couleur = "white"
+            print((i/2+j/2)%2 )
+        else :
+            couleur = "black"
+        sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= couleur))
         L.append((i,j))
+    Listepiece.append(sousListe)
         #creation de la liste contenant les 64 pièces d'éches numérotés de 0 à 63
 
-for i in range(len(Listepiece)):
-   Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-   
+#T,C,F,Q,K,P = tour, cavalier, fou, reine(queen), roi(king), pion #N,B = noir, blanc position=[[TB1,CB1,FB1,QB1,KB1,FB2,CB2,TB2],[PB1,PB2,PB3,PB4,PB5,PB6,PB7,PB8],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[PN1,PN2,PN3,PN4,PN5,PN6,PN7,PN8],[TN1,CN1,FN1,QN1,KN1,FN2,CN2,TN2]]
+
+# for i in range(len(Listepiece)):
+#    Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+Listepiece[0][2] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= "red")
+for i in range(8):
+    for j in range(8):
+        Listepiece[i][j].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+        print(Listepiece[i][j])
+
+# setting image with the help of label
+# La = Label(root, image = img)
+# La.grid(column = 10, row = 10, columnspan = 2, rowspan = 2)
+
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -62,34 +95,34 @@ for j in range(0,18):
 
 largeur = 4
 
-Lvide = ttk.Label(content, text= "",relief="solid")
+Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
 Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lcommencer = ttk.Label(content, text= "Commencer",relief="solid")
+Lcommencer = ttk.Label(content, text= "Commencer",relief="solid",anchor=CENTER)
 Lcommencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lcouleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid")
+Lcouleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
 Lcouleurquijoue.grid(column=20, row=2, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lcouleuractualise= ttk.Label(content, text= "blanc",relief="solid")
+Lcouleuractualise= ttk.Label(content, text= "blanc",relief="solid",anchor=CENTER)
 Lcouleuractualise.grid(column=20,row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid")
+Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
 Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lpieceactualise= ttk.Label(content, text= "fou2N",relief="solid")
+Lpieceactualise= ttk.Label(content, text= "fou2N",relief="solid",anchor=CENTER)
 Lpieceactualise.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lcoupajouer = ttk.Label(content, text= "Coup à jouer",relief="solid")
+Lcoupajouer = ttk.Label(content, text= "Coup à jouer",relief="solid",anchor=CENTER)
 Lcoupajouer.grid(column=20, row=6, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lcoupactualise= ttk.Label(content, text= "E3",relief="solid")
+Lcoupactualise= ttk.Label(content, text= "E3",relief="solid",anchor=CENTER)
 Lcoupactualise.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lvalider= ttk.Label(content, text= "Valider",relief="solid")
+Lvalider= ttk.Label(content, text= "Valider",relief="solid",anchor=CENTER)
 Lvalider.grid(column=20,row=8, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-Labandonner= ttk.Label(content, text= "Abandonner",relief="solid")
+Labandonner= ttk.Label(content, text= "Abandonner",relief="solid",anchor=CENTER)
 Labandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 
@@ -127,5 +160,9 @@ Labandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N,S,E,W
 # content.columnconfigure(3, weight=1)
 # content.columnconfigure(4, weight=1)
 # content.rowconfigure(1, weight=1)
+
+# adding image (remember image should be PNG and not JPG)
+
+
 
 root.mainloop()
