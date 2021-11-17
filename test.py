@@ -73,20 +73,33 @@ for i in range(2,18,2):
 # for i in range(len(Listepiece)):
 #    Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-dicopiece = {"FB1": 'fou_blanc.png',"FB2": 'fou_blanc.png',"FN1": 'fou_noir.png',"FN2": 'fou_noir.png',"FN1": 'fou_noir.png', "TB1" : "tour_blanche.png", "TB2" : "tour_blanche.png", "TN1" : "tour_noire.png", "TN2" : "tour_noire.png"}
+dicopiece = {}
+
+dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
+dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
+dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
+dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
+
+
+dicopiece= dict(dicopieceB)
+dicopiece.update(dicopieceN)
+dicopiece.update(dicopiecepionB)
+dicopiece.update(dicopiecepionN)
+
+print(dicopiece["TN1"])
+
 
 img2 = PhotoImage(file = dicopiece["FB1"])
 img2 = img2.subsample(15, 15)
 Listepiece[2][0] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img2,anchor=CENTER, background= "red")
 
-for i in range(8):
-    for j in range(8):
-        Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-        # print(Listepiece[i][j])
 
-# setting image with the help of label
-# La = Label(root, image = img)
-# La.grid(column = 10, row = 10, columnspan = 2, rowspan = 2)
+def afficherPiece():
+    for i in range(8):
+        for j in range(8):
+            Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+afficherPiece()
 
 
 root.columnconfigure(0, weight=1)
@@ -167,6 +180,11 @@ Labandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N,S,E,W
 # content.rowconfigure(1, weight=1)
 
 # adding image (remember image should be PNG and not JPG)
+
+
+# setting image with the help of label
+# La = Label(root, image = img)
+# La.grid(column = 10, row = 10, columnspan = 2, rowspan = 2)
 
 
 
