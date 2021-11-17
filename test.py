@@ -115,7 +115,7 @@ largeur = 4
 Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
 Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
 
-Bouton_commencer = ttk.Button(content, text= "Commencer",command= cmd_bouton_commencer)
+Bouton_commencer = Button(content, text= "Commencer",command= cmd_bouton_commencer,relief="solid",highlightbackground="red")
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
