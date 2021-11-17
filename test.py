@@ -60,7 +60,7 @@ for i in range(2,18,2):
     for j in range(2,18,2):
         if (i/2+j/2)%2 == 0:
             couleur = "white"
-            print((i/2+j/2)%2 )
+            # print((i/2+j/2)%2 )
         else :
             couleur = "black"
         sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= couleur))
@@ -73,11 +73,16 @@ for i in range(2,18,2):
 # for i in range(len(Listepiece)):
 #    Listepiece[i].grid(column=L[i][0], row=L[i][1], columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-Listepiece[0][2] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= "red")
+dicopiece = {"FB1": 'fou_blanc.png',"FB2": 'fou_blanc.png',"FN1": 'fou_noir.png',"FN2": 'fou_noir.png',"FN1": 'fou_noir.png', "TB1" : "tour_blanche.png", "TB2" : "tour_blanche.png", "TN1" : "tour_noire.png", "TN2" : "tour_noire.png"}
+
+img2 = PhotoImage(file = dicopiece["FB1"])
+img2 = img2.subsample(15, 15)
+Listepiece[2][0] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img2,anchor=CENTER, background= "red")
+
 for i in range(8):
     for j in range(8):
-        Listepiece[i][j].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-        print(Listepiece[i][j])
+        Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+        # print(Listepiece[i][j])
 
 # setting image with the help of label
 # La = Label(root, image = img)
