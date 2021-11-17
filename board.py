@@ -53,7 +53,8 @@ PN8=pion("Noir",7,6,8)
 
 #position = [a[1,2,...,8], b[1,...,8],...,h[1,...,8]]
 position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,PN3,FN1],[QB1,PB4,0,0,0,0,PN4,QN1],[KB1,PB5,0,0,0,0,PN5,KN1],[FB2,PB6,0,0,0,0,PN6,FN2],[CB2,PB7,0,0,0,0,PN7,CN2],[TB2,PB8,0,0,0,0,PN8,TN2]]
-prises=[] #pièces prises
+prises_Noir=[] #pièces prises par les noirs
+prises_Blanc=[] #pièces prises par les blancs
 
 def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
   if piece._couleur==CouleurQuiJoue: #cf interface
@@ -63,10 +64,13 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
     if ligne==piece.ligne and colonne==piece.colonne:
       print("Votre pièce est déjà à cette position.")
     else:
-      if a.mouvementpossible(piece,case)==True:
+      if a.mouvementpossible(piece,c)==True:
         if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
           if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-            prise.append(position[colonne][ligne])
+            if CouleurQuiJoue='Blanc':
+              prises_Blanc.append(position[colonne][ligne])
+            else:
+              prises_Noir.append(position[colonne][ligne])
             piece.ligne=ligne
             piece.colonne=colonne
             position[colonne][ligne]=piece

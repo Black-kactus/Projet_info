@@ -1,3 +1,5 @@
+from board import position
+
 #OPP pour instancier les différentes pieces
 class piece():
   def __str__(self):
@@ -28,6 +30,7 @@ class piece():
   #coordonées sur le board
   #valeur
   #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
+
 class fou(piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=3):
     self._couleur=couleur
@@ -35,6 +38,43 @@ class fou(piece):
     self.ligne=ligne
     self.colonne=colonne
     self._numero=numero
+
+  def mouvementpossible(self,colonne,ligne): #indique si le fou peut bouger jusqu'à la case indiquée
+    if ligne>7 or colonne>7 or ligne<0 or colonne<0: # sortie de l'échiquier
+	    return False
+    elif colonne==self.colonne and ligne==self.ligne: #si le fou ne bouge pas
+	    return True
+    else:
+      K=0
+      cpt=0
+      for k in range(-8,9): #motif de déplacement du fou
+        if (colonne==self.colonne+k and ligne==self.ligne+k) or (colonne==self.colonne-k and ligne==self.ligne+k):
+          cpt+=1
+          K=k
+      if cpt!=1: #pas le bon "motif" de déplacement
+	      return False
+
+      elif (colonne==self.colonne+K and ligne==self.ligne+K): #si le fou bouge sur la diagonale de bas gauche à haut droit (/)
+        if K>0: #si le fou va vers le haut gauche
+          for k in range(1,K):
+            if position[self.colonne+k][self.ligne+k]!=0: #s'il y a une autre piece en travers du chemin
+              return False
+        else: #si le fou va vers le bas droit
+	        for k in range(1,-(K-1)):
+        	  if position[self.colonne-k][self.ligne-k]!=0: #s'il y a une autre piece en travers du chemin
+		          return False
+    
+      elif (colonne==self.colonne-K and ligne==self.ligne+K): #si le fou bouge sur la diagonale de haut gauche à bas droit (\)
+        if K > 0: #si le fou va vers le haut droit
+          for k in range(1,K):
+            if position[self.colonne-k][self.ligne+k]!=0: #s'il y a une autre piece en travers du chemin
+              return False
+        else: #si la tour va vers le bas gauche 
+          for k in range(1,-(K-1)):
+            if position[self.colonne+k][self.ligne-k]!=0: #s'il y a une autre piece en travers du chemin
+              return False
+    return True
+
 
 class roi(piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=0):
@@ -76,9 +116,7 @@ class tour (piece):
     self.colonne=colonne
     self._numero=numero
 
-  def mouvementpossible(self,case): #indique si la tour peut bouger jusqu'à la case indiquée
-    ligne=case[1]
-    colonne=case[0]
+  def mouvementpossible(self,colonne,ligne): #indique si la tour peut bouger jusqu'à la case indiquée
     if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
 	    return False
     elif colonne==self.colonne and ligne==self.ligne: #si la tour ne bouge pas
@@ -102,8 +140,6 @@ class tour (piece):
         	if position[colonne][l]!=0: #s'il y a une autre piece en travers du chemin
 		        return False
     return True
-#il faut importer la variable position du fichier board
-
 
 
   
