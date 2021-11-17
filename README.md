@@ -13,4 +13,4 @@ Meilleure documentation tkinter https://tkdocs.com/tutorial/grid.html#morefeatur
 Pour l'interpreteur :
 #T,C,F,Q,K,P = tour, cavalier, fou, reine(queen), roi(king), pion
 #N,B = noir, blanc
-position=[[TB1,CB1,FB1,QB1,KB1,FB2,CB2,TB2],[PB1,PB2,PB3,PB4,PB5,PB6,PB7,PB8],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[PN1,PN2,PN3,PN4,PN5,PN6,PN7,PN8],[TN1,CN1,FN1,QN1,KN1,FN2,CN2,TN2]]
+position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,PN3,FN1],[QB1,PB4,0,0,0,0,PN4,QN1],[KB1,PB5,0,0,0,0,PN5,KN1],[FB2,PB6,0,0,0,0,PN6,FN2],[CB2,PB7,0,0,0,0,PN7,CN2],[TB2,PB8,0,0,0,0,PN8,TN2]]
