@@ -1,4 +1,5 @@
 from piece import cavalier, dame, fou, pion, roi, tour
+#import CouleurQuiJoue de interface
 
 #echiquier
 
