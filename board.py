@@ -62,28 +62,60 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
       print("Votre pièce est déjà à cette position.")
     else:
       if a.mouvementpossible(piece,colonne,ligne)==True:
-        if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-          if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-            if CouleurQuiJoue='Blanc':
-              prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
-              position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
-              position[colonne][ligne].lign=-1
+        
+        if type(piece)!=pion:
+          if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+            if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+              if CouleurQuiJoue='Blanc':
+                prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
+                position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
+                position[colonne][ligne].ligne=-1
+              else:
+                prises_Noir.append(position[colonne][ligne])
+                position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
+                position[colonne][ligne].ligne=-2
+              position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+              piece.ligne=ligne #on met à jour les coordonnées de la pièce
+              piece.colonne=colonne
+              position[colonne][ligne]=piece #on met à jour la liste position
+              
             else:
-              prises_Noir.append(position[colonne][ligne])
-              position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
-              position[colonne][ligne].lign=-2
-            position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-            piece.ligne=ligne #on met à jour les coordonnées de la pièce
-            piece.colonne=colonne
-            position[colonne][ligne]=piece #on met à jour la liste position
-            
+              print("Il y a déjà une de vos pièces sur cette case.")
+          else: #s'il n'y a pas d'autre pièce sur la case
+              position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+              piece.ligne=ligne #on met à jour les coordonnées de la pièce
+              piece.colonne=colonne
+              position[colonne][ligne]=piece #on met à jour la liste position
+        
+        else: #cas spécial du pion
+          if ligne==piece.ligne+1:
+            if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+              print("Cette case est déjà occupée.")
+            else:
+              position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+              piece.ligne=ligne #on met à jour les coordonnées de la pièce
+              piece.colonne=colonne
+              position[colonne][ligne]=piece #on met à jour la liste position
           else:
-            print("Il y a déjà une de vos pièces sur cette case.")
-        else: #s'il n'y a pas d'autre pièce sur la case
-            position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-            piece.ligne=ligne #on met à jour les coordonnées de la pièce
-            piece.colonne=colonne
-            position[colonne][ligne]=piece #on met à jour la liste position
+            if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
+              print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
+            else:
+              if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+                if CouleurQuiJoue='Blanc':
+                  prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
+                  position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
+                  position[colonne][ligne].ligne=-1
+                else:
+                  prises_Noir.append(position[colonne][ligne])
+                  position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
+                  position[colonne][ligne].lign=-2
+                position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                piece.ligne=ligne #on met à jour les coordonnées de la pièce
+                piece.colonne=colonne
+                position[colonne][ligne]=piece #on met à jour la liste position
+              else:
+                print("Il y a déjà une de vos pièces sur cette case.")
+
       else:
         print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
   else:
