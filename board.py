@@ -9,12 +9,10 @@ from piece import cavalier, dame, fou, pion, roi, tour
 
 #attribut: quel camp joue/droit au roque
 
-
-L=[[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8]]
+#échiquier=[a[1,2,3,4,5,6,7,8],b[1,2,3,4,5,6,7,8],c[1,2,3,4,5,6,7,8],d[1,2,3,4,5,6,7,8],e[1,2,3,4,5,6,7,8],f[1,2,3,4,5,6,7,8],g[1,2,3,4,5,6,7,8],h[1,2,3,4,5,6,7,8]]
 #echiquier en liste de listes L[0][5] pour dire qu'on ait en A6 par exemple
 
-
-#initialisation du plateau:
+#initialisation du plateau et des pièces:
 #T,C,F,Q,K,P = tour, cavalier, fou, reine(queen), roi(king), pion
 #N,B = noir, blanc
 TB1=tour("Blanc",0,0,1)
@@ -51,7 +49,6 @@ PN6=pion("Noir",5,6,6)
 PN7=pion("Noir",6,6,7)
 PN8=pion("Noir",7,6,8)
 
-#position = [a[1,2,...,8], b[1,...,8],...,h[1,...,8]]
 position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,PN3,FN1],[QB1,PB4,0,0,0,0,PN4,QN1],[KB1,PB5,0,0,0,0,PN5,KN1],[FB2,PB6,0,0,0,0,PN6,FN2],[CB2,PB7,0,0,0,0,PN7,CN2],[TB2,PB8,0,0,0,0,PN8,TN2]]
 prises_Noir=[] #pièces prises par les noirs
 prises_Blanc=[] #pièces prises par les blancs
@@ -68,18 +65,25 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
           if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
             if CouleurQuiJoue='Blanc':
-              prises_Blanc.append(position[colonne][ligne])
+              prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
+              position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
+              position[colonne][ligne].lign=-1
             else:
               prises_Noir.append(position[colonne][ligne])
-            piece.ligne=ligne
+              position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
+              position[colonne][ligne].lign=-2
+            position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+            piece.ligne=ligne #on met à jour les coordonnées de la pièce
             piece.colonne=colonne
-            position[colonne][ligne]=piece
+            position[colonne][ligne]=piece #on met à jour la liste position
+            
           else:
             print("Il y a déjà une de vos pièces sur cette case.")
         else: #s'il n'y a pas d'autre pièce sur la case
-            piece.ligne=ligne
+            position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+            piece.ligne=ligne #on met à jour les coordonnées de la pièce
             piece.colonne=colonne
-            position[colonne][ligne]=piece
+            position[colonne][ligne]=piece #on met à jour la liste position
       else:
         print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
   else:
