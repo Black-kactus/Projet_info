@@ -145,8 +145,10 @@ class tour (piece):
   
 #à faire pour chaque pièce :
   #def mouvementpossible (self,case) :
-	  #if dans les règles :
+	  #if dans les règles (pas de sortie de l'échiqiuer, bonne forme de déplacement, pas d'autre pièce sur le chemin):
 		  #return True 
+	  #elif piece ne bouge pas:
+		  #return True
 	  #else:
 		  #return False
 
