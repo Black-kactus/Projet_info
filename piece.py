@@ -27,7 +27,7 @@ class piece():
 	
 #attributs de chaque piece :
   #couleur
-  #coordonées sur le board
+  #coordonées sur le board (ou -1,-1 si mangée par les blancs et -2,-2 si mangée par les noirs)
   #valeur
   #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
 
