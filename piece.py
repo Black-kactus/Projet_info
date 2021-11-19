@@ -76,6 +76,7 @@ class fou(piece):
     return True
 
 
+
 class roi(piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=0):
     self._couleur=couleur
@@ -83,6 +84,7 @@ class roi(piece):
     self.ligne=ligne
     self.colonne=colonne
     self._numero=numero
+
 
 class dame (piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=9):
@@ -92,6 +94,7 @@ class dame (piece):
     self.colonne=colonne
     self._numero=numero
 
+
 class cavalier (piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=3):
     self._couleur=couleur
@@ -100,6 +103,7 @@ class cavalier (piece):
     self.colonne=colonne
     self._numero=numero
 
+
 class pion (piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=1):
     self._couleur=couleur
@@ -107,6 +111,7 @@ class pion (piece):
     self.ligne=ligne
     self.colonne=colonne
     self._numero=numero
+
 
 class tour (piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=5):
