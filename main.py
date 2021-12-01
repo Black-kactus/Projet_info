@@ -1,1 +1,4 @@
-print("il servait à quoi déjà ce fichier ?")
+
+from test import coup,deplacement
+def interpreteur(coup,deplacement):
+    print('ok')
