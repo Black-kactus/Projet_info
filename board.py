@@ -101,6 +101,16 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 piece.ligne=ligne #on met à jour les coordonnées de la pièce
                 piece.colonne=colonne
                 position[colonne][ligne]=piece #on met à jour la liste position
+            elif ligne==piece.ligne+2 and colonne==piece.colonne:
+              if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                print("Cette case est déjà occupée.")
+              elif not(piece.Move1): #ne peut plus déplacer de 2
+                print("Vous ne pouvez plus jouer ce coup")
+              else:
+                position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                piece.ligne=ligne #on met à jour les coordonnées de la pièce
+                piece.colonne=colonne
+                position[colonne][ligne]=piece #on met à jour la liste position
             else:
               if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
                 print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
@@ -153,4 +163,3 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
   else:
     print("Vous ne pouvez pas déplacer une pièce de l'adversaire.")
     
-
