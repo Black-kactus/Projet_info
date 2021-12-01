@@ -89,7 +89,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
               position[colonne][ligne]=piece #on met à jour la liste position
         
         else: #cas spécial du pion
-          if ligne==piece.ligne+1:
+          if ligne==piece.ligne+1 and colonne==piece.colonne:
             if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
               print("Cette case est déjà occupée.")
             else:
