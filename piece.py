@@ -102,6 +102,24 @@ class cavalier (piece):
     self.ligne=ligne
     self.colonne=colonne
     self._numero=numero
+  
+#positions d'arrivé possibles :
+#(l+1,c-2)  colonne == self.colonne-2 and ligne==self.ligne+1
+#(l-1,c-2)  colonne == self.colonne-2 and ligne==self.ligne-1
+#(L+2,c-1)  colonne == self.colonne-1 and ligne==self.ligne+2
+#(l-2,c-1)  colonne == self.colonne-1 and ligne==self.ligne-2
+#(L+2,c+1)  colonne == self.colonne+1 and ligne==self.ligne+2
+#(l-2,c+1)  colonne == self.colonne+1 and ligne==self.ligne-2
+#(l+1,c+2)  colonne == self.colonne+2 and ligne==self.ligne+1
+#(l-1,c+2)  colonne == self.colonne+2 and ligne==self.ligne-1
+
+ def mouvementpossible(self,colonne,ligne): #indique si le cavalier peut bouger jusqu'à la case indiquée
+    if colonne==self.colonne and ligne==self.ligne: #si le cavalier ne bouge pas
+	    return True
+    elif ((colonne != self.colonne-2 and ligne!=self.ligne+1) or (colonne != self.colonne-2 and ligne!=self.ligne-1) or (colonne != self.colonne-1 and ligne!=self.ligne+2) or (colonne != self.colonne-1 and ligne!=self.ligne-2) or (colonne != self.colonne+1 and ligne!=self.ligne+2) or (colonne != self.colonne+1 and ligne!=self.ligne-2) or (colonne != self.colonne+2 and ligne!=self.ligne+1) or (colonne != self.colonne+2 and ligne!=self.ligne-1)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
+	    return False
+    else :
+      return True
 
 
 class pion (piece):
