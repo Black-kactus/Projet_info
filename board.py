@@ -89,7 +89,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
               position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
               piece.ligne=ligne #on met à jour les coordonnées de la pièce
               piece.colonne=colonne
-              position[colonne][ligne]=piece #on met à jour la liste position
+              position[colonne][ligne]=piece #on met à jour la liste position 
         
         else: #cas spécial du pion
           if ligne==piece.ligne+1 and colonne==piece.colonne:
