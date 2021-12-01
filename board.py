@@ -105,14 +105,14 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
               print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
             else:
               if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-                if CouleurQuiJoue='Blanc':
+                if CouleurQuiJoue=='Blanc':
                   prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
                   position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
                   position[colonne][ligne].ligne=-1
                 else:
                   prises_Noir.append(position[colonne][ligne])
                   position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
-                  position[colonne][ligne].lign=-2
+                  position[colonne][ligne].ligne=-2
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                 piece.ligne=ligne #on met à jour les coordonnées de la pièce
                 piece.colonne=colonne
