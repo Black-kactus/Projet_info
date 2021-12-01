@@ -1,4 +1,7 @@
 from piece import cavalier, dame, fou, pion, roi, tour
+from test import couleurA
+
+CouleurQuiJoue=couleurA
 #import CouleurQuiJoue de interface
 
 #echiquier
