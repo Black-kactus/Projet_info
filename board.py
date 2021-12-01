@@ -51,7 +51,7 @@ prises_Blanc=[] #pièces prises par les blancs
 
 def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
-  if piece._couleur==CouleurQuiJoue: #cf interface
+  if piece._couleur==CouleurQuiJoue:
     a=type(piece)
     ligne=case[1]
     colonne=case[0]
