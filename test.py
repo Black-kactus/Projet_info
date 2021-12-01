@@ -7,7 +7,6 @@ from PIL import ImageTk, Image
 from time import *
 
 #pour récupérer la liste des positions
-
 from board import position
 from piece import*
 LPOSITION=[]
