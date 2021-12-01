@@ -2,6 +2,7 @@ from test import coup,deplacement
 from board import mouvement,position
 
 def interpreteur(coup,deplacement):
+    global position
     coup=coup.get()
     deplacement=deplacement.get()
     colonne_P=ord(coup[0])-97 #position de la pièce à bouger

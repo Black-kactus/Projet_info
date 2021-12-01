@@ -1,7 +1,7 @@
 from board import position
 
 #OPP pour instancier les différentes pieces
-#class piece():
+class piece():
   #def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
     #nom=""
     #if self._couleur=="Blanc":
