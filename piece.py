@@ -1,35 +1,34 @@
 from board import position
 
-#OPP pour instancier les différentes pieces
 class piece():
-  #def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
-    #nom=""
-    #if self._couleur=="Blanc":
-      #nom+="B"
-    #else:
-      #nom+="N"
-    #nom+=str(self._numero)
-    #if type(self)==pion:
-      #nom="P"+nom
-    #elif type(self)==fou:
-      #nom="F"+nom
-    #elif type(self)==dame:
-      #nom="Q"+nom
-    #elif type(self)==roi:
-      #nom="K"+nom
-    #elif type(self)==cavalier:
-      #nom="C"+nom
-    #elif type(self)==tour:
-      #nom="T"+nom
-    #return nom
+  def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
+    nom=""
+    if self._couleur=="Blanc":
+      nom+="B"
+    else:
+      nom+="N"
+    nom+=str(self._numero)
+    if type(self)==pion:
+      nom="P"+nom
+    elif type(self)==fou:
+      nom="F"+nom
+    elif type(self)==dame:
+      nom="Q"+nom
+    elif type(self)==roi:
+      nom="K"+nom
+    elif type(self)==cavalier:
+      nom="C"+nom
+    elif type(self)==tour:
+      nom="T"+nom
+    return nom
     #on a un nom du type "PN3" pour le pion noir 3
 
 	
-#attributs de chaque piece :
-  #couleur
-  #coordonées sur le board (ou -1,-1 si mangée par les blancs et -2,-2 si mangée par les noirs)
-  #valeur
-  #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
+  #attributs de chaque piece :
+    #couleur
+    #coordonées sur le board (ou -1,-1 si mangée par les blancs et -2,-2 si mangée par les noirs)
+    #valeur
+    #numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
 
 class fou(piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=3):
@@ -103,17 +102,17 @@ class cavalier (piece):
     self.colonne=colonne
     self._numero=numero
   
-#positions d'arrivé possibles :
-#(l+1,c-2)  colonne == self.colonne-2 and ligne==self.ligne+1
-#(l-1,c-2)  colonne == self.colonne-2 and ligne==self.ligne-1
-#(L+2,c-1)  colonne == self.colonne-1 and ligne==self.ligne+2
-#(l-2,c-1)  colonne == self.colonne-1 and ligne==self.ligne-2
-#(L+2,c+1)  colonne == self.colonne+1 and ligne==self.ligne+2
-#(l-2,c+1)  colonne == self.colonne+1 and ligne==self.ligne-2
-#(l+1,c+2)  colonne == self.colonne+2 and ligne==self.ligne+1
-#(l-1,c+2)  colonne == self.colonne+2 and ligne==self.ligne-1
+  #positions d'arrivé possibles :
+  #(l+1,c-2)  colonne == self.colonne-2 and ligne==self.ligne+1
+  #(l-1,c-2)  colonne == self.colonne-2 and ligne==self.ligne-1
+  #(L+2,c-1)  colonne == self.colonne-1 and ligne==self.ligne+2
+  #(l-2,c-1)  colonne == self.colonne-1 and ligne==self.ligne-2
+  #(L+2,c+1)  colonne == self.colonne+1 and ligne==self.ligne+2
+  #(l-2,c+1)  colonne == self.colonne+1 and ligne==self.ligne-2
+  #(l+1,c+2)  colonne == self.colonne+2 and ligne==self.ligne+1
+  #(l-1,c+2)  colonne == self.colonne+2 and ligne==self.ligne-1
 
- def mouvementpossible(self,colonne,ligne): #indique si le cavalier peut bouger jusqu'à la case indiquée
+  def mouvementpossible(self,colonne,ligne): #indique si le cavalier peut bouger jusqu'à la case indiquée
     if colonne==self.colonne and ligne==self.ligne: #si le cavalier ne bouge pas
 	    return True
     elif ((colonne != self.colonne-2 and ligne!=self.ligne+1) or (colonne != self.colonne-2 and ligne!=self.ligne-1) or (colonne != self.colonne-1 and ligne!=self.ligne+2) or (colonne != self.colonne-1 and ligne!=self.ligne-2) or (colonne != self.colonne+1 and ligne!=self.ligne+2) or (colonne != self.colonne+1 and ligne!=self.ligne-2) or (colonne != self.colonne+2 and ligne!=self.ligne+1) or (colonne != self.colonne+2 and ligne!=self.ligne-1)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
@@ -208,5 +207,3 @@ class tour (piece):
 		  #return True
 	  #else:
 		  #return False
-
-

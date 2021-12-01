@@ -1,15 +1,7 @@
 from piece import cavalier, dame, fou, pion, roi, tour
 from test import couleurA
-
 CouleurQuiJoue=couleurA.get()
-#import CouleurQuiJoue de interface
 
-#echiquier
-
-#cooordonées de chaques cases
-#possibilité d'avoir une seule case
-#règles du jeu d'échec
-#savoir si une pièces est attaquée
 
 #attribut: quel camp joue/droit au roque
 
