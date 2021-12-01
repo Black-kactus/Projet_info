@@ -1,27 +1,27 @@
 from board import position
 
 #OPP pour instancier les différentes pieces
-class piece():
-  def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
-    nom=""
-    if self._couleur=="Blanc":
-      nom+="B"
-    else:
-      nom+="N"
-    nom+=str(self._numero)
-    if type(self)==pion:
-      nom="P"+nom
-    elif type(self)==fou:
-      nom="F"+nom
-    elif type(self)==dame:
-      nom="Q"+nom
-    elif type(self)==roi:
-      nom="K"+nom
-    elif type(self)==cavalier:
-      nom="C"+nom
-    elif type(self)==tour:
-      nom="T"+nom
-    return nom
+#class piece():
+  #def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
+    #nom=""
+    #if self._couleur=="Blanc":
+      #nom+="B"
+    #else:
+      #nom+="N"
+    #nom+=str(self._numero)
+    #if type(self)==pion:
+      #nom="P"+nom
+    #elif type(self)==fou:
+      #nom="F"+nom
+    #elif type(self)==dame:
+      #nom="Q"+nom
+    #elif type(self)==roi:
+      #nom="K"+nom
+    #elif type(self)==cavalier:
+      #nom="C"+nom
+    #elif type(self)==tour:
+      #nom="T"+nom
+    #return nom
     #on a un nom du type "PN3" pour le pion noir 3
 
 	
