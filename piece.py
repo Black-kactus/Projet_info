@@ -1,7 +1,7 @@
-from board import position
+#from board import position
 
 class piece():
-  def __str__(self): #jsp à quoi ça sert pour l'instant mais c'est là au cas où
+  def __str__(self):
     nom=""
     if self._couleur=="Blanc":
       nom+="B"
@@ -38,8 +38,8 @@ class fou(piece):
     self.colonne=colonne
     self._numero=numero
 
-
   def mouvementpossible(self,colonne,ligne): #indique si le fou peut bouger jusqu'à la case indiquée
+    from board import position
     if ligne>7 or colonne>7 or ligne<0 or colonne<0: # sortie de l'échiquier
       return False
     elif colonne==self.colonne and ligne==self.ligne: #si le fou ne bouge pas
@@ -104,6 +104,7 @@ class cavalier (piece):
     self._numero=numero
 
   def mouvementpossible(self,colonne,ligne): #indique si le cavalier peut bouger jusqu'à la case indiquée
+    from board import position
     if colonne==self.colonne and ligne==self.ligne: #si le cavalier ne bouge pas
       return True
     elif ((colonne != self.colonne-2 and ligne!=self.ligne+1) or (colonne != self.colonne-2 and ligne!=self.ligne-1) or (colonne != self.colonne-1 and ligne!=self.ligne+2) or (colonne != self.colonne-1 and ligne!=self.ligne-2) or (colonne != self.colonne+1 and ligne!=self.ligne+2) or (colonne != self.colonne+1 and ligne!=self.ligne-2) or (colonne != self.colonne+2 and ligne!=self.ligne+1) or (colonne != self.colonne+2 and ligne!=self.ligne-1)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
@@ -122,37 +123,38 @@ class pion (piece):
         self.Move1= True
 
     def mouvementpossible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
-        if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
-            return False
-        elif colonne == self.colonne and ligne == self.ligne:  # si le pion ne bouge pas
-            return True
-        if colonne != self.colonne and ligne == self.ligne:
-            return False
-        else:
-            if colonne == self.colonne:
-                if ligne == (self.ligne + 1) and self._couleur == "Blanc":
-                    return True
-                if ligne == (self.ligne + 2) and self._couleur == "Blanc":
-                    pass
-                # if premier coup ? si oui c'est bon, sinon false
-                if ligne == (self.ligne - 1) and self._couleur != "Blanc":
-                    return True
-                if ligne == (self.ligne - 2) and self._couleur != "Blanc":
-                    if self.Move1: # premier mouvement du pion ?
-                        return True
-                    else:
-                        return False
-                else:
-                    return False
-            if colonne == (self.colonne + 1) or colonne == (self.colonne - 1):
-                if ligne == (self.ligne + 1) and self._couleur == "Blanc":
-                    return True
-                if ligne == (self.ligne - 1) and self._couleur != "Blanc":
-                    return True
-                else:
-                    return False
-            else:
-                return False
+      from board import position
+      if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
+          return False
+      elif colonne == self.colonne and ligne == self.ligne:  # si le pion ne bouge pas
+          return True
+      if colonne != self.colonne and ligne == self.ligne:
+          return False
+      else:
+          if colonne == self.colonne:
+              if ligne == (self.ligne + 1) and self._couleur == "Blanc":
+                  return True
+              if ligne == (self.ligne + 2) and self._couleur == "Blanc":
+                  pass
+              # if premier coup ? si oui c'est bon, sinon false
+              if ligne == (self.ligne - 1) and self._couleur != "Blanc":
+                  return True
+              if ligne == (self.ligne - 2) and self._couleur != "Blanc":
+                  if self.Move1: # premier mouvement du pion ?
+                      return True
+                  else:
+                      return False
+              else:
+                  return False
+          if colonne == (self.colonne + 1) or colonne == (self.colonne - 1):
+              if ligne == (self.ligne + 1) and self._couleur == "Blanc":
+                  return True
+              if ligne == (self.ligne - 1) and self._couleur != "Blanc":
+                  return True
+              else:
+                  return False
+          else:
+              return False
 
 class tour (piece):
   def __init__ (self,couleur,colonne,ligne,numero,valeur=5):
@@ -163,6 +165,7 @@ class tour (piece):
     self._numero=numero
 
   def mouvementpossible(self,colonne,ligne): #indique si la tour peut bouger jusqu'à la case indiquée
+    from board import position
     if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne>7 or colonne>7 or ligne<0 or colonne<0: #pas le bon "motif" de déplacement ou sortie de l'échiquier
       return False
     elif colonne==self.colonne and ligne==self.ligne: #si la tour ne bouge pas

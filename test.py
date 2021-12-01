@@ -8,14 +8,14 @@ from time import *
 
 #pour récupérer la liste des positions
 
-#from board import position
-#from piece import*
-#LPOSITION=[]
-#for l in position:
-    #if l==0:
-        #LPOSITION.append(0)
-    #else:
-        #LPOSITION.append(str(l))
+from board import position
+from piece import*
+LPOSITION=[]
+for l in position:
+    if l==0:
+        LPOSITION.append(0)
+    else:
+        LPOSITION.append(str(l))
 
 
 

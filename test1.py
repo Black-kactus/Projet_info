@@ -1,3 +1,1 @@
-from test2 import variable2
-
-variable1 = 10
+#bon le pb est plus ou moins résolu...

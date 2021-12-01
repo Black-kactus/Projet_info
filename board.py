@@ -1,6 +1,4 @@
 from piece import cavalier, dame, fou, pion, roi, tour
-from test import couleurA
-CouleurQuiJoue=couleurA.get()
 
 
 #attribut: quel camp joue/droit au roque
@@ -49,8 +47,12 @@ position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,P
 prises_Noir=[] #pièces prises par les noirs
 prises_Blanc=[] #pièces prises par les blancs
 
+
+
 def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
+  from test import couleurA
+  CouleurQuiJoue=couleurA.get()
   if piece._couleur==CouleurQuiJoue:
     a=type(piece)
     ligne=case[1]
