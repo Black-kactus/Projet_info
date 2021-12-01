@@ -70,7 +70,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         if type(piece)!=pion:
           if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
             if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-              if CouleurQuiJoue='Blanc':
+              if CouleurQuiJoue=='Blanc':
                 prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
                 position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
                 position[colonne][ligne].ligne=-1
@@ -115,7 +115,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
               else:
                 if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-                  if CouleurQuiJoue='Blanc':
+                  if CouleurQuiJoue=='Blanc':
                     prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
                     position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
                     position[colonne][ligne].ligne=-1
@@ -143,7 +143,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
               else:
                 if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-                  if CouleurQuiJoue='Blanc':
+                  if CouleurQuiJoue=='Blanc':
                     prises_Blanc.append(position[colonne][ligne]) #on met à jour la liste des prises
                     position[colonne][ligne].colonne=-1 #on change les coordonées de la pièce mangée
                     position[colonne][ligne].ligne=-1
