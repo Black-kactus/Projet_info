@@ -1,15 +1,7 @@
 from piece import cavalier, dame, fou, pion, roi, tour
 from test import couleurA
-
 CouleurQuiJoue=couleurA.get()
-#import CouleurQuiJoue de interface
 
-#echiquier
-
-#cooordonées de chaques cases
-#possibilité d'avoir une seule case
-#règles du jeu d'échec
-#savoir si une pièces est attaquée
 
 #attribut: quel camp joue/droit au roque
 
@@ -59,7 +51,7 @@ prises_Blanc=[] #pièces prises par les blancs
 
 def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
-  if piece._couleur==CouleurQuiJoue: #cf interface
+  if piece._couleur==CouleurQuiJoue:
     a=type(piece)
     ligne=case[1]
     colonne=case[0]
