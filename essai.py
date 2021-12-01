@@ -1,6 +1,30 @@
-dico1= {"A":"a", "B" : "b"}
-dico2 = {"C":"c", "D" : "d"}
-dico = dict(dico1)
-dico.update(dico2)
+# Import des noms du module
+from tkinter import *
+# Création d'un objet "fenêtre"
+fenetre = Tk()
+# Titre (Label)
+titre = Label(fenetre, text = "L'informatique, c'est fantastique !")
+# Affichage du titre
+titre.pack()
+# Ajout des autres widgets
+# .........................
+# Démarrage de la boucle Tkinter (à placer à la fin !!!)
 
-print(dico,dico1,dico2)
+
+resultat = StringVar()
+resultat.set("10")
+expression = StringVar()
+expression.set("20")
+
+print(type(resultat.get()),expression.get())
+
+TOUT = StringVar()
+# TOUT.set(str([resultat.get(),expression.get()]))
+TOUT.set(str([resultat,expression]))
+
+print(TOUT.get())
+
+def calculer():
+   resultat.set(eval(expression.get()))
+
+fenetre.mainloop()

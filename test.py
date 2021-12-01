@@ -22,13 +22,8 @@ couleurA = StringVar()
 couleurA.set("blanc")
 
 
-content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-# for i in range(0,18,2):
-#     for j in range(0,18,2):
-#         print(i,j)
-#         namelbl = ttk.Label(content, text= str(i)+","+str(j),relief="solid")
-#         namelbl.grid(column=i, row=j, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 for i in range(0,18,2):
     L = ["","A",'B',"C","D","E","F",'G','H']
@@ -39,29 +34,13 @@ for i in range(0,18,2):
 
 Listepiece = [] 
 L= []
-
-img = PhotoImage(file = 'fou_noir.png')
-img = img.subsample(15, 15)
 # img = img.zoom(10,10)
-  
-for i in range(2,18,2):
-    sousListe = []
-    for j in range(2,18,2):
-        if (i/2+j/2)%2 == 0:
-            couleur = "white"
-            # print((i/2+j/2)%2 )
-        else :
-            couleur = "black"
-        sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= couleur))
-        L.append((i,j))
-    Listepiece.append(sousListe)
-        #creation de la liste contenant les 64 pièces d'éches numérotés de 0 à 63
 
+#### PARTIE QUI GERE LA LISTE DES IMAGES ASSOCIES AUX POSITIONS
+dicopiece = {0:"vide.png","":"vide.png","0":"vide.png"}
 
-dicopiece = {"":"vide.png"}
-
-dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
-dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
+dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"roi_blanc.png","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
+dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"roi_noir.png","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
 dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
 dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
 
@@ -70,15 +49,93 @@ dicopiece.update(dicopieceB)
 dicopiece.update(dicopiecepionB)
 dicopiece.update(dicopiecepionN)
 
+Limg = [["0" for i in range(8)] for j in range(8)]
+# Limg2 = [["0" for i in range(8)] for j in range(8)]
 
-img2 = PhotoImage(file = dicopiece[""])
-img2 = img2.subsample(15, 15)
-Listepiece[2][0] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img2,anchor=CENTER,background = "red")
+#Liste des positions renvoyées par Raph
+LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
+
+#variable Tkinter correspondant à LPOSITION
+LPOS = StringVar()
+LPOS.set(str(LPOSITION))
+
+# print("LPOS",LPOS.get())
+# print("LPOS2", str(eval(LPOS.get()) [0][0]))
+
+LPOS.get()
+
+#Création de la liste Limg2 contenant les images tkinter correspondant à la bonne position
+for i in range(8):
+    for j in range(8):
+        # IMG = StringVar()
+        # img = PhotoImage(file = str(dicopiece[LPOSITION[i][j]]))
+        img = PhotoImage(file = str(dicopiece[ str(eval(LPOS.get()) [i][j])]))
+        img = img.subsample(12, 12)
+        # IMG.set(str(img))
+        #pour aggrandir la taille des pièces, diminuer subsample
+        Limg[i][j] = img 
+        # Limg2[i][j] = IMG.get()
+
+# print(Limg2)
+
+# LIMG = StringVar()
+# LIMG.set(str(Limg2))
+
+# LIMG.get()
+
+# print("LPOS2", LIMG.get())
+# print("LPOS3", eval(LIMG.get())[0][0])
+
+# # for i in LIMG.get():
+#     print(i)
+# print("tableau",TAB)
+# print("LPOS2", LIMG.get()[1][0])
+
+
+# Creation de la liste Listepiece contenant tous les labels (avec images) de toutes les pieces de l'echiquier
+for i in range(2,18,2):
+    sousListe = []
+    for j in range(2,18,2):
+        # print(i,j)
+        if (i/2+j/2)%2 == 0:
+            couleur = "white"
+        else :
+            couleur = "black"
+        # print(str((LIMG.get()) [int(i/2-1)][int(j/2-1)]))  
+        # sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = eval(LIMG.get())[int(i/2-1)][int(j/2-1)],anchor=CENTER, background= couleur))
+        # OBJ = StringVar
+        sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = Limg[int(i/2-1)][int(j/2-1)],anchor=CENTER, background= couleur))
+        L.append((i,j))
+    Listepiece.append(sousListe)
+        #creation de la liste contenant les 64 pièces d'éches numérotés de 0 à 63
+
+# LO = [["0" for i in range(8)] for j in range(8)]
+# for i in range(8):
+#     for j in range(8):
+#         OBJ = StringVar()
+#         OBJ.set(Listepiece[i][j])
+#         LO[i][j] = OBJ
+
+# LPIECE = StringVar()
+# LPIECE.set(LO)
+# # LPIECE.set(Listepiece)
+# print("LPIECE",LPIECE.get())
+
+# print("LPIECE2",eval(LPIECE.get())[0][0])
+# img2 = PhotoImage(file = dicopiece[""])
+# img2 = img2.subsample(15, 15)
+# Listepiece[2][0] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img2,anchor=CENTER,background = "red")
 
 
 def afficherPiece():
+    #idee : avec la liste position actualisé, on incorpore les listes pieces et limng 
+    #directement dans la fonction, afin d'actualisé l'afficher piece
+    print("LISTE POS", LPOS.get())
+    #faire la meme chose avec liste piece et l2
+    global Listepiece
     for i in range(8):
         for j in range(8):
+            # (eval(LPIECE.get())[i][j]).grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
@@ -97,6 +154,13 @@ def cmd_bouton_commencer():
 
 def cmd_bouton_abandonner():
     print("abandonner")
+
+
+def cmd_bouton_test():
+    LPOSITION= [[0,0,0,0,0,0,0,0],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
+    LPOS.set(str(LPOSITION))
+    print(LPOS.get())
+    print("test")
 
 # afficherPiece()
 
@@ -138,6 +202,9 @@ Entry_coup.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),
 
 Bouton_valider= ttk.Button(content, text= "Valider",command= cmd_bouton_valider)
 Bouton_valider.grid(column=20,row=8, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
+Bouton_test.grid(column=20,row=10, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_abandonner= ttk.Button(content, text= "Abandonner",command = cmd_bouton_abandonner)
 Bouton_abandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
@@ -209,5 +276,11 @@ Bouton_abandonner.grid(column=20,row=16, columnspan=largeur, rowspan=2,sticky=(N
 # three = ttk.Checkbutton(content, text="Three", variable=threevar, onvalue=True)
 # ok = ttk.Button(content, text="Valider")
 # cancel = ttk.Button(content, text="Abandonner")
+
+# for i in range(0,18,2):
+#     for j in range(0,18,2):
+#         print(i,j)
+#         namelbl = ttk.Label(content, text= str(i)+","+str(j),relief="solid")
+#         namelbl.grid(column=i, row=j, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.mainloop()
