@@ -1,6 +1,10 @@
 # from board import position
 
 class Piece():
+    def __init__(self, couleur, numero):
+        self._couleur = couleur
+        self._numero = numero
+
     def __str__(self):
         nom = ""
         if self._couleur == "Blanc":
