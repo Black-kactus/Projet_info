@@ -43,6 +43,19 @@ temps.set(str(localtime()))
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
+# Dictionaires des images 
+dicopiece = {0:"vide.png","":"vide.png","0":"vide.png"}
+
+dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"roi_blanc.png","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
+dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"roi_noir.png","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
+dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
+dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
+
+dicopiece.update(dicopieceN)
+dicopiece.update(dicopieceB)
+dicopiece.update(dicopiecepionB)
+dicopiece.update(dicopiecepionN)
+
 #Creation des indices horizontaux de l'échiquier
 for i in range(0,18,2):
     L = ["","A",'B',"C","D","E","F",'G','H']
@@ -66,19 +79,29 @@ LPOS.set(str(LPOSITION))
 LPOS.get()
 
 def afficherPiece():
+    #pour récupérer la liste des positions
+    # from board import position
+    # # from piece import *
 
-    dicopiece = {0:"vide.png","":"vide.png","0":"vide.png"}
+    # LPOSITION=[]
+    # for l in position:
+    #     if l==0:
+    #         LPOSITION.append(0)
+    #     else:
+    #         LPOSITION.append(str(l))
+    # dicopiece = {0:"vide.png","":"vide.png","0":"vide.png"}
 
-    dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"roi_blanc.png","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
-    dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"roi_noir.png","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
-    dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
-    dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
+    # dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"roi_blanc.png","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
+    # dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"roi_noir.png","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
+    # dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
+    # dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
 
-    dicopiece.update(dicopieceN)
-    dicopiece.update(dicopieceB)
-    dicopiece.update(dicopiecepionB)
-    dicopiece.update(dicopiecepionN)
+    # dicopiece.update(dicopieceN)
+    # dicopiece.update(dicopieceB)
+    # dicopiece.update(dicopiecepionB)
+    # dicopiece.update(dicopiecepionN)
 
+    global dicopiece
     # print("LISTE POS", LPOS.get())
 
     Limg = [["0" for i in range(8)] for j in range(8)]
