@@ -127,7 +127,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                   else:
                     prises_Noir.append(position[colonne][ligne])
                     position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
-                    position[colonne][ligne].lign=-2
+                    position[colonne][ligne].ligne=-2
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   piece.ligne=ligne #on met à jour les coordonnées de la pièce
                   piece.colonne=colonne
@@ -155,7 +155,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                   else:
                     prises_Noir.append(position[colonne][ligne])
                     position[colonne][ligne].colonne=-2 #on change les coordonées de la pièce mangée
-                    position[colonne][ligne].lign=-2
+                    position[colonne][ligne].ligne=-2
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   piece.ligne=ligne #on met à jour les coordonnées de la pièce
                   piece.colonne=colonne
