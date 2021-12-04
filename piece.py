@@ -86,12 +86,13 @@ class Fou(Piece):
 
 
 class Roi(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=0):
+    def __init__(self, couleur, colonne, ligne, numero, valeur=0,echec=False):
         self._couleur = couleur
         self._valeur = valeur
         self.ligne = ligne
         self.colonne = colonne
         self._numero = numero
+        self.echec=echec
 
 
 class Dame(Piece):
