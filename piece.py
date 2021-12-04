@@ -126,7 +126,7 @@ class Dame(Fou,Tour):
         self._numero = numero
 
     def mouvement_possible(self,colonne,ligne):
-            if Fou(self.position).mouvement_possible(colonne,ligne) or Tour(self.position).mouvement_possible(colonne,ligne):
+            if Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne):
                 return True
             else :
                 return False
