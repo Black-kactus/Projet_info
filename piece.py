@@ -1,6 +1,8 @@
 class Piece():
-    def __init__(self, couleur, numero):
+    def __init__(self, couleur, colonne, ligne, numero):
         self._couleur = couleur
+        self.ligne = ligne
+        self.colonne = colonne
         self._numero = numero
 
     def __str__(self):
@@ -33,12 +35,9 @@ class Piece():
 
 
 class Fou(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=3):
-        self._couleur = couleur
-        self._valeur = valeur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
+    def __init__(self, couleur, colonne, ligne, numero):
+        super().__init__(couleur, colonne, ligne, numero)
+        self._valeur = 3
 
     def mouvement_possible(self, colonne, ligne):  # indique si le fou peut bouger jusqu'à la case indiquée
         from board import position
@@ -79,34 +78,63 @@ class Fou(Piece):
 
 
 class Roi(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=0,echec=False):
-        self._couleur = couleur
-        self._valeur = valeur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
+    def __init__(self, couleur, colonne, ligne, numero,echec=False):
+        super().__init__(couleur, colonne, ligne, numero)
+        self._valeur = 0
         self._echec=echec
 
     def Echec(self): ##??
         return True
 
+class Tour(Piece):
+    def __init__(self, couleur, colonne, ligne, numero):
+        super().__init__(couleur, colonne, ligne, numero)
+        self._valeur = 5
 
-class Dame(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=9):
+    def mouvement_possible(self, colonne, ligne):  # indique si la tour peut bouger jusqu'à la case indiquée
+        from board import position
+        if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
+            return False
+        elif colonne == self.colonne and ligne == self.ligne:  # si la tour ne bouge pas
+            return True
+        elif ligne == self.ligne:  # si la tour bouge en horizontal
+            if colonne > self.colonne:  # si la tour va vers le haut
+                for c in range(self.colonne, colonne):
+                    if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin   ##1
+                        return False
+            else:  # si la tour va vers le bas
+                for c in range(colonne, self.colonne):
+                    if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin  ##2
+                        return False
+        elif colonne == self.colonne:  # si la tour bouge en vertical
+            if ligne > self.ligne:  # si la tour va vers la droite
+                for l in range(self.ligne, ligne):
+                    if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin  ##3
+                        return False
+            else:  # si la tour va vers la gauche
+                for l in range(ligne, self.ligne):
+                    if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin  ##4
+                        return False
+        return True
+
+class Dame(Fou,Tour):
+    def __init__(self, couleur, colonne, ligne, numero):
         self._couleur = couleur
-        self._valeur = valeur
+        self._valeur = 9
         self.ligne = ligne
         self.colonne = colonne
         self._numero = numero
 
+    def mouvement_possible(self,colonne,ligne):
+            if Fou(self.position).mouvement_possible(colonne,ligne) or Tour(self.position).mouvement_possible(colonne,ligne):
+                return True
+            else :
+                return False
 
 class Cavalier(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=3):
-        self._couleur = couleur
-        self._valeur = valeur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
+    def __init__(self, couleur, colonne, ligne, numero):
+        super().__init__(couleur, colonne, ligne, numero)
+        self._valeur = 3
 
     def mouvement_possible(self, colonne, ligne):  # indique si le cavalier peut bouger jusqu'à la case indiquée
         from board import position
@@ -119,12 +147,9 @@ class Cavalier(Piece):
 
 
 class Pion(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=1):
-        self._couleur = couleur
-        self._valeur = valeur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
+    def __init__(self, couleur, colonne, ligne, numero):
+        super().__init__(couleur, colonne, ligne, numero)
+        self._valeur = 1
         self.Move1 = True
 
     def mouvement_possible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
@@ -164,39 +189,6 @@ class Pion(Piece):
                 return False
 
 
-class Tour(Piece):
-    def __init__(self, couleur, colonne, ligne, numero, valeur=5):
-        self._couleur = couleur
-        self._valeur = valeur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
-
-    def mouvement_possible(self, colonne, ligne):  # indique si la tour peut bouger jusqu'à la case indiquée
-        from board import position
-        if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
-            return False
-        elif colonne == self.colonne and ligne == self.ligne:  # si la tour ne bouge pas
-            return True
-        elif ligne == self.ligne:  # si la tour bouge en horizontal
-            if colonne > self.colonne:  # si la tour va vers le haut
-                for c in range(self.colonne, colonne):
-                    if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin
-                        return False
-            else:  # si la tour va vers le bas
-                for c in range(colonne, self.colonne):
-                    if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin
-                        return False
-        elif colonne == self.colonne:  # si la tour bouge en vertical
-            if ligne > self.ligne:  # si la tour va vers la droite
-                for l in range(self.ligne, ligne):
-                    if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin
-                        return False
-            else:  # si la tour va vers la gauche
-                for l in range(ligne, self.ligne):
-                    if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin
-                        return False
-        return True
 
 # à faire pour chaque pièce :
 # def mouvementpossible (self,case) :

@@ -60,9 +60,9 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
     if ligne==piece.ligne and colonne==piece.colonne:
       print("Votre pièce est déjà à cette position.")
     else:
-      if a.mouvementpossible(piece,colonne,ligne)==True:
+      if piece.mouvement_possible(colonne,ligne):
         
-        if type(piece)!=Pion:
+        if a!=Pion:
           if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
             if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
               if CouleurQuiJoue=='Blanc':
