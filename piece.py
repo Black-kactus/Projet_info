@@ -107,8 +107,13 @@ class Roi(Piece):
         self._valeur = 0
         self._echec=echec
 
-    def Echec(self): ##??
-        return True
+
+    def Echec(self): #attention : complexité élevée
+        from board import position
+        for piece in position:
+            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
+                    return True
+        return False
 
 class Tour(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
