@@ -46,34 +46,58 @@ class Fou(Piece):
         elif colonne == self.colonne and ligne == self.ligne:  # si le fou ne bouge pas
             return True
         else:
-            K = 0
-            cpt = 0
-            for k in range(-8, 9):  # motif de déplacement du fou
-                if (colonne == self.colonne + k and ligne == self.ligne + k) or (colonne == self.colonne - k and ligne == self.ligne + k):
-                    cpt += 1
-                    K = k
-            if cpt != 1:  # pas le bon "motif" de déplacement
-                return False
-
-            elif (colonne == self.colonne + K and ligne == self.ligne + K):  # si le fou bouge sur la diagonale de bas gauche à haut droit (/)
-                if K > 0:  # si le fou va vers le haut gauche
-                    for k in range(1, K):
-                        if position[self.colonne + k][self.ligne + k] != 0:  # s'il y a une autre piece en travers du chemin
-                            return False
-                else:  # si le fou va vers le bas droit
-                    for k in range(1, -(K - 1)):
-                        if position[self.colonne - k][self.ligne - k] != 0:  # s'il y a une autre piece en travers du chemin
+            k=abs(colonne-self.colonne)
+            if k != abs(ligne-self.ligne):
+                return False #pas le bon motif de déplacement
+            
+            elif (colonne == self.colonne + k and ligne == self.ligne + k):  # si le fou bouge sur la diagonale de bas gauche à haut droit (/)
+                for i in range(1, k):
+                        if position[self.colonne + i][self.ligne + i] != 0:  # s'il y a une autre piece en travers du chemin
                             return False
 
-            elif (colonne == self.colonne - K and ligne == self.ligne + K):  # si le fou bouge sur la diagonale de haut gauche à bas droit (\)
-                if K > 0:  # si le fou va vers le haut droit
-                    for k in range(1, K):
-                        if position[self.colonne - k][self.ligne + k] != 0:  # s'il y a une autre piece en travers du chemin
-                            return False
-                else:  # si la tour va vers le bas gauche
-                    for k in range(1, -(K - 1)):
-                        if position[self.colonne + k][self.ligne - k] != 0:  # s'il y a une autre piece en travers du chemin
-                            return False
+            elif (colonne == self.colonne - k and ligne == self.ligne - k):  # si le fou bouge sur la diagonale de haut droite à bas gauche (/)
+                for i in range(1, -(k - 1)):
+                    if position[self.colonne - i][self.ligne - i] != 0:  # s'il y a une autre piece en travers du chemin
+                        return False
+
+            elif (colonne == self.colonne - k and ligne == self.ligne + k):  # si le fou bouge sur la diagonale de bas droit à haut gauche (\)
+                for i in range(1, k):
+                    if position[self.colonne - i][self.ligne + i] != 0:  # s'il y a une autre piece en travers du chemin
+                        return False
+
+            else:  # si le fou bouge sur la diagonale de haut gauche à bas droit (\)
+                for i in range(1, -(k - 1)):
+                    if position[self.colonne + i][self.ligne - i] != 0:  # s'il y a une autre piece en travers du chemin
+                        return False
+
+            #K = 0
+            #cpt = 0
+            #for k in range(-8, 9):  # motif de déplacement du fou
+                #if (colonne == self.colonne + k and ligne == self.ligne + k) or (colonne == self.colonne - k and ligne == self.ligne + k):
+                    #cpt += 1
+                    #K = k
+            #if cpt != 1:  # pas le bon "motif" de déplacement
+                #return False
+
+            #elif (colonne == self.colonne + K and ligne == self.ligne + K):  # si le fou bouge sur la diagonale de bas gauche à haut droit (/)
+                #if K > 0:  # si le fou va vers le haut gauche
+                    #for k in range(1, K):
+                        #if position[self.colonne + k][self.ligne + k] != 0:  # s'il y a une autre piece en travers du chemin
+                            #return False
+                #else:  # si le fou va vers le bas droit
+                    #for k in range(1, -(K - 1)):
+                        #if position[self.colonne - k][self.ligne - k] != 0:  # s'il y a une autre piece en travers du chemin
+                            #return False
+
+            #elif (colonne == self.colonne - K and ligne == self.ligne + K):  # si le fou bouge sur la diagonale de haut gauche à bas droit (\)
+                #if K > 0:  # si le fou va vers le haut droit
+                    #for k in range(1, K):
+                        #if position[self.colonne - k][self.ligne + k] != 0:  # s'il y a une autre piece en travers du chemin
+                            #return False
+                #else:  # si la tour va vers le bas gauche
+                    #for k in range(1, -(K - 1)):
+                        #if position[self.colonne + k][self.ligne - k] != 0:  # s'il y a une autre piece en travers du chemin
+                            #return False
         return True
 
 
