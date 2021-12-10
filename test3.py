@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 app =Tk()
 app.title("Jeu d'échec")
 app.iconbitmap(r'icone.ico')
+# app.config(background="grey")
 
 content = ttk.Frame(app, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
@@ -23,10 +24,10 @@ python_imageFB = ImageTk.PhotoImage(ImgFouBlanc)
 
 dico = {"FN1":python_imageFN, "FB1": python_imageFB, "FB2":python_imageFB, "FN2":python_imageFN}
 
-L1 = ttk.Label(content, image=python_imageFN,background = "white",relief="solid").grid(row = 0, column = 0, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
-L2 = ttk.Label(content, image=python_imageFB,background = "black",relief="solid").grid(row = 0, column = 1, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
-L3 = ttk.Label(content, image=python_imageFB,background = "black",relief="solid").grid(row = 1, column = 0, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
-L4 = ttk.Label(content, image=python_imageFN,background = "white",relief="solid").grid(row = 1, column = 1, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+L1 = ttk.Label(content, image=python_imageFN,background = "white",relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+L2 = ttk.Label(content, image=python_imageFB,background = "black",relief="solid",anchor=CENTER).grid(row = 0, column = 1, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+L3 = ttk.Label(content, image=python_imageFB,background = "black",relief="solid",anchor=CENTER).grid(row = 1, column = 0, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+L4 = ttk.Label(content, image=python_imageFN,background = "white",relief="solid",anchor=CENTER).grid(row = 1, column = 1, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Liste = [[python_imageFN,python_imageFB],[python_imageFB,python_imageFN]]
 
@@ -44,8 +45,7 @@ def cmd_bouton_afficher():
         for j in range(len(Liste)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            ttk.Label(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid").grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
-            # ttk.Label(content, image=Liste[i][j],background = couleur,relief="solid").grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid",anchor=CENTER).grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_commencer2():
     global LPOSITION
