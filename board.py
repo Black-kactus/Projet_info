@@ -51,7 +51,7 @@ prises_Blanc=[] #pièces prises par les blancs
 
 def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
-  from test import couleurA
+  from new_interface import couleurA
   CouleurQuiJoue=couleurA.get()
   if piece._couleur==CouleurQuiJoue:
     a=type(piece)
