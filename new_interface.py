@@ -127,10 +127,10 @@ def afficherPiece():
 
 def cmd_bouton_valider():
     print("valider")
-    from main import interpreteur ###g
-    interpreteur(coup,deplacement)  #c'est censé changer la liste des positions en fonction de ce que l'utilisateur a rentré
-    global LPOSITION #""
-    LPOSITION=fonction_lecture(position) ##
+    #from main import interpreteur ###g
+    #interpreteur(coup,deplacement)  #c'est censé changer la liste des positions en fonction de ce que l'utilisateur a rentré
+    #global LPOSITION #""
+    #LPOSITION=fonction_lecture(position) ##
     afficherPiece()
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
