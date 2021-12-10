@@ -6,18 +6,24 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
-#pour récupérer la liste des positions
-from board import position
-from piece import*
-LPOSITION=[]
-for l in position:
-    if l==0:
-        LPOSITION.append(0)
-    else:
-        LPOSITION.append(str(l))
+# # #pour récupérer la liste des positions
+# from board import position
+# from piece import*
+# from new_interface import Entry_pieceabouger
+# def fonction_lecture(position):
+#     LPOSITION=[]
+#     for l in range(len(position)):
+#         LPOSITION.append([])
+#         for j in range(8):
+#             if position[l][j]==0:
+#                 LPOSITION[l].append(0)
+#             else:
+#                 LPOSITION[l].append(str(position[l][j]))
+#     return(LPOSITION)
+
 
 root = Tk()
-root.title("Jeu d'échec")
+root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
 content = ttk.Frame(root, padding=(0,0,0,0))
@@ -25,8 +31,8 @@ frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
 
 # Variables de Tkinter
-deplacement = StringVar()
-deplacement.set("Position piece à bouger")
+piece_a_bouger = StringVar()
+piece_a_bouger.set("Position piece à bouger")
 
 coup = StringVar()
 coup.set("Position où aller")
@@ -36,6 +42,9 @@ couleurA.set("Blanc")
 
 nbcoup= StringVar()
 nbcoup.set("0")
+
+coup_special= StringVar()
+coup_special.set("")
 
 temps= StringVar()
 temps.set(str(localtime()))
@@ -134,6 +143,7 @@ def cmd_bouton_valider():
 
 def cmd_bouton_commencer():
     coup.set("0")
+    couleurA.set("Blanc")
     global LPOSITION
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     afficherPiece()
@@ -147,6 +157,12 @@ def cmd_bouton_test():
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     print("test")
 
+def cmd_bouton_pieces_perdues():
+    pass
+
+def cmd_bouton_regles():
+    pass
+
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -157,6 +173,7 @@ for i in range(0,24):
 for j in range(0,18):
     content.rowconfigure(j,weight=1)
 
+#on peut facilement retirer les bordures en retirant relief
 largeur = 4
 
 Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
@@ -166,16 +183,22 @@ Bouton_commencer = Button(content, text= "Nouvelle Partie",command= cmd_bouton_c
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
-Label_couleurquijoue.grid(column=20, row=2, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Entry_couleuractualise= ttk.Entry(content, textvariable= couleurA)
-Entry_couleuractualise.grid(column=20,row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
+Label_couleuractualise.grid(column=22,row=2, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Label_Nbcoup = ttk.Label(content, text= "coup n°",relief="solid",anchor=CENTER)
+Label_Nbcoup.grid(column=20, row=3, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+Label_coup_actualise= ttk.Label(content, textvariable= nbcoup, anchor = CENTER, relief = "solid")
+Label_coup_actualise.grid(column=22,row=3, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
 Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Entry_deplacement= ttk.Entry(content, textvariable= deplacement)
-Entry_deplacement.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Entry_pieceabouger= ttk.Entry(content, textvariable= piece_a_bouger)
+Entry_pieceabouger.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_coupajouer = ttk.Label(content, text= "Coup à jouer",relief="solid",anchor=CENTER)
 Label_coupajouer.grid(column=20, row=6, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
@@ -184,16 +207,25 @@ Entry_coup= ttk.Entry(content, textvariable= coup)
 Entry_coup.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_valider= ttk.Button(content, text= "Valider",command= cmd_bouton_valider)
-Bouton_valider.grid(column=20,row=8, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+Bouton_valider.grid(column=20,row=9, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
-Bouton_test.grid(column=20,row=10, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+Bouton_test.grid(column=20,row=15, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Label_Nbcoup = ttk.Label(content, text= "n° coup",relief="solid",anchor=CENTER)
-Label_Nbcoup.grid(column=20, row=12, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
+Label_CoupSpecial= ttk.Label(content, text= "coup spécial:",relief="solid",anchor=CENTER)
+Label_CoupSpecial.grid(column=20, row=8, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
 
-Entry_coup= ttk.Entry(content, textvariable= nbcoup)
-Entry_coup.grid(column=22,row=12, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Entry_CoupSpecial= ttk.Entry(content, textvariable= coup_special)
+Entry_CoupSpecial.grid(column=22,row=8, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Bouton_Piecesperdues= ttk.Button(content, text= "Bilan des pièces perdues",command= cmd_bouton_pieces_perdues)
+Bouton_Piecesperdues.grid(column=20,row=11, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Bouton_Regles= ttk.Button(content, text= "Consulter les règles",command= cmd_bouton_regles)
+Bouton_Regles.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Bouton_Abandonner= ttk.Button(content, text= "Reconnaître sa cuisante défaite",command= cmd_bouton_abandonner)
+Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.mainloop()
 
