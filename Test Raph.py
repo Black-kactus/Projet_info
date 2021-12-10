@@ -1,10 +1,5 @@
-class salutation():
-    def __init__(self):
-        self.hello=1
-    def bonjour(self):
-        self.hello=2
-
-a=salutation()
-print(a.hello)
-a.bonjour()
-print(a.hello)
+L=[[1,2],[3,4]]
+for i in L:
+    for j in i:
+        j=0
+print(L)
