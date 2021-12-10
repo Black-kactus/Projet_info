@@ -10,3 +10,5 @@ def interpreteur(coup,deplacement):
     colonne_A=ord(deplacement[0])-97 #position de la case d'arrivée
     ligne_A=deplacement[1]-1 #position de la case d'arrivée
     mouvement(position[colonne_P][ligne_P],[colonne_A,ligne_A]) #case = liste des 2 coordonées de la case : [colonne,ligne]
+
+
