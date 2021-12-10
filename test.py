@@ -138,7 +138,7 @@ def afficherPiece():
         for j in range(8):
             Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Listepiece.grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Listepiece[0][0].grid(column=2, row=2, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
     print("valider")
