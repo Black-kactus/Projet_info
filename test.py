@@ -130,9 +130,9 @@ def afficherPiece():
     
     # print ("Liste Piece:", Listepiece)
 
-    for i in range(8):
-        for j in range(8):
-            Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    # for i in range(8):
+    #     for j in range(8):
+    #         Listepiece[j][i].grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     Listepiece.grid(column=2+2*j, row=2+2*i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
