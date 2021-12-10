@@ -9,12 +9,16 @@ from time import *
 #pour récupérer la liste des positions
 from board import position
 from piece import*
-LPOSITION=[]
-for l in position:
-    if l==0:
-        LPOSITION.append(0)
-    else:
-        LPOSITION.append(str(l))
+def fonction_lecture(position):
+    LPOSITION=[]
+    for l in range(len(position)):
+        LPOSITION.append([])
+        for j in range(8):
+            if position[l][j]==0:
+                LPOSITION[l].append(0)
+            else:
+                LPOSITION[l].append(str(position[l][j]))
+    return(LPOSITION)
 
 root = Tk()
 root.title("Jeu d'échec")
