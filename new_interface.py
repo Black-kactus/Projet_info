@@ -16,10 +16,9 @@ for l in position:
     else:
         LPOSITION.append(str(l))
 
-
-
 root = Tk()
 root.title("Jeu d'échec")
+root.iconbitmap(r'icone.ico')
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
@@ -43,16 +42,59 @@ temps.set(str(localtime()))
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-# Dictionaires des images 
-dicopiece = {0:"vide.png","":"vide.png","0":"vide.png"}
+ImgFouNoir = Image.open('fou_noir.png')
+ImgFouBlanc = Image.open('fou_blanc.png')
+ImgCavalierBlanc = Image.open('cavalier_blanc.png')
+ImgCavalierNoir= Image.open('cavalier_noir.png')
+ImgRoiBlanc = Image.open('roi_blanc.png')
+ImgRoiNoir = Image.open('roi_noir.png')
+ImgDameBlanche = Image.open('reine_blanche.png')
+ImgDameNoire = Image.open('reine_noire.png')
+ImgPionBlanc = Image.open('pion_blanc.png')
+ImgPionNoir = Image.open('pion_noir.png')
+ImgTourBlanche = Image.open('tour_blanche.png')
+ImgTourNoire = Image.open('tour_noire.png')
+ImgVide = Image.open('vide.png')
 
-dicopieceB = {"TB1":"tour_blanche.png","CB1":"cavalier_blanc.png","FB1":"fou_blanc.png","QB1":"reine_blanche.png","KB1":"roi_blanc.png","FB2":"fou_blanc.png","CB2":"cavalier_blanc.png","TB2":"tour_blanche.png"}
-dicopieceN= {"TN1":"tour_noire.png","CN1":"cavalier_noir.png","FN1":"fou_noir.png","QN1":"reine_noire.png","KN1":"roi_noir.png","FN2":"fou_noir.png","CN2":"cavalier_noir.png","TN2":"tour_noire.png"}
-dicopiecepionB = {"PB1":"pion_blanc.png","PB2":"pion_blanc.png","PB3":"pion_blanc.png","PB4":"pion_blanc.png","PB5":"pion_blanc.png","PB6":"pion_blanc.png","PB7":"pion_blanc.png","PB8":"pion_blanc.png"}
-dicopiecepionN = {"PN1":"pion_noir.png","PN2":"pion_noir.png","PN3":"pion_noir.png","PN4":"pion_noir.png","PN5":"pion_noir.png","PN6":"pion_noir.png","PN7":"pion_noir.png","PN8":"pion_noir.png"}
+resizeX = 60
+resizeY = 60
+ImgFouNoir = ImgFouNoir.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgFouBlanc = ImgFouBlanc.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgCavalierBlanc = ImgCavalierBlanc.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgCavalierNoir = ImgCavalierNoir.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgRoiBlanc = ImgRoiBlanc.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgRoiNoir = ImgRoiNoir.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDameBlanche = ImgDameBlanche.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDameNoire = ImgDameNoire.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgPionBlanc = ImgPionBlanc.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgPionNoir = ImgPionNoir.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgTourBlanche = ImgTourBlanche.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgTourNoire = ImgTourNoire.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgVide = ImgVide.resize((resizeX,resizeY), Image.ANTIALIAS)
 
-dicopiece.update(dicopieceN)
+
+python_imageFN = ImageTk.PhotoImage(ImgFouNoir)
+python_imageFB = ImageTk.PhotoImage(ImgFouBlanc)
+python_imageCB = ImageTk.PhotoImage(ImgCavalierBlanc)
+python_imageCN = ImageTk.PhotoImage(ImgCavalierNoir)
+python_imageRB = ImageTk.PhotoImage(ImgRoiBlanc)
+python_imageRN = ImageTk.PhotoImage(ImgRoiNoir)
+python_imageDB = ImageTk.PhotoImage(ImgDameBlanche)
+python_imageDN = ImageTk.PhotoImage(ImgDameNoire)
+python_imagePB = ImageTk.PhotoImage(ImgPionBlanc)
+python_imagePN = ImageTk.PhotoImage(ImgPionNoir)
+python_imageTB = ImageTk.PhotoImage(ImgTourBlanche)
+python_imageTN = ImageTk.PhotoImage(ImgTourNoire)
+python_imageVIDE= ImageTk.PhotoImage(ImgVide)
+
+dicopiece = {0 : python_imageVIDE}
+dicopieceB = {"TB1": python_imageTB,"CB1": python_imageCB,"FB1": python_imageFB,"QB1":python_imageDB,"KB1":python_imageRB,"FB2":python_imageFB,"CB2":python_imageCB,"TB2":python_imageTB}
+dicopieceN= {"TN1":python_imageTN,"CN1":python_imageCN,"FN1":python_imageFN,"QN1":python_imageDN,"KN1":python_imageRN,"FN2":python_imageFN,"CN2":python_imageCN,"TN2":python_imageTN}
+dicopiecepionB = {"PB1": python_imagePB, "PB2":python_imagePB,"PB3":python_imagePB,"PB4":python_imagePB,"PB5":python_imagePB,"PB6":python_imagePB,"PB7":python_imagePB,"PB8":python_imagePB}
+dicopiecepionN = {"PN1":python_imagePN,"PN2":python_imagePN,"PN3":python_imagePN,"PN4":python_imagePN,"PN5":python_imagePN,"PN6":python_imagePN,"PN7":python_imagePN,"PN8":python_imagePN}
+
 dicopiece.update(dicopieceB)
+dicopiece.update(dicopieceN)
 dicopiece.update(dicopiecepionB)
 dicopiece.update(dicopiecepionN)
 
@@ -64,38 +106,20 @@ for i in range(0,18,2):
     namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
     namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-Listepiece = [] 
-L= []
 
-
-Limg = [["0" for i in range(8)] for j in range(8)]
 
 #Liste des positions renvoyées par Raph
 LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
 
-#variable Tkinter correspondant à LPOSITION
-LPOS = StringVar()
-LPOS.set(str(LPOSITION))
-LPOS.get()
+
 
 def afficherPiece():
-
-    global dicopiece
-
-    Limg = [["0" for i in range(8)] for j in range(8)]
-    Listepiece = [] 
-    
-
-    # Creation de la liste #Listepiece# contenant tous les labels (avec images) de toutes les pieces de l'echiquier
-    for i in range(8):
-        for j in range(8):
-            if (i+j)%2 == 0:
-                couleur = "white"
-            else :
-                couleur = "black"
-            label = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = Limg[int(i)][int(j)],anchor=CENTER, background= couleur)
-            #label.grid(column=2, row=2, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-
+    global LPOSITION
+    for i in range(len(LPOSITION)) : 
+        for j in range(len(LPOSITION)):
+            if (i+j)%2 == 0: couleur = 'black'
+            else : couleur = "white"
+            ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
     print("valider")
@@ -110,19 +134,17 @@ def cmd_bouton_valider():
 
 def cmd_bouton_commencer():
     coup.set("0")
+    global LPOSITION
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
-    LPOS.set(str(LPOSITION))
     afficherPiece()
     print("commencer")
 
 def cmd_bouton_abandonner():
     print("abandonner")
 
-
 def cmd_bouton_test():
+    global LPOSITION
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
-    LPOS.set(str(LPOSITION))
-    #print(LPOS.get())
     print("test")
 
 
@@ -174,3 +196,8 @@ Entry_coup= ttk.Entry(content, textvariable= nbcoup)
 Entry_coup.grid(column=22,row=12, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.mainloop()
+
+# dicopieceB = {"TB1":"","CB1":"","FB1":"","QB1":"","KB1":"","FB2":"","CB2":"","TB2":""}
+# dicopieceN= {"TN1":"","CN1":"","FN1":"","QN1":"","KN1":"","FN2":"","CN2":"","TN2":""}
+# dicopiecepionB = {"PB1":"","PB2":"","PB3":"","PB4":"","PB5":"","PB6":"","PB7":"","PB8":""}
+# dicopiecepionN = {"PN1":"","PN2":"","PN3":"","PN4":"","PN5":"","PN6":"","PN7":"","PN8":""}

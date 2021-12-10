@@ -32,7 +32,6 @@ L4 = ttk.Label(content, image=python_imageFN,background = "white",relief="solid"
 Liste = [[python_imageFN,python_imageFB],[python_imageFB,python_imageFN]]
 
 dico = {"FN1":python_imageFN, "FB1": python_imageFB, "FB2":python_imageFB, "FN2":python_imageFN}
-LPOSITION = [["FN1","FB1"],["FB2","FN2"]]
 
 def cmd_bouton_commencer():
     global LPOSITION
