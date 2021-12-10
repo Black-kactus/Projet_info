@@ -133,11 +133,8 @@ class Tour(Piece):
 
 class Dame(Fou,Tour):
     def __init__(self, couleur, colonne, ligne, numero):
-        self._couleur = couleur
+        super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 9
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
 
     def mouvement_possible(self,colonne,ligne):
             if Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne):
