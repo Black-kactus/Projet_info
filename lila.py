@@ -5,6 +5,8 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
+
+#idée : on arrete de gerer des labels, on gere des images de tkinter, regarder des tutoriels 
 #pour récupérer la liste des positions
 from board import position
 from piece import*
