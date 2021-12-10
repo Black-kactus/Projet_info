@@ -225,9 +225,10 @@ class Roi(Fou,Tour):
     
     def Echec2(self):
         from board import position
+        POSITION=[[0]*8,position[:],[0]*8]
         #diagonales
         for i in range(max(self.colonne,7-self.colonne), 8):
-            if self.colonne+i>7 or self.ligne+i>7 or self.ligne-i<0 or self.colonne-i<0 :
+            if not(self.colonne+i>7) and not(self.ligne+i>7) and not(self.ligne-i<0) and not(self.colonne-i<0) :
                 a=65
                 if position[self.colonne+i][self.ligne+i] != 0 :
                     a= position[self.colonne+i][self.ligne+i]
@@ -244,10 +245,10 @@ class Roi(Fou,Tour):
                         break
         #Pion
         if self._couleur=="Blanc" and self.ligne!=7:
-            if type(position[self.colonne+1][self.ligne+1])==Pion or type(position[self.colonne-1][self.ligne+1])==Pion:
+            if (type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
                 return True
         elif self._couleur=="Noir" and self.ligne!=0:
-            if type(position[self.colonne+1][self.ligne-1])==Pion or type(position[self.colonne-1][self.ligne-1])==Pion:
+            if (type(position[self.colonne+1][self.ligne-1])==Pion and position[self.colonne+1][self.ligne-1]._couleur=="Blanc") or (type(position[self.colonne-1][self.ligne-1])==Pion and position[self.colonne-1][self.ligne-1]._couleur=="Blanc") :
                 return True
 
         #cavalier
@@ -256,7 +257,7 @@ class Roi(Fou,Tour):
 
         #colonnes/lignes
         for i in range(max(self.colonne,7-self.colonne), 8): #colonne
-            if self.colonne+i>7 or self.colonne-i<0 :
+            if not(self.colonne+i>7) and not(self.colonne-i<0) :
                 a=65
                 if position[self.colonne+i][self.ligne] != 0 :
                     a=position[self.colonne+i][self.ligne]
@@ -269,7 +270,7 @@ class Roi(Fou,Tour):
                         break
 
         for i in range(max(self.ligne,7-self.ligne), 8): #ligne
-            if self.ligne+i>7 or self.ligne-i<0 :
+            if not(self.ligne+i>7) and not(self.ligne-i<0) :
                 a=65
                 if position[self.colonne][self.ligne+i] != 0 :
                     a=position[self.colonne][self.ligne+i]
@@ -282,7 +283,10 @@ class Roi(Fou,Tour):
                         break
         return False
         
-        #autre Roi ??
+        #Roi
+        if self.colonne<7:
+            return True
+        #gros problème de sortie du plateau sur toute la fonction
 
 
 
