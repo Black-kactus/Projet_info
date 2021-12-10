@@ -127,6 +127,8 @@ def afficherPiece():
 
 def cmd_bouton_valider():
     print("valider")
+    #from main import interpreteur
+    #interpreteur(coup,piece_a_bouger)  #c'est censé changer la liste des positions en fonction de ce que l'utilisateur a rentré
     afficherPiece()
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
