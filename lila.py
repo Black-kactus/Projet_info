@@ -1,5 +1,4 @@
-#La véritable fenêtre d'interface 
-
+#fenetre essai
 
 from tkinter import *
 from tkinter import ttk
@@ -121,11 +120,27 @@ def afficherPiece():
     #         Piece = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= couleur)
     #         Piece.grid(column=2+2*i, row=2+2*j, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    img = ImageTk.PhotoImage(Image.open('fou_blanc.png'))
-    # img = img.subsample(12, 12)
-    Piece = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img,anchor=CENTER, background= "white")
-    Piece.grid(column=2, row=2, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-        
+    img3 = PhotoImage(file = "pion_noir.png")
+    img3 = img3.subsample(12,12)
+    Essay = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img3,anchor=CENTER, background= 'white')
+    Essay.grid(column=6, row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+
+    img2 = PhotoImage(file = 'cavalier_noir.png')
+    img2 = img2.subsample(10, 10)
+    Piece = ttk.Label(content, text= "test",relief="solid", image = img2, anchor=CENTER, background= "white")
+    # Piece["image"] = img
+    Piece.grid(column=4, row=4, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    img2 = PhotoImage(file = "pion_noir.png")
+    img2 = img2.subsample(15, 15)
+    L = [[0,0],[0,0]]
+    L[0][0] = ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = img2,anchor=CENTER,background = "red")
+
+    L[0][0].grid(column=2, row=2, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    # imgobj = PhotoImage(file='myimage.gif')
+    # label['image'] = imgobj
         
 
             # Limg[i][j] = img 
