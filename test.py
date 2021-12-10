@@ -124,7 +124,8 @@ def afficherPiece():
                 couleur = "white"
             else :
                 couleur = "black"
-            sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = Limg[int(i/2-1)][int(j/2-1)],anchor=CENTER, background= couleur))
+            # sousListe.append(ttk.Label(content, text= str(i)+","+str(j),relief="solid",image = Limg[int(i/2-1)][int(j/2-1)],anchor=CENTER, background= couleur))
+            sousListe.append(ttk.Label(content, text= str(LPOSITION[int(i/2-1)][int(j/2-1)]),relief="solid",anchor=CENTER, background= couleur))
             L.append((i,j))
         Listepiece.append(sousListe)
     

@@ -160,7 +160,7 @@ class Roi(Fou,Tour):
             else :
                 return False
 
-    def Echec(self): #attention : complexité élevée
+    def Echec1(self): #attention : complexité élevée
         from board import position
         for piece in position:
             if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
