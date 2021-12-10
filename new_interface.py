@@ -10,16 +10,18 @@ from time import *
 # from board import position
 # from piece import*
 # from new_interface import Entry_pieceabouger
-# def fonction_lecture(position):
-#     LPOSITION=[]
-#     for l in range(len(position)):
-#         LPOSITION.append([])
-#         for j in range(8):
-#             if position[l][j]==0:
-#                 LPOSITION[l].append(0)
-#             else:
-#                 LPOSITION[l].append(str(position[l][j]))
-#     return(LPOSITION)
+def fonction_lecture(position):
+    from board import position
+    from piece import Piece
+    LPOSITION=[]
+    for l in range(len(position)):
+        LPOSITION.append([])
+        for j in range(8):
+            if position[l][j]==0:
+                LPOSITION[l].append(0)
+            else:
+                LPOSITION[l].append(str(position[l][j]))
+    return(LPOSITION)
 
 
 root = Tk()
@@ -131,11 +133,13 @@ def afficherPiece():
             ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
+    from board import position #
     print("valider")
-    #from main import interpreteur
-    #interpreteur(coup,deplacement) 
-    #global LPOSITION 
-    #LPOSITION=fonction_lecture(position) 
+    from main import interpreteur #
+    interpreteur(coup,piece_a_bouger) #
+    global LPOSITION #
+    LPOSITION=fonction_lecture(position) #
+    #print(LPOSITION)#
     afficherPiece()
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
