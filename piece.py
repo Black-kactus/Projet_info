@@ -142,27 +142,6 @@ class Dame(Fou,Tour):
             else :
                 return False
 
-class Roi(Fou,Tour):
-    def __init__(self, couleur, colonne, ligne, numero,echec=False):
-        self._valeur = 0
-        self._echec=echec
-        self._couleur = couleur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
-
-    def mouvement_possible(self,colonne,ligne):
-            if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<1) and abs(colonne-self.colonne<1)):
-                return True
-            else :
-                return False
-
-    def Echec1(self): #attention : complexité élevée
-        from board import position
-        for piece in position:
-            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
-                    return True
-        return False
 
 class Cavalier(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
@@ -220,6 +199,91 @@ class Pion(Piece):
                 # return False
             else:
                 return False
+
+
+class Roi(Fou,Tour):
+    def __init__(self, couleur, colonne, ligne, numero,echec=False):
+        self._valeur = 0
+        self._echec=echec
+        self._couleur = couleur
+        self.ligne = ligne
+        self.colonne = colonne
+        self._numero = numero
+
+    def mouvement_possible(self,colonne,ligne):
+            if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<1) and abs(colonne-self.colonne<1)):
+                return True
+            else :
+                return False
+
+    def Echec1(self): #attention : complexité élevée
+        from board import position
+        for piece in position:
+            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
+                    return True
+        return False
+    
+    def Echec2(self):
+        from board import position
+        #diagonales
+        for i in range(max(self.colonne,7-self.colonne), 8):
+            if self.colonne+i>7 or self.ligne+i>7 or self.ligne-i<0 or self.colonne-i<0 :
+                a=65
+                if position[self.colonne+i][self.ligne+i] != 0 :
+                    a= position[self.colonne+i][self.ligne+i]
+                elif position[self.colonne-i][self.ligne-i] != 0:
+                    a= position[self.colonne-i][self.ligne-i]
+                elif position[self.colonne+i][self.ligne-i] != 0:
+                    a=position[self.colonne+i][self.ligne-i]
+                elif position[self.colonne-i][self.ligne+i] != 0:   
+                    a=position[self.colonne-i][self.ligne+i]
+                if a!=65:
+                    if (type(a)==Fou or type(a)==Dame) and a._couleur!=self._couleur:
+                        return True
+                    else:
+                        break
+        #Pion
+        if self._couleur=="Blanc" and self.ligne!=7:
+            if type(position[self.colonne+1][self.ligne+1])==Pion or type(position[self.colonne-1][self.ligne+1])==Pion:
+                return True
+        elif self._couleur=="Noir" and self.ligne!=0:
+            if type(position[self.colonne+1][self.ligne-1])==Pion or type(position[self.colonne-1][self.ligne-1])==Pion:
+                return True
+
+        #cavalier
+        if (type(position[self.colonne - 2][self.ligne + 1])==Cavalier and position[self.colonne - 2][self.ligne + 1]._couleur != self._couleur) or (type(position[self.colonne - 2][self.ligne - 1]) == Cavalier and position[self.colonne - 2][self.ligne - 1]._couleur!=self._couleur) or (type(position[self.colonne - 1][self.ligne + 2])==Cavalier and position[self.colonne - 1][self.ligne + 2]._couleur!=self._couleur) or (type(position[self.colonne - 1][self.ligne - 2])==Cavalier and position[self.colonne - 1][self.ligne - 2]._couleur!=self._couleur) or (type(position[self.colonne + 1][self.ligne + 2])==Cavalier and position[self.colonne + 1][self.ligne + 2]._couleur!=self._couleur) or (type(position[self.colonne + 1][self.ligne - 2])==Cavalier and position[self.colonne + 1][self.ligne - 2]._couleur!=self._couleur) or (type(position[self.colonne + 2][self.ligne + 1])==Cavalier and position[self.colonne + 2][self.ligne + 1]._couleur!=self._couleur) or (type(position[self.colonne + 2][self.ligne - 1])==Cavalier and position[self.colonne + 2][self.ligne - 1]._couleur!=self._couleur) :
+            return True
+
+        #colonnes/lignes
+        for i in range(max(self.colonne,7-self.colonne), 8): #colonne
+            if self.colonne+i>7 or self.colonne-i<0 :
+                a=65
+                if position[self.colonne+i][self.ligne] != 0 :
+                    a=position[self.colonne+i][self.ligne]
+                elif position[self.colonne-i][self.ligne] != 0 : 
+                    a= position[self.colonne-i][self.ligne]
+                if a!=65:
+                    if (type(a)==Tour or type(a)==Dame) and a._couleur!=self._couleur:
+                        return True
+                    else:
+                        break
+
+        for i in range(max(self.ligne,7-self.ligne), 8): #ligne
+            if self.ligne+i>7 or self.ligne-i<0 :
+                a=65
+                if position[self.colonne][self.ligne+i] != 0 :
+                    a=position[self.colonne][self.ligne+i]
+                elif position[self.colonne][self.ligne-i] != 0 :
+                    a=position[self.colonne][self.ligne-i]
+                if a!=65:
+                    if (type(a)==Tour or type(a)==Dame) and a._couleur!=self._couleur:
+                        return True
+                    else:
+                        break
+        return False
+        
+        #autre Roi ??
+
 
 
 
