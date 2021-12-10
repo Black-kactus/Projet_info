@@ -34,30 +34,31 @@ dico = {"FN1":python_imageFN, "FB1": python_imageFB, "FB2":python_imageFB, "FN2"
 LPOSITION = [["FN1","FB1"],["FB2","FN2"]]
 
 def cmd_bouton_commencer():
-    global Liste
-    Liste = [[python_imageFN,python_imageFB],[python_imageFB,python_imageFN]]
+    global LPOSITION
+    LPOSITION = [["FN1","FB1"],["FB2","FN2"]]
     
 
 def cmd_bouton_afficher():
-    global Liste
+    global LPOSITION
     for i in range(len(Liste)) : 
         for j in range(len(Liste)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            ttk.Label(content, image=Liste[i][j],background = couleur,relief="solid").grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid").grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+            # ttk.Label(content, image=Liste[i][j],background = couleur,relief="solid").grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_commencer2():
-    global Liste
-    Liste = [[python_imageFB,python_imageFN],[python_imageFN,python_imageFB]]
+    global LPOSITION
+    LPOSITION = [["FB1","FN1"],["FN2","FB2"]]
 
 Bouton_commencer = Button(content, text= "Valider coup 1",command= cmd_bouton_commencer,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
-Bouton_commencer.grid(column=2, row=0, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+Bouton_commencer.grid(column=1, row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_commencer2 = Button(content, text= "Valider coup 2",command= cmd_bouton_commencer2,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
 Bouton_commencer2.grid(column=2, row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_Affichage = Button(content, text= "Affichage",command= cmd_bouton_afficher,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
-Bouton_Affichage.grid(column=1, row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+Bouton_Affichage.grid(column=2, row=0, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 
 for i in range(2):
