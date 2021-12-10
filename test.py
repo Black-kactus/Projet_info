@@ -19,7 +19,7 @@ for l in position:
 
 
 root = Tk()
-root.title("Jeu d'échec")
+root.title("Jeu d'échec") 
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
