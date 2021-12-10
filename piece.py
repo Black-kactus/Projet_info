@@ -100,21 +100,6 @@ class Fou(Piece):
                             #return False
         return True
 
-
-class Roi(Piece):
-    def __init__(self, couleur, colonne, ligne, numero,echec=False):
-        super().__init__(couleur, colonne, ligne, numero)
-        self._valeur = 0
-        self._echec=echec
-
-
-    def Echec(self): #attention : complexité élevée
-        from board import position
-        for piece in position:
-            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
-                    return True
-        return False
-
 class Tour(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
@@ -156,6 +141,28 @@ class Dame(Fou,Tour):
                 return True
             else :
                 return False
+
+class Roi(Fou,Tour):
+    def __init__(self, couleur, colonne, ligne, numero,echec=False):
+        self._valeur = 0
+        self._echec=echec
+        self._couleur = couleur
+        self.ligne = ligne
+        self.colonne = colonne
+        self._numero = numero
+
+    def mouvement_possible(self,colonne,ligne):
+            if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<1) and abs(colonne-self.colonne<1)):
+                return True
+            else :
+                return False
+
+    def Echec1(self): #attention : complexité élevée
+        from board import position
+        for piece in position:
+            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
+                    return True
+        return False
 
 class Cavalier(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
