@@ -26,8 +26,8 @@ frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
 
 # Variables de Tkinter
-deplacement = StringVar()
-deplacement.set("Position piece à bouger")
+piece_a_bouger = StringVar()
+piece_a_bouger.set("Position piece à bouger")
 
 coup = StringVar()
 coup.set("Position où aller")
@@ -188,11 +188,11 @@ Label_couleurquijoue.grid(column=20, row=2, columnspan=largeur, rowspan=1,sticky
 Entry_couleuractualise= ttk.Entry(content, textvariable= couleurA)
 Entry_couleuractualise.grid(column=20,row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
-Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_pieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
+Label_pieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Entry_deplacement= ttk.Entry(content, textvariable= deplacement)
-Entry_deplacement.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Entry_pieceabouger= ttk.Entry(content, textvariable= piece_a_bouger)
+Entry_pieceabouger.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_coupajouer = ttk.Label(content, text= "Coup à jouer",relief="solid",anchor=CENTER)
 Label_coupajouer.grid(column=20, row=6, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
