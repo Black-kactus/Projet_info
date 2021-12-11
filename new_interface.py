@@ -142,6 +142,7 @@ def cmd_bouton_valider():
         nbcoup.set(str(int(nbcoup.get())+1))
         coup.set("")
         piece_a_bouger.set("")
+        #global couleurA
         if couleurA.get() == "Blanc": 
             couleurA.set("Noir")
             # print("Noir")
@@ -149,6 +150,7 @@ def cmd_bouton_valider():
             couleurA.set("Blanc")
             # print("Blanc")
         afficherPiece()
+
 
 def cmd_bouton_commencer():
     nbcoup.set("0")
