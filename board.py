@@ -213,6 +213,8 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         
         else:
           print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+          return False
     else:
       print("Vous ne pouvez pas déplacer une pièce de l'adversaire.")
+      return False
     
