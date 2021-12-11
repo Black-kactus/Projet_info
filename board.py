@@ -57,7 +57,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
     global position
     from new_interface import couleurA
     CouleurQuiJoue=couleurA.get()
-    if piece._couleur==CouleurQuiJoue:
+    if piece._couleur==couleurA.get():
       a=type(piece)
       ligne=case[1]
       colonne=case[0]
@@ -68,18 +68,18 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         if piece.mouvement_possible(colonne,ligne):
           if a!=Pion:
             if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-              if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+              if position[colonne][ligne]._couleur!=couleurA.get(): #si la pièce est de la couleur opposée, on la mange
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                 possible_prise=position[colonne][ligne]
                 position[colonne][ligne]=piece #on met à jour la liste position
-                if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
+                if (couleurA.get() == "Blanc" and KB1.Echec2()) or (couleurA.get()=="Noir" and KN1.Echec2()): #si clouage
                   print("Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
                   position[piece.colonne][piece.ligne]=piece #on annule le mouvement
                   position[colonne][ligne]=possible_prise
                   return False
                 piece.ligne=ligne #on met à jour les coordonnées de la pièce
                 piece.colonne=colonne
-                if CouleurQuiJoue=='Blanc':
+                if couleurA.get()=='Blanc':
                   prises_Blanc.append(possible_prise) #on met à jour la liste des prises
                   possible_prise.colonne=-1 #on change les coordonées de la pièce mangée
                   possible_prise.ligne=-1
@@ -93,7 +93,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
             else: #s'il n'y a pas d'autre pièce sur la case
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                 position[colonne][ligne]=piece #on met à jour la liste position 
-                if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
+                if (couleurA.get() == "Blanc" and KB1.Echec2()) or (couleurA.get()=="Noir" and KN1.Echec2()): #si clouage
                   print("Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
                   position[piece.colonne][piece.ligne]=piece #on annule le mouvement
                   position[colonne][ligne]=0 #on annule le mouvement
@@ -102,7 +102,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 piece.colonne=colonne
           
           else: #cas spécial du pion
-            if CouleurQuiJoue=="Blanc": #si les blancs jouent
+            if couleurA.get()=="Blanc": #si les blancs jouent
               if ligne==piece.ligne+1 and colonne==piece.colonne:
                 if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
                   print("Cette case est déjà occupée.")
@@ -138,7 +138,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
                   print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
                   return False
-                elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+                elif position[colonne][ligne]._couleur!=couleurA.get(): #si la pièce est de la couleur opposée, on la mange
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne]
                   position[colonne][ligne]=piece #on met à jour la liste position
@@ -192,7 +192,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
                 if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
                   print("Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce.")
                   return False
-                elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+                elif position[colonne][ligne]._couleur!=couleurA.get(): #si la pièce est de la couleur opposée, on la mange
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne]
                   position[colonne][ligne]=piece #on met à jour la liste position
@@ -213,6 +213,8 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         
         else:
           print("Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+          return False
     else:
       print("Vous ne pouvez pas déplacer une pièce de l'adversaire.")
+      return False
     

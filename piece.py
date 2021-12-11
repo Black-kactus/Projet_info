@@ -112,21 +112,21 @@ class Tour(Piece):
         elif colonne == self.colonne and ligne == self.ligne:  # si la tour ne bouge pas
             return True
         elif ligne == self.ligne:  # si la tour bouge en horizontal
-            if colonne > self.colonne:  # si la tour va vers le haut
-                for c in range(self.colonne, colonne):
+            if colonne > self.colonne:  # si la tour va vers la droite
+                for c in range(self.colonne+1, colonne):
                     if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin   ##1
                         return False
-            else:  # si la tour va vers le bas
-                for c in range(colonne, self.colonne):
+            else:  # si la tour va vers la gauche
+                for c in range(colonne+1, self.colonne):
                     if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin  ##2
                         return False
         elif colonne == self.colonne:  # si la tour bouge en vertical
-            if ligne > self.ligne:  # si la tour va vers la droite
-                for l in range(self.ligne, ligne):
+            if ligne > self.ligne:  # si la tour va vers le haut
+                for l in range(self.ligne+1, ligne):
                     if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin  ##3
                         return False
-            else:  # si la tour va vers la gauche
-                for l in range(ligne, self.ligne):
+            else:  # si la tour va vers le bas
+                for l in range(ligne+1, self.ligne):
                     if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin  ##4
                         return False
         return True
@@ -150,12 +150,12 @@ class Cavalier(Piece):
 
     def mouvement_possible(self, colonne, ligne):  # indique si le cavalier peut bouger jusqu'à la case indiquée
         from board import position
-        if colonne == self.colonne and ligne == self.ligne:  # si le cavalier ne bouge pas
-            return True
-        elif ((colonne != self.colonne - 2 and ligne != self.ligne + 1) or (colonne != self.colonne - 2 and ligne != self.ligne - 1) or (colonne != self.colonne - 1 and ligne != self.ligne + 2) or (colonne != self.colonne - 1 and ligne != self.ligne - 2) or (colonne != self.colonne + 1 and ligne != self.ligne + 2) or (colonne != self.colonne + 1 and ligne != self.ligne - 2) or (colonne != self.colonne + 2 and ligne != self.ligne + 1) or (colonne != self.colonne + 2 and ligne != self.ligne - 1)) or ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
+        if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # sortie de l'échiquier
             return False
-        else:
+        elif (colonne == self.colonne - 2 and ligne == self.ligne + 1) or (colonne == self.colonne - 2 and ligne == self.ligne - 1) or (colonne == self.colonne - 1 and ligne == self.ligne + 2) or (colonne == self.colonne - 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 1 and ligne == self.ligne + 2) or (colonne == self.colonne + 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 2 and ligne == self.ligne + 1) or (colonne == self.colonne + 2 and ligne == self.ligne - 1) or (colonne == self.colonne and ligne == self.ligne) :  # bon "motif" de déplacement ou cavalier ne bouge pas
             return True
+        else: #pas bon déplacement
+            return False
 
 
 class Pion(Piece):
@@ -211,7 +211,7 @@ class Roi(Fou,Tour):
         self._numero = numero
 
     def mouvement_possible(self,colonne,ligne):
-            if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<1) and abs(colonne-self.colonne<1)):
+            if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):
                 return True
             else :
                 return False
@@ -298,7 +298,7 @@ class Roi(Fou,Tour):
                 else:
                     d=False
         #Roi
-        if (not(self.ligne+1 > 7) and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (not(self.ligne-1 < 0) and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (not (self.colonne+1 > 7) and ype(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and not(self.ligne-1 < 0) and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne+1 > 7) and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (not (self.colonne-1 < 0) and not(self.ligne+1 > 7) and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne-1 < 0) and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
+        if (not(self.ligne+1 > 7) and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (not(self.ligne-1 < 0) and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (not (self.colonne+1 > 7) and type(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and not(self.ligne-1 < 0) and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne+1 > 7) and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (not (self.colonne-1 < 0) and not(self.ligne+1 > 7) and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne-1 < 0) and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
             return True
 
         return False

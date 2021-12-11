@@ -136,20 +136,19 @@ def cmd_bouton_valider():
     from board import position #
     print("valider")
     from main import interpreteur #
-    interpreteur(coup,piece_a_bouger) #
-    global LPOSITION #
-    LPOSITION=fonction_lecture(position) #
-    #print(LPOSITION)#
-    nbcoup.set(str(int(nbcoup.get())+1))
-    coup.set("")
-    piece_a_bouger.set("")
-    if couleurA.get() == "Blanc": 
-        couleurA.set("Noir")
-        # print("Noir")
-    else:
-        couleurA.set("Blanc")
-        # print("Blanc")
-    afficherPiece()
+    if not(interpreteur(coup,piece_a_bouger)==False): #
+        global LPOSITION #
+        LPOSITION=fonction_lecture(position) #
+        nbcoup.set(str(int(nbcoup.get())+1))
+        coup.set("")
+        piece_a_bouger.set("")
+        if couleurA.get() == "Blanc": 
+            couleurA.set("Noir")
+            # print("Noir")
+        else:
+            couleurA.set("Blanc")
+            # print("Blanc")
+        afficherPiece()
 
 def cmd_bouton_commencer():
     nbcoup.set("0")
