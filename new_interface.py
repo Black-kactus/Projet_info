@@ -144,10 +144,10 @@ def cmd_bouton_valider():
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
         couleurA.set("Noir")
-        print("Noir")
+        # print("Noir")
     else:
         couleurA.set("Blanc")
-        print("Blanc")
+        # print("Blanc")
 
 def cmd_bouton_commencer():
     nbcoup.set("0")
