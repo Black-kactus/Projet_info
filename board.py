@@ -66,13 +66,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
         return False
       else:
         if piece.mouvement_possible(colonne,ligne):
-          if CouleurQuiJoue == "Blanc" and KB1.Echec2():
-            print("Vous êtes en échec.") #que faire si on est en echec
-            return False
-          elif CouleurQuiJoue=="Noir" and KN1.Echec2():
-            print("Vous êtes en échec.") #que faire si on est en echec
-            return False
-          elif a!=Pion:
+          if a!=Pion:
             if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
               if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
