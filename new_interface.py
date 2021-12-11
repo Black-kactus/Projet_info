@@ -140,7 +140,6 @@ def cmd_bouton_valider():
     global LPOSITION #
     LPOSITION=fonction_lecture(position) #
     #print(LPOSITION)#
-    afficherPiece()
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
         couleurA.set("Noir")
@@ -148,6 +147,7 @@ def cmd_bouton_valider():
     else:
         couleurA.set("Blanc")
         # print("Blanc")
+    afficherPiece()
 
 def cmd_bouton_commencer():
     nbcoup.set("0")
