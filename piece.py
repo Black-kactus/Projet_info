@@ -225,69 +225,85 @@ class Roi(Fou,Tour):
     
     def Echec2(self):
         from board import position
-        POSITION=[[0]*8,position[:],[0]*8]
         #diagonales
+        A=1
         for i in range(max(self.colonne,7-self.colonne), 8):
-            if not(self.colonne+i>7) and not(self.ligne+i>7) and not(self.ligne-i<0) and not(self.colonne-i<0) :
-                a=65
-                if position[self.colonne+i][self.ligne+i] != 0 :
-                    a= position[self.colonne+i][self.ligne+i]
-                elif position[self.colonne-i][self.ligne-i] != 0:
-                    a= position[self.colonne-i][self.ligne-i]
-                elif position[self.colonne+i][self.ligne-i] != 0:
-                    a=position[self.colonne+i][self.ligne-i]
-                elif position[self.colonne-i][self.ligne+i] != 0:   
-                    a=position[self.colonne-i][self.ligne+i]
-                if a!=65:
-                    if (type(a)==Fou or type(a)==Dame) and a._couleur!=self._couleur:
-                        return True
-                    else:
-                        break
+            a,b,c,d=True,True,True,True
+            if not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a:
+                A= position[self.colonne+i][self.ligne+i]
+                if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    A=False
+            elif not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b:
+                A= position[self.colonne-i][self.ligne-i]
+                if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    b=False
+            elif not(self.colonne+i>7) and not(self.ligne-i<0) and position[self.colonne+i][self.ligne-i] != 0 and c:
+                A=position[self.colonne+i][self.ligne-i]
+                if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    c= False
+            elif not(self.colonne-i<0) and not(self.ligne+i>7) and position[self.colonne-i][self.ligne+i] != 0 and d:   
+                A=position[self.colonne-i][self.ligne+i]
+                if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    d = False
+                
         #Pion
         if self._couleur=="Blanc" and self.ligne!=7:
-            if (type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
+            if (self.colonne!=7 and type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (self.colonne!=0 and type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
                 return True
         elif self._couleur=="Noir" and self.ligne!=0:
-            if (type(position[self.colonne+1][self.ligne-1])==Pion and position[self.colonne+1][self.ligne-1]._couleur=="Blanc") or (type(position[self.colonne-1][self.ligne-1])==Pion and position[self.colonne-1][self.ligne-1]._couleur=="Blanc") :
+            if (self.colonne!=7 and type(position[self.colonne+1][self.ligne-1])==Pion and position[self.colonne+1][self.ligne-1]._couleur=="Blanc") or (self.colonne!=0 and type(position[self.colonne-1][self.ligne-1])==Pion and position[self.colonne-1][self.ligne-1]._couleur=="Blanc") :
                 return True
 
         #cavalier
-        if (type(position[self.colonne - 2][self.ligne + 1])==Cavalier and position[self.colonne - 2][self.ligne + 1]._couleur != self._couleur) or (type(position[self.colonne - 2][self.ligne - 1]) == Cavalier and position[self.colonne - 2][self.ligne - 1]._couleur!=self._couleur) or (type(position[self.colonne - 1][self.ligne + 2])==Cavalier and position[self.colonne - 1][self.ligne + 2]._couleur!=self._couleur) or (type(position[self.colonne - 1][self.ligne - 2])==Cavalier and position[self.colonne - 1][self.ligne - 2]._couleur!=self._couleur) or (type(position[self.colonne + 1][self.ligne + 2])==Cavalier and position[self.colonne + 1][self.ligne + 2]._couleur!=self._couleur) or (type(position[self.colonne + 1][self.ligne - 2])==Cavalier and position[self.colonne + 1][self.ligne - 2]._couleur!=self._couleur) or (type(position[self.colonne + 2][self.ligne + 1])==Cavalier and position[self.colonne + 2][self.ligne + 1]._couleur!=self._couleur) or (type(position[self.colonne + 2][self.ligne - 1])==Cavalier and position[self.colonne + 2][self.ligne - 1]._couleur!=self._couleur) :
+        if (not(self.colonne - 2 < 0) and not(self.ligne + 1 > 7) and type(position[self.colonne - 2][self.ligne + 1])==Cavalier and position[self.colonne - 2][self.ligne + 1]._couleur != self._couleur) or (not(self.colonne - 2 < 0) and not(self.ligne - 1 <  0) and type(position[self.colonne - 2][self.ligne - 1]) == Cavalier and position[self.colonne - 2][self.ligne - 1]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne + 2 > 7) and type(position[self.colonne - 1][self.ligne + 2])==Cavalier and position[self.colonne - 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne - 2 < 0) and type(position[self.colonne - 1][self.ligne - 2])==Cavalier and position[self.colonne - 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne + 2 > 7) and type(position[self.colonne + 1][self.ligne + 2])==Cavalier and position[self.colonne + 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne - 2 < 0) and type(position[self.colonne + 1][self.ligne - 2])==Cavalier and position[self.colonne + 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne + 1 > 7) and type(position[self.colonne + 2][self.ligne + 1])==Cavalier and position[self.colonne + 2][self.ligne + 1]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne - 1 < 0) and type(position[self.colonne + 2][self.ligne - 1])==Cavalier and position[self.colonne + 2][self.ligne - 1]._couleur!=self._couleur) :
             return True
 
         #colonnes/lignes
+        A=1
         for i in range(max(self.colonne,7-self.colonne), 8): #colonne
-            if not(self.colonne+i>7) and not(self.colonne-i<0) :
-                a=65
-                if position[self.colonne+i][self.ligne] != 0 :
-                    a=position[self.colonne+i][self.ligne]
-                elif position[self.colonne-i][self.ligne] != 0 : 
-                    a= position[self.colonne-i][self.ligne]
-                if a!=65:
-                    if (type(a)==Tour or type(a)==Dame) and a._couleur!=self._couleur:
-                        return True
-                    else:
-                        break
-
+            a,b=True,True
+            if not(self.colonne+i>7) and position[self.colonne+i][self.ligne] != 0 and a:
+                A=position[self.colonne+i][self.ligne]
+                if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    a=False
+            elif not(self.colonne-i<0) and position[self.colonne-i][self.ligne] != 0 and b: 
+                A= position[self.colonne-i][self.ligne]
+                if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    b=False
+        A=1
         for i in range(max(self.ligne,7-self.ligne), 8): #ligne
-            if not(self.ligne+i>7) and not(self.ligne-i<0) :
-                a=65
-                if position[self.colonne][self.ligne+i] != 0 :
-                    a=position[self.colonne][self.ligne+i]
-                elif position[self.colonne][self.ligne-i] != 0 :
-                    a=position[self.colonne][self.ligne-i]
-                if a!=65:
-                    if (type(a)==Tour or type(a)==Dame) and a._couleur!=self._couleur:
-                        return True
-                    else:
-                        break
+            c,d=True,True
+            if not(self.ligne+i>7) and position[self.colonne][self.ligne+i] != 0 and c:
+                A=position[self.colonne][self.ligne+i]
+                if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    c=False
+            elif not(self.ligne-i<0) and position[self.colonne][self.ligne-i] != 0 and d:
+                A=position[self.colonne][self.ligne-i]
+                if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
+                    return True
+                else:
+                    d=False
+        #Roi
+        if (not(self.ligne+1 > 7) and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (not(self.ligne-1 < 0) and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (not (self.colonne+1 > 7) and ype(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and not(self.ligne-1 < 0) and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne+1 > 7) and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (not (self.colonne-1 < 0) and not(self.ligne+1 > 7) and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne-1 < 0) and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
+            return True
+
         return False
         
-        #Roi
-        if self.colonne<7:
-            return True
-        #gros problème de sortie du plateau sur toute la fonction
-
+        
 
 
 
