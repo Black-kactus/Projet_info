@@ -96,7 +96,7 @@ python_imagePB = ImageTk.PhotoImage(ImgPionBlanc)
 python_imagePN = ImageTk.PhotoImage(ImgPionNoir)
 python_imageTB = ImageTk.PhotoImage(ImgTourBlanche)
 python_imageTN = ImageTk.PhotoImage(ImgTourNoire)
-python_imageVIDE= ImageTk.PhotoImage(ImgVide)
+python_imageVIDE = ImageTk.PhotoImage(ImgVide)
 
 dicopiece = {0 : python_imageVIDE}
 dicopieceB = {"TB1": python_imageTB,"CB1": python_imageCB,"FB1": python_imageFB,"QB1":python_imageDB,"KB1":python_imageRB,"FB2":python_imageFB,"CB2":python_imageCB,"TB2":python_imageTB}
