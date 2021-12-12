@@ -188,27 +188,20 @@ class Pion(Piece):
                     if self.Move1:  # premier mouvement du pion ?
                         if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                             return True
-                # else:
-                # return False
             if colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
                     return True
                 if ligne == (self.ligne - 1) and self._couleur != "Blanc":
                     return True
-                # else:
-                # return False
             else:
                 return False
 
 
 class Roi(Fou,Tour):
-    def __init__(self, couleur, colonne, ligne, numero,echec=False):
+    def __init__(self, couleur, colonne, ligne, numero, echec=False):
+        super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
         self._echec=echec
-        self._couleur = couleur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
 
     def mouvement_possible(self,colonne,ligne):
             if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):

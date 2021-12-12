@@ -133,6 +133,14 @@ def afficherPiece():
             ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
+    #lettres = "a,b,c,d,e,f,g,h"
+    #chiffres = "1,2,3,4,5,6,7,8"
+    #coup=coup.get()
+    #piece_a_bouger=piece_a_bouger.get()
+    #while len(coup)!=2 or (coup[0] not in lettres) or (coup[1] not in chiffres):
+        #piece_a_bouger.set("Syntaxe incorrecte. Retentez.")
+    #while len(piece_a_bouger)!=2 or (piece_a_bouger[0] not in lettres) or (piece_a_bouger[1] not in chiffres):
+        #coup.set("Syntaxe incorrecte. Retentez.")
     from board import position #
     print("valider")
     from main import interpreteur #
