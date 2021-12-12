@@ -57,6 +57,7 @@ def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne
     global position
     from new_interface import couleurA
     CouleurQuiJoue=couleurA.get()
+    print(CouleurQuiJoue)
     if piece._couleur==CouleurQuiJoue:
       a=type(piece)
       ligne=case[1]

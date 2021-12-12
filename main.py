@@ -1,9 +1,10 @@
-from new_interface import coup, piece_a_bouger
+
 
 
 def interpreteur(coup,piece_a_bouger):
+    from new_interface import coup, piece_a_bouger
     from board import mouvement,position
-    global position
+    #global position
     coup=coup.get()
     piece_a_bouger=piece_a_bouger.get()
     colonne_P=ord(coup[0])-97 #position de la case d'arrivée
