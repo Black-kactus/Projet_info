@@ -109,7 +109,8 @@ dicopiece.update(dicopiecepionN)
 
 #Creation des indices horizontaux de l'échiquier
 for i in range(0,18,2):
-    L = ["","A",'B',"C","D","E","F",'G','H']
+    # L = ["","A",'B',"C","D","E","F",'G','H']
+    L = ["","H","G",'F',"E","D","C","B",'A']
     namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER)
     namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
     namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
@@ -128,10 +129,25 @@ def afficherPiece():
         for j in range(len(LPOSITION)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+            if couleurA.get() == "Noir":
+                ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+            else : 
+                ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+    if couleurA.get() == "Noir":
+        for k in range(0,18,2):
+            # L = ["","A",'B',"C","D","E","F",'G','H']
+            L = ["","H","G",'F',"E","D","C","B",'A']
+            ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    else: 
+        for k in range(0,18,2):
+            L = ["","A",'B',"C","D","E","F",'G','H']
+            # L = ["","H","G",'F',"E","D","C","B",'A']
+            ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
-    print("valider")
+    # print("valider")
     #from main import interpreteur
     #interpreteur(coup,deplacement) 
     #global LPOSITION 
@@ -140,10 +156,10 @@ def cmd_bouton_valider():
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
         couleurA.set("Noir")
-        print("Noir")
+        # print("Noir")
     else:
         couleurA.set("Blanc")
-        print("Blanc")
+        # print("Blanc")
 
 def cmd_bouton_commencer():
     coup.set("0")
@@ -158,7 +174,7 @@ def cmd_bouton_abandonner():
 
 def cmd_bouton_test():
     global LPOSITION
-    LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
+    LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2",0,"PB7",0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     print("test")
 
 def cmd_bouton_pieces_perdues():
