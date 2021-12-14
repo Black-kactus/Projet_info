@@ -108,13 +108,13 @@ dicopiece.update(dicopiecepionB)
 dicopiece.update(dicopiecepionN)
 
 #Creation des indices horizontaux de l'échiquier
-for i in range(0,18,2):
-    # L = ["","A",'B',"C","D","E","F",'G','H']
-    L = ["","H","G",'F',"E","D","C","B",'A']
-    namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER)
-    namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-    namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
-    namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+# for i in range(0,18,2):
+#     # L = ["","A",'B',"C","D","E","F",'G','H']
+#     L = ["","H","G",'F',"E","D","C","B",'A']
+#     namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER)
+#     namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#     namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
+#     namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 
 
@@ -129,11 +129,12 @@ def afficherPiece():
         for j in range(len(LPOSITION)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            if couleurA.get() == "Noir":
+            if couleurA.get() == "Blanc" and eval(nbcoup.get()) > 0:
                 ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
             else : 
                 ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
-    if couleurA.get() == "Noir":
+    
+    if couleurA.get() == "Blanc" and eval(nbcoup.get()) > 0:
         for k in range(0,18,2):
             # L = ["","A",'B',"C","D","E","F",'G','H']
             L = ["","H","G",'F',"E","D","C","B",'A']
