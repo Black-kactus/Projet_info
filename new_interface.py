@@ -115,10 +115,8 @@ dicopiece.update(dicopiecepionN)
 #Creation des indices horizontaux de l'échiquier
 for i in range(0,18,2):
     L = ["","A",'B',"C","D","E","F",'G','H']
-    namelbl = ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER)
-    namelbl.grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-    namelbl = ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER)
-    namelbl.grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER).grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER).grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 
 
@@ -190,7 +188,7 @@ def cmd_bouton_pieces_perdues():
 def cmd_bouton_regles():
     pass
 
-
+#permet l'expension des boutons 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
     
