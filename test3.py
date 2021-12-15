@@ -95,7 +95,8 @@ def cmd_bouton_popup():
     
     Lvide = ttk.Label(Onglet1_Regles, text= "",relief="solid",anchor=CENTER)
     Lvide.grid(column=0, row=0, columnspan=18, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    
+    #cd
 
     for i in range(20):
         Onglet1_Regles.columnconfigure(i,weight=1)
