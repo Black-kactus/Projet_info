@@ -11,7 +11,7 @@ from time import *
 # from piece import*
 # from new_interface import Entry_pieceabouger
 def fonction_lecture(position):
-    from board import position
+    #from board import position
     from piece import Piece
     LPOSITION=[]
     for l in range(len(position)):
@@ -164,7 +164,7 @@ def cmd_bouton_valider():
     else:
         print(interpreteur(coup,piece_a_bouger,couleurA)[1])
         message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA)[1])
-        print(message_erreur.get())
+        #print(message_erreur.get())
 
 
 def cmd_bouton_commencer():

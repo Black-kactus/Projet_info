@@ -58,7 +58,6 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
   else :
     global position
     CouleurQuiJoue=couleurA.get()
-    print(CouleurQuiJoue)
     if piece._couleur==CouleurQuiJoue:
       a=type(piece)
       ligne=case[1]
@@ -88,7 +87,7 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                 else:
                   prises_Noir.append(possible_prise)
                   possible_prise.colonne=-2 #on change les coordonées de la pièce mangée
-                  possible_prise.ligne=-2  
+                  possible_prise.ligne=-2
               else:
                 message_erreur="Il y a déjà une de vos pièces sur cette case."
                 return (False,message_erreur)
@@ -241,6 +240,7 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
     else:
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
+  return (True,0)
 
 def update_coord_piece(piece,ligne,colonne): # on met à jour les coordonnées de la pièce
   pass

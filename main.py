@@ -9,6 +9,7 @@ def interpreteur(coup,piece_a_bouger,couleurA):
     ligne_A=int(piece_bougee[1])-1 #position de la pièce à bouger
     if mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA)[0]==False: #case = liste des 2 coordonées de la case : [colonne,ligne]
         return (False,mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA)[1])
+    return (True,0)
 
 
 
