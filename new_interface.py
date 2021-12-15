@@ -144,7 +144,7 @@ def cmd_bouton_valider():
     from board import position #
     print("valider")
     from main import interpreteur #
-    if not(interpreteur(coup,piece_a_bouger)==False): #
+    if not(interpreteur(coup,piece_a_bouger,couleurA)==False): #
         global LPOSITION #
         LPOSITION=fonction_lecture(position) #
         nbcoup.set(str(int(nbcoup.get())+1))
