@@ -31,7 +31,7 @@ root.iconbitmap(r'icone.ico')
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
-
+content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 # Variables de Tkinter
 piece_a_bouger = StringVar()
@@ -52,7 +52,6 @@ coup_special.set("")
 temps= StringVar()
 temps.set(str(localtime()))
 
-content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 ImgFouNoir = Image.open('fou_noir.png')
 ImgFouBlanc = Image.open('fou_blanc.png')
