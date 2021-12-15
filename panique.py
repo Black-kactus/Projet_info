@@ -1,5 +1,8 @@
-#La véritable fenêtre d'interface 
-
+# La véritable fenêtre d'interface 
+# ajout de pop up
+# ajout de label avec erreur actualisé 
+# implémentation du retournement de plateau dans le jeu!
+# :))
 
 from tkinter import *
 from tkinter import ttk
