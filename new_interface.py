@@ -51,6 +51,9 @@ coup_special.set("")
 temps= StringVar()
 temps.set(str(localtime()))
 
+message_erreur =StringVar()
+message_erreur.set("T'as pas le droit wsh")
+
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 ImgFouNoir = Image.open('fou_noir.png')
@@ -144,7 +147,7 @@ def cmd_bouton_valider():
     from board import position #
     print("valider")
     from main import interpreteur #
-    if not(interpreteur(coup,piece_a_bouger,couleurA)==False): #
+    if not(interpreteur(coup,piece_a_bouger,couleurA)[0]==False): #
         global LPOSITION #
         LPOSITION=fonction_lecture(position) #
         nbcoup.set(str(int(nbcoup.get())+1))
@@ -158,6 +161,10 @@ def cmd_bouton_valider():
             couleurA.set("Blanc")
             # print("Blanc")
         afficherPiece()
+    else:
+        print(interpreteur(coup,piece_a_bouger,couleurA)[1])
+        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA)[1])
+        print(message_erreur.get())
 
 
 def cmd_bouton_commencer():
@@ -175,6 +182,7 @@ def cmd_bouton_test():
     global LPOSITION
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     print("test")
+    message_erreur.set("bye bitch")
 
 def cmd_bouton_pieces_perdues():
     pass
@@ -245,6 +253,9 @@ Bouton_Regles.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,E
 
 Bouton_Abandonner= ttk.Button(content, text= "Reconnaître sa cuisante défaite",command= cmd_bouton_abandonner)
 Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Label_erreur= ttk.Label(content, textvariable= message_erreur, anchor= CENTER, relief="solid")
+Label_erreur.grid(column=20,row=12, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 root.mainloop()
 

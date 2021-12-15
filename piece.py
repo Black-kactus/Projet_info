@@ -189,6 +189,7 @@ class Roi(Fou,Tour):
     
     def Echec2(self):
         from board import position
+        print(position) #
         #diagonales
         A=1
         for i in range(max(self.colonne,7-self.colonne), 8):
