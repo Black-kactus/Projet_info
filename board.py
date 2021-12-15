@@ -49,13 +49,12 @@ prises_Blanc=[] #pièces prises par les blancs
 
 
 
-def mouvement(piece,case): #case = liste des 2 coordonées de la case : [colonne,ligne]
+def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case : [colonne,ligne]
   if piece==0:
     print("Vous n'avez pas de pièce à cet endroit.")
     return False
   else :
     global position
-    from new_interface import couleurA
     CouleurQuiJoue=couleurA.get()
     print(CouleurQuiJoue)
     if piece._couleur==CouleurQuiJoue:

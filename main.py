@@ -1,17 +1,13 @@
-
-
-
-def interpreteur(coup,piece_a_bouger):
-    from new_interface import coup, piece_a_bouger
+def interpreteur(coup,piece_a_bouger,couleurA):
     from board import mouvement,position
     #global position
-    coup=coup.get()
-    piece_a_bouger=piece_a_bouger.get()
-    colonne_P=ord(coup[0])-97 #position de la case d'arrivée
-    ligne_P=int(coup[1])-1 #position de la case d'arrivée
-    colonne_A=ord(piece_a_bouger[0])-97 #position de la piece à bouger
-    ligne_A=int(piece_a_bouger[1])-1 #position de la pièce à bouger
-    if mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P])==False: #case = liste des 2 coordonées de la case : [colonne,ligne]
+    position_ou_aller=coup.get()
+    piece_bougee=piece_a_bouger.get()
+    colonne_P=ord(position_ou_aller[0])-97 #position de la case d'arrivée
+    ligne_P=int(position_ou_aller[1])-1 #position de la case d'arrivée
+    colonne_A=ord(piece_bougee[0])-97 #position de la piece à bouger
+    ligne_A=int(piece_bougee[1])-1 #position de la pièce à bouger
+    if mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA)==False: #case = liste des 2 coordonées de la case : [colonne,ligne]
         return False 
 
 
@@ -36,9 +32,9 @@ def interpreteur(coup,piece_a_bouger):
     #return P1,P2
 
 #P1,P2 = demander_utilisateur()
-#interpreteur(P1,P2)
+#interpreteur(P1,P2,couleurA)
 
-#if interpreteur(P1,P2) == False:
+#if interpreteur(P1,P2,couleurA) == False:
     #print("Faux")
     #coup, piece_a_bouger = demander_utilisateur()
 
