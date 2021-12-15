@@ -34,7 +34,7 @@ frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
 # Variables de Tkinter
 piece_a_bouger = StringVar()
-piece_a_bouger.set("Position piece à bouger")
+piece_a_bouger.set("Position pièce à bouger")
 
 coup = StringVar()
 coup.set("Position où aller")
