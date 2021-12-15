@@ -147,32 +147,29 @@ class Pion(Piece):
             if colonne == self.colonne:
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
-                        return True
-                if ligne == (self.ligne + 2) and self._couleur == "Blanc":
-                    if self.Move1:  # premier mouvement du pion ?
-                        if position[colonne][ligne - 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
-                            return True
-                if ligne == (self.ligne - 1) and self._couleur != "Blanc":
+                        return (True,"tout_droit")
+                if self.ligne == 1 and ligne == 3 and self._couleur == "Blanc": # premier mouvement du pion
+                    if position[colonne][ligne - 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
+                        return (True,"tout_droit_2")
+                if ligne == (self.ligne - 1) and self._couleur == "Noir":
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
-                        return True
-                if ligne == (self.ligne - 2) and self._couleur != "Blanc":
-                    if self.Move1:  # premier mouvement du pion ?
-                        if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
-                            return True
+                        return (True,"tout_droit")
+                if ligne == 4 and self.ligne == 6 and self._couleur == "Noir": # premier mouvement du pion
+                    if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
+                        return (True,"tout_droit_2")
             if colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
-                    return True
-                if ligne == (self.ligne - 1) and self._couleur != "Blanc":
-                    return True
+                    return (True,"diagonale")
+                if ligne == (self.ligne - 1) and self._couleur == "Noir":
+                    return (True,"diagonale")
             else:
-                return False
+                return (False,0)
 
 
 class Roi(Fou,Tour):
     def __init__(self, couleur, colonne, ligne, numero, echec=False):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
-        self._echec=echec
 
     def mouvement_possible(self,colonne,ligne):
             if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):
@@ -184,12 +181,11 @@ class Roi(Fou,Tour):
         from board import position
         for piece in position:
             if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
-                    return True
+                return True
         return False
     
     def Echec2(self):
         from board import position
-        print(position) #
         #diagonales
         A=1
         for i in range(max(self.colonne,7-self.colonne), 8):

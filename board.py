@@ -66,8 +66,8 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
         message_erreur="Votre pièce est déjà à cette position."
         return (False,message_erreur)
       else:
-        if piece.mouvement_possible(colonne,ligne):
-          if a!=Pion:
+        if a!=Pion:
+          if piece.mouvement_possible(colonne,ligne):
             if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
               if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
@@ -94,7 +94,6 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
             else: #s'il n'y a pas d'autre pièce sur la case
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                 position[colonne][ligne]=piece #on met à jour la liste position 
-                print(position) #
                 if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                   message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                   position[piece.colonne][piece.ligne]=piece #on annule le mouvement
@@ -102,10 +101,16 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                   return (False,message_erreur)
                 piece.ligne=ligne #on met à jour les coordonnées de la pièce
                 piece.colonne=colonne
+          else:
+            message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
+            return (False,message_erreur)
           
-          else: #cas spécial du pion
+        else: #cas spécial du pion
+          legalite = piece.mouvement_possible(colonne,ligne)[0]
+          type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
+          if legalite:
             if CouleurQuiJoue=="Blanc": #si les blancs jouent
-              if ligne==piece.ligne+1 and colonne==piece.colonne:
+              if type_de_mouvement == "tout_droit":
                 if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
                   message_erreur="Cette case est déjà occupée."
                   return (False,message_erreur)
@@ -119,12 +124,9 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                     return (False,message_erreur)
                   piece.ligne=ligne #on met à jour les coordonnées de la pièce
                   piece.colonne=colonne
-              elif ligne==piece.ligne+2 and colonne==piece.colonne:
+              elif type_de_mouvement == "tout_droit_2":
                 if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
                   message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                elif not(piece.Move1): #ne peut plus déplacer de 2
-                  message_erreur="Vous ne pouvez plus jouer ce coup."
                   return (False,message_erreur)
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
@@ -180,7 +182,7 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                   return (False,message_erreur)
 
             else: #si les noirs jouent
-              if ligne==piece.ligne-1 and colonne==piece.colonne:
+              if type_de_mouvement == "tout_droit":
                 if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
                   message_erreur="Cette case est déjà occupée."
                   return (False,message_erreur)
@@ -194,12 +196,9 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                       return (False,message_erreur)
                   piece.ligne=ligne #on met à jour les coordonnées de la pièce
                   piece.colonne=colonne
-              elif ligne==piece.ligne-2 and colonne==piece.colonne:
+              elif type_de_mouvement == "tout_droit_2":
                 if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
                   message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                elif not(piece.Move1): #ne peut plus déplacer de 2
-                  message_erreur="Vous ne pouvez plus jouer ce coup."
                   return (False,message_erreur)
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
@@ -233,10 +232,9 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
                   return (False,message_erreur)
-        
-        else:
-          message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
-          return (False,message_erreur)
+          else:
+            message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
+            return (False,message_erreur)  
     else:
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
