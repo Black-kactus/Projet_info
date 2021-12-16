@@ -41,5 +41,3 @@ def interpreteur(coup,piece_a_bouger,couleurA):
 
 #for i in fonction_lecture(position):
     #print(i)
-
-

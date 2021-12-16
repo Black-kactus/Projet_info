@@ -136,12 +136,12 @@ def afficherPiece():
 def cmd_bouton_valider():
     #lettres = "a,b,c,d,e,f,g,h"
     #chiffres = "1,2,3,4,5,6,7,8"
-    #coup=coup.get()
-    #piece_a_bouger=piece_a_bouger.get()
-    #while len(coup)!=2 or (coup[0] not in lettres) or (coup[1] not in chiffres):
-        #piece_a_bouger.set("Syntaxe incorrecte. Retentez.")
-    #while len(piece_a_bouger)!=2 or (piece_a_bouger[0] not in lettres) or (piece_a_bouger[1] not in chiffres):
-        #coup.set("Syntaxe incorrecte. Retentez.")
+    #position_ou_aller=coup.get()
+    #piece_bougee=piece_a_bouger.get()
+    #while len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres):
+        #message_erreur.set("Syntaxe incorrecte. Retentez.")
+    #while len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
+        #message_erreur.set("Syntaxe incorrecte. Retentez.")
     from board import position #
     print("valider")
     from main import interpreteur #
