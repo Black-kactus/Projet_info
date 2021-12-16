@@ -133,7 +133,6 @@ class Pion(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 1
-        self.Move1 = True
 
     def mouvement_possible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
         from board import position
