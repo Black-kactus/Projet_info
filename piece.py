@@ -185,34 +185,42 @@ class Roi(Fou,Tour):
     
     def Echec2(self):
         from board import position
+        print(position) #
         #diagonales
         A=1
-        for i in range(max(self.colonne,7-self.colonne), 8):
+        for i in range(1,max(self.colonne,7-self.colonne)+1):
             a,b,c,d=True,True,True,True
             if not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a:
                 A= position[self.colonne+i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    print(True)#
                     return True
                 else:
                     A=False
             elif not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b:
                 A= position[self.colonne-i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    print(i)
+                    print(True)#
                     return True
                 else:
                     b=False
             elif not(self.colonne+i>7) and not(self.ligne-i<0) and position[self.colonne+i][self.ligne-i] != 0 and c:
                 A=position[self.colonne+i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    print(True)#
                     return True
                 else:
                     c= False
             elif not(self.colonne-i<0) and not(self.ligne+i>7) and position[self.colonne-i][self.ligne+i] != 0 and d:   
                 A=position[self.colonne-i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
+                    print(True)#
                     return True
                 else:
                     d = False
+            print(False)#
+        return False
                 
         #Pion
         if self._couleur=="Blanc" and self.ligne!=7:

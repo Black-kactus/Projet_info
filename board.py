@@ -96,6 +96,7 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
             else: #s'il n'y a pas d'autre pièce sur la case
                 position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                 position[colonne][ligne]=piece #on met à jour la liste position 
+                print(position) #
                 if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                   message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                   #annuler_Mouvement(piece, ligne, colonne, 0)

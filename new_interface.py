@@ -52,7 +52,7 @@ temps= StringVar()
 temps.set(str(localtime()))
 
 message_erreur =StringVar()
-message_erreur.set("T'as pas le droit wsh")
+message_erreur.set("")
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
