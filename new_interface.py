@@ -31,6 +31,7 @@ root.iconbitmap(r'icone.ico')
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
+content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 # Variables de Tkinter
 piece_a_bouger = StringVar()
@@ -54,7 +55,6 @@ temps.set(str(localtime()))
 message_erreur =StringVar()
 message_erreur.set("")
 
-content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 ImgFouNoir = Image.open('fou_noir.png')
 ImgFouBlanc = Image.open('fou_blanc.png')
@@ -113,10 +113,10 @@ dicopiece.update(dicopiecepionB)
 dicopiece.update(dicopiecepionN)
 
 #Creation des indices horizontaux de l'échiquier
-for i in range(0,18,2):
-    L = ["","A",'B',"C","D","E","F",'G','H']
-    ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER).grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER).grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+# for i in range(0,18,2):
+#     L = ["","A",'B',"C","D","E","F",'G','H']
+#     ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER).grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#     ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER).grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 
 
@@ -131,7 +131,24 @@ def afficherPiece():
         for j in range(len(LPOSITION)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+            if couleurA.get() == "Noir":
+                ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+            else : 
+                ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+    
+    if couleurA.get() == "Noir":
+        for k in range(0,18,2):
+            # L = ["","A",'B',"C","D","E","F",'G','H']
+            L = ["","H","G",'F',"E","D","C","B",'A']
+            ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    else: 
+        for k in range(0,18,2):
+            L = ["","A",'B',"C","D","E","F",'G','H']
+            # L = ["","H","G",'F',"E","D","C","B",'A']
+            ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+            ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
 
 def cmd_bouton_valider():
     #lettres = "a,b,c,d,e,f,g,h"
@@ -142,22 +159,22 @@ def cmd_bouton_valider():
         #message_erreur.set("Syntaxe incorrecte. Retentez.")
     #while len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
         #message_erreur.set("Syntaxe incorrecte. Retentez.")
+    
     from board import position #
     print("valider")
     from main import interpreteur #
     if not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False): #
         global LPOSITION #
         LPOSITION=fonction_lecture(position) #
+        
         nbcoup.set(str(int(nbcoup.get())+1))
         coup.set("")
         piece_a_bouger.set("")
-        #global couleurA
+
         if couleurA.get() == "Blanc": 
             couleurA.set("Noir")
-            # print("Noir")
         else:
             couleurA.set("Blanc")
-            # print("Blanc")
         afficherPiece()
     else:
         message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[1])
@@ -240,8 +257,8 @@ Entry_coup.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),
 Bouton_valider= ttk.Button(content, text= "Valider",command= cmd_bouton_valider)
 Bouton_valider.grid(column=20,row=9, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
-Bouton_test.grid(column=20,row=15, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+# Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
+# Bouton_test.grid(column=20,row=15, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_CoupSpecial= ttk.Label(content, text= "coup spécial:",relief="solid",anchor=CENTER)
 Label_CoupSpecial.grid(column=20, row=8, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
