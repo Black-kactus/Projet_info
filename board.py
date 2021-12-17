@@ -49,7 +49,7 @@ prises_Blanc=[] #pièces prises par les blancs
 
 
 
-def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case : [colonne,ligne]
+def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées de la case : [colonne,ligne]
   
   if piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
@@ -58,186 +58,216 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
   else :
     global position
     CouleurQuiJoue=couleurA.get()
-    if piece._couleur==CouleurQuiJoue:
-      a=type(piece)
-      ligne=case[1]
-      colonne=case[0]
-      if ligne==piece.ligne and colonne==piece.colonne:
-        message_erreur="Votre pièce est déjà à cette position."
-        return (False,message_erreur)
-      else:
-        if a!=Pion:
-          if piece.mouvement_possible(colonne,ligne):
-            if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-              if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-                position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                possible_prise=position[colonne][ligne]
-                position[colonne][ligne]=piece #on met à jour la liste position
-                if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
-                  message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                  #annuler_Mouvement(piece, ligne, colonne, possible_prise)
-                  position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                  position[colonne][ligne]=possible_prise
-                  return (False,message_erreur)
-                update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-                if CouleurQuiJoue=='Blanc':
-                  #eaten_Blanc(colonne,ligne)
-                  prises_Blanc.append(possible_prise) #on met à jour la liste des prises
-                  possible_prise.colonne=-1 #on change les coordonées de la pièce mangée
-                  possible_prise.ligne=-1
-                else:
-                  # eaten_Noir(colonne,ligne)
-                  prises_Noir.append(possible_prise)
-                  possible_prise.colonne=-2 #on change les coordonées de la pièce mangée
-                  possible_prise.ligne=-2
-              else:
-                message_erreur="Il y a déjà une de vos pièces sur cette case."
-                return (False,message_erreur)
-            else: #s'il n'y a pas d'autre pièce sur la case
-                position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                position[colonne][ligne]=piece #on met à jour la liste position 
-                print(position) #
-                if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
-                  message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                  #annuler_Mouvement(piece, ligne, colonne, 0)
-                  position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                  position[colonne][ligne]=0 #on annule le mouvement
-                  return (False,message_erreur)
-                update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+    if coup_special != "":
+      if coup_special=="roque":
+        if CouleurQuiJoue=="Blanc":
+          if KB1.echec==True:
+            return (False,"Vous ne pouvez pas roquer si votre roi a déjà été en échec.")
           else:
-            message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
-            return (False,message_erreur)
-          
-        else: #cas spécial du pion
-          legalite = piece.mouvement_possible(colonne,ligne)[0]
-          type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
-          if legalite:
-            if CouleurQuiJoue=="Blanc": #si les blancs jouent
-              if type_de_mouvement == "tout_droit":
-                if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-                  message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                else:
-                  position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KB1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                    #annuler_Mouvement(piece, ligne, colonne, 0)
-                    position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    position[colonne][ligne]=0 #on annule le mouvement
-                    return (False,message_erreur)
-                  update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-              elif type_de_mouvement == "tout_droit_2":
-                if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-                  message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                else:
-                  position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KB1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                    #annuler_Mouvement(piece, ligne, colonne, 0)
-                    position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    position[colonne][ligne]=0 #on annule le mouvement
-                    return (False,message_erreur)
-                  update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
-              else:
-                if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
-                    #PRISE EN PASSANT
-                    if piece.ligne == 4 :
-                      if position[colonne - 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
-                        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                        ##possible_prise = position[colonne][ligne]
-                        position[colonne][ligne] = piece  # on met à jour la liste position
-                        eaten_Blanc(colonne-1,ligne)
-                        #prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
-                        #position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-                        #position[colonne - 1][ligne].ligne = -1
-                        update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-                      if position[colonne + 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
-                        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                        ##possible_prise = position[colonne][ligne]
-                        position[colonne][ligne] = piece  # on met à jour la liste position
-                        eaten_Blanc(colonne+1, ligne)
-                        #prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
-                        #position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-                        #position[colonne + 1][ligne].ligne = -1
-                        update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-                    else:
-                      message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
-                      return (False,message_erreur)
-                elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+            if position[4][0]==KB1 and position[7][0]==TB2:
+              roqueB()
+        else:
+          if KN1.echec==True:
+            return (False,"Vous ne pouvez pas roquer si votre roi a déjà été en échec.")
+          else:
+            if position[4][7]==KN1 and position[7][7]==TN2:
+              roqueN()
+      elif coup_special == "ROQUE":
+          if CouleurQuiJoue=="Blanc":
+            if KB1.echec==True:
+              return (False,"Vous ne pouvez pas roquer si votre roi a déjà été en échec.")
+            else:
+              if position[4][0]==KB1 and position[0][0]==TB1:
+                ROQUEB()
+          else:
+            if KN1.echec==True:
+              return (False,"Vous ne pouvez pas roquer si votre roi a déjà été en échec.")
+            else:
+              if position[4][7]==KN1 and position[0][7]==TN1:
+                ROQUEN()
+
+
+    else:  
+      if piece._couleur==CouleurQuiJoue:
+        a=type(piece)
+        ligne=case[1]
+        colonne=case[0]
+        if ligne==piece.ligne and colonne==piece.colonne:
+          message_erreur="Votre pièce est déjà à cette position."
+          return (False,message_erreur)
+        else:
+          if a!=Pion:
+            if piece.mouvement_possible(colonne,ligne):
+              if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                if position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne]
                   position[colonne][ligne]=piece #on met à jour la liste position
-                  if KB1.Echec2(): #si clouage
+                  if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     #annuler_Mouvement(piece, ligne, colonne, possible_prise)
                     position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    position[colonne][ligne]=possible_prise #on annule le mouvement
+                    position[colonne][ligne]=possible_prise
                     return (False,message_erreur)
-                  eaten_Blanc(colonne, ligne)
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                  if CouleurQuiJoue=='Blanc':
+                    #eaten_Blanc(colonne,ligne)
+                    prises_Blanc.append(possible_prise) #on met à jour la liste des prises
+                    possible_prise.colonne=-1 #on change les coordonées de la pièce mangée
+                    possible_prise.ligne=-1
+                  else:
+                    # eaten_Noir(colonne,ligne)
+                    prises_Noir.append(possible_prise)
+                    possible_prise.colonne=-2 #on change les coordonées de la pièce mangée
+                    possible_prise.ligne=-2
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
                   return (False,message_erreur)
-
-            else: #si les noirs jouent
-              if type_de_mouvement == "tout_droit":
-                if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-                  message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                else:
+              else: #s'il n'y a pas d'autre pièce sur la case
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KN1.Echec2(): #si clouage
+                  position[colonne][ligne]=piece #on met à jour la liste position 
+                  print(position) #
+                  if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
+                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    #annuler_Mouvement(piece, ligne, colonne, 0)
+                    position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                    position[colonne][ligne]=0 #on annule le mouvement
+                    return (False,message_erreur)
+                  update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+            else:
+              message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
+              return (False,message_erreur)
+            
+          else: #cas spécial du pion
+            legalite = piece.mouvement_possible(colonne,ligne)[0]
+            type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
+            if legalite:
+              if CouleurQuiJoue=="Blanc": #si les blancs jouent
+                if type_de_mouvement == "tout_droit":
+                  if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                    message_erreur="Cette case est déjà occupée."
+                    return (False,message_erreur)
+                  else:
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KB1.Echec2(): #si clouage
                       message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                       #annuler_Mouvement(piece, ligne, colonne, 0)
                       position[piece.colonne][piece.ligne]=piece #on annule le mouvement
                       position[colonne][ligne]=0 #on annule le mouvement
                       return (False,message_erreur)
-                  update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
-              elif type_de_mouvement == "tout_droit_2":
-                if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
-                  message_erreur="Cette case est déjà occupée."
-                  return (False,message_erreur)
-                else:
-                  position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KN1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                    #annuler_Mouvement(piece, ligne, colonne, 0)
-                    position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    position[colonne][ligne]=0 #on annule le mouvement
-                    return (False,message_erreur)
-                update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-
-              else:
-                if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
-                  message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
-                  return (False,message_erreur)
-                elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
-                  position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  possible_prise=position[colonne][ligne]
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KN1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
-                    #annuler_Mouvement(piece, ligne, colonne, possible_prise)
-                    position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    position[colonne][ligne]=possible_prise #on annule le mouvement
+                    update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                elif type_de_mouvement == "tout_droit_2":
+                  if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                    message_erreur="Cette case est déjà occupée."
                     return (False,message_erreur)
                   else:
-                    eaten_Noir(colonne,ligne)#on ajoute la pièce à la liste des pièces mangées
-                    update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KB1.Echec2(): #si clouage
+                      message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                      #annuler_Mouvement(piece, ligne, colonne, 0)
+                      position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                      position[colonne][ligne]=0 #on annule le mouvement
+                      return (False,message_erreur)
+                    update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
                 else:
-                  message_erreur="Il y a déjà une de vos pièces sur cette case."
-                  return (False,message_erreur)
-          else:
-            message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
-            return (False,message_erreur)  
-    else:
-      message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
-      return (False,message_erreur)
+                  if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
+                      #PRISE EN PASSANT
+                      if piece.ligne == 4 :
+                        if position[colonne - 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
+                          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+                          ##possible_prise = position[colonne][ligne]
+                          position[colonne][ligne] = piece  # on met à jour la liste position
+                          eaten_Blanc(colonne-1,ligne)
+                          #prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
+                          #position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
+                          #position[colonne - 1][ligne].ligne = -1
+                          update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                        if position[colonne + 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
+                          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+                          ##possible_prise = position[colonne][ligne]
+                          position[colonne][ligne] = piece  # on met à jour la liste position
+                          eaten_Blanc(colonne+1, ligne)
+                          #prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
+                          #position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
+                          #position[colonne + 1][ligne].ligne = -1
+                          update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                      else:
+                        message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
+                        return (False,message_erreur)
+                  elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    possible_prise=position[colonne][ligne]
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KB1.Echec2(): #si clouage
+                      message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                      #annuler_Mouvement(piece, ligne, colonne, possible_prise)
+                      position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                      position[colonne][ligne]=possible_prise #on annule le mouvement
+                      return (False,message_erreur)
+                    eaten_Blanc(colonne, ligne)
+                    update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                  else:
+                    message_erreur="Il y a déjà une de vos pièces sur cette case."
+                    return (False,message_erreur)
+
+              else: #si les noirs jouent
+                if type_de_mouvement == "tout_droit":
+                  if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                    message_erreur="Cette case est déjà occupée."
+                    return (False,message_erreur)
+                  else:
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KN1.Echec2(): #si clouage
+                        message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                        #annuler_Mouvement(piece, ligne, colonne, 0)
+                        position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                        position[colonne][ligne]=0 #on annule le mouvement
+                        return (False,message_erreur)
+                    update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
+                elif type_de_mouvement == "tout_droit_2":
+                  if position[colonne][ligne]!=0: #s'il y a déjà une pièce sur la case
+                    message_erreur="Cette case est déjà occupée."
+                    return (False,message_erreur)
+                  else:
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KN1.Echec2(): #si clouage
+                      message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                      #annuler_Mouvement(piece, ligne, colonne, 0)
+                      position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                      position[colonne][ligne]=0 #on annule le mouvement
+                      return (False,message_erreur)
+                  update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+
+                else:
+                  if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
+                    message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
+                    return (False,message_erreur)
+                  elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
+                    position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
+                    possible_prise=position[colonne][ligne]
+                    position[colonne][ligne]=piece #on met à jour la liste position
+                    if KN1.Echec2(): #si clouage
+                      message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                      #annuler_Mouvement(piece, ligne, colonne, possible_prise)
+                      position[piece.colonne][piece.ligne]=piece #on annule le mouvement
+                      position[colonne][ligne]=possible_prise #on annule le mouvement
+                      return (False,message_erreur)
+                    else:
+                      eaten_Noir(colonne,ligne)#on ajoute la pièce à la liste des pièces mangées
+                      update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                  else:
+                    message_erreur="Il y a déjà une de vos pièces sur cette case."
+                    return (False,message_erreur)
+            else:
+              message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
+              return (False,message_erreur)  
+      else:
+        message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
+        return (False,message_erreur)
   return (True,0)
 
 def update_coord_piece(piece,ligne,colonne): # on met à jour les coordonnées de la pièce
@@ -263,3 +293,29 @@ def eat_Piece(piece, colonne, ligne):
 def annuler_Mouvement(piece, ligne, colonne, arg):
   position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
+
+
+def ROQUEB():
+  update_coord_piece(KB1,2,0)
+  position[2][0]=KB1
+  update_coord_piece(TB1,3,0)
+  position[3][0]=TB1
+
+def ROQUEN():
+  update_coord_piece(KN1,2,7)
+  position[2][7]=KN1
+  update_coord_piece(TN2,3,7)
+  position[3][7]=TN1 
+
+def roqueB():
+  update_coord_piece(KB1,7,0)
+  position[7][0]=KB1
+  update_coord_piece(TB2,5,0)
+  position[5][0]=TB2 
+
+def roqueN():
+  update_coord_piece(KN1,7,7)
+  position[7][7]=KN1
+  update_coord_piece(TN2,5,7)
+  position[5][7]=TN2 
+

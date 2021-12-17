@@ -145,7 +145,7 @@ def cmd_bouton_valider():
     from board import position #
     print("valider")
     from main import interpreteur #
-    if not(interpreteur(coup,piece_a_bouger,couleurA)[0]==False): #
+    if not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False): #
         global LPOSITION #
         LPOSITION=fonction_lecture(position) #
         nbcoup.set(str(int(nbcoup.get())+1))
@@ -160,9 +160,15 @@ def cmd_bouton_valider():
             # print("Blanc")
         afficherPiece()
     else:
-        print(interpreteur(coup,piece_a_bouger,couleurA)[1])
-        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA)[1])
+        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[1])
         #print(message_erreur.get())
+    from main import interpreteur2
+    if coup_special.get()=='ROQUE':
+        from board import ROQUE
+        ROQUE(interpreteur2(coup,piece_a_bouger))
+    if coup_special.get()=='roque':
+        from board import roque
+        roque(interpreteur2(coup,piece_a_bouger))
 
 
 def cmd_bouton_commencer():

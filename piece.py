@@ -169,6 +169,7 @@ class Roi(Fou,Tour):
     def __init__(self, couleur, colonne, ligne, numero, echec=False):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
+        self.echec=echec
 
     def mouvement_possible(self,colonne,ligne):
             if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):
@@ -194,6 +195,7 @@ class Roi(Fou,Tour):
                 A= position[self.colonne+i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     print(True)#
+                    self.echec=True
                     return True
                 else:
                     A=False
@@ -202,6 +204,7 @@ class Roi(Fou,Tour):
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     print(i)
                     print(True)#
+                    self.echec=True
                     return True
                 else:
                     b=False
@@ -209,6 +212,7 @@ class Roi(Fou,Tour):
                 A=position[self.colonne+i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     print(True)#
+                    self.echec=True
                     return True
                 else:
                     c= False
@@ -216,6 +220,7 @@ class Roi(Fou,Tour):
                 A=position[self.colonne-i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     print(True)#
+                    self.echec=True
                     return True
                 else:
                     d = False
