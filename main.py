@@ -19,53 +19,6 @@ def interpreteur(coup,piece_a_bouger,couleurA,coup_special):
 
 
 
-def interpreteur_script(script):
-    import time
-    from new_interface import coup_special,coup,piece_a_bouger
-    from new_interface import LPOSITION, fonction_lecture, couleurA,nbcoup,message_erreur,afficherPiece
-    #from new_interface import cmd_bouton_valider
-    script = script.split(' ')
-    #L=[]
-    #for i in range(0,len(script),2):
-        #L.append([script[i].split("-"),script[i+1].split("-")])
-    for i in range(len(script)):
-        time.sleep(4)
-        coup_script=script[i].split("-")
-        #L.append(script[i].split("-"))
-        if len(coup_script)==1:
-            coup_special.set(coup_script)
-        elif len(coup_script)==2:
-            piece_a_bouger.set(coup_script[0])
-            coup.set(coup_script[1])
-        #cmd_bouton_valider()
-    
-        from board import position #
-        if not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False): #
-            global LPOSITION #
-            LPOSITION=fonction_lecture(position) #
-        
-            nbcoup.set(str(int(nbcoup.get())+1))
-            coup.set("")
-            piece_a_bouger.set("")
-            message_erreur.set("")
-            coup_special.set("")
-
-            if couleurA.get() == "Blanc": 
-                couleurA.set("Noir")
-            else:
-                couleurA.set("Blanc")
-            afficherPiece()
-        else:
-            message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[1])
-interpreteur_script("e2-e4 c7-c5 c2-c3 d7-d5 e4-d5 d8-d5 d2-d4 g8-f6 g1-f3 c8-g4 f1-e2 e7-e6 h2-h3 g4-h5 roque b8-c6 c1-e3 c5-d4 c3-d4 f8-b4")
-
-
-
-
-
-    
-    
-
 
 
 #from board import position
