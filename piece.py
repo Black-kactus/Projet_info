@@ -196,7 +196,6 @@ class Roi(Fou,Tour):
             if not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a:
                 A= position[self.colonne+i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
-                    print(True)#
                     self.echec=True
                     return True
                 else:
@@ -204,7 +203,6 @@ class Roi(Fou,Tour):
             elif not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b:
                 A= position[self.colonne-i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
-                    print(True)#
                     self.echec=True
                     return True
                 else:
@@ -212,7 +210,6 @@ class Roi(Fou,Tour):
             elif not(self.colonne+i>7) and not(self.ligne-i<0) and position[self.colonne+i][self.ligne-i] != 0 and c:
                 A=position[self.colonne+i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
-                    print(True)#
                     self.echec=True
                     return True
                 else:
@@ -220,12 +217,10 @@ class Roi(Fou,Tour):
             elif not(self.colonne-i<0) and not(self.ligne+i>7) and position[self.colonne-i][self.ligne+i] != 0 and d:   
                 A=position[self.colonne-i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
-                    print(True)#
                     self.echec=True
                     return True
                 else:
                     d = False
-            print(False)#
         return False
                 
         #Pion

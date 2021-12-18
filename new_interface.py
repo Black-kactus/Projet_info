@@ -24,6 +24,31 @@ def fonction_lecture(position):
     return(LPOSITION)
 
 
+def interpreteur_script(script):
+    import time
+    #from new_interface import coup_special,coup,piece_a_bouger
+    #from new_interface import LPOSITION, fonction_lecture, couleurA,nbcoup,message_erreur,afficherPiece
+    #from new_interface import cmd_bouton_valider
+    script = script.split(' ')
+    #L=[]
+    #for i in range(0,len(script),2):
+        #L.append([script[i].split("-"),script[i+1].split("-")])
+    for i in range(len(script)):
+        #time.sleep(10)
+        coup_script=script[i].split("-")
+        print(coup_script, type(coup_script))
+        #L.append(script[i].split("-"))
+        if len(coup_script)==1:
+            coup_special.set(coup_script[0])
+            print(coup_special.get())
+        elif len(coup_script)==2:
+            piece_a_bouger.set(coup_script[0])
+            coup.set(coup_script[1])
+        cmd_bouton_valider()
+
+
+
+
 root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
@@ -160,12 +185,19 @@ def cmd_bouton_valider():
     #while len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
         #message_erreur.set("Syntaxe incorrecte. Retentez.")
     
-    from board import position #
+    from board import position
     print("valider")
-    from main import interpreteur #
-    if not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False): #
-        global LPOSITION #
-        LPOSITION=fonction_lecture(position) #
+    from main import interpreteur
+
+    if len(coup_special.get())>10: #
+        script=coup_special.get() #
+        coup_special.set("") #
+        interpreteur_script(script) #
+
+
+    elif not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False):
+        global LPOSITION
+        LPOSITION=fonction_lecture(position)
         
         nbcoup.set(str(int(nbcoup.get())+1))
         coup.set("")
@@ -279,3 +311,8 @@ root.mainloop()
 # dicopieceN= {"TN1":"","CN1":"","FN1":"","QN1":"","KN1":"","FN2":"","CN2":"","TN2":""}
 # dicopiecepionB = {"PB1":"","PB2":"","PB3":"","PB4":"","PB5":"","PB6":"","PB7":"","PB8":""}
 # dicopiecepionN = {"PN1":"","PN2":"","PN3":"","PN4":"","PN5":"","PN6":"","PN7":"","PN8":""}
+
+
+
+
+
