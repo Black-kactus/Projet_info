@@ -149,3 +149,6 @@ def Echec_et_mat(self):
                             case.colonne=coordC
 
     return True
+
+
+a="e2-e4 e7-e5 d1-h5 b8-c6 f1-c4 g8-f6 h5-f7"

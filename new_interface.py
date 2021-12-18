@@ -36,7 +36,6 @@ def interpreteur_script(script):
     for i in range(len(script)):
         #time.sleep(10)
         coup_script=script[i].split("-")
-        print(coup_script, type(coup_script))
         #L.append(script[i].split("-"))
         if len(coup_script)==1:
             coup_special.set(coup_script[0])
@@ -185,7 +184,7 @@ def cmd_bouton_valider():
     #while len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
         #message_erreur.set("Syntaxe incorrecte. Retentez.")
     
-    from board import position
+    from board import position,KB1,KN1
     print("valider")
     from main import interpreteur
 
@@ -205,13 +204,19 @@ def cmd_bouton_valider():
         message_erreur.set("")
         coup_special.set("")
 
-        if couleurA.get() == "Blanc": 
+        if couleurA.get() == "Blanc":
+            if KN1.Echec2():
+                if KN1.Echec_et_mat():
+                    print("Echec et mat.") 
             couleurA.set("Noir")
         else:
+            if KB1.Echec2():
+                if KB1.Echec_et_mat():
+                    print("Echec et mat.") ### afficher quelque part
             couleurA.set("Blanc")
         afficherPiece()
     else:
-        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[1])
+        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())[1])
         #print(message_erreur.get())
 
 
