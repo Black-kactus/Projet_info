@@ -75,6 +75,7 @@ class Tour(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 5
+        self.Move1=False
 
     def mouvement_possible(self, colonne, ligne):  # indique si la tour peut bouger jusqu'à la case indiquée
         from board import position
@@ -170,6 +171,7 @@ class Roi(Fou,Tour):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
         self.echec=echec
+        self.Move1=False
 
     def mouvement_possible(self,colonne,ligne):
             if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):

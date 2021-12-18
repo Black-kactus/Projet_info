@@ -234,12 +234,14 @@ def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées
                   position[colonne][ligne]=possible_prise
                   return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                if (a==Tour or a==Roi):
+                  piece.Move1=True
                 if CouleurQuiJoue=='Blanc':
                   #eaten_Blanc(colonne,ligne)
                   prises_Blanc.append(possible_prise) #on met à jour la liste des prises
                   possible_prise.colonne=-1 #on change les coordonées de la pièce mangée
                   possible_prise.ligne=-1
-                else:
+                else: #noirs
                   # eaten_Noir(colonne,ligne)
                   prises_Noir.append(possible_prise)
                   possible_prise.colonne=-2 #on change les coordonées de la pièce mangée
@@ -250,13 +252,14 @@ def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées
             else: #s'il n'y a pas d'autre pièce sur la case
               position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
               position[colonne][ligne]=piece #on met à jour la liste position 
-              print(position) #
               if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                 message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                 #annuler_Mouvement(piece, ligne, colonne, 0)
                 position[piece.colonne][piece.ligne]=piece #on annule le mouvement
                 position[colonne][ligne]=0 #on annule le mouvement
                 return (False,message_erreur)
+              if (a==Tour or a==Roi):
+                  piece.Move1=True
               update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
           else:
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
@@ -392,6 +395,8 @@ def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées
     else:
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
+  if (a==Tour or a==Roi):
+    piece.Move1=True
   return (True,0)
 
 
