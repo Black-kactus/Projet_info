@@ -204,7 +204,6 @@ class Roi(Fou,Tour):
             elif not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b:
                 A= position[self.colonne-i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
-                    print(i)
                     print(True)#
                     self.echec=True
                     return True
