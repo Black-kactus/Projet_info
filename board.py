@@ -76,31 +76,122 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
   position[colonne][ligne] = arg  # on annule le mouvement
 
 
-def ROQUEB():
-  update_coord_piece(KB1,0,2)
-  position[2][0]=KB1
-  update_coord_piece(TB1,0,3)
-  position[3][0]=TB1
+def ROQUEB(): #grand roque blanc
+  if KB1.echec==True or KB1.Move1 or TB2.Move1:
+    return (False,"Vous ne pouvez plus roquer.")
+  elif position[3][0]!=0 or position[2][0]!=0 or position[1][0]!=0:
+    return (False,"Il y a des pièces sur le chemin.")
+  position[3][0]=KN1
+  l=KN1.ligne
+  c=KN1.colonne
+  update_coord_piece(KN1,0,3)
+  A=KN1.Echec2 
+  position[3][0]=0
+  position[2][0]=KN1
+  update_coord_piece(KN1,0,2)
+  B=KN1.Echec2 
+  position[2][0]=0
+  update_coord_piece(KN1,l,c)
+  if A or B:
+    return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
+  elif position[4][0]==KB1 and position[0][0]==TB1:
+    update_coord_piece(KB1,0,2)
+    position[2][0]=KB1
+    update_coord_piece(TB1,0,3)
+    position[3][0]=TB1
+    return (True,0)
+  else:
+    return (False,"Vous ne pouvez pas roquer.")
 
-def ROQUEN():
-  update_coord_piece(KN1,7,2)
+
+
+def ROQUEN(): #grand roque noir
+  if KN1.echec==True or KN1.Move1 or TN2.Move1:
+    return (False,"Vous ne pouvez plus roquer.")
+  elif position[3][7]!=0 or position[2][7]!=0 or position[1][7]!=0:
+    return (False,"Il y a des pièces sur le chemin.")
+  position[3][7]=KN1
+  l=KN1.ligne
+  c=KN1.colonne
+  update_coord_piece(KN1,7,3)
+  A=KN1.Echec2 
+  position[3][7]=0
   position[2][7]=KN1
-  update_coord_piece(TN2,7,3)
-  position[3][7]=TN1 
+  update_coord_piece(KN1,7,2)
+  B=KN1.Echec2 
+  position[2][7]=0
+  update_coord_piece(KN1,l,c)
+  if A or B:
+    return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
+  elif position[4][7]==KN1 and position[0][7]==TN1:
+    update_coord_piece(KN1,7,2)
+    position[2][7]=KN1
+    update_coord_piece(TN2,7,3)
+    position[3][7]=TN1 
+    return (True,0)
+  else:
+    return (False,"Vous ne pouvez pas roquer.")
 
-def roqueB():
-  update_coord_piece(KB1,0,6)
+
+
+def roqueB(): #petit roque blanc
+  global position
+  global KB1,TB2
+  if KB1.echec==True or KB1.Move1 or TB2.Move1: #si echec ou déjà bougé
+    return (False,"Vous ne pouvez plus roquer.")
+  elif position[5][0]!=0 or position[6][0]!=0 : #si chemin pas dégegé
+    return (False,"La case d'arrivée est déjà occupée.")
+  position[5][0]=KB1
+  l=KB1.ligne
+  c=KB1.colonne
+  update_coord_piece(KB1,0,5)
+  A=KB1.Echec2 
+  position[5][0]=0
   position[6][0]=KB1
-  update_coord_piece(TB2,0,5)
-  position[5][0]=TB2 
+  update_coord_piece(KB1,0,6)
+  B=KB1.Echec2 
+  position[6][0]=0
+  update_coord_piece(KB1,l,c)
+  if A or B: #si attaque sur le chemin
+    return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
+  elif position[4][0]==KB1 and position[7][0]==TB2: #tout bon, roque
+    update_coord_piece(KB1,0,6)
+    position[6][0]=KB1
+    update_coord_piece(TB2,0,5)
+    position[5][0]=TB2
+    return (True,0)
+  else:
+    return (False,"Vous ne pouvez pas roquer.")
+   
 
-def roqueN():
-  update_coord_piece(KN1,7,7)
+def roqueN(): #petit roque noir
+  global position
+  global KN1, TN2
+  if KN1.echec==True or KN1.Move1 or TN2.Move1: # déjà échec ou bougé
+    return (False,"Vous ne pouvez plus roquer.")
+  elif position[5][7]!=0 or position[6][7]!=0: #chemin pas libre
+    return (False,"La case d'arrivée est déjà occupée.")
+  position[5][7]=KN1
+  l=KN1.ligne
+  c=KN1.colonne
+  update_coord_piece(KN1,7,5)
+  A=KN1.Echec2 
+  position[5][7]=0
   position[6][7]=KN1
-  update_coord_piece(TN2,7,5)
-  position[5][7]=TN2 
-
-
+  update_coord_piece(KN1,7,6)
+  B=KN1.Echec2 
+  position[6][7]=0
+  update_coord_piece(KN1,l,c)
+  if A or B: #attaque sur le chemin
+    return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
+  elif position[4][7]==KN1 and position[7][7]==TN2: #tout bon, roque
+    update_coord_piece(KN1,7,7)
+    position[6][7]=KN1
+    update_coord_piece(TN2,7,5)
+    position[5][7]=TN2 
+    return (True,0)
+  else:
+    return (False,"Vous ne pouvez pas roquer.")
 
 
 
@@ -113,99 +204,16 @@ def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées
   if coup_special != "":
 
     if coup_special=="roque": #petit roque
-
       if CouleurQuiJoue=="Blanc": #blancs
-        if KB1.echec==True or KB1.Move1 or TB2.Move1: #si echec ou déjà bougé
-          return (False,"Vous ne pouvez plus roquer.")
-        elif position[5][0]!=0 or position[6][0]!=0 : #si chemin pas dégegé
-          return (False,"La case d'arrivée est déjà occupée.")
-        position[5][0]=KB1
-        l=KB1.ligne
-        c=KB1.colonne
-        update_coord_piece(KB1,0,5)
-        A=KB1.Echec2 
-        position[5][0]=0
-        position[6][0]=KB1
-        update_coord_piece(KB1,0,6)
-        B=KB1.Echec2 
-        position[6][0]=0
-        update_coord_piece(KB1,l,c)
-        if A or B: #si attaque sur le chemin
-          return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
-        elif position[4][0]==KB1 and position[7][0]==TB2: #tout bon
-          roqueB()
-        else:
-          return (False,"Vous ne pouvez pas roquer.")
-
+        return roqueB()
       else: #noirs
-        if KN1.echec==True or KN1.Move1 or TN2.Move1:
-          return (False,"Vous ne pouvez plus roquer.")
-        elif position[5][7]!=0 or position[6][7]!=0:
-          return (False,"La case d'arrivée est déjà occupée.")
-        position[5][7]=KN1
-        l=KN1.ligne
-        c=KN1.colonne
-        update_coord_piece(KN1,7,5)
-        A=KN1.Echec2 
-        position[5][7]=0
-        position[6][7]=KN1
-        update_coord_piece(KN1,7,6)
-        B=KN1.Echec2 
-        position[6][7]=0
-        update_coord_piece(KN1,l,c)
-        if A or B:
-          return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
-        elif position[4][7]==KN1 and position[7][7]==TN2:
-          roqueN()
-        else:
-          return (False,"Vous ne pouvez pas roquer.")
+        return roqueN()
 
     elif coup_special == "ROQUE": #grand roque
       if CouleurQuiJoue=="Blanc": #blancs
-        if KB1.echec==True or KB1.Move1 or TB2.Move1:
-          return (False,"Vous ne pouvez plus roquer.")
-        elif position[3][0]!=0 or position[2][0]!=0 or position[1][0]!=0:
-          return (False,"Il y a des pièces sur le chemin.")
-        position[3][0]=KN1
-        l=KN1.ligne
-        c=KN1.colonne
-        update_coord_piece(KN1,0,3)
-        A=KN1.Echec2 
-        position[3][0]=0
-        position[2][0]=KN1
-        update_coord_piece(KN1,0,2)
-        B=KN1.Echec2 
-        position[2][0]=0
-        update_coord_piece(KN1,l,c)
-        if A or B:
-          return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
-        elif position[4][0]==KB1 and position[0][0]==TB1:
-          ROQUEB()
-        else:
-          return (False,"Vous ne pouvez pas roquer.")
-
+        return ROQUEB()
       else: #noirs
-        if KN1.echec==True or KN1.Move1 or TN2.Move1:
-          return (False,"Vous ne pouvez plus roquer.")
-        elif position[3][7]!=0 or position[2][7]!=0 or position[1][7]!=0:
-          return (False,"Il y a des pièces sur le chemin.")
-        position[3][7]=KN1
-        l=KN1.ligne
-        c=KN1.colonne
-        update_coord_piece(KN1,7,3)
-        A=KN1.Echec2 
-        position[3][7]=0
-        position[2][7]=KN1
-        update_coord_piece(KN1,7,2)
-        B=KN1.Echec2 
-        position[2][7]=0
-        update_coord_piece(KN1,l,c)
-        if A or B:
-          return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
-        elif position[4][7]==KN1 and position[0][7]==TN1:
-          ROQUEN()
-        else:
-          return (False,"Vous ne pouvez pas roquer.")
+        return ROQUEN()
 
   elif piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
