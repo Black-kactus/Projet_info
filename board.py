@@ -92,7 +92,7 @@ def ROQUEB(): #grand roque blanc
   B=KN1.Echec2()
   position[2][0]=0
   update_coord_piece(KN1,l,c)
-  if A or B or C: #attaques en chemin
+  if A or B : #attaques en chemin
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
   elif position[4][0]==KB1 and position[0][0]==TB1: #tout bon, roque
     update_coord_piece(KB1,0,2)
