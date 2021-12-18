@@ -170,6 +170,7 @@ def cmd_bouton_valider():
         nbcoup.set(str(int(nbcoup.get())+1))
         coup.set("")
         piece_a_bouger.set("")
+        message_erreur.set("")
 
         if couleurA.get() == "Blanc": 
             couleurA.set("Noir")
