@@ -193,8 +193,7 @@ def cmd_bouton_valider():
         coup_special.set("") #
         interpreteur_script(script) #
 
-
-    elif not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False):
+    elif interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]:
         global LPOSITION
         LPOSITION=fonction_lecture(position)
         
@@ -215,9 +214,9 @@ def cmd_bouton_valider():
                     print("Echec et mat.") ### afficher quelque part
             couleurA.set("Blanc")
         afficherPiece()
-    else:
+    elif interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False:
         message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())[1])
-        #print(message_erreur.get())
+        print(message_erreur.get())
 
 
 def cmd_bouton_commencer():
