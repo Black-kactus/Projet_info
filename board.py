@@ -282,6 +282,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
             return (False,message_erreur)
             
         else: #cas spécial du pion
+          print(piece.mouvement_possible(colonne,ligne))
           legalite = piece.mouvement_possible(colonne,ligne)[0]
           type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
           if legalite:

@@ -138,30 +138,42 @@ class Pion(Piece):
     def mouvement_possible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
         from board import position
         if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
-            return False
+            return (False,0)
         elif colonne == self.colonne and ligne == self.ligne:  # si le pion ne bouge pas
-            return True
-        if colonne != self.colonne and ligne == self.ligne:
-            return False
+            return (True,"statique")
+        elif colonne != self.colonne and ligne == self.ligne: #mouvement horizontal
+            return (False,0)
         else:
             if colonne == self.colonne:
-                if ligne == (self.ligne + 1) and self._couleur == "Blanc":
+                if ligne == (self.ligne + 1) and self._couleur == "Blanc" :
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit")
+                    else:
+                        return (False,0)
                 if self.ligne == 1 and ligne == 3 and self._couleur == "Blanc": # premier mouvement du pion
                     if position[colonne][ligne - 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
+                    else:
+                        return (False,0)
                 if ligne == (self.ligne - 1) and self._couleur == "Noir":
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit")
+                    else:
+                        return (False,0)
                 if ligne == 4 and self.ligne == 6 and self._couleur == "Noir": # premier mouvement du pion
                     if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
-            if colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
+                    else:
+                        return (False,0)
+            elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
                     return (True,"diagonale")
+                else:
+                        return (False,0)
                 if ligne == (self.ligne - 1) and self._couleur == "Noir":
                     return (True,"diagonale")
+                else:
+                        return (False,0)
             else:
                 return (False,0)
 
@@ -287,46 +299,76 @@ class Roi(Fou,Tour):
                         L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
                         a=0
                         for case in L:
-                            if position[case[0]][case[1]]!=0:
-                                a=1
-                                coordL=position[case[0]][case[1]].ligne
-                                coordC=position[case[0]][case[1]].colonne
-                            if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                return False
-                            position=archive_pos[:]
-                            prises_Blanc=archive_prisesB[:]
-                            prises_Noir=archive_prisesN[:]
-                            self.ligne=ligne
-                            self.colonne=colonne
-                            if a==1:
-                                position[case[0]][case[1]].ligne=coordL
-                                position[case[0]][case[1]].colonne=coordC
+                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if position[case[0]][case[1]]!=0:
+                                    a=1
+                                    mangee=position[case[0]][case[1]]
+                                    coordL=position[case[0]][case[1]].ligne
+                                    coordC=position[case[0]][case[1]].colonne
+                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    return False
+                                position=archive_pos[:]
+                                prises_Blanc=archive_prisesB[:]
+                                prises_Noir=archive_prisesN[:]
+                                self.ligne=ligne
+                                self.colonne=colonne
+                                if a==1:
+                                    position[case[0]][case[1]]=mangee
+                                    position[case[0]][case[1]].ligne=coordL
+                                    position[case[0]][case[1]].colonne=coordC
 
                     elif type(piece)==Pion:
                         if piece._couleur=="Blanc":
                             L=[[self.colonne,self.ligne + 1],[self.colonne - 1,self.ligne + 1],[self.colonne + 1,self.ligne + 1]]
                             a=0
                             for case in L:
-                                if position[case[0]][case[1]]!=0:
-                                    a=1
-                                    coordL=position[case[0]][case[1]].ligne
-                                    coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                    return False
-                                position=archive_pos[:]
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]].ligne=coordL
-                                    position[case[0]][case[1]].colonne=coordC
+                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                    if position[case[0]][case[1]]!=0:
+                                        a=1
+                                        mangee=position[case[0]][case[1]]
+                                        coordL=position[case[0]][case[1]].ligne
+                                        coordC=position[case[0]][case[1]].colonne
+                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                        return False
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
                         if piece._couleur=="Noir":
                             L=[[self.colonne,self.ligne - 1],[self.colonne - 1,self.ligne - 1],[self.colonne + 1,self.ligne - 1]]                    
                             a=0
                             for case in L:
+                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                    if position[case[0]][case[1]]!=0:
+                                        a=1
+                                        mangee=position[case[0]][case[1]]
+                                        coordL=position[case[0]][case[1]].ligne
+                                        coordC=position[case[0]][case[1]].colonne
+                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                        return False
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
+
+                    elif type(piece)==Cavalier:
+                        L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne - 1]]
+                        a=0
+                        for case in L:
+                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
                                 if position[case[0]][case[1]]!=0:
                                     a=1
+                                    mangee=position[case[0]][case[1]]
                                     coordL=position[case[0]][case[1]].ligne
                                     coordC=position[case[0]][case[1]].colonne
                                 if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
@@ -337,27 +379,9 @@ class Roi(Fou,Tour):
                                 self.ligne=ligne
                                 self.colonne=colonne
                                 if a==1:
+                                    position[case[0]][case[1]]=mangee
                                     position[case[0]][case[1]].ligne=coordL
                                     position[case[0]][case[1]].colonne=coordC
-
-                    elif type(piece)==Cavalier:
-                        L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2][self.ligne + 1],[self.colonne + 2][self.ligne + 1],[self.colonne + 2][self.ligne - 1]]
-                        a=0
-                        for case in L:
-                            if position[case[0]][case[1]]!=0:
-                                a=1
-                                coordL=position[case[0]][case[1]].ligne
-                                coordC=position[case[0]][case[1]].colonne
-                            if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                return False
-                            position=archive_pos[:]
-                            prises_Blanc=archive_prisesB[:]
-                            prises_Noir=archive_prisesN[:]
-                            self.ligne=ligne
-                            self.colonne=colonne
-                            if a==1:
-                                position[case[0]][case[1]].ligne=coordL
-                                position[case[0]][case[1]].colonne=coordC
 
                     if type(piece)==Fou or type(piece)==Dame:
                         A=1
@@ -365,58 +389,67 @@ class Roi(Fou,Tour):
                             L=[[self.colonne+i,self.ligne+i],[self.colonne-i,self.ligne-i],[self.colonne+i,self.ligne-i],[self.colonne-i,self.ligne+i]]
                             a=0
                             for case in L:
-                                if position[case[0]][case[1]]!=0:
-                                    a=1
-                                    coordL=position[case[0]][case[1]].ligne
-                                    coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                    return False
-                                position=archive_pos[:]
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]].ligne=coordL
-                                    position[case[0]][case[1]].colonne=coordC
+                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                    if position[case[0]][case[1]]!=0:
+                                        a=1
+                                        mangee=position[case[0]][case[1]]
+                                        coordL=position[case[0]][case[1]].ligne
+                                        coordC=position[case[0]][case[1]].colonne
+                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                        return False
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
                     
                     if type(piece)==Tour or type(piece)==Dame:
                         for i in range(max(self.colonne,7-self.colonne), 8): #colonnes
                             L=[[self.colonne+i,self.ligne],[self.colonne-i,self.ligne]]
                             a=0
                             for case in L:
-                                if position[case[0]][case[1]]!=0:
-                                    a=1
-                                    coordL=position[case[0]][case[1]].ligne
-                                    coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                    return False
-                                position=archive_pos[:]
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]].ligne=coordL
-                                    position[case[0]][case[1]].colonne=coordC
+                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                    if position[case[0]][case[1]]!=0:
+                                        a=1
+                                        mangee=position[case[0]][case[1]]
+                                        coordL=position[case[0]][case[1]].ligne
+                                        coordC=position[case[0]][case[1]].colonne
+                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                        return False
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
                         for i in range(max(self.ligne,7-self.ligne), 8): #lignes
                             L=[[self.colonne,self.ligne+i],[self.colonne,self.ligne-i]]
                             a=0
                             for case in L:
-                                if position[case[0]][case[1]]!=0:
-                                    a=1
-                                    coordL=position[case[0]][case[1]].ligne
-                                    coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
-                                    return False
-                                position=archive_pos[:]
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]].ligne=coordL
-                                    position[case[0]][case[1]].colonne=coordC
+                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                    if position[case[0]][case[1]]!=0:
+                                        a=1
+                                        mangee=position[case[0]][case[1]]
+                                        coordL=position[case[0]][case[1]].ligne
+                                        coordC=position[case[0]][case[1]].colonne
+                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                        return False
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
         return True
 
         

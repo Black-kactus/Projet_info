@@ -188,37 +188,36 @@ def cmd_bouton_valider():
     print("valider")
     from main import interpreteur
 
-    #if len(coup_special.get())>10: #
-        #script=coup_special.get() #
-        #coup_special.set("") #
-        #interpreteur_script(script) #
-    result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
-    print(result)
-    if result[0]:
-        global LPOSITION
-        LPOSITION=fonction_lecture(position)
-        
-        nbcoup.set(str(int(nbcoup.get())+1))
-        coup.set("")
-        piece_a_bouger.set("")
-        message_erreur.set("")
-        coup_special.set("")
+    if len(coup_special.get())>10: #
+        script=coup_special.get() #
+        coup_special.set("") #
+        interpreteur_script(script) #
+    else:
+        result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
+        if result[0]:
+            global LPOSITION
+            LPOSITION=fonction_lecture(position)
+            
+            nbcoup.set(str(int(nbcoup.get())+1))
+            coup.set("")
+            piece_a_bouger.set("")
+            message_erreur.set("")
+            coup_special.set("")
 
-        if couleurA.get() == "Blanc":
-            #if KN1.Echec2():
-                #if KN1.Echec_et_mat():
-                    #print("Echec et mat.") 
-            couleurA.set("Noir")
-        else:
-            #if KB1.Echec2():
-                #if KB1.Echec_et_mat():
-                    #print("Echec et mat.") ### afficher quelque part
-            couleurA.set("Blanc")
-        afficherPiece()
-    elif result[0]==False:
-        message_erreur.set(result[1])
-        #print(message_erreur.get())
-        print(False)
+            if couleurA.get() == "Blanc":
+                if KN1.Echec2():
+                    if KN1.Echec_et_mat():
+                        print("Echec et mat.") 
+                couleurA.set("Noir")
+            else:
+                if KB1.Echec2():
+                    if KB1.Echec_et_mat():
+                        print("Echec et mat.") ### afficher quelque part
+                couleurA.set("Blanc")
+            afficherPiece()
+        elif result[0]==False:
+            message_erreur.set(result[1])
+            #print(message_erreur.get())
 
 
 def cmd_bouton_commencer():
