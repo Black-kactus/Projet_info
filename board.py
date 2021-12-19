@@ -1,3 +1,4 @@
+from new_interface import coup_special
 from piece import Cavalier, Dame, Fou, Pion, Roi, Tour
 
 
@@ -142,29 +143,16 @@ def mouvement(piece,case,couleurA): #case = liste des 2 coordonées de la case :
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
-                    #PRISE EN PASSANT
-                    if piece.ligne == 4 :
-                      if position[colonne - 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
-                        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                        ##possible_prise = position[colonne][ligne]
-                        position[colonne][ligne] = piece  # on met à jour la liste position
-                        eaten_Blanc(colonne-1,ligne)
-                        #prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
-                        #position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-                        #position[colonne - 1][ligne].ligne = -1
-                        update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-                      if position[colonne + 1][ligne]._couleur!=CouleurQuiJoue and type(position[colonne - 1][ligne])==Pion:
-                        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                        ##possible_prise = position[colonne][ligne]
-                        position[colonne][ligne] = piece  # on met à jour la liste position
-                        eaten_Blanc(colonne+1, ligne)
-                        #prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
-                        #position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-                        #position[colonne + 1][ligne].ligne = -1
-                        update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
-                    else:
-                      message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
-                      return (False,message_erreur)
+                  #special = coup_special.get()
+                  #if special == "PEP":
+                    #if prise_en_passant(piece, colonne, ligne, CouleurQuiJoue) == False:
+                      #message_erreur = "Vous ne pouvez pas faire la prise en passant."
+                      #return (False, message_erreur)
+                    #else:
+                     # prise_en_passant(piece, colonne, ligne, CouleurQuiJoue)
+                  #else:
+                    message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
+                    return (False,message_erreur)
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne]
@@ -262,3 +250,43 @@ def eat_Piece(piece, colonne, ligne):
 def annuler_Mouvement(piece, ligne, colonne, arg):
   position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
+
+def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
+  if CouleurQuiJoue == "Blanc":  # si les blancs jouent
+    if piece.ligne == 4:
+      if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
+        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+        position[colonne][ligne] = piece  # on la met sur la nouvelle case
+        eaten_Blanc(colonne - 1, ligne)
+      # prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
+      # position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
+      # position[colonne - 1][ligne].ligne = -1
+        update_coord_piece(piece, ligne, colonne)
+      if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
+        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+        position[colonne][ligne] = piece  # on la met sur la nouvelle case
+        eaten_Blanc(colonne + 1, ligne)
+      # prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
+      # position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
+      # position[colonne + 1][ligne].ligne = -1
+        update_coord_piece(piece, ligne, colonne)
+      else:
+        return False
+    else:
+      return False
+  else:
+    if piece.ligne == 5:
+      if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
+        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+        position[colonne][ligne] = piece  # on la met sur la nouvelle case
+        eaten_Blanc(colonne - 1, ligne)
+        update_coord_piece(piece, ligne, colonne)
+      if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
+        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+        position[colonne][ligne] = piece  # on la met sur la nouvelle case
+        eaten_Blanc(colonne + 1, ligne)
+        update_coord_piece(piece, ligne, colonne)
+      else:
+        return False
+    else:
+      return False
