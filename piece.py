@@ -201,23 +201,14 @@ class Roi(Fou,Tour):
     
     def Echec2(self):
         from board import position
-        print(position) #
         #diagonales
         A=1
         a,b,c,d=True,True,True,True
         for i in range(1,min(max(self.colonne,7-self.colonne),max(self.ligne,7-self.ligne))+1):
-            print(i,c)
-            if self.colonne+i<=7 and self.ligne-i>=0:
-                print(i,position[self.colonne+i][self.ligne-i])
-                print("condition 1",not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a)
-                print("condition 2",not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b)
-                print("condition 3",self.colonne+i<=7 and self.ligne-i>=0 and position[self.colonne+i][self.ligne-i] != 0 and c)
-                print("condition 4",not(self.colonne-i<0) and not(self.ligne+i>7) and position[self.colonne-i][self.ligne+i] != 0 and d)
             if not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a:
                 A= position[self.colonne+i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago 1") #
                     return True
                 else:
                     a=False
@@ -225,16 +216,13 @@ class Roi(Fou,Tour):
                 A= position[self.colonne-i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago 2") #
                     return True
                 else:
                     b=False
             if self.colonne+i<=7 and self.ligne-i>=0 and position[self.colonne+i][self.ligne-i] != 0 and c:
                 A=position[self.colonne+i][self.ligne-i]
-                print(i,(type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur)
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago 3", i) #
                     return True
                 else:
                     c= False
@@ -242,7 +230,6 @@ class Roi(Fou,Tour):
                 A=position[self.colonne-i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago 4") #
                     return True
                 else:
                     d = False
@@ -250,16 +237,13 @@ class Roi(Fou,Tour):
         #Pion
         if self._couleur=="Blanc" and self.ligne!=7:
             if (self.colonne!=7 and type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (self.colonne!=0 and type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
-                print("pion") #
                 return True
         elif self._couleur=="Noir" and self.ligne!=0:
             if (self.colonne!=7 and type(position[self.colonne+1][self.ligne-1])==Pion and position[self.colonne+1][self.ligne-1]._couleur=="Blanc") or (self.colonne!=0 and type(position[self.colonne-1][self.ligne-1])==Pion and position[self.colonne-1][self.ligne-1]._couleur=="Blanc") :
-                print("pion") #
                 return True
 
         #cavalier
         if (not(self.colonne - 2 < 0) and not(self.ligne + 1 > 7) and type(position[self.colonne - 2][self.ligne + 1])==Cavalier and position[self.colonne - 2][self.ligne + 1]._couleur != self._couleur) or (not(self.colonne - 2 < 0) and not(self.ligne - 1 <  0) and type(position[self.colonne - 2][self.ligne - 1]) == Cavalier and position[self.colonne - 2][self.ligne - 1]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne + 2 > 7) and type(position[self.colonne - 1][self.ligne + 2])==Cavalier and position[self.colonne - 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne - 2 < 0) and type(position[self.colonne - 1][self.ligne - 2])==Cavalier and position[self.colonne - 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne + 2 > 7) and type(position[self.colonne + 1][self.ligne + 2])==Cavalier and position[self.colonne + 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne - 2 < 0) and type(position[self.colonne + 1][self.ligne - 2])==Cavalier and position[self.colonne + 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne + 1 > 7) and type(position[self.colonne + 2][self.ligne + 1])==Cavalier and position[self.colonne + 2][self.ligne + 1]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne - 1 < 0) and type(position[self.colonne + 2][self.ligne - 1])==Cavalier and position[self.colonne + 2][self.ligne - 1]._couleur!=self._couleur) :
-            print("cavalier") #
             return True
 
         #colonnes/lignes
@@ -269,14 +253,12 @@ class Roi(Fou,Tour):
             if not(self.colonne+i>7) and position[self.colonne+i][self.ligne] != 0 and a:
                 A=position[self.colonne+i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("colonne") #
                     return True
                 else:
                     a=False
             if not(self.colonne-i<0) and position[self.colonne-i][self.ligne] != 0 and b: 
                 A= position[self.colonne-i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("colonne") #
                     return True
                 else:
                     b=False
@@ -286,20 +268,17 @@ class Roi(Fou,Tour):
             if not(self.ligne+i>7) and position[self.colonne][self.ligne+i] != 0 and c:
                 A=position[self.colonne][self.ligne+i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("ligne") #
                     return True
                 else:
                     c=False
             if not(self.ligne-i<0) and position[self.colonne][self.ligne-i] != 0 and d:
                 A=position[self.colonne][self.ligne-i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("ligne") #
                     return True
                 else:
                     d=False
         #Roi
         if (not(self.ligne+1 > 7) and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (not(self.ligne-1 < 0) and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (not (self.colonne+1 > 7) and type(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and not(self.ligne-1 < 0) and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne+1 > 7) and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (not (self.colonne-1 < 0) and not(self.ligne+1 > 7) and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne-1 < 0) and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
-            print("roi") #
             return True
 
         return False
@@ -309,7 +288,6 @@ class Roi(Fou,Tour):
         from board import position,mouvement,prises_Blanc,prises_Noir
         for colonne in position:
             for piece in colonne:
-                print("piece",piece)
                 if piece!=0 and piece._couleur == self._couleur:
                     archive_pos=position[:]
                     archive_prisesB=prises_Blanc[:]

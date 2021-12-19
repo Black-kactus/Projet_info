@@ -2,7 +2,6 @@ def interpreteur(coup,piece_a_bouger,couleurA,coup_special):
     from board import mouvement,position
     position_ou_aller=coup.get()
     piece_bougee=piece_a_bouger.get()
-    print(coup_special)
     if coup_special != "roque" and coup_special != "ROQUE":
         colonne_P=ord(position_ou_aller[0])-97 #position de la case d'arrivée
         ligne_P=int(position_ou_aller[1])-1 #position de la case d'arrivée
