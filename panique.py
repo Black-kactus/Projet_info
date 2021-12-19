@@ -131,12 +131,12 @@ def afficherPiece():
         for j in range(len(LPOSITION)):
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
-            if couleurA.get() == "Blanc" and eval(nbcoup.get()) > 0:
+            if couleurA.get() == "Noir":
                 ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
             else : 
                 ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
     
-    if couleurA.get() == "Blanc" and eval(nbcoup.get()) > 0:
+    if couleurA.get() == "Blanc":
         for k in range(0,18,2):
             # L = ["","A",'B',"C","D","E","F",'G','H']
             L = ["","H","G",'F',"E","D","C","B",'A']
@@ -150,20 +150,13 @@ def afficherPiece():
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def cmd_bouton_valider():
-    # print("valider")
-    #from main import interpreteur
-    #interpreteur(coup,deplacement) 
-    #global LPOSITION 
-    #LPOSITION=fonction_lecture(position) 
-    afficherPiece()
     nbcoup.set(str(int(nbcoup.get())+1))
     if couleurA.get() == "Blanc": 
         couleurA.set("Noir")
-        # print("Noir")
 
     else:
         couleurA.set("Blanc")
-        # print("Blanc")
+    afficherPiece()
 
 def cmd_bouton_commencer():
     nbcoup.set("0")
