@@ -72,10 +72,10 @@ class Fou(Piece):
         return True
 
 class Tour(Piece):
-    def __init__(self, couleur, colonne, ligne, numero):
+    def __init__(self, couleur, colonne, ligne, numero,Move1=False):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 5
-        self.Move1=False
+        self.Move1=Move1
 
     def mouvement_possible(self, colonne, ligne):  # indique si la tour peut bouger jusqu'à la case indiquée
         from board import position
@@ -453,8 +453,120 @@ class Roi(Fou,Tour):
 
         
         
+def promoDameB(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Dame and p._couleur=="Blanc":
+                cpt+=1
+
+    str = f"DB{cpt+1}"
+    exec("%s = %d" % (str,Dame("Blanc",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Dame("Blanc",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
+    #DBP=Dame("Blanc",piece.colonne,piece.ligne,cpt)
 
 
+def promoTourB(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Tour and p._couleur=="Blanc":
+                cpt+=1
+
+    str = f"TB{cpt+1}"
+    exec("%s = %d" % (str,Tour("Blanc",piece.colonne,piece.ligne,cpt,True)))
+    position[piece.colonne][piece.ligne]=Tour("Blanc",piece.colonne,piece.ligne,cpt,True)
+    piece.colonne=-3
+    piece.ligne=-3
+    
+def promoFouB(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Fou and p._couleur=="Blanc":
+                cpt+=1
+
+    str = f"FB{cpt+1}"
+    exec("%s = %d" % (str,Fou("Blanc",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Fou("Blanc",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
+
+def promoCavalierB(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Cavalier and p._couleur=="Blanc":
+                cpt+=1
+
+    str = f"CB{cpt+1}"
+    exec("%s = %d" % (str,Cavalier("Blanc",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Cavalier("Blanc",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
+
+
+def promoDameN(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Dame and p._couleur=="Noir":
+                cpt+=1
+
+    str = f"DN{cpt+1}"
+    exec("%s = %d" % (str,Dame("Noir",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Dame("Noir",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
+
+def promoTourN(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Tour and p._couleur=="Noir":
+                cpt+=1
+
+    str = f"TN{cpt+1}"
+    exec("%s = %d" % (str,Tour("Noir",piece.colonne,piece.ligne,cpt,True)))
+    position[piece.colonne][piece.ligne]=Tour("Noir",piece.colonne,piece.ligne,cpt,True)
+    piece.colonne=-3
+    piece.ligne=-3
+    
+def promoFouN(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Fou and p._couleur=="Noir":
+                cpt+=1
+
+    str = f"FN{cpt+1}"
+    exec("%s = %d" % (str,Fou("Noir",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Fou("Noir",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
+
+def promoCavalierN(piece):
+    from board import position
+    cpt=0
+    for colonne in position:
+        for p in colonne:
+            if type(p)==Cavalier and p._couleur=="Noir":
+                cpt+=1
+
+    str = f"CN{cpt+1}"
+    exec("%s = %d" % (str,Cavalier("Noir",piece.colonne,piece.ligne,cpt)))
+    position[piece.colonne][piece.ligne]=Cavalier("Noir",piece.colonne,piece.ligne,cpt)
+    piece.colonne=-3
+    piece.ligne=-3
 
 # à faire pour chaque pièce :
 # def mouvementpossible (self,case) :

@@ -12,7 +12,7 @@ def interpreteur(coup,piece_a_bouger,couleurA,coup_special):
         ligne_P=1 #position de la case d'arrivée
         colonne_A=1 #position de la piece à bouger
         ligne_A=1 #position de la pièce à bouger
-    return (mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA,coup_special))
+    return (mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA,coup_special),position[colonne_P][ligne_P])
 
 
 

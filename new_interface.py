@@ -173,6 +173,45 @@ def afficherPiece():
             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
+choix_de_promotion = StringVar()
+choix_de_promotion.set("Indiquez la pièce.")
+
+def open_popup():
+    top= Toplevel(root)
+    top.geometry("750x250")
+    top.title("Promotion de pion")
+    Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
+    #Label_Choix_de_promotion= ttk.Label(top, text= "En quoi voulez-vous changer votre pion ?",relief="solid",anchor=CENTER)
+    #Label_Choix_de_promotion.grid(column=20, row=8, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=20, padx=20)
+    #Entry_Choix_de_promotion= ttk.Entry(top, textvariable= choix_de_promotion)
+    #Entry_Choix_de_promotion.grid(column=22,row=8, columnspan=int(largeur), rowspan=1,sticky=(N,S,E,W),pady=20, padx=20)
+    Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame).pack()
+    #Bouton_dame.grid(column=20,row=25, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=20, padx=1)
+    Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tour).pack()
+    #Bouton_Tour.grid(column=20,row=30, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=2, padx=1)
+    Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fou).pack()
+    Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
+    Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion).pack()
+
+def cmd_bouton_dame():
+    choix_de_promotion.set("Dame")
+    print("Dame")
+
+def cmd_bouton_tour():
+    choix_de_promotion.set("Tour")
+    print("Tour")
+
+def cmd_bouton_fou():
+    choix_de_promotion="Fou"
+    print("Fou")
+
+def cmd_bouton_cavalier():
+    choix_de_promotion.set("Cavalier")
+    print("Cavalier")
+
+def cmd_bouton_pion():
+    choix_de_promotion.set("Pion")
+    print("Pion")
 
 def cmd_bouton_valider():
     #lettres = "a,b,c,d,e,f,g,h"
@@ -192,12 +231,17 @@ def cmd_bouton_valider():
         script=coup_special.get() #
         coup_special.set("") #
         interpreteur_script(script) #
+
+    elif coup_special.get()=="promotion":
+        open_popup()
+
+
     else:
         result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
         if result[0]:
             global LPOSITION
             LPOSITION=fonction_lecture(position)
-            
+            ligne=coup.get()[1]
             nbcoup.set(str(int(nbcoup.get())+1))
             coup.set("")
             piece_a_bouger.set("")
@@ -208,14 +252,37 @@ def cmd_bouton_valider():
                 if KN1.Echec2():
                     print("Echec noir") 
                     if KN1.Echec_et_mat():
-                        print("Echec et mat.") 
+                        print("Echec et mat.")
+                if ligne=="8": #promotion de pion
+                    open_popup()
+                    from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
+                    if choix_de_promotion=="Dame":
+                        promoDameB(result[2])
+                    elif choix_de_promotion=="Tour":
+                        promoTourB(result[2])
+                    elif choix_de_promotion=="Fou":
+                        promoFouB(result[2])
+                    elif choix_de_promotion=="Cavalier":
+                        promoCavalierB(result[2])
                 couleurA.set("Noir")
-            else:
+            else: #noirs
                 if KB1.Echec2():
                     print("Echec blanc") 
                     if KB1.Echec_et_mat():
                         print("Echec et mat.") ### afficher quelque part
+                if ligne=="1": #promotion de pion
+                    open_popup()
+                    from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
+                    if choix_de_promotion=="Dame":
+                        promoDameN(result[2])
+                    elif choix_de_promotion=="Tour":
+                        promoTourN(result[2])
+                    elif choix_de_promotion=="Fou":
+                        promoFouN(result[2])
+                    elif choix_de_promotion=="Cavalier":
+                        promoCavalierN(result[2])
                 couleurA.set("Blanc")
+            LPOSITION=fonction_lecture(position)
             afficherPiece()
         elif result[0]==False:
             message_erreur.set(result[1])
