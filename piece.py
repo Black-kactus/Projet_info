@@ -150,30 +150,31 @@ class Pion(Piece):
                         return (True,"tout_droit")
                     else:
                         return (False,0)
-                if self.ligne == 1 and ligne == 3 and self._couleur == "Blanc": # premier mouvement du pion
+                elif self.ligne == 1 and ligne == 3 and self._couleur == "Blanc": # premier mouvement du pion
                     if position[colonne][ligne - 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
                     else:
                         return (False,0)
-                if ligne == (self.ligne - 1) and self._couleur == "Noir":
+                elif ligne == (self.ligne - 1) and self._couleur == "Noir":
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit")
                     else:
                         return (False,0)
-                if ligne == 4 and self.ligne == 6 and self._couleur == "Noir": # premier mouvement du pion
+                elif ligne == 4 and self.ligne == 6 and self._couleur == "Noir": # premier mouvement du pion
                     if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
                     else:
                         return (False,0)
+                else:
+                    return (False,0)
             elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
                     return (True,"diagonale")
-                else:
-                        return (False,0)
-                if ligne == (self.ligne - 1) and self._couleur == "Noir":
+
+                elif ligne == (self.ligne - 1) and self._couleur == "Noir":
                     return (True,"diagonale")
                 else:
-                        return (False,0)
+                    return (False,0)
             else:
                 return (False,0)
 

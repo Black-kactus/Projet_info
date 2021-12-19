@@ -206,11 +206,13 @@ def cmd_bouton_valider():
 
             if couleurA.get() == "Blanc":
                 if KN1.Echec2():
+                    print("Echec noir")
                     if KN1.Echec_et_mat():
                         print("Echec et mat.") 
                 couleurA.set("Noir")
             else:
                 if KB1.Echec2():
+                    print("Echec blanc")
                     if KB1.Echec_et_mat():
                         print("Echec et mat.") ### afficher quelque part
                 couleurA.set("Blanc")
