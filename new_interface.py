@@ -188,12 +188,13 @@ def cmd_bouton_valider():
     print("valider")
     from main import interpreteur
 
-    if len(coup_special.get())>10: #
-        script=coup_special.get() #
-        coup_special.set("") #
-        interpreteur_script(script) #
-
-    elif interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]:
+    #if len(coup_special.get())>10: #
+        #script=coup_special.get() #
+        #coup_special.set("") #
+        #interpreteur_script(script) #
+    result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
+    print(result)
+    if result[0]:
         global LPOSITION
         LPOSITION=fonction_lecture(position)
         
@@ -204,19 +205,20 @@ def cmd_bouton_valider():
         coup_special.set("")
 
         if couleurA.get() == "Blanc":
-            if KN1.Echec2():
-                if KN1.Echec_et_mat():
-                    print("Echec et mat.") 
+            #if KN1.Echec2():
+                #if KN1.Echec_et_mat():
+                    #print("Echec et mat.") 
             couleurA.set("Noir")
         else:
-            if KB1.Echec2():
-                if KB1.Echec_et_mat():
-                    print("Echec et mat.") ### afficher quelque part
+            #if KB1.Echec2():
+                #if KB1.Echec_et_mat():
+                    #print("Echec et mat.") ### afficher quelque part
             couleurA.set("Blanc")
         afficherPiece()
-    elif interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False:
-        message_erreur.set(interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())[1])
-        print(message_erreur.get())
+    elif result[0]==False:
+        message_erreur.set(result[1])
+        #print(message_erreur.get())
+        print(False)
 
 
 def cmd_bouton_commencer():
