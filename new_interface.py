@@ -36,7 +36,7 @@ def interpreteur_script(script):
     #for i in range(0,len(script),2):
         #L.append([script[i].split("-"),script[i+1].split("-")])
     for i in range(len(script)):
-        #time.sleep(10)
+        time.sleep(5)
         coup_script=script[i].split("-")
         #L.append(script[i].split("-"))
         if len(coup_script)==1:
@@ -354,7 +354,7 @@ def cmd_bouton_valider():
     print("valider")
     from main import interpreteur
     global LPOSITION
-    
+
     result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
     if result[0]:
         #global LPOSITION
