@@ -256,14 +256,8 @@ def open_popup():
     top.geometry("750x250")
     top.title("Promotion de pion")
     Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
-    #Label_Choix_de_promotion= ttk.Label(top, text= "En quoi voulez-vous changer votre pion ?",relief="solid",anchor=CENTER)
-    #Label_Choix_de_promotion.grid(column=20, row=8, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=20, padx=20)
-    #Entry_Choix_de_promotion= ttk.Entry(top, textvariable= choix_de_promotion)
-    #Entry_Choix_de_promotion.grid(column=22,row=8, columnspan=int(largeur), rowspan=1,sticky=(N,S,E,W),pady=20, padx=20)
     Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame).pack()
-    #Bouton_dame.grid(column=20,row=25, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=20, padx=1)
     Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tour).pack()
-    #Bouton_Tour.grid(column=20,row=30, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=2, padx=1)
     Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fou).pack()
     Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
     Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion).pack()
@@ -301,8 +295,8 @@ def cmd_bouton_valider():
     from board import position,KB1,KN1
     print("valider")
     from main import interpreteur
-
-    if len(coup_special.get())>10: #
+    global LPOSITION
+    if len(coup_special.get())>10: #script
         script=coup_special.get() #
         coup_special.set("") #
         interpreteur_script(script) #
@@ -310,28 +304,28 @@ def cmd_bouton_valider():
     elif coup_special.get()=="promotion":
         open_popup()
 
-    elif not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False):
-        global LPOSITION
-        LPOSITION=fonction_lecture(position)
-        
-        nbcoup.set(str(int(nbcoup.get())+1))
-        coup.set("")
-        piece_a_bouger.set("")
-        message_erreur.set("")
-        coup_special.set("")
+        #elif not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False):
+            #global LPOSITION
+            #LPOSITION=fonction_lecture(position)
+            
+            #nbcoup.set(str(int(nbcoup.get())+1))
+            #coup.set("")
+            #piece_a_bouger.set("")
+            #message_erreur.set("")
+            #coup_special.set("")
 
-        if couleurA.get() == "Blanc": 
-            couleurA.set("Noir")
-        else:
-            couleurA.set("Blanc")
-        
-        afficherPiece()
-        actualiserPiecesPrises()
-        afficherPiecesPrises()
+            #if couleurA.get() == "Blanc": 
+                #couleurA.set("Noir")
+            #else:
+                #couleurA.set("Blanc")
+            
+            #afficherPiece()
+            #actualiserPiecesPrises()
+            #afficherPiecesPrises()
     else:
         result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
         if result[0]:
-            global LPOSITION
+            #global LPOSITION
             LPOSITION=fonction_lecture(position)
             ligne=coup.get()[1]
             nbcoup.set(str(int(nbcoup.get())+1))
@@ -376,6 +370,8 @@ def cmd_bouton_valider():
                 couleurA.set("Blanc")
             LPOSITION=fonction_lecture(position)
             afficherPiece()
+            actualiserPiecesPrises()
+            afficherPiecesPrises()
         elif result[0]==False:
             message_erreur.set(result[1])
             #print(message_erreur.get())
