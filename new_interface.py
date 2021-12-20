@@ -262,6 +262,17 @@ def open_popup():
     Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
     Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion).pack()
 
+def open_popup_perdu():
+    top= Toplevel(root)
+    top.geometry("750x250")
+    top.title("Perduuuu")
+    Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
+    #Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame).pack()
+    #Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tour).pack()
+    #Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fou).pack()
+    #Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
+    #Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion).pack()
+
 def cmd_bouton_dame():
     choix_de_promotion.set("Dame")
     print("Dame")
@@ -339,6 +350,7 @@ def cmd_bouton_valider():
                     print("Echec noir") 
                     if KN1.Echec_et_mat():
                         print("Echec et mat.")
+                        open_popup_perdu()
                 if ligne=="8": #promotion de pion
                     open_popup()
                     from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
@@ -356,6 +368,7 @@ def cmd_bouton_valider():
                     print("Echec blanc") 
                     if KB1.Echec_et_mat():
                         print("Echec et mat.") ### afficher quelque part
+                        open_popup_perdu()
                 if ligne=="1": #promotion de pion
                     open_popup()
                     from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
