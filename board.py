@@ -151,12 +151,10 @@ def roqueB(): #petit roque blanc
   c=KB1.colonne
   update_coord_piece(KB1,0,5)
   A=KB1.Echec2() 
-  print("A",A)
   position[5][0]=0
   position[6][0]=KB1
   update_coord_piece(KB1,0,6)
   B=KB1.Echec2() 
-  print("B",B)
   position[6][0]=0
   update_coord_piece(KB1,l,c)
   if A or B: #si attaque sur le chemin
@@ -283,7 +281,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
             return (False,message_erreur)
             
         else: #cas spécial du pion
-          print(piece.mouvement_possible(colonne,ligne))
           legalite = piece.mouvement_possible(colonne,ligne)[0]
           type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
           if legalite:
