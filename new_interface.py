@@ -296,15 +296,15 @@ def open_popup_promo(piece,couleur):
         Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionB(piece))
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN)
+        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN(piece))
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN)
+        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN(piece))
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN)
+        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN(piece))
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN)
+        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN)
+        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN(piece))
         Bouton_pion.pack()
 
 
@@ -333,7 +333,7 @@ def cmd_bouton_cavalierB(piece):
     print("Cavalier")
     promoCavalierB(piece)
 
-def cmd_bouton_pionB():
+def cmd_bouton_pionB(piece):
     choix_de_promotion.set("Pion")
     print("Pion")
 
@@ -401,6 +401,7 @@ def cmd_bouton_valider():
 
     result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
     print(result)
+    from piece import Pion
     if result[0]:
         #global LPOSITION
         LPOSITION=fonction_lecture(position)
@@ -418,7 +419,7 @@ def cmd_bouton_valider():
                 if KN1.Echec_et_mat():
                     print("Echec et mat.")
                     open_popup_perdu("Noir")
-            if ligne=="8": #promotion de pion
+            if ligne=="8" and type(result[2])==Pion: #promotion de pion
                 open_popup_promo(result[2],"Blanc")
                 #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                 #if choix_de_promotion=="Dame":
@@ -437,7 +438,7 @@ def cmd_bouton_valider():
                 if KB1.Echec_et_mat():
                     print("Echec et mat.") ### afficher quelque part
                     open_popup_perdu("Blanc")
-            if ligne=="1": #promotion de pion
+            if ligne=="1" and type(result[2])==Pion: #promotion de pion
                 open_popup_promo(result[2],"Noir")
                 #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                 #if choix_de_promotion=="Dame":
