@@ -150,12 +150,10 @@ def roqueB(): #petit roque blanc
   c=KB1.colonne
   update_coord_piece(KB1,0,5)
   A=KB1.Echec2() 
-  print("A",A)
   position[5][0]=0
   position[6][0]=KB1
   update_coord_piece(KB1,0,6)
   B=KB1.Echec2() 
-  print("B",B)
   position[6][0]=0
   update_coord_piece(KB1,l,c)
   if A or B: #si attaque sur le chemin
@@ -207,10 +205,8 @@ def roqueN(): #petit roque noir
 
 
 
-def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées de la case : [colonne,ligne]
+def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
-  CouleurQuiJoue=couleurA.get()
-
   if coup_special != "":
 
     if coup_special=="roque": #petit roque
@@ -415,6 +411,7 @@ def mouvement(piece,case,couleurA,coup_special): #case = liste des 2 coordonées
       return (False,message_erreur)
   if (a==Tour or a==Roi):
     piece.Move1=True
+  
   return (True,0)
 
 
