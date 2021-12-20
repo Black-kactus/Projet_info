@@ -7,7 +7,6 @@ from PIL import ImageTk, Image
 from time import *
 
 from panique import Bouton_Regles
-#from piece import promoDameN, promoFouN
 
 # # #pour récupérer la liste des positions
 # from board import position
