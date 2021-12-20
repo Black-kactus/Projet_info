@@ -6,6 +6,8 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
+from panique import Bouton_Regles
+
 # # #pour récupérer la liste des positions
 # from board import position
 # from piece import*
@@ -81,6 +83,11 @@ message_erreur.set("")
 
 script = StringVar()
 script.set("")
+ 
+message_echec= StringVar()
+message_echec.set("Vous etes en echec")
+
+##Images des pieces de l'échiquier
 
 
 ImgFouNoir = Image.open('fou_noir.png')
@@ -128,6 +135,8 @@ python_imageTB = ImageTk.PhotoImage(ImgTourBlanche)
 python_imageTN = ImageTk.PhotoImage(ImgTourNoire)
 python_imageVIDE = ImageTk.PhotoImage(ImgVide)
 
+##Images des icones des pieces prise
+
 resizeX = 30
 resizeY = 30
 ImgFouNoir2 = ImgFouNoir.resize((resizeX,resizeY), Image.ANTIALIAS)
@@ -158,7 +167,28 @@ python_imageTB2 = ImageTk.PhotoImage(ImgTourBlanche2)
 python_imageTN2 = ImageTk.PhotoImage(ImgTourNoire2)
 python_imageVIDE2 = ImageTk.PhotoImage(ImgVide2)
 
+## Image des déplacements 
 
+ImgDFou= Image.open('dep_fou.png')
+ImgDTour= Image.open('dep_tour.png')
+ImgDDame= Image.open('dep_dame.png')
+ImgDRoi= Image.open('dep_roi.png')
+ImgDCavalier= Image.open('dep_cavalier.png')
+
+resizeX= 350
+resizeY= 350
+ImgDFou = ImgDFou.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDTour = ImgDTour.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDDame = ImgDDame.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDRoi = ImgDRoi.resize((resizeX,resizeY), Image.ANTIALIAS)
+ImgDCavalier = ImgDCavalier.resize((resizeX,resizeY), Image.ANTIALIAS)
+
+
+python_imageDF = ImageTk.PhotoImage(ImgDFou)
+python_imageDT = ImageTk.PhotoImage(ImgDTour)
+python_imageDD = ImageTk.PhotoImage(ImgDDame)
+python_imageDR = ImageTk.PhotoImage(ImgDRoi)
+python_imageDC = ImageTk.PhotoImage(ImgDCavalier)
 
 
 dicopiece = {0 : python_imageVIDE}
@@ -246,8 +276,6 @@ def actualiserPiecesPrises():
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
 
-    print(LPIECESPRISES)
-
 choix_de_promotion = StringVar()
 choix_de_promotion.set("Indiquez la pièce.")
 
@@ -261,6 +289,13 @@ def open_popup():
     Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fou).pack()
     Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
     Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion).pack()
+
+    #raph ça sert à rien de les packer en leur ayant donner un nom avant: 
+    # Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame)
+    # Bouton_dame.pack()
+ 
+    ## ou bien : ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
+
 
 def cmd_bouton_dame():
     choix_de_promotion.set("Dame")
@@ -281,6 +316,12 @@ def cmd_bouton_cavalier():
 def cmd_bouton_pion():
     choix_de_promotion.set("Pion")
     print("Pion")
+
+def cmd_bouton_visuel():
+    pass
+
+def cmd_bouton_son():
+    pass
 
 def cmd_bouton_valider():
     #lettres = "a,b,c,d,e,f,g,h"
@@ -404,10 +445,149 @@ def cmd_bouton_pieces_perdues():
     pass
 
 def cmd_bouton_regles():
-    pass
+    Popup = Toplevel()
+    Popup.title('Règles de jeu')
+
+    Popup.geometry("500x500")
+    Popup.grid_columnconfigure(0, weight=1)
+    Popup.grid_rowconfigure(0, weight=1)
+
+    n = ttk.Notebook(Popup)   # Création du système d'onglets
+    n.columnconfigure(0, weight=1)
+    n.rowconfigure(0, weight=1)
+    n.grid(column=0, row=0,sticky= NSEW)
+
+    Onglet1_Regles = ttk.Frame(n,padding=(0,0,0,0))      
+    Onglet2_Pion = ttk.Frame(n,padding=(0,0,0,0))      
+    Onglet3_Fou = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet4_Tour = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet5_Cavalier = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet6_Dame = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet7_Roi = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet8_ActionSpe = ttk.Frame(n,padding=(0,0,0,0))
+    Onglet9_Fin = ttk.Frame(n,padding=(0,0,0,0))
+
+
+    Onglet1_Regles.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet2_Pion.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet3_Fou.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet4_Tour.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet5_Cavalier.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet6_Dame.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet7_Roi.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet8_ActionSpe.grid(column=0, row=0, sticky=(N, S, E, W))
+    Onglet9_Fin.grid(column=0, row=0, sticky=(N, S, E, W))
+
+
+    n.add(Onglet1_Regles, text='Règles générales')     
+    n.add(Onglet2_Pion, text='Pion')      
+    n.add(Onglet3_Fou, text='Fou')
+    n.add(Onglet4_Tour, text='Tour')
+    n.add(Onglet5_Cavalier, text='Cavalier')
+    n.add(Onglet6_Dame, text='Dame')
+    n.add(Onglet7_Roi, text='Roi')
+    n.add(Onglet8_ActionSpe, text='Action Speciale')
+    n.add(Onglet9_Fin, text='Fin de partie')
+
+    # Onglet 1 : Regles
+    ch1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
+    ttk.Label(Onglet1_Regles, text= ch1 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+    
+    #Onglet 2: Pion
+    ttk.Label(Onglet2_Pion, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 16, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet2_Pion, text= 'Les déplacements du pion se font verticalement, coup spécial : prise en passant \n mange en diagonale et promotion de pion',background = 'white',relief="solid",anchor=CENTER).grid(row = 16, column = 0, rowspan= 4, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 3 : Fou
+    ttk.Label(Onglet3_Fou, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet3_Fou, text= 'Les déplacements du fou se font diagonalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 4 : Tour
+    ttk.Label(Onglet4_Tour, image= python_imageDT,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet4_Tour, text= 'Les déplacements de la tour se font horizontalement et verticalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 5 : Cavalier
+    ttk.Label(Onglet5_Cavalier, image= python_imageDC,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet5_Cavalier, text= 'Les déplacements du cavalier se font en forme de L',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 6: Dame
+    ttk.Label(Onglet6_Dame, image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet6_Dame, text= "La Dame peut se déplacer dans toutes les directions de l'espace",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 7 : Roi
+    ttk.Label(Onglet7_Roi, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet7_Roi, text= 'Le Roi peut se déplacer dans toutes les directions, mais seulement de 1',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 8 : Action spéciale
+    ttk.Label(Onglet8_ActionSpe, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet8_ActionSpe, text= "Expliquer le pat et la promotion",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    #Onglet 9 : Fin de partie 
+    ch2= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
+    ttk.Label(Onglet9_Fin, text= ch2 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(20):
+        Onglet1_Regles.columnconfigure(i,weight=1)
+        Onglet2_Pion.columnconfigure(i,weight=1)
+        Onglet3_Fou.columnconfigure(i,weight=1)
+        Onglet4_Tour.columnconfigure(i,weight=1)
+        Onglet5_Cavalier.columnconfigure(i,weight=1)
+        Onglet6_Dame.columnconfigure(i,weight=1)
+        Onglet7_Roi.columnconfigure(i,weight=1)
+        Onglet8_ActionSpe.columnconfigure(i,weight=1)
+        Onglet9_Fin.columnconfigure(i,weight=1)
+
+    for j in range(20):
+        Onglet1_Regles.rowconfigure(j,weight=1)
+        Onglet2_Pion.rowconfigure(j,weight=1)
+        Onglet3_Fou.rowconfigure(j,weight=1)
+        Onglet4_Tour.rowconfigure(j,weight=1)
+        Onglet5_Cavalier.rowconfigure(j,weight=1)
+        Onglet6_Dame.rowconfigure(j,weight=1)
+        Onglet7_Roi.rowconfigure(j,weight=1)
+        Onglet8_ActionSpe.rowconfigure(j,weight=1)
+        Onglet9_Fin.rowconfigure(j,weight=1)
+
 
 def cmd_bouton_options():
-    pass
+    Popup2 = Toplevel()
+    Popup2.title('Options')
+
+    Popup2.geometry("300x200")
+    Popup2.grid_columnconfigure(0, weight=1)
+    Popup2.grid_rowconfigure(0, weight=1)
+
+    content2 = ttk.Frame(Popup2, padding=(0,0,0,0))
+    content2.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    Label_Option = ttk.Label(content2, text= "Options : ",relief="solid",anchor=CENTER)
+    Label_Option.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Label_Script= ttk.Label(content2, text= "Entrer un script",relief="solid",anchor=CENTER)
+    Label_Script.grid(column=0, row=2, columnspan=1, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Entry_Script= ttk.Entry(content2, textvariable= script)
+    Entry_Script.grid(column=1,row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command= cmd_bouton_regles)
+    Bouton_CompilerScript.grid(column=0,row=4, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)
+    Bouton_Regles2.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
+    Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
+    Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(0,2):
+        content2.columnconfigure(i,weight=1)
+
+    for j in range(0,12):
+        content2.rowconfigure(j,weight=1)
+
+
+    
 #permet l'expension des boutons 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -429,18 +609,18 @@ Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,
 
 ##
 Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
-Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
-Label_couleuractualise.grid(column=20+int(largeur/2),row=2, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleuractualise.grid(column=20+int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 ##
  
 ##
 Label_Nbcoup = ttk.Label(content, text= "coup n°",relief="solid",anchor=CENTER)
-Label_Nbcoup.grid(column=20, row=3, columnspan=int(largeur/2), rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
+Label_Nbcoup.grid(column=20 + int(largeur/2), row=2, columnspan=int(largeur/4), rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_coup_actualise= ttk.Label(content, textvariable= nbcoup, anchor = CENTER, relief = "solid")
-Label_coup_actualise.grid(column=20 + int(largeur/2),row=3, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_coup_actualise.grid(column=20 +3*int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 ## 
 
 Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
@@ -467,9 +647,6 @@ Label_CoupSpecial.grid(column=20, row=8, columnspan=int(largeur/2), rowspan=1 ,s
 Entry_CoupSpecial= ttk.Entry(content, textvariable= coup_special)
 Entry_CoupSpecial.grid(column=20 + int(largeur/2),row=8, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-# Bouton_Piecesperdues= ttk.Button(content, text= "Bilan des pièces perdues",command= cmd_bouton_pieces_perdues)
-# Bouton_Piecesperdues.grid(column=20,row=11, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
-
 Bouton_Options= ttk.Button(content, text= "Options",command= cmd_bouton_options)
 Bouton_Options.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
@@ -482,13 +659,14 @@ Bouton_Options.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,
 Bouton_Abandonner= ttk.Button(content, text= "Reconnaître sa cuisante défaite",command= cmd_bouton_abandonner)
 Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Label_actualiseerreur= ttk.Label(content, textvariable= message_erreur, anchor= CENTER, relief="solid")
+Label_actualiseerreur= ttk.Label(content, textvariable= message_erreur, anchor= CENTER, relief="solid", foreground = 'orange', background='white')
 Label_actualiseerreur.grid(column=20,row=11, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+
+Lechec = ttk.Label(content, textvariable= message_echec,relief="solid",anchor=CENTER, foreground='red')
+Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 # Label_piecesperdues= ttk.Label(content, text= "Pièces perdues",relief="solid",anchor=CENTER)
 # Label_piecesperdues.grid(column=20, row=13, columnspan = largeur, rowspan=1 ,sticky=(N,S,E,W))
-
-
 
 root.mainloop()
 
