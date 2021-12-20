@@ -245,7 +245,6 @@ def actualiserPiecesPrises():
             else : 
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
-    print("TN1" in LPOSITION)
 
     print(LPIECESPRISES)
 
@@ -310,7 +309,6 @@ def cmd_bouton_valider():
 
     elif coup_special.get()=="promotion":
         open_popup()
-
 
     elif not(interpreteur(coup,piece_a_bouger,couleurA,coup_special.get())[0]==False):
         global LPOSITION
