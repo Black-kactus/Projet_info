@@ -94,7 +94,6 @@ def cmd_bouton_popup():
     Popup.grid_columnconfigure(0, weight=1)
     Popup.grid_rowconfigure(0, weight=1)
 
-
     n = ttk.Notebook(Popup)   # Création du système d'onglets
     n.columnconfigure(0, weight=1)
     n.rowconfigure(0, weight=1)

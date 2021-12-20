@@ -200,16 +200,16 @@ Bouton_commencer = Button(content, text= "Nouvelle Partie",command= cmd_bouton_c
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
-Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
 Label_couleuractualise.grid(column=22,row=2, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_Nbcoup = ttk.Label(content, text= "coup n°",relief="solid",anchor=CENTER)
-Label_Nbcoup.grid(column=20, row=3, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
+Label_Nbcoup.grid(column=22, row=3, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_coup_actualise= ttk.Label(content, textvariable= nbcoup, anchor = CENTER, relief = "solid")
-Label_coup_actualise.grid(column=22,row=3, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_coup_actualise.grid(column=24,row=3, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Lpieceabouger = ttk.Label(content, text= "Piece à bouger",relief="solid",anchor=CENTER)
 Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
@@ -224,7 +224,7 @@ Entry_coup= ttk.Entry(content, textvariable= coup)
 Entry_coup.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_valider= ttk.Button(content, text= "Valider",command= cmd_bouton_valider)
-Bouton_valider.grid(column=20,row=9, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+Bouton_valider.grid(column=20,row=9, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
 Bouton_test.grid(column=20,row=15, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
