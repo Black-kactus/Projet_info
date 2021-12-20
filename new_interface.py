@@ -7,6 +7,7 @@ from PIL import ImageTk, Image
 from time import *
 
 from panique import Bouton_Regles
+from piece import promoDameN, promoFouN
 
 # # #pour récupérer la liste des positions
 # from board import position
@@ -36,7 +37,7 @@ def interpreteur_script(script):
     #for i in range(0,len(script),2):
         #L.append([script[i].split("-"),script[i+1].split("-")])
     for i in range(len(script)):
-        time.sleep(5)
+        #time.sleep(5)
         coup_script=script[i].split("-")
         #L.append(script[i].split("-"))
         if len(coup_script)==1:
@@ -279,28 +280,92 @@ def actualiserPiecesPrises():
 choix_de_promotion = StringVar()
 choix_de_promotion.set("Indiquez la pièce.")
 
-def open_popup():
+def open_popup_promo(piece,couleur):
     top= Toplevel(root)
     top.geometry("750x250")
     top.title("Promotion de pion")
     Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
-    Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame)
-    Bouton_dame.pack()
-    Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tour)
-    Bouton_tour.pack()
-    Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fou)
-    Bouton_fou.pack()
-    Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier)
-    Bouton_cavalier.pack()
-    Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pion)
-    Bouton_pion.pack()
+    if couleur=="Blanc":
+        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameB(piece))
+        Bouton_dame.pack()
+        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourB(piece))
+        Bouton_tour.pack()
+        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouB(piece))
+        Bouton_fou.pack()
+        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
+        Bouton_cavalier.pack()
+        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionB(piece))
+        Bouton_pion.pack()
+    else:
+        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN)
+        Bouton_dame.pack()
+        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN)
+        Bouton_tour.pack()
+        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN)
+        Bouton_fou.pack()
+        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN)
+        Bouton_cavalier.pack()
+        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN)
+        Bouton_pion.pack()
 
 
-    #raph ça sert à rien de les packer en leur ayant donner un nom avant: 
-    # Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dame)
-    # Bouton_dame.pack()
- 
-    ## ou bien : ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalier).pack()
+def cmd_bouton_dameB(piece):
+    from piece import promoDameB
+    choix_de_promotion.set("Dame")
+    print("Dame")
+    promoDameB(piece)
+
+def cmd_bouton_tourB(piece):
+    from piece import promoTourB
+    choix_de_promotion.set("Tour")
+    print("Tour")
+    promoTourB(piece)
+
+def cmd_bouton_fouB(piece):
+    from piece import promoFouB
+    choix_de_promotion.set("Fou")
+    print("Fou")
+    promoFouB(piece)
+
+
+def cmd_bouton_cavalierB(piece):
+    from piece import promoCavalierB
+    choix_de_promotion.set("Cavalier")
+    print("Cavalier")
+    promoCavalierB(piece)
+
+def cmd_bouton_pionB():
+    choix_de_promotion.set("Pion")
+    print("Pion")
+
+def cmd_bouton_dameN(piece):
+    from piece import promoDameN
+    choix_de_promotion.set("Dame")
+    print("Dame")
+    promoDameN(piece)
+
+def cmd_bouton_tourN(piece):
+    from piece import promoTourN
+    choix_de_promotion.set("Tour")
+    print("Tour")
+    promoTourN(piece)
+
+def cmd_bouton_fouN(piece):
+    from piece import promoFouN
+    choix_de_promotion.set("Fou")
+    print("Fou")
+    promoFouN(piece)
+
+def cmd_bouton_cavalierN(piece):
+    from piece import promoCavalierN
+    choix_de_promotion.set("Cavalier")
+    print("Cavalier")
+    promoCavalierN(piece)
+
+def cmd_bouton_pionN(piece):
+    choix_de_promotion.set("Pion")
+    print("Pion")
+
 
 def open_popup_perdu(couleur):
     top= Toplevel(root)
@@ -308,31 +373,11 @@ def open_popup_perdu(couleur):
     top.title("Perduuuu")
     Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
     if couleur=="Noir":
-        Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15 bold')).pack()
+        Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
     else:
-        Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15 bold')).pack()
+        Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
 
     
-
-def cmd_bouton_dame():
-    choix_de_promotion.set("Dame")
-    print("Dame")
-
-def cmd_bouton_tour():
-    choix_de_promotion.set("Tour")
-    print("Tour")
-
-def cmd_bouton_fou():
-    choix_de_promotion="Fou"
-    print("Fou")
-
-def cmd_bouton_cavalier():
-    choix_de_promotion.set("Cavalier")
-    print("Cavalier")
-
-def cmd_bouton_pion():
-    choix_de_promotion.set("Pion")
-    print("Pion")
 
 def cmd_bouton_visuel():
     pass
@@ -356,6 +401,7 @@ def cmd_bouton_valider():
     global LPOSITION
 
     result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
+    print(result)
     if result[0]:
         #global LPOSITION
         LPOSITION=fonction_lecture(position)
@@ -374,16 +420,16 @@ def cmd_bouton_valider():
                     print("Echec et mat.")
                     open_popup_perdu("Noir")
             if ligne=="8": #promotion de pion
-                open_popup()
-                from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
-                if choix_de_promotion=="Dame":
-                    promoDameB(result[2])
-                elif choix_de_promotion=="Tour":
-                    promoTourB(result[2])
-                elif choix_de_promotion=="Fou":
-                    promoFouB(result[2])
-                elif choix_de_promotion=="Cavalier":
-                    promoCavalierB(result[2])
+                open_popup_promo(result[2],"Blanc")
+                #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
+                #if choix_de_promotion=="Dame":
+                    #promoDameB(result[2])
+                #elif choix_de_promotion=="Tour":
+                    #promoTourB(result[2])
+                #elif choix_de_promotion=="Fou":
+                    #promoFouB(result[2])
+                #elif choix_de_promotion=="Cavalier":
+                    #promoCavalierB(result[2])
             couleurA.set("Noir")
         else: #noirs
             if KB1.Echec2():
@@ -393,16 +439,16 @@ def cmd_bouton_valider():
                     print("Echec et mat.") ### afficher quelque part
                     open_popup_perdu("Blanc")
             if ligne=="1": #promotion de pion
-                open_popup()
-                from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
-                if choix_de_promotion=="Dame":
-                    promoDameN(result[2])
-                elif choix_de_promotion=="Tour":
-                    promoTourN(result[2])
-                elif choix_de_promotion=="Fou":
-                    promoFouN(result[2])
-                elif choix_de_promotion=="Cavalier":
-                    promoCavalierN(result[2])
+                open_popup_promo(result[2],"Noir")
+                #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
+                #if choix_de_promotion=="Dame":
+                    #promoDameN(result[2])
+                #elif choix_de_promotion=="Tour":
+                    #promoTourN(result[2])
+                #elif choix_de_promotion=="Fou":
+                    #promoFouN(result[2])
+                #elif choix_de_promotion=="Cavalier":
+                    #promoCavalierN(result[2])
             couleurA.set("Blanc")
         LPOSITION=fonction_lecture(position)
         afficherPiece()
