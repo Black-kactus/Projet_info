@@ -6,7 +6,7 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
-from panique import Bouton_Regles
+# from panique import Bouton_Regles
 
 # # #pour récupérer la liste des positions
 # from board import position
@@ -493,6 +493,8 @@ def cmd_bouton_Compiler_script():
     script_compilé=script.get() #
     script.set("") #
     interpreteur_script(script_compilé)
+    #NB Raph normalement il ne faut jamais ai grand jamais mettre d'accent dans les variables (en general de caractere speciaux)
+    #car c'est un formatage special, ça depend des machines et des interpreteur (je te passe les details), donc au cas ou, peut etre qu'il faudrait retirer l'accent si tu peux? xD
 
 def cmd_bouton_regles():
     Popup = Toplevel()
