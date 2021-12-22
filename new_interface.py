@@ -6,6 +6,8 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
+#probleme de prototypage
+
 # from panique import Bouton_Regles
 
 # # #pour récupérer la liste des positions
@@ -48,8 +50,6 @@ def interpreteur_script(script):
         cmd_bouton_valider()
 
 
-
-
 root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
@@ -86,6 +86,15 @@ script.set("")
  
 message_echec= StringVar()
 message_echec.set("")
+
+prenom_blanc = StringVar()
+prenom_blanc.set('')
+
+prenom_noir = StringVar()
+prenom_noir.set('')
+
+prenom = StringVar()
+prenom.set(prenom_blanc.get())
 
 ##Images des pieces de l'échiquier
 
@@ -260,8 +269,8 @@ def afficherPiecesPrises():
        
 def actualiserPiecesPrises():
     global LPOSITION
-    # LPOSITION= [[0,0,0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     global LPIECESPRISES
+
     Lconcordance = [["TN1","CN1","FN1","QN1","KN1","FN2","CN2","TN2"],["PN1","PN2","PN3","PN4","PN5","PN6","PN7","PN8"],["PB1","PB2","PB3","PB4","PB5","PB6","PB7","PB8"],["TB1","CB1","FB1","QB1","KB1","FB2","CB2","TB2"]]
     for i in range(4):
         for j in range(8):
@@ -278,35 +287,6 @@ def actualiserPiecesPrises():
 
 choix_de_promotion = StringVar()
 choix_de_promotion.set("Indiquez la pièce.")
-
-def open_popup_promo(piece,couleur):
-    top= Toplevel(root)
-    top.geometry("750x250")
-    top.title("Promotion de pion")
-    Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
-    if couleur=="Blanc":
-        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameB(piece))
-        Bouton_dame.pack()
-        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourB(piece))
-        Bouton_tour.pack()
-        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouB(piece))
-        Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
-        Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionB(piece))
-        Bouton_pion.pack()
-    else:
-        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN(piece))
-        Bouton_dame.pack()
-        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN(piece))
-        Bouton_tour.pack()
-        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN(piece))
-        Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
-        Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN(piece))
-        Bouton_pion.pack()
-
 
 def cmd_bouton_dameB(piece):
     from piece import promoDameB
@@ -360,23 +340,113 @@ def cmd_bouton_cavalierN(piece):
     choix_de_promotion.set("Cavalier")
     print("Cavalier")
     promoCavalierN(piece)
+    #là il va pas savoir ce que c'est piece
 
 def cmd_bouton_pionN(piece):
     choix_de_promotion.set("Pion")
     print("Pion")
+
+def open_popup_promo(piece,couleur):
+    top= Toplevel(root)
+    top.geometry("750x250")
+    top.title("Promotion de pion")
+    top.iconbitmap(r'icone.ico')
+    top.lift()
+    Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
+    if couleur=="Blanc":
+        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameB(piece))
+        Bouton_dame.pack()
+        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourB(piece))
+        Bouton_tour.pack()
+        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouB(piece))
+        Bouton_fou.pack()
+        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
+        Bouton_cavalier.pack()
+        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionB(piece))
+        Bouton_pion.pack()
+    else:
+        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN(piece))
+        Bouton_dame.pack()
+        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN(piece))
+        Bouton_tour.pack()
+        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN(piece))
+        Bouton_fou.pack()
+        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
+        Bouton_cavalier.pack()
+        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN(piece))
+        Bouton_pion.pack()
+
+        #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
+        #parce que il sait pas a quoi correspond piece, ce qui explique peut etre pourquoi ça marche pas 
 
 
 def open_popup_perdu(couleur):
     top= Toplevel(root)
     top.geometry("750x250")
     top.title("Perduuuu")
+    top.iconbitmap(r'icone.ico')
+    top.lift()
     Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
     if couleur=="Noir":
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
     else:
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
 
-    
+def pop_up_commencer():
+    def cmd_lancer_bouton_prenom():
+        global prenom_noir
+        global prenom_blanc
+        prenom_blanc.set(entry_prenom_blanc.get())
+        prenom_noir.set(entry_prenom_noir.get())
+        Popup3.destroy()
+
+    Popup3 = Toplevel()
+    Popup3.title('Options')
+    Popup3.iconbitmap(r'icone.ico')
+
+    Popup3.geometry("200x100")
+    Popup3.grid_columnconfigure(0, weight=1)
+    Popup3.grid_rowconfigure(0, weight=1)
+
+    content3 = ttk.Frame(Popup3, padding=(0,0,0,0))
+    content3.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    entry_prenom_blanc = StringVar()
+    entry_prenom_blanc.set("")
+
+    entry_prenom_noir = StringVar()
+    entry_prenom_noir.set("")
+
+    Label_Choixcouleur = ttk.Label(content3, text= "Choix des couleurs",relief="solid",anchor=CENTER)
+    Label_Choixcouleur.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Label_Joueur1= ttk.Label(content3, text= "Blancs",relief="solid",anchor=CENTER)
+    Label_Joueur1.grid(column=0, row=2, columnspan=1, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Entry_Joueur1= ttk.Entry(content3, textvariable= entry_prenom_blanc)
+    Entry_Joueur1.grid(column=1,row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Label_Joueur2= ttk.Label(content3, text= "Noirs",relief="solid",anchor=CENTER)
+    Label_Joueur2.grid(column=0, row=4, columnspan=1, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Entry_Joueur2= ttk.Entry(content3, textvariable= entry_prenom_noir)
+    Entry_Joueur2.grid(column=1,row=4, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    Bouton_CompilerScript= ttk.Button(content3, text= "Lancer la partie",command= cmd_lancer_bouton_prenom)
+    Bouton_CompilerScript.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(0,2):
+        content3.columnconfigure(i,weight=1)
+
+    for j in range(0,8):
+        content3.rowconfigure(j,weight=1)
+
+    Popup3.lift()                   #met la fenetre en premier plan
+    Popup3.transient(root)          #on ne peut pas réduire cette pop up
+    Popup3.grab_set()               #empeche ttes actions avec la fenetre principale
+    root.wait_window(Popup3)        #Arrete le script principal tant que la fenetre n'est pas fermée
+
+#### Fonctions de boutons
 
 def cmd_bouton_visuel():
     pass
@@ -395,7 +465,7 @@ def cmd_bouton_valider():
         #message_erreur.set("Syntaxe incorrecte. Retentez.")
     
     from board import position,KB1,KN1
-    print("valider")
+    # print("valider")
     from main import interpreteur
     global LPOSITION
 
@@ -431,6 +501,8 @@ def cmd_bouton_valider():
                 #elif choix_de_promotion=="Cavalier":
                     #promoCavalierB(result[2])
             couleurA.set("Noir")
+            prenom.set(prenom_noir.get())
+
         else: #noirs
             if KB1.Echec2():
                 message_echec.set("Les blancs sont en échec.")
@@ -450,6 +522,8 @@ def cmd_bouton_valider():
                 #elif choix_de_promotion=="Cavalier":
                     #promoCavalierN(result[2])
             couleurA.set("Blanc")
+            prenom.set(prenom_blanc.get())
+
         LPOSITION=fonction_lecture(position)
         afficherPiece()
         actualiserPiecesPrises()
@@ -460,8 +534,10 @@ def cmd_bouton_valider():
 
 
 def cmd_bouton_commencer():
+    pop_up_commencer()
     nbcoup.set("0")
     couleurA.set("Blanc")
+    prenom.set(prenom_blanc.get())
     global LPOSITION
     global LPIECESPRISES
 
@@ -499,10 +575,12 @@ def cmd_bouton_Compiler_script():
 def cmd_bouton_regles():
     Popup = Toplevel()
     Popup.title('Règles de jeu')
+    Popup.iconbitmap(r'icone.ico')
 
     Popup.geometry("500x500")
     Popup.grid_columnconfigure(0, weight=1)
     Popup.grid_rowconfigure(0, weight=1)
+    Popup.lift()
 
     n = ttk.Notebook(Popup)   # Création du système d'onglets
     n.columnconfigure(0, weight=1)
@@ -603,6 +681,7 @@ def cmd_bouton_regles():
 def cmd_bouton_options():
     Popup2 = Toplevel()
     Popup2.title('Options')
+    Popup2.iconbitmap(r'icone.ico')
 
     Popup2.geometry("300x200")
     Popup2.grid_columnconfigure(0, weight=1)
@@ -663,7 +742,8 @@ Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid
 Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
-Label_couleuractualise.grid(column=20+int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_couleuractualise2= ttk.Label(content, textvariable= prenom, anchor= CENTER, relief="solid")
+Label_couleuractualise2.grid(column=20+int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 ##
  
 ##
