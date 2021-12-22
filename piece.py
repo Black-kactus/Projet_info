@@ -134,7 +134,6 @@ class Pion(Piece):
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 1
-        #self._condition1 = False
         self._condition2 = 5
 
     def mouvement_possible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
@@ -169,17 +168,20 @@ class Pion(Piece):
                         return (False,0)
                 else:
                     return (False,0)
-            elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1):  # mouvement diagonal
+            elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1):# mouvement diagonal
+                import new_interface
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc":
-                    if ligne == 4 :
-                        #self._condition1 = True
-                        self._condition2 = nbcoup.get()
+                    if ligne == 3 :
+                        coup_numero = new_interface.nbcoup
+                        self._condition2 = coup_numero
+                        print("Condition activee")
                     return (True,"diagonale")
 
                 elif ligne == (self.ligne - 1) and self._couleur == "Noir":
-                    if ligne == 5 :
-                        #self._condition1 = True
-                        self._condition2 = nbcoup.get()
+                    if ligne == 4 :
+                        coup_numero = new_interface.nbcoup
+                        self._condition2 = coup_numero
+                        print("Condition activee")
                     return (True,"diagonale")
                 else:
                     return (False,0)

@@ -405,46 +405,48 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
 def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
   from new_interface import nbcoup
   if CouleurQuiJoue == "Blanc":  # si les blancs jouent
-    if piece.ligne == 4:
-      if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-        position[colonne][ligne] = piece  # on la met sur la nouvelle case
-        eaten_Blanc(colonne - 1, ligne)
+    if piece.ligne == 3:
+      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
+        if position[colonne - 1][ligne]._condition2 != nbcoup :
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne - 1, ligne)
       # prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
       # position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
       # position[colonne - 1][ligne].ligne = -1
-        update_coord_piece(piece, ligne, colonne)
-        return (True, 0)
-      if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-        position[colonne][ligne] = piece  # on la met sur la nouvelle case
-        eaten_Blanc(colonne + 1, ligne)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
+      if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
+        if position[colonne + 1][ligne]._condition2 != nbcoup :
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne + 1, ligne)
       # prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
       # position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
       # position[colonne + 1][ligne].ligne = -1
-        update_coord_piece(piece, ligne, colonne)
-        return (True, 0)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
       else:
-        return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+        return (False,"PEP impossible")
     else:
-      return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
-  else:#pour les noirs
-    if piece.ligne == 5:
-      if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        if position[colonne - 1][ligne]._condition2 - nbcoup == 0:
+      return (False,"PEP impossible")
+  else: #pour les noirs
+    if piece.ligne == 4:
+      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
+        if position[colonne - 1][ligne]._condition2 != nbcoup :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(colonne - 1, ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
-      if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        if position[colonne + 1][ligne]._condition2 - nbcoup == 0:
+      if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
+        if position[colonne + 1][ligne]._condition2 != nbcoup :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(colonne + 1, ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
       else:
-        return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+        return (False,"PEP impossible.")
     else:
-      return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+      return (False,"PEP impossible.")
