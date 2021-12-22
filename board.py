@@ -222,6 +222,9 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
       else: #noirs
         return ROQUEN()
 
+    elif coup_special == "PEP":
+      return prise_en_passant(piece, piece.colonne, piece.ligne, CouleurQuiJoue)
+
   elif piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
     #print("Vous n'avez pas de pièce à cet endroit.")
@@ -315,13 +318,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
-                  if coup_special == "PEP":
-                    if prise_en_passant(piece, colonne, ligne, CouleurQuiJoue) == False:
-                      message_erreur = "Vous ne pouvez pas faire la prise en passant."
-                      return (False, message_erreur)
-                    else:
-                      prise_en_passant(piece, colonne, ligne, CouleurQuiJoue)
-                  else:
                     message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
                     return (False,message_erreur)
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
@@ -396,7 +392,8 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
     else:
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
-  if (a==Tour or a==Roi):
+  #if (a==Tour or a==Roi):
+  if (type(piece) == Tour or type(piece)== Roi):
     piece.Move1=True
   
   return (True,0)
@@ -417,6 +414,7 @@ def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
       # position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
       # position[colonne - 1][ligne].ligne = -1
         update_coord_piece(piece, ligne, colonne)
+        return (True, 0)
       if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
         position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
         position[colonne][ligne] = piece  # on la met sur la nouvelle case
@@ -425,24 +423,26 @@ def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
       # position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
       # position[colonne + 1][ligne].ligne = -1
         update_coord_piece(piece, ligne, colonne)
+        return (True, 0)
       else:
-        return False
+        return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
     else:
-      return False
-  else:
+      return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
+  else:#pour les noirs
     if piece.ligne == 5:
       if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
         position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
         position[colonne][ligne] = piece  # on la met sur la nouvelle case
         eaten_Blanc(colonne - 1, ligne)
         update_coord_piece(piece, ligne, colonne)
+        return (True, 0)
       if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
         position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
         position[colonne][ligne] = piece  # on la met sur la nouvelle case
         eaten_Blanc(colonne + 1, ligne)
         update_coord_piece(piece, ligne, colonne)
+        return (True, 0)
       else:
-        return False
+        return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
     else:
-      return False
-
+      return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
