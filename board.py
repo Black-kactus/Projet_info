@@ -1,4 +1,3 @@
-#from new_interface import coup_special
 from piece import Cavalier, Dame, Fou, Pion, Roi, Tour
 
 
@@ -404,6 +403,7 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
   position[colonne][ligne] = arg  # on annule le mouvement
 
 def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
+  from new_interface import nbcoup
   if CouleurQuiJoue == "Blanc":  # si les blancs jouent
     if piece.ligne == 4:
       if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
@@ -431,17 +431,19 @@ def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
   else:#pour les noirs
     if piece.ligne == 5:
       if position[colonne - 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-        position[colonne][ligne] = piece  # on la met sur la nouvelle case
-        eaten_Blanc(colonne - 1, ligne)
-        update_coord_piece(piece, ligne, colonne)
-        return (True, 0)
+        if position[colonne - 1][ligne]._condition2 - nbcoup == 0:
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne - 1, ligne)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
       if position[colonne + 1][ligne]._couleur != CouleurQuiJoue and type(position[colonne - 1][ligne]) == Pion:
-        position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-        position[colonne][ligne] = piece  # on la met sur la nouvelle case
-        eaten_Blanc(colonne + 1, ligne)
-        update_coord_piece(piece, ligne, colonne)
-        return (True, 0)
+        if position[colonne + 1][ligne]._condition2 - nbcoup == 0:
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne + 1, ligne)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
       else:
         return (False,"Vous ne pouvez pas déplacer la pièce à cet endroit là.")
     else:
