@@ -30,17 +30,9 @@ def fonction_lecture(position):
 
 def interpreteur_script(script):
     import time
-    #from new_interface import coup_special,coup,piece_a_bouger
-    #from new_interface import LPOSITION, fonction_lecture, couleurA,nbcoup,message_erreur,afficherPiece
-    #from new_interface import cmd_bouton_valider
     script = script.split(' ')
-    #L=[]
-    #for i in range(0,len(script),2):
-        #L.append([script[i].split("-"),script[i+1].split("-")])
     for i in range(len(script)):
-        #time.sleep(5)
         coup_script=script[i].split("-")
-        #L.append(script[i].split("-"))
         if len(coup_script)==1:
             coup_special.set(coup_script[0])
             print(coup_special.get())
@@ -48,6 +40,7 @@ def interpreteur_script(script):
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
         cmd_bouton_valider()
+        #time.sleep(5)
 
 
 root = Tk()
@@ -95,6 +88,9 @@ prenom_noir.set('')
 
 prenom = StringVar()
 prenom.set(prenom_blanc.get())
+
+duree_de_la_partie=0
+
 
 ##Images des pieces de l'échiquier
 
@@ -293,18 +289,21 @@ def cmd_bouton_dameB(piece):
     choix_de_promotion.set("Dame")
     print("Dame")
     promoDameB(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_tourB(piece):
     from piece import promoTourB
     choix_de_promotion.set("Tour")
     print("Tour")
     promoTourB(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_fouB(piece):
     from piece import promoFouB
     choix_de_promotion.set("Fou")
     print("Fou")
     promoFouB(piece)
+    PopUp_promo.destroy()
 
 
 def cmd_bouton_cavalierB(piece):
@@ -312,68 +311,75 @@ def cmd_bouton_cavalierB(piece):
     choix_de_promotion.set("Cavalier")
     print("Cavalier")
     promoCavalierB(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_pionB(piece):
     choix_de_promotion.set("Pion")
     print("Pion")
+    PopUp_promo.destroy()
 
 def cmd_bouton_dameN(piece):
     from piece import promoDameN
     choix_de_promotion.set("Dame")
     print("Dame")
     promoDameN(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_tourN(piece):
     from piece import promoTourN
     choix_de_promotion.set("Tour")
     print("Tour")
     promoTourN(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_fouN(piece):
     from piece import promoFouN
     choix_de_promotion.set("Fou")
     print("Fou")
     promoFouN(piece)
+    PopUp_promo.destroy()
 
 def cmd_bouton_cavalierN(piece):
     from piece import promoCavalierN
     choix_de_promotion.set("Cavalier")
     print("Cavalier")
     promoCavalierN(piece)
+    PopUp_promo.destroy()
     #là il va pas savoir ce que c'est piece
 
 def cmd_bouton_pionN(piece):
     choix_de_promotion.set("Pion")
     print("Pion")
+    PopUp_promo.destroy()
 
 def open_popup_promo(piece,couleur):
-    top= Toplevel(root)
-    top.geometry("750x250")
-    top.title("Promotion de pion")
-    top.iconbitmap(r'icone.ico')
-    top.lift()
-    Label(top, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
+    PopUp_promo= Toplevel(root)
+    PopUp_promo.geometry("750x350")
+    PopUp_promo.title("Promotion de pion")
+    PopUp_promo.iconbitmap(r'icone.ico')
+    PopUp_promo.lift()
+    Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
     if couleur=="Blanc":
-        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameB(piece))
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB(piece))
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourB(piece))
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB(piece))
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouB(piece))
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB(piece))
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionB(piece))
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB(piece))
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(top, text= "Dame",command= cmd_bouton_dameN(piece))
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN(piece))
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(top, text= "Tour",command= cmd_bouton_tourN(piece))
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN(piece))
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(top, text= "Fou",command= cmd_bouton_fouN(piece))
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN(piece))
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(top, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(top, text= "Garder un pion",command= cmd_bouton_pionN(piece))
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN(piece))
         Bouton_pion.pack()
 
         #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
@@ -381,6 +387,9 @@ def open_popup_promo(piece,couleur):
 
 
 def open_popup_perdu(couleur):
+    import time
+    global duree_de_la_partie
+    duree_de_la_partie=time.time()-duree_de_la_partie
     top= Toplevel(root)
     top.geometry("750x250")
     top.title("Perduuuu")
@@ -391,13 +400,34 @@ def open_popup_perdu(couleur):
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
     else:
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
+    Label(top, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+
+def open_popup_pat(couleur):
+    import time
+    global duree_de_la_partie
+    duree_de_la_partie=time.time()-duree_de_la_partie
+    PopUp_pat= Toplevel(root)
+    PopUp_pat.geometry("750x300")
+    PopUp_pat.title("Pat")
+    PopUp_pat.iconbitmap(r'icone.ico')
+    PopUp_pat.lift()
+    Label(PopUp_pat, text= "Partie nulle", font=('Helvetica 35 bold')).pack(pady=10)
+    if couleur=="Noir":
+        Label(PopUp_pat, text= "Les Noirs sont pat", font=('Helvetica 15')).pack()
+    else:
+        Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
+    Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+    
 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
+        import time
+        global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
         prenom_blanc.set(entry_prenom_blanc.get())
         prenom_noir.set(entry_prenom_noir.get())
+        duree_de_la_partie=time.time()
         Popup3.destroy()
 
     Popup3 = Toplevel()
@@ -489,7 +519,10 @@ def cmd_bouton_valider():
                 if KN1.Echec_et_mat():
                     print("Echec et mat.")
                     open_popup_perdu("Noir")
-            if ligne=="8" and type(result[2])==Pion: #promotion de pion
+            elif KN1.Echec_et_mat():
+                print("Pat")
+                open_popup_pat("Noir")
+            elif ligne=="8" and type(result[2])==Pion: #promotion de pion
                 open_popup_promo(result[2],"Blanc")
                 #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                 #if choix_de_promotion=="Dame":
@@ -510,7 +543,10 @@ def cmd_bouton_valider():
                 if KB1.Echec_et_mat():
                     print("Echec et mat.") ### afficher quelque part
                     open_popup_perdu("Blanc")
-            if ligne=="1" and type(result[2])==Pion: #promotion de pion
+            elif KB1.Echec_et_mat():
+                print("Pat")
+                open_popup_pat("Blanc")
+            elif ligne=="1" and type(result[2])==Pion: #promotion de pion
                 open_popup_promo(result[2],"Noir")
                 #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                 #if choix_de_promotion=="Dame":
@@ -566,11 +602,9 @@ def cmd_bouton_pieces_perdues():
     pass
 
 def cmd_bouton_Compiler_script():
-    script_compilé=script.get() #
+    script_compile=script.get() #
     script.set("") #
-    interpreteur_script(script_compilé)
-    #NB Raph normalement il ne faut jamais ai grand jamais mettre d'accent dans les variables (en general de caractere speciaux)
-    #car c'est un formatage special, ça depend des machines et des interpreteur (je te passe les details), donc au cas ou, peut etre qu'il faudrait retirer l'accent si tu peux? xD
+    interpreteur_script(script_compile)
 
 def cmd_bouton_regles():
     Popup = Toplevel()
@@ -738,7 +772,7 @@ Bouton_commencer = Button(content, text= "Nouvelle Partie",command= cmd_bouton_c
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 ##
-Label_couleurquijoue = ttk.Label(content, text= "Couleur qui joue",relief="solid",anchor=CENTER)
+Label_couleurquijoue = ttk.Label(content, text= "Personne qui joue",relief="solid",anchor=CENTER)
 Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
