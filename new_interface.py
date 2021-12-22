@@ -386,77 +386,77 @@ def cmd_bouton_son():
     pass
 
 def cmd_bouton_valider():
-    #lettres = "a,b,c,d,e,f,g,h"
-    #chiffres = "1,2,3,4,5,6,7,8"
-    #position_ou_aller=coup.get()
-    #piece_bougee=piece_a_bouger.get()
-    #if len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres):
-        #message_erreur.set("Syntaxe incorrecte. Retentez.")
-    #if len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
-        #message_erreur.set("Syntaxe incorrecte. Retentez.")
-    
-    from board import position,KB1,KN1
-    print("valider")
-    from main import interpreteur
-    global LPOSITION
+    lettres = "a,b,c,d,e,f,g,h"
+    chiffres = "1,2,3,4,5,6,7,8"
+    position_ou_aller=coup.get()
+    piece_bougee=piece_a_bouger.get()
+    if len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres):
+        message_erreur.set("Syntaxe incorrecte. Retentez.")
+    if len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
+        message_erreur.set("Syntaxe incorrecte. Retentez.")
+    else:
+        from board import position,KB1,KN1
+        print("valider")
+        from main import interpreteur
+        global LPOSITION
 
-    result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
-    print(result)
-    if result[0]:
-        #global LPOSITION
-        LPOSITION=fonction_lecture(position)
-        ligne=coup.get()[1]
-        nbcoup.set(str(int(nbcoup.get())+1))
-        coup.set("")
-        piece_a_bouger.set("")
-        message_erreur.set("")
-        coup_special.set("")
+        result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
+        print(result)
+        if result[0]:
+            #global LPOSITION
+            LPOSITION=fonction_lecture(position)
+            ligne=coup.get()[1]
+            nbcoup.set(str(int(nbcoup.get())+1))
+            coup.set("")
+            piece_a_bouger.set("")
+            message_erreur.set("")
+            coup_special.set("")
 
-        if couleurA.get() == "Blanc":
-            if KN1.Echec2():
-                message_echec.set("Les noirs sont en échec.")
-                print("Echec noir") 
-                if KN1.Echec_et_mat():
-                    print("Echec et mat.")
-                    open_popup_perdu("Noir")
-            if ligne=="8": #promotion de pion
-                open_popup_promo(result[2],"Blanc")
-                #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
-                #if choix_de_promotion=="Dame":
-                    #promoDameB(result[2])
-                #elif choix_de_promotion=="Tour":
-                    #promoTourB(result[2])
-                #elif choix_de_promotion=="Fou":
-                    #promoFouB(result[2])
-                #elif choix_de_promotion=="Cavalier":
-                    #promoCavalierB(result[2])
-            couleurA.set("Noir")
-        else: #noirs
-            if KB1.Echec2():
-                message_echec.set("Les blancs sont en échec.")
-                print("Echec blanc") 
-                if KB1.Echec_et_mat():
-                    print("Echec et mat.") ### afficher quelque part
-                    open_popup_perdu("Blanc")
-            if ligne=="1": #promotion de pion
-                open_popup_promo(result[2],"Noir")
-                #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
-                #if choix_de_promotion=="Dame":
-                    #promoDameN(result[2])
-                #elif choix_de_promotion=="Tour":
-                    #promoTourN(result[2])
-                #elif choix_de_promotion=="Fou":
-                    #promoFouN(result[2])
-                #elif choix_de_promotion=="Cavalier":
-                    #promoCavalierN(result[2])
-            couleurA.set("Blanc")
-        LPOSITION=fonction_lecture(position)
-        afficherPiece()
-        actualiserPiecesPrises()
-        afficherPiecesPrises()
-    elif result[0]==False:
-        message_erreur.set(result[1])
-        #print(message_erreur.get())
+            if couleurA.get() == "Blanc":
+                if KN1.Echec2():
+                    message_echec.set("Les noirs sont en échec.")
+                    print("Echec noir")
+                    if KN1.Echec_et_mat():
+                        print("Echec et mat.")
+                        open_popup_perdu("Noir")
+                if ligne=="8": #promotion de pion
+                    open_popup_promo(result[2],"Blanc")
+                    #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
+                    #if choix_de_promotion=="Dame":
+                        #promoDameB(result[2])
+                    #elif choix_de_promotion=="Tour":
+                        #promoTourB(result[2])
+                    #elif choix_de_promotion=="Fou":
+                        #promoFouB(result[2])
+                    #elif choix_de_promotion=="Cavalier":
+                        #promoCavalierB(result[2])
+                couleurA.set("Noir")
+            else: #noirs
+                if KB1.Echec2():
+                    message_echec.set("Les blancs sont en échec.")
+                    print("Echec blanc")
+                    if KB1.Echec_et_mat():
+                        print("Echec et mat.") ### afficher quelque part
+                        open_popup_perdu("Blanc")
+                if ligne=="1": #promotion de pion
+                    open_popup_promo(result[2],"Noir")
+                    #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
+                    #if choix_de_promotion=="Dame":
+                        #promoDameN(result[2])
+                    #elif choix_de_promotion=="Tour":
+                        #promoTourN(result[2])
+                    #elif choix_de_promotion=="Fou":
+                        #promoFouN(result[2])
+                    #elif choix_de_promotion=="Cavalier":
+                        #promoCavalierN(result[2])
+                couleurA.set("Blanc")
+            LPOSITION=fonction_lecture(position)
+            afficherPiece()
+            actualiserPiecesPrises()
+            afficherPiecesPrises()
+        elif result[0]==False:
+            message_erreur.set(result[1])
+            #print(message_erreur.get())
 
 
 def cmd_bouton_commencer():

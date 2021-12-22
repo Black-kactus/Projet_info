@@ -1,4 +1,4 @@
-from new_interface import coup_special
+#from new_interface import coup_special
 from piece import Cavalier, Dame, Fou, Pion, Roi, Tour
 
 
@@ -315,14 +315,13 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
-                  #special = coup_special.get()
-                  #if special == "PEP":
-                    #if prise_en_passant(piece, colonne, ligne, CouleurQuiJoue) == False:
-                      #message_erreur = "Vous ne pouvez pas faire la prise en passant."
-                      #return (False, message_erreur)
-                    #else:
-                     # prise_en_passant(piece, colonne, ligne, CouleurQuiJoue)
-                  #else:
+                  if coup_special == "PEP":
+                    if prise_en_passant(piece, colonne, ligne, CouleurQuiJoue) == False:
+                      message_erreur = "Vous ne pouvez pas faire la prise en passant."
+                      return (False, message_erreur)
+                    else:
+                      prise_en_passant(piece, colonne, ligne, CouleurQuiJoue)
+                  else:
                     message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
                     return (False,message_erreur)
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
