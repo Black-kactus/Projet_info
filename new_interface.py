@@ -401,6 +401,7 @@ def open_popup_perdu(couleur):
     else:
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
     Label(top, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+    #personnaliser le message avec les prenoms
 
 def open_popup_pat(couleur):
     import time
