@@ -116,11 +116,11 @@ def ROQUEN(): #grand roque noir
   l=KN1.ligne
   c=KN1.colonne
   update_coord_piece(KN1,7,3)
-  A=KN1.Echec2() 
+  A=KN1.Echec2()
   position[3][7]=0
   position[2][7]=KN1
   update_coord_piece(KN1,7,2)
-  B=KN1.Echec2() 
+  B=KN1.Echec2()
   position[2][7]=0
   update_coord_piece(KN1,l,c)
   if A or B:
@@ -129,7 +129,7 @@ def ROQUEN(): #grand roque noir
     update_coord_piece(KN1,7,2) #on met à jour les coordonnées des pièces
     position[2][7]=KN1
     update_coord_piece(TN2,7,3)
-    position[3][7]=TN1 
+    position[3][7]=TN1
     position[4][7]=0 #on enlève les pièces de leur ancienne case
     position[0][7]=0
     return (True,0)
@@ -149,11 +149,11 @@ def roqueB(): #petit roque blanc
   l=KB1.ligne
   c=KB1.colonne
   update_coord_piece(KB1,0,5)
-  A=KB1.Echec2() 
+  A=KB1.Echec2()
   position[5][0]=0
   position[6][0]=KB1
   update_coord_piece(KB1,0,6)
-  B=KB1.Echec2() 
+  B=KB1.Echec2()
   position[6][0]=0
   update_coord_piece(KB1,l,c)
   if A or B: #si attaque sur le chemin
@@ -168,7 +168,7 @@ def roqueB(): #petit roque blanc
     return (True,0)
   else:
     return (False,"Vous ne pouvez pas roquer.")
-   
+
 
 def roqueN(): #petit roque noir
   global position
@@ -185,7 +185,7 @@ def roqueN(): #petit roque noir
   position[5][7]=0
   position[6][7]=KN1
   update_coord_piece(KN1,7,6)
-  B=KN1.Echec2() 
+  B=KN1.Echec2()
   position[6][7]=0
   update_coord_piece(KN1,l,c)
   if A or B: #attaque sur le chemin
@@ -194,7 +194,7 @@ def roqueN(): #petit roque noir
     update_coord_piece(KN1,7,7)
     position[6][7]=KN1
     update_coord_piece(TN2,7,5)
-    position[5][7]=TN2 
+    position[5][7]=TN2
     position[4][7]=0 #on enlève les pièces de leur ancienne case
     position[7][7]=0
     return (True,0)
@@ -205,7 +205,7 @@ def roqueN(): #petit roque noir
 
 
 
-def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coordonées de la case : [colonne,ligne]
+def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 2 coordonées de la case : [colonne,ligne]
   global position
   if coup_special != "":
 
@@ -222,13 +222,13 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
         return ROQUEN()
 
     elif coup_special == "PEP":
-      return prise_en_passant(piece, piece.colonne, piece.ligne, CouleurQuiJoue)
+      return prise_en_passant(piece, piece.colonne, piece.ligne, CouleurQuiJoue,nbcoup)
 
   elif piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
     #print("Vous n'avez pas de pièce à cet endroit.")
     return (False,message_erreur)
-  else:  
+  else:
     if piece._couleur==CouleurQuiJoue:
       a=type(piece)
       ligne=case[1]
@@ -268,7 +268,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                 return (False,message_erreur)
             else: #s'il n'y a pas d'autre pièce sur la case
               position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-              position[colonne][ligne]=piece #on met à jour la liste position 
+              position[colonne][ligne]=piece #on met à jour la liste position
               if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                 message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                 #annuler_Mouvement(piece, ligne, colonne, 0)
@@ -281,8 +281,9 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
           else:
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
             return (False,message_erreur)
-            
+
         else: #cas spécial du pion
+          #from new_interface import nbcoup
           legalite = piece.mouvement_possible(colonne,ligne)[0]
           type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
           if legalite:
@@ -315,6 +316,9 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                     position[colonne][ligne]=0 #on annule le mouvement
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
+                  piece._condition2 = int(nbcoup.get())
+                  print(piece._condition2)
+                  print("Condition activee")
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
                     message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
@@ -364,6 +368,9 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                     position[colonne][ligne]=0 #on annule le mouvement
                     return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                piece._condition2 = int(nbcoup.get())
+                print(piece._condition2)
+                print("Condition activee")
 
               else:
                 if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
@@ -387,14 +394,14 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special): #case = liste des 2 coord
                   return (False,message_erreur)
           else:
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
-            return (False,message_erreur)  
+            return (False,message_erreur)
     else:
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
   #if (a==Tour or a==Roi):
   if (type(piece) == Tour or type(piece)== Roi):
     piece.Move1=True
-  
+
   return (True,0)
 
 
@@ -402,51 +409,61 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
   position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
 
-def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue):
-  from new_interface import nbcoup
+def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue,nbcoup):
+  #from new_interface import nbcoup
   if CouleurQuiJoue == "Blanc":  # si les blancs jouent
-    if piece.ligne == 3:
-      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
-        if position[colonne - 1][ligne]._condition2 != nbcoup :
-          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne - 1, ligne)
-      # prises_Blanc.append(position[colonne - 1][ligne])  # on met à jour la liste des prises
-      # position[colonne - 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-      # position[colonne - 1][ligne].ligne = -1
-          update_coord_piece(piece, ligne, colonne)
-          return (True, 0)
-      if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
-        if position[colonne + 1][ligne]._condition2 != nbcoup :
-          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne + 1, ligne)
-      # prises_Blanc.append(position[colonne + 1][ligne])  # on met à jour la liste des prises
-      # position[colonne + 1][ligne].colonne = -1  # on change les coordonées de la pièce mangée
-      # position[colonne + 1][ligne].ligne = -1
-          update_coord_piece(piece, ligne, colonne)
-          return (True, 0)
-      else:
-        return (False,"PEP impossible")
-    else:
-      return (False,"PEP impossible")
-  else: #pour les noirs
     if piece.ligne == 4:
       if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
-        if position[colonne - 1][ligne]._condition2 != nbcoup :
+        print(nbcoup.get())
+        print(position[colonne - 1][ligne]._condition2)
+        if position[colonne - 1][ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(colonne - 1, ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
+        else:
+          return (False, "PEP impossible car mauvais nbcoup.")
       if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
-        if position[colonne + 1][ligne]._condition2 != nbcoup :
+        print(nbcoup.get())
+        print(position[colonne + 1][ligne]._condition2)
+        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(colonne + 1, ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
+        else:
+          return (False, "PEP impossible car mauvais nbcoup.")
       else:
-        return (False,"PEP impossible.")
+        return (False,"PEP impossible car pion noir pas au bon endroit")
     else:
-      return (False,"PEP impossible.")
+      return (False,"PEP impossible car pion blanc pas au bon endroit")
+  else: #pour les noirs
+    if piece.ligne == 3:
+      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
+        print(nbcoup.get())
+        print(position[colonne - 1][ligne]._condition2)
+        if position[colonne - 1][ligne]._condition2 == int(nbcoup.get())-1 :
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne - 1, ligne)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
+        else:
+          return (False, "PEP impossible car mauvais nbcoup.")
+      if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
+        print(nbcoup.get())
+        print(position[colonne + 1][ligne]._condition2)
+        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get()) :
+          position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          eaten_Blanc(colonne + 1, ligne)
+          update_coord_piece(piece, ligne, colonne)
+          return (True, 0)
+        else :
+          return (False, "PEP impossible car mauvais nbcoup.")
+      else:
+        return (False,"PEP impossible car pion blanc pas au bon endroit.")
+    else:
+      return (False,"PEP impossible car pion noir au mauvais endroit.")

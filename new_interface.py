@@ -500,7 +500,7 @@ def cmd_bouton_valider():
         from main import interpreteur
         global LPOSITION
 
-        result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get())
+        result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
         print(result)
         if result[0]:
             #global LPOSITION
