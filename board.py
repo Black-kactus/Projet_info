@@ -316,7 +316,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
                   piece._condition2 = int(nbcoup.get())
-                    
+
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
                     message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
