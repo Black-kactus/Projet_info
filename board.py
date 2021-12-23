@@ -316,8 +316,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
                   piece._condition2 = int(nbcoup.get())
-                  print(piece._condition2)
-                  print("Condition activee")
+                    
               else:
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
                     message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
@@ -368,8 +367,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 piece._condition2 = int(nbcoup.get())
-                print(piece._condition2)
-                print("Condition activee")
 
               else:
                 if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
@@ -418,6 +415,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(piece.colonne - 1, piece.ligne)
+          position[piece.colonne - 1][piece.ligne] = 0  # on enlève le pion adversaire du board
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
         else:
@@ -425,16 +423,10 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
       if type(position[piece.colonne + 1][piece.ligne]) == Pion and position[piece.colonne + 1][piece.ligne]._couleur != CouleurQuiJoue:
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          print(position)
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          print(position)
-          eaten_Blanc(piece.colonne + 1,piece.ligne)
-          #prises_Blanc.append(position[piece.colonne + 1][piece.ligne])  # on met à jour la liste des prises
-          #position[piece.colonne + 1][piece.ligne].colonne = -1  # on change les coordonées de la pièce mangée
-          #position[piece.colonne + 1][piece.ligne].ligne = -1
-          print(position)
+          eaten_Blanc(piece.colonne + 1,piece.ligne) #on l'ajoute aux prises des Blancs
+          position[piece.colonne + 1][piece.ligne] = 0  # on enlève le pion adversaire du board
           update_coord_piece(piece, ligne, colonne)
-          print(piece.ligne,piece.colonne)
           return (True, 0)
         else:
           return (False, "PEP only possible directly after move pion N.")
@@ -449,6 +441,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(piece.colonne - 1, piece.ligne)
+          position[piece.colonne - 1][piece.ligne] = 0
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
         else:
@@ -458,6 +451,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(piece.colonne + 1, piece.ligne)
+          position[piece.colonne + 1][piece.ligne] = 0
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
         else:
