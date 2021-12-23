@@ -283,7 +283,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
             return (False,message_erreur)
 
         else: #cas spécial du pion
-          #from new_interface import nbcoup
           legalite = piece.mouvement_possible(colonne,ligne)[0]
           type_de_mouvement = piece.mouvement_possible(colonne,ligne)[1]
           if legalite:
@@ -410,7 +409,6 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
   position[colonne][ligne] = arg  # on annule le mouvement
 
 def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue,nbcoup):
-  #from new_interface import nbcoup
   if CouleurQuiJoue == "Blanc":  # si les blancs jouent
     if piece.ligne == 4:
       if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
@@ -455,7 +453,7 @@ def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue,nbcoup):
       if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
         print(nbcoup.get())
         print(position[colonne + 1][ligne]._condition2)
-        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get()) :
+        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           eaten_Blanc(colonne + 1, ligne)
