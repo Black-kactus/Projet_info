@@ -222,7 +222,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
         return ROQUEN()
 
     elif coup_special == "PEP":
-      return prise_en_passant(piece, piece.colonne, piece.ligne, CouleurQuiJoue,nbcoup)
+      return prise_en_passant(piece, case, CouleurQuiJoue, nbcoup)
 
   elif piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
@@ -408,60 +408,61 @@ def annuler_Mouvement(piece, ligne, colonne, arg):
   position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
 
-def prise_en_passant(piece, colonne, ligne, CouleurQuiJoue,nbcoup):
+def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
+  ligne = case[1]
+  colonne = case[0]
   if CouleurQuiJoue == "Blanc":  # si les blancs jouent
     if piece.ligne == 4:
-      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
-        print(nbcoup.get())
-        print(position[colonne - 1][ligne]._condition2)
-        if position[colonne - 1][ligne]._condition2 == int(nbcoup.get())-1 :
+      if type(position[piece.colonne - 1][piece.ligne]) == Pion and position[piece.colonne - 1][piece.ligne]._couleur != CouleurQuiJoue:
+        if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne - 1, ligne)
+          eaten_Blanc(piece.colonne - 1, piece.ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
         else:
-          return (False, "PEP impossible car mauvais nbcoup.")
-      if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
-        print(nbcoup.get())
-        print(position[colonne + 1][ligne]._condition2)
-        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get())-1 :
+          return (False, "PEP only possible directly after move pion N.")
+      if type(position[piece.colonne + 1][piece.ligne]) == Pion and position[piece.colonne + 1][piece.ligne]._couleur != CouleurQuiJoue:
+        if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
+          print(position)
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne + 1, ligne)
+          print(position)
+          eaten_Blanc(piece.colonne + 1,piece.ligne)
+          #prises_Blanc.append(position[piece.colonne + 1][piece.ligne])  # on met à jour la liste des prises
+          #position[piece.colonne + 1][piece.ligne].colonne = -1  # on change les coordonées de la pièce mangée
+          #position[piece.colonne + 1][piece.ligne].ligne = -1
+          print(position)
           update_coord_piece(piece, ligne, colonne)
+          print(piece.ligne,piece.colonne)
           return (True, 0)
         else:
-          return (False, "PEP impossible car mauvais nbcoup.")
+          return (False, "PEP only possible directly after move pion N.")
       else:
-        return (False,"PEP impossible car pion noir pas au bon endroit")
+        return (False,"PEP impossible car pion noir au mauvais endroit.")
     else:
-      return (False,"PEP impossible car pion blanc pas au bon endroit")
+      return (False,"PEP impossible car pion blanc au mauvais endroit.")
   else: #pour les noirs
     if piece.ligne == 3:
-      if type(position[colonne - 1][ligne]) == Pion and position[colonne - 1][ligne]._couleur != CouleurQuiJoue:
-        print(nbcoup.get())
-        print(position[colonne - 1][ligne]._condition2)
-        if position[colonne - 1][ligne]._condition2 == int(nbcoup.get())-1 :
+      if type(position[piece.colonne - 1][piece.ligne]) == Pion and position[piece.colonne - 1][piece.ligne]._couleur != CouleurQuiJoue:
+        if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne - 1, ligne)
+          eaten_Blanc(piece.colonne - 1, piece.ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
         else:
-          return (False, "PEP impossible car mauvais nbcoup.")
+          return (False, "PEP only possible directly after move pion B.")
       if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
-        print(nbcoup.get())
-        print(position[colonne + 1][ligne]._condition2)
-        if position[colonne + 1][ligne]._condition2 == int(nbcoup.get())-1 :
+        if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          eaten_Blanc(colonne + 1, ligne)
+          eaten_Blanc(piece.colonne + 1, piece.ligne)
           update_coord_piece(piece, ligne, colonne)
           return (True, 0)
-        else :
-          return (False, "PEP impossible car mauvais nbcoup.")
+        else:
+          return (False, "PEP only possible directly after move pion B.")
       else:
-        return (False,"PEP impossible car pion blanc pas au bon endroit.")
+        return (False,"PEP impossible car pion blanc au mauvais endroit.")
     else:
       return (False,"PEP impossible car pion noir au mauvais endroit.")

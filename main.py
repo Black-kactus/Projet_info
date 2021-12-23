@@ -1,4 +1,4 @@
-def interpreteur(coup,piece_a_bouger,couleurA,coup_special,nbcoup):
+def interpreteur(coup, piece_a_bouger, couleurA, coup_special, nbcoup):
     from board import mouvement,position
     position_ou_aller=coup.get()
     piece_bougee=piece_a_bouger.get()
