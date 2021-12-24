@@ -47,6 +47,10 @@ root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
+s = ttk.Style()
+# s.configure(root, font=('Raleway', 10))
+# s.configure(root, font=('', 10))
+
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
 
@@ -90,6 +94,18 @@ prenom = StringVar()
 prenom.set(prenom_blanc.get())
 
 duree_de_la_partie=0
+
+ImageTableau = Image.open('tableau.jpg')
+ImageTableau = ImageTableau.resize((400,300), Image.ANTIALIAS)
+python_imageTableau = ImageTk.PhotoImage(ImageTableau)
+
+ImagePEP = Image.open('PEP.png')
+ImagePEP = ImagePEP.resize((200,200), Image.ANTIALIAS)
+python_imagePEP = ImageTk.PhotoImage(ImagePEP)
+
+ImageEchecMate = Image.open('checkmate.jpg')
+ImageEchecMate = ImageEchecMate.resize((300,200), Image.ANTIALIAS)
+python_imageEchecMate = ImageTk.PhotoImage(ImageEchecMate)
 
 
 ##Images des pieces de l'échiquier
@@ -644,40 +660,35 @@ def cmd_bouton_regles():
     n.add(Onglet9_Fin, text='Fin de partie')
 
     # Onglet 1 : Regles
-    ch1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
-    ttk.Label(Onglet1_Regles, text= ch1 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+    # ch1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
+    ch1 = "La partie d’échecs de Sofonisba Anguissola (1555)\n\nLe jeu d’échec est un jeu opposant deux joueurs de part et d’autre d’un échiquier composé de soixante-quatre cases, 32 cases blanches et 32 cases noires. Les joueurs jouent à tour de rôle en déplaçant l'une de leurs seize pièces (ou deux pièces en cas de roque), blanches pour le camp des blancs, noires pour le camp des noirs. Chaque joueur possède au départ un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un échec et mat, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier."
+    ttk.Label(Onglet1_Regles, image = python_imageTableau, background = 'white',text= ch1 ,relief="solid",anchor= CENTER, compound='top',  wraplength=480, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
     
     #Onglet 2: Pion
-    ttk.Label(Onglet2_Pion, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 16, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet2_Pion, text= 'Les déplacements du pion se font verticalement, coup spécial : prise en passant \n mange en diagonale et promotion de pion',background = 'white',relief="solid",anchor=CENTER).grid(row = 16, column = 0, rowspan= 4, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet2_Pion, image= python_imageDF, text = "Les déplacements du pion se font verticalement, le pion est la seule pièce qui ne peut pas reculer. C’est aussi la seule pièce qui ne prend pas comme elle avance. Les pions avancent en effet d’une case sur la même colonne, si la case située devant eux est libre. Ils prennent sur l’une ou l’autre des deux cases situées devant eux en diagonale", compound = 'top', wraplength = "480", background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 3 : Fou
-    ttk.Label(Onglet3_Fou, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet3_Fou, text= 'Les déplacements du fou se font diagonalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet3_Fou, image= python_imageDF, text = "Les déplacements du fou se font diagonalement, il peut se déplacer d'autant de cases qu'il veut. Chaque joueur dispose au départ d’un Fou sur une case noire et d’un Fou sur une case blanche. Ces Fous ne pourront jamais changer de couleur durant toute la partie." , compound= 'top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 4 : Tour
-    ttk.Label(Onglet4_Tour, image= python_imageDT,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet4_Tour, text= 'Les déplacements de la tour se font horizontalement et verticalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet4_Tour, wraplength="480",image= python_imageDT, text ="Les déplacements de la tour se font horizontalement et verticalement, elle se déplace d'autant de pièces qu'elle veut", compound ='top', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 5 : Cavalier
-    ttk.Label(Onglet5_Cavalier, image= python_imageDC,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet5_Cavalier, text= 'Les déplacements du cavalier se font en forme de L',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet5_Cavalier, image= python_imageDC, text = "Les déplacements du cavalier se font en forme de 'L'. Le cavalier ne peut être intercepté par aucune des pièces autour de lui, il saute jusqu'à sa case d'arrivée.", compound = 'top', background = 'white',relief="solid",anchor=CENTER, wraplength='480').grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 6: Dame
-    ttk.Label(Onglet6_Dame, image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet6_Dame, text= "La Dame peut se déplacer dans toutes les directions de l'espace",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet6_Dame, wraplength = '480', text = "La Dame peut se déplacer comme la Tour et le Fou: elle peut donc se déplacer verticalement, horizontalement et en diagonale, d’autant de cases qu’elle veut.", compound= 'top', image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 7 : Roi
-    ttk.Label(Onglet7_Roi, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet7_Roi, text= 'Le Roi peut se déplacer dans toutes les directions, mais seulement de 1',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet7_Roi, image= python_imageDR, text = "Le Roi peut se déplacer dans toutes les directions, mais seulement de une case. Lorsqu’un Roi est attaqué par une pièce adverse, on dit qu’il est en échec. Un joueur n’a pas le droit de laisser son Roi en échec. Il n’a pas non plus le droit de déplacer son Roi sur une case où celui-ci sera attaqué (donc en échec).", compound ='top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 8 : Action spéciale
-    ttk.Label(Onglet8_ActionSpe, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet8_ActionSpe, text= "Expliquer le pat et la promotion",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ch2= "\t\t\t\tPrise en passant\nCoup spéciaux du pion :\n- Prise en passant : Lorsqu’un pion situé sur sa rangée de départ avance de deux cases et se retrouve à côté d’un pion adverse, alors l’adversaire peut, au coup suivant (et uniquement ce coup-là), prendre le pion qui vient d’avancer avec son pion comme si le pion adverse n’avait avancé que d’une case.\n- Promotion de pion: Lorsqu’un joueur avance un pion sur la dernière rangée, ou s’il prend avec un pion une pièce qui se trouve sur la dernière rangée, il doit le remplacer par une pièce de son choix (Dame, Tour, Fou ou Cavalier), de la même couleur, quelles que soient les pièces restantes sur l’échiquier. \nLe Roque: \nLorsque le Roi et cette Tour sont encore sur leurs cases initiales et qu’il n’y a plus de pièces entre eux, le joueur peut déplacer de deux cases le Roi vers la Tour, puis placer cette Tour sur la case juste à côté du Roi, de l’autre côté. Le roque peut être effectué sur l’aile roi (on parle alors de petit roque) ou sur l’aile dame (on parle alors de grand roque). Attention, si le roi est Roi est en échec, si une case qu’il doit traverser est attaquée ou si sa case d’arrivée est attaquée, alors le roque est interdit."
+    ttk.Label(Onglet8_ActionSpe, image= python_imagePEP, text = ch2, compound = 'top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 9 : Fin de partie 
-    ch2= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
-    ttk.Label(Onglet9_Fin, text= ch2 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+    ch3 = "\n\nUne partie d’échec peut avoir trois résultats: le gain des Blancs, le gain des Noirs ou un match nul. \nLe gain survient lors d'un échec et mat, ie lorsque l'échec ne peut être paré ou bien lorsqu'un des joueurs abandonne. \nUne partie est nulle dans les cas suivants:\n- Par accord mutuel entre les deux joueurs\n- En cas de PAT: si l’un des joueurs n’a aucun coup légal mais que son Roi n’est pas en échec\n- En cas de matériel insuffisant pour permettre le mat\n- Si la même position survient trois fois sur l’échiquier\n- Si les deux joueurs ont joué chacun 50 coups consécutifs sans poussée de pion ni prise de pièce"
+    ttk.Label(Onglet9_Fin, text= ch3, image = python_imageEchecMate, compound = 'top',relief="solid",background = 'white',anchor=CENTER, wraplength=480).grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(20):
         Onglet1_Regles.columnconfigure(i,weight=1)
