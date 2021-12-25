@@ -406,6 +406,7 @@ choix_de_promotion.set("Indiquez la pièce.")
 
 
 def open_popup_promo(piece,couleur):
+
     def cmd_bouton_dameB():
         from piece import promoDameB
         global choix_de_promotion
@@ -447,13 +448,16 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameN():
         from piece import promoDameN
+        global choix_de_promotion
         choix_de_promotion.set("Dame")
         print("Dame")
         promoDameN(piece)
         PopUp_promo.destroy()
+        #ce que fait la fonction, c'est donner une nouvelle valeur à choix de promotion, sans l'utiliser après, c'est normal? 
 
     def cmd_bouton_tourN():
         from piece import promoTourN
+        global choix_de_promotion
         choix_de_promotion.set("Tour")
         print("Tour")
         promoTourN(piece)
@@ -461,6 +465,7 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_fouN():
         from piece import promoFouN
+        global choix_de_promotion
         choix_de_promotion.set("Fou")
         print("Fou")
         promoFouN(piece)
@@ -468,12 +473,14 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
+        global choix_de_promotion
         choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
+        global choix_de_promotion
         choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
@@ -535,12 +542,17 @@ def open_popup_perdu(couleur):
     top.title("Perduuuu")
     top.iconbitmap(r'icone.ico')
     top.lift()
-    Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
+    # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
     if couleur=="Noir":
+        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
+        # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
+        Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
     else:
+        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
+        Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
-    Label(top, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
     #personnaliser le message avec les prenoms
 
 def pop_up_commencer():
