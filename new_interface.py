@@ -532,7 +532,7 @@ def open_popup_pat(couleur):
     else:
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
-
+    
 def open_popup_perdu(couleur):
     import time
     global duree_de_la_partie
@@ -567,7 +567,7 @@ def pop_up_commencer():
         Popup3.destroy()
 
     Popup3 = Toplevel()
-    Popup3.title('Options')
+    Popup3.title('Faites un choix')
     Popup3.iconbitmap(r'icone.ico')
 
     Popup3.geometry("200x100")
@@ -831,10 +831,35 @@ def cmd_bouton_regles():
         Onglet8_ActionSpe.rowconfigure(j,weight=1)
         Onglet9_Fin.rowconfigure(j,weight=1)
 
+def cmd_bouton_cmtjouer():
+    Popup4 = Toplevel()
+    Popup4.title('Comment jouer ?')
+    Popup4.iconbitmap(r'icone.ico')
+    Popup4.resizable(width=False, height=False)
+
+    Popup4.geometry("500x340")
+    Popup4.grid_columnconfigure(0, weight=1)
+    Popup4.grid_rowconfigure(0, weight=1)
+
+    content4 = ttk.Frame(Popup4, padding=(0,0,0,0))
+    content4.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    Label_Explication = ttk.Label(content4, text= "Utilisation du logiciel : ",relief="solid",anchor=CENTER)
+    Label_Explication.grid(column=0, row=0, columnspan=10, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+    
+    ch2= "1- Commencer la partie :\nAppuyez sur le bouton 'Nouvelle Partie' et choississez ensuite qui joue les blancs ou les noirs. \n\n2- Entrer les coups:\nPour entrer les coups rien de plus simple! Il suffit d'indiquer les coordonnées de la pièces que vous vouler jouer, sous la forme 'a5' (colonne puis ligne) dans la 1e zone de saisie, puis d'entrer dans la deuxième zone de saisie l'endroit où vous voulez vous diriger. Si le coup est incorrect, le jeu l'indiquera.\n\n3- Coup spéciaux: Dans la zone de saisie 'Coup spécial', vous pouvez jouer :\n- Une prise en passant : 'PEP'\n- Un petit roque : 'roque'\n- Un grand roque : 'ROQUE'\n\n4- Fin de partie : \nLe jeu indiquera les échecs et l'échec et mat, dans ce cas la partie sera terminé. De plus, vous pouvez reconnaitre votre défaite, lorsque c'est votre tour, en appuyant sur le bouton 'Reconnaître sa cuisante défaite'."
+    ttk.Label(content4, text = ch2, wraplength = "480", background = 'white',relief="solid",anchor=CENTER).grid(row = 1, column = 0, rowspan= 8, columnspan= 10,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(0,8):
+        content4.columnconfigure(i,weight=1)
+
+    for j in range(0,4):
+        content4.rowconfigure(j,weight=1)
 
 def cmd_bouton_options():
     Popup2 = Toplevel()
     Popup2.title('Options')
+    Popup2.resizable(width=False, height=False)
     Popup2.iconbitmap(r'icone.ico')
 
     Popup2.geometry("300x200")
@@ -859,17 +884,22 @@ def cmd_bouton_options():
     Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)
     Bouton_Regles2.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
-    Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Bouton_CmtJouer= ttk.Button(content2, text= "Comment jouer ?",command= cmd_bouton_cmtjouer)
+    Bouton_CmtJouer.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
-    Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    # Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
+    # Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    # Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
+    # Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(0,2):
         content2.columnconfigure(i,weight=1)
 
-    for j in range(0,12):
+    for j in range(0,10):
         content2.rowconfigure(j,weight=1)
+
+    
 
     
 #permet l'expension des boutons 
