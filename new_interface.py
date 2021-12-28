@@ -52,7 +52,7 @@ s = ttk.Style()
 # s.configure(root, font=('', 10))
 
 content = ttk.Frame(root, padding=(0,0,0,0))
-frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
+frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
@@ -237,6 +237,37 @@ LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],
 LPIECESPRISES = [[1,1,0,1,0,1,1,0],[1,0,1,0,1,0,1,1],[1,0,1,1,1,0,1,1],[1,0,1,1,0,1,1,1]]
 LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python_imageDB2, python_imageRB2, python_imageFB2, python_imageCB2, python_imageTB2], [python_imageTN2, python_imageCN2, python_imageFN2, python_imageDN2, python_imageRN2, python_imageFN2, python_imageCN2, python_imageTN2] ]
 
+# def afficherPiece():
+#     global LPOSITION
+#     for i in range(len(LPOSITION)) : 
+#         for j in range(len(LPOSITION)):
+#             if (i+j)%2 == 0: couleur = 'black'
+#             else : couleur = "white"
+#             if couleurA.get() == "Noir":
+#                 ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+#             else : 
+#                 ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+#     if couleurA.get() == "Noir":
+#         for k in range(0,18,2):
+#             # L = ["","A",'B',"C","D","E","F",'G','H']
+#             L = ["","H","G",'F',"E","D","C","B",'A']
+#             ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#             ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#     else: 
+#         for k in range(0,18,2):
+#             L = ["","A",'B',"C","D","E","F",'G','H']
+#             # L = ["","H","G",'F',"E","D","C","B",'A']
+#             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+def BoutonGestClicgauche(evt, i, j):
+    print('CGauche',i, j )
+    piece_a_bouger.set(chr(j+97)+str(8-i))
+
+def BoutonGestClicdroit(evt, i, j ):
+    print('CDroit', i, j)
+    coup.set(chr(j+97)+str(8-i))
+
+BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
     global LPOSITION
     for i in range(len(LPOSITION)) : 
@@ -244,10 +275,27 @@ def afficherPiece():
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
             if couleurA.get() == "Noir":
-                ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+                Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER)
+                BoutonListe[i].insert(j,Bouton_piece)
+                Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+                def gestCG(evt, i=i,j=j):   
+                    return BoutonGestClicgauche(evt, 7-i,7-j)
+                def gestCD(evt, i=i, j= j):   
+                    return BoutonGestClicdroit(evt, 7-i,7-j)
             else : 
-                ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
-    
+                Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER)
+                BoutonListe[i].insert(j,Bouton_piece)
+                Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+
+                def gestCG(evt, i=i,j=j):   
+                     return BoutonGestClicgauche(evt, i,j)
+                def gestCD(evt, i=i, j= j):   
+                    return BoutonGestClicdroit(evt, i,j)
+            
+           
+            Bouton_piece.bind('<Button-1>', gestCG)
+            Bouton_piece.bind('<Button-3>', gestCD)
+
     if couleurA.get() == "Noir":
         for k in range(0,18,2):
             # L = ["","A",'B',"C","D","E","F",'G','H']
