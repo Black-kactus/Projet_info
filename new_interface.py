@@ -260,11 +260,11 @@ LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python
 #             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 #             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 def BoutonGestClicgauche(evt, i, j):
-    print('CGauche',i, j )
+    # print('CGauche',i, j )
     piece_a_bouger.set(chr(j+97)+str(8-i))
 
 def BoutonGestClicdroit(evt, i, j ):
-    print('CDroit', i, j)
+    # print('CDroit', i, j)
     coup.set(chr(j+97)+str(8-i))
 
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
@@ -747,6 +747,12 @@ def cmd_bouton_commencer():
     nbcoup.set("0")
     couleurA.set("Blanc")
     prenom.set(prenom_blanc.get())
+    coup.set("")
+    piece_a_bouger.set("")
+    coup_special.set("")
+    message_echec.set("")
+    script.set("")
+    message_echec.set("")
     global LPOSITION
     global LPIECESPRISES
 
