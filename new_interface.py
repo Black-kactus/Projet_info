@@ -753,6 +753,11 @@ def cmd_bouton_commencer():
     message_echec.set("")
     script.set("")
     message_echec.set("")
+    if prenom_blanc.get()== "":
+        print("oui")
+        prenom_blanc.set("Blanc")
+    if prenom_noir.get() =="":
+        prenom_noir.set("Noir")
     global LPOSITION
     global LPIECESPRISES
 
