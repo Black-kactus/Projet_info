@@ -420,7 +420,7 @@ choix_de_promotion.set("Indiquez la pièce.")
 #     PopUp_promo.destroy()
 
 # def open_popup_promo(piece,couleur):
-#     PopUp_promo= Toplevel(root)
+#     PopUp_promo= Toplevel()
 #     PopUp_promo.geometry("750x350")
 #     PopUp_promo.title("Promotion de pion")
 #     PopUp_promo.iconbitmap(r'icone.ico')
@@ -569,7 +569,7 @@ def open_popup_pat(couleur):
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
-    PopUp_pat= Toplevel(root)
+    PopUp_pat= Toplevel()
     PopUp_pat.geometry("750x300")
     PopUp_pat.title("Pat")
     PopUp_pat.iconbitmap(r'icone.ico')
@@ -585,7 +585,7 @@ def open_popup_perdu(couleur):
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
-    top= Toplevel(root)
+    top= Toplevel()
     top.geometry("750x250")
     top.title("Perduuuu")
     top.iconbitmap(r'icone.ico')
