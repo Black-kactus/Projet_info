@@ -95,6 +95,8 @@ prenom.set(prenom_blanc.get())
 
 duree_de_la_partie=0
 
+## Images des règles 
+
 ImageTableau = Image.open('tableau.jpg')
 ImageTableau = ImageTableau.resize((400,300), Image.ANTIALIAS)
 python_imageTableau = ImageTk.PhotoImage(ImageTableau)
@@ -108,7 +110,7 @@ ImageEchecMate = ImageEchecMate.resize((300,200), Image.ANTIALIAS)
 python_imageEchecMate = ImageTk.PhotoImage(ImageEchecMate)
 
 
-##Images des pieces de l'échiquier
+## Images des pieces de l'échiquier
 
 
 ImgFouNoir = Image.open('fou_noir.png')
@@ -156,7 +158,7 @@ python_imageTB = ImageTk.PhotoImage(ImgTourBlanche)
 python_imageTN = ImageTk.PhotoImage(ImgTourNoire)
 python_imageVIDE = ImageTk.PhotoImage(ImgVide)
 
-##Images des icones des pieces prise
+## Images des icones des pieces prise
 
 resizeX = 30
 resizeY = 30
