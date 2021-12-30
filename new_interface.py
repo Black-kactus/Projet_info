@@ -591,7 +591,7 @@ def open_popup_perdu(couleur):
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
     top= Toplevel()
-    top.geometry("750x250")
+    top.geometry("750x450")
     top.title("Perduuuu")
     top.iconbitmap(r'icone.ico')
     top.lift()
@@ -603,16 +603,19 @@ def open_popup_perdu(couleur):
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
 
         img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
-        can1 = Canvas(top, width = 500, height = 500, bg = 'white')
-        item = can1.create_image(300, 300, image = img)
-        can1.image = img
-        can1.pack()
-        #j'ai essayé de rajouter une image, n'hésitez pas à corriger si vous voyez que c'est n'importe quoi
+        Label(top, image = img).pack(side = "bottom", fill = "both", expand = "yes")
+        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
+
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
         Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
+        img = ImageTk.PhotoImage(file="defaite_des_blancs.png")
+        Label(top, image = img).pack(side = "bottom", fill = "both", expand = "yes")
+        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
+
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+    top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
     #personnaliser le message avec les prenoms
 
 def pop_up_commencer():
