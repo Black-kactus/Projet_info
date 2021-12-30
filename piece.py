@@ -285,7 +285,7 @@ class Roi(Fou,Tour):
         return False
     
 
-    def Echec_et_mat(self):
+    def Echec_et_mat(self,nbcoup):
         from board import position,mouvement,prises_Blanc,prises_Noir
         for colonne in position:
             for piece in colonne:
@@ -305,7 +305,7 @@ class Roi(Fou,Tour):
                                     mangee=position[case[0]][case[1]]
                                     coordL=position[case[0]][case[1]].ligne
                                     coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                     return False
                                 position=archive_pos[:]
                                 prises_Blanc=archive_prisesB[:]
@@ -328,7 +328,7 @@ class Roi(Fou,Tour):
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -349,7 +349,7 @@ class Roi(Fou,Tour):
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -371,7 +371,7 @@ class Roi(Fou,Tour):
                                     mangee=position[case[0]][case[1]]
                                     coordL=position[case[0]][case[1]].ligne
                                     coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                     return False
                                 position=archive_pos[:]
                                 prises_Blanc=archive_prisesB[:]
@@ -395,7 +395,7 @@ class Roi(Fou,Tour):
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -418,7 +418,7 @@ class Roi(Fou,Tour):
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -439,7 +439,7 @@ class Roi(Fou,Tour):
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"")[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]

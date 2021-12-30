@@ -701,7 +701,7 @@ def cmd_bouton_valider():
                 if KN1.Echec2():
                     message_echec.set("Les noirs sont en échec.")
                     print("Echec noir")
-                    if KN1.Echec_et_mat():
+                    if KN1.Echec_et_mat(nbcoup.get()):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
                 if ligne=="8": #promotion de pion
@@ -720,7 +720,7 @@ def cmd_bouton_valider():
                 if KB1.Echec2():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
-                    if KB1.Echec_et_mat():
+                    if KB1.Echec_et_mat(nbcoup.get()):
                         print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
                 if ligne=="1": #promotion de pion
