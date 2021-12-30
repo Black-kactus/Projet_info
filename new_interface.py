@@ -39,8 +39,11 @@ def interpreteur_script(script):
         elif len(coup_script)==2:
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
-        cmd_bouton_valider()
-        #time.sleep(5)
+        if coup_special.get()=="abandon":
+            cmd_bouton_abandonner()
+        else:
+            cmd_bouton_valider()
+            #time.sleep(5)
 
 
 root = Tk()
@@ -596,8 +599,15 @@ def open_popup_perdu(couleur):
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
         # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
-        Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
+        Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
+
+        img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
+        can1 = Canvas(top, width = 500, height = 500, bg = 'white')
+        item = can1.create_image(300, 300, image = img)
+        can1.image = img
+        can1.pack()
+        #j'ai essayé de rajouter une image, n'hésitez pas à corriger si vous voyez que c'est n'importe quoi
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
         Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
@@ -673,13 +683,17 @@ def cmd_bouton_son():
 def cmd_bouton_valider():
     lettres = "a,b,c,d,e,f,g,h"
     chiffres = "1,2,3,4,5,6,7,8"
+    special=["roque","ROQUE","abandon","","PEP"]
     position_ou_aller=coup.get()
     piece_bougee=piece_a_bouger.get()
-    if len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres):
+    if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
+    if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    else:
+    if not(coup_special.get() in special):
+        message_erreur.set("Syntaxe incorrecte. Retentez.")
+
+    if message_erreur.get()=="":
         from board import position,KB1,KN1
         print("valider")
         from main import interpreteur
@@ -690,21 +704,20 @@ def cmd_bouton_valider():
         if result[0]:
             #global LPOSITION
             LPOSITION=fonction_lecture(position)
-            ligne=coup.get()[1]
+            if not (coup_special.get() in ["ROQUE","roque","PEP"]):
+                ligne=coup.get()[1]
             nbcoup.set(str(int(nbcoup.get())+1))
-            coup.set("")
-            piece_a_bouger.set("")
+            
             message_erreur.set("")
-            coup_special.set("")
 
             if couleurA.get() == "Blanc":
                 if KN1.Echec2():
                     message_echec.set("Les noirs sont en échec.")
                     print("Echec noir")
-                    if KN1.Echec_et_mat(nbcoup.get()):
+                    if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
-                if ligne=="8": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8": #promotion de pion
                     open_popup_promo(result[2],"Blanc")
                     #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                     #if choix_de_promotion=="Dame":
@@ -720,10 +733,10 @@ def cmd_bouton_valider():
                 if KB1.Echec2():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
-                    if KB1.Echec_et_mat(nbcoup.get()):
+                    if KB1.Echec_et_mat(nbcoup):
                         print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
-                if ligne=="1": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1": #promotion de pion
                     open_popup_promo(result[2],"Noir")
                     #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                     #if choix_de_promotion=="Dame":
@@ -736,6 +749,9 @@ def cmd_bouton_valider():
                         #promoCavalierN(result[2])
                 couleurA.set("Blanc")
             LPOSITION=fonction_lecture(position)
+            coup.set("")
+            piece_a_bouger.set("")
+            coup_special.set("")
             afficherPiece()
             actualiserPiecesPrises()
             afficherPiecesPrises()

@@ -141,7 +141,7 @@ def ROQUEN(): #grand roque noir
 def roqueB(): #petit roque blanc
   global position
   global KB1,TB2
-  if KB1.echec==True or KB1.Move1 or TB2.Move1: #si echec ou déjà bougé
+  if KB1.echec==True or KB1.Move1 or TB2.Move1: #si a déjà été en échec ou déjà bougé
     return (False,"Vous ne pouvez plus roquer.")
   elif position[5][0]!=0 or position[6][0]!=0 : #si chemin pas dégegé
     return (False,"La case d'arrivée est déjà occupée.")
@@ -157,6 +157,7 @@ def roqueB(): #petit roque blanc
   position[6][0]=0
   update_coord_piece(KB1,l,c)
   if A or B: #si attaque sur le chemin
+    print("A",A,"B",B)
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
   elif position[4][0]==KB1 and position[7][0]==TB2: #tout bon, roque
     update_coord_piece(KB1,0,6) #on met les coordonnées à jour
