@@ -98,6 +98,16 @@ prenom.set(prenom_blanc.get())
 
 duree_de_la_partie=0
 
+## Images perdu
+
+ImageperduB = Image.open('defaite_des_blancs.png')
+ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
+python_imageperduB = ImageTk.PhotoImage(ImageperduB)
+
+ImageperduN = Image.open('defaite_des_noirs.png')
+ImageperduN = ImageperduN.resize((300,300), Image.ANTIALIAS)
+python_imageperduN = ImageTk.PhotoImage(ImageperduN)
+
 ## Images des règles 
 
 ImageTableau = Image.open('tableau.jpg')
@@ -602,16 +612,20 @@ def open_popup_perdu(couleur):
         Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
 
-        img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
-        Label(top, image = img).pack(side = "bottom", fill = "both", expand = "yes")
+        # img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
+        Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
+
         #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
 
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
+
         Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
-        img = ImageTk.PhotoImage(file="defaite_des_blancs.png")
-        Label(top, image = img).pack(side = "bottom", fill = "both", expand = "yes")
+
+        # img = ImageTk.PhotoImage(file="defaite_des_blancs.png")
+
+        Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
         #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
 
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
