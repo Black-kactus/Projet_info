@@ -311,16 +311,25 @@ class Roi(Fou,Tour):
                     if type(piece)==Roi:
                         L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
                         a=0
-                        for case in L:
-                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
-                                if position[case[0]][case[1]]!=0:
+                        for case in L: #on teste tous les mouvements possibles du roi
+                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0: #si on reste dans l'échiquier
+                                if position[case[0]][case[1]]!=0: #s'il y a une piece sur la case d'arrivée
                                     a=1
-                                    mangee=position[case[0]][case[1]]
-                                    coordL=position[case[0]][case[1]].ligne
-                                    coordC=position[case[0]][case[1]].colonne
+                                    mangee=position[case[0]][case[1]] #on garde tout en memoire au cas où on a besoin d'annuler le mouvement
+                                    coordL=mangee.ligne
+                                    coordC=mangee.colonne
                                 if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    position=archive_pos[:] #annule le mouvement
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
                                     return False
-                                position=archive_pos[:]
+                                position=archive_pos[:] #annule le mouvement
                                 prises_Blanc=archive_prisesB[:]
                                 prises_Noir=archive_prisesN[:]
                                 self.ligne=ligne
@@ -342,6 +351,15 @@ class Roi(Fou,Tour):
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                        position=archive_pos[:]
+                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Noir=archive_prisesN[:]
+                                        self.ligne=ligne
+                                        self.colonne=colonne
+                                        if a==1:
+                                            position[case[0]][case[1]]=mangee
+                                            position[case[0]][case[1]].ligne=coordL
+                                            position[case[0]][case[1]].colonne=coordC
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -363,6 +381,15 @@ class Roi(Fou,Tour):
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                        position=archive_pos[:]
+                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Noir=archive_prisesN[:]
+                                        self.ligne=ligne
+                                        self.colonne=colonne
+                                        if a==1:
+                                            position[case[0]][case[1]]=mangee
+                                            position[case[0]][case[1]].ligne=coordL
+                                            position[case[0]][case[1]].colonne=coordC
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -385,6 +412,15 @@ class Roi(Fou,Tour):
                                     coordL=position[case[0]][case[1]].ligne
                                     coordC=position[case[0]][case[1]].colonne
                                 if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    position=archive_pos[:]
+                                    prises_Blanc=archive_prisesB[:]
+                                    prises_Noir=archive_prisesN[:]
+                                    self.ligne=ligne
+                                    self.colonne=colonne
+                                    if a==1:
+                                        position[case[0]][case[1]]=mangee
+                                        position[case[0]][case[1]].ligne=coordL
+                                        position[case[0]][case[1]].colonne=coordC
                                     return False
                                 position=archive_pos[:]
                                 prises_Blanc=archive_prisesB[:]
@@ -409,6 +445,15 @@ class Roi(Fou,Tour):
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                        position=archive_pos[:]
+                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Noir=archive_prisesN[:]
+                                        self.ligne=ligne
+                                        self.colonne=colonne
+                                        if a==1:
+                                            position[case[0]][case[1]]=mangee
+                                            position[case[0]][case[1]].ligne=coordL
+                                            position[case[0]][case[1]].colonne=coordC
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -432,6 +477,15 @@ class Roi(Fou,Tour):
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                        position=archive_pos[:]
+                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Noir=archive_prisesN[:]
+                                        self.ligne=ligne
+                                        self.colonne=colonne
+                                        if a==1:
+                                            position[case[0]][case[1]]=mangee
+                                            position[case[0]][case[1]].ligne=coordL
+                                            position[case[0]][case[1]].colonne=coordC
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -453,6 +507,15 @@ class Roi(Fou,Tour):
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                        position=archive_pos[:]
+                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Noir=archive_prisesN[:]
+                                        self.ligne=ligne
+                                        self.colonne=colonne
+                                        if a==1:
+                                            position[case[0]][case[1]]=mangee
+                                            position[case[0]][case[1]].ligne=coordL
+                                            position[case[0]][case[1]].colonne=coordC
                                         return False
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]

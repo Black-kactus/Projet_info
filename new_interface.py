@@ -27,6 +27,12 @@ def fonction_lecture(position):
                 LPOSITION[l].append(str(position[l][j]))
     return(LPOSITION)
 
+def fonction_lecture_prises(prises):
+    from piece import Piece
+    PRISES=[]
+    for p in prises:
+        PRISES.append(str(p))
+    return(PRISES)
 
 def interpreteur_script(script):
     import time
@@ -326,8 +332,8 @@ def afficherPiece():
 
 def afficherPiecesPrises():
     from board import prises_Noir, prises_Blanc
-    PIECESPRISESNOIR=fonction_lecture(prises_Noir)
-    PIECESPRISESBLANC=fonction_lecture(prises_Blanc)
+    PIECESPRISESNOIR=fonction_lecture_prises(prises_Noir)
+    PIECESPRISESBLANC=fonction_lecture_prises(prises_Blanc)
 
     global LPIECESPRISES
     global LIMAGESPICESPRISES
