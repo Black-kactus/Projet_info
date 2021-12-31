@@ -537,7 +537,7 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_fouN():
         from piece import promoFouN
-        global choix_de_promotion
+        #global choix_de_promotion
         #choix_de_promotion.set("Fou")
         print("Fou")
         promoFouN(piece)
@@ -545,15 +545,15 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
-        global choix_de_promotion
+        #global choix_de_promotion
         #choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
-        global choix_de_promotion
-        choix_de_promotion.set("Pion")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
@@ -565,26 +565,26 @@ def open_popup_promo(piece,couleur):
 
     ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
     if couleur=="Blanc":
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameB())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourB())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouB())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameN())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourN())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouN())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
         Bouton_pion.pack()
 
 
@@ -786,6 +786,7 @@ def cmd_bouton_valider():
                 couleurA.set("Blanc")
                 prenom.set(prenom_blanc.get())
             LPOSITION=fonction_lecture(position)
+            print(LPOSITION) #
             coup.set("")
             piece_a_bouger.set("")
             coup_special.set("")
