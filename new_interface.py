@@ -609,6 +609,7 @@ def open_popup_perdu(couleur):
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
         # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
+        
         Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
 
