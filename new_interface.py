@@ -482,24 +482,24 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
         from piece import promoDameB
-        global choix_de_promotion
-        choix_de_promotion.set("Dame")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Dame")
         print("Dame")
         promoDameB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_tourB():
         from piece import promoTourB
-        global choix_de_promotion
-        choix_de_promotion.set("Tour")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Tour")
         print("Tour")
         promoTourB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_fouB():
         from piece import promoFouB
-        global choix_de_promotion
-        choix_de_promotion.set("Fou")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Fou")
         print("Fou")
         promoFouB(piece)
         PopUp_promo.destroy()
@@ -508,30 +508,29 @@ def open_popup_promo(piece,couleur):
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
         global choix_de_promotion
-        choix_de_promotion.set("Cavalier")
+        #choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionB():
-        global choix_de_promotion
-        choix_de_promotion.set("Pion")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
     def cmd_bouton_dameN():
         from piece import promoDameN
-        global choix_de_promotion
-        choix_de_promotion.set("Dame")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Dame")
         print("Dame")
         promoDameN(piece)
         PopUp_promo.destroy()
-        #ce que fait la fonction, c'est donner une nouvelle valeur à choix de promotion, sans l'utiliser après, c'est normal? 
 
     def cmd_bouton_tourN():
         from piece import promoTourN
-        global choix_de_promotion
-        choix_de_promotion.set("Tour")
+        #global choix_de_promotion
+        #choix_de_promotion.set("Tour")
         print("Tour")
         promoTourN(piece)
         PopUp_promo.destroy()
@@ -539,7 +538,7 @@ def open_popup_promo(piece,couleur):
     def cmd_bouton_fouN():
         from piece import promoFouN
         global choix_de_promotion
-        choix_de_promotion.set("Fou")
+        #choix_de_promotion.set("Fou")
         print("Fou")
         promoFouN(piece)
         PopUp_promo.destroy()
@@ -547,7 +546,7 @@ def open_popup_promo(piece,couleur):
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
         global choix_de_promotion
-        choix_de_promotion.set("Cavalier")
+        #choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierN(piece)
         PopUp_promo.destroy()
