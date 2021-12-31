@@ -538,15 +538,9 @@ def promoDameB(piece):
             if type(p)==Dame and p._couleur=="Blanc":
                 cpt+=1
 
-    #v = globals()
-    #v[f"DB{cpt+1}"] = Dame("Blanc",piece.colonne,piece.ligne,cpt+1) #pas obligé de lui donner un nom???
-
-    #str = f"DB{cpt+1}"
-    #exec("%s = %d" % (str,Dame("Blanc",piece.colonne,piece.ligne,cpt+1)))
     position[piece.colonne][piece.ligne]=Dame("Blanc",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
-    #DBP=Dame("Blanc",piece.colonne,piece.ligne,cpt)
 
 
 def promoTourB(piece):
@@ -557,15 +551,12 @@ def promoTourB(piece):
             if type(p)==Tour and p._couleur=="Blanc":
                 cpt+=1
 
-    #v = globals()
-    #v[f"TB{cpt+1}"] = Tour("Blanc",piece.colonne,piece.ligne,cpt+1,True)
-
-    #str = f"TB{cpt+1}"
-    #exec("%s = %d" % (str,Tour("Blanc",piece.colonne,piece.ligne,cpt,True)))
     position[piece.colonne][piece.ligne]=Tour("Blanc",piece.colonne,piece.ligne,cpt+1,True)
     piece.colonne=-3
     piece.ligne=-3
     print(position)
+    from new_interface import fonction_lecture
+    print(fonction_lecture(position))
     
 def promoFouB(piece):
     from board import position
@@ -575,11 +566,6 @@ def promoFouB(piece):
             if type(p)==Fou and p._couleur=="Blanc":
                 cpt+=1
 
-    #v = globals()
-    #v[f"FB{cpt+1}"] = Fou("Blanc",piece.colonne,piece.ligne,cpt+1)
-
-    #str = f"FB{cpt+1}"
-    #exec("%s = %d" % (str,Fou("Blanc",piece.colonne,piece.ligne,cpt+1)))
     position[piece.colonne][piece.ligne]=Fou("Blanc",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
@@ -592,11 +578,6 @@ def promoCavalierB(piece):
             if type(p)==Cavalier and p._couleur=="Blanc":
                 cpt+=1
 
-    #v = globals()
-    #v[f"CB{cpt+1}"] = Cavalier("Blanc",piece.colonne,piece.ligne,cpt+1)
-
-    #str = f"CB{cpt+1}"
-    #exec("%s = %d" % (str,Cavalier("Blanc",piece.colonne,piece.ligne,cpt+1)))
     position[piece.colonne][piece.ligne]=Cavalier("Blanc",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
@@ -610,11 +591,6 @@ def promoDameN(piece):
             if type(p)==Dame and p._couleur=="Noir":
                 cpt+=1
 
-    #v = globals()
-    #v[f"DN{cpt+1}"] = Dame("Noir",piece.colonne,piece.ligne,cpt+1)
-
-    #str = f"DN{cpt+1}"
-    #exec("%s = %d" % (str,Dame("Noir",piece.colonne,piece.ligne,cpt+1)))
     position[piece.colonne][piece.ligne]=Dame("Noir",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
@@ -627,11 +603,6 @@ def promoTourN(piece):
             if type(p)==Tour and p._couleur=="Noir":
                 cpt+=1
 
-    #v = globals()
-    #v[f"TN{cpt+1}"] = Tour("Noir",piece.colonne,piece.ligne,cpt+1,True)
-
-    #str = f"TN{cpt+1}"
-    #exec("%s = %d" % (str,Tour("Noir",piece.colonne,piece.ligne,cpt+1,True)))
     position[piece.colonne][piece.ligne]=Tour("Noir",piece.colonne,piece.ligne,cpt+1,True)
     piece.colonne=-3
     piece.ligne=-3
@@ -644,11 +615,6 @@ def promoFouN(piece):
             if type(p)==Fou and p._couleur=="Noir":
                 cpt+=1
 
-    #v = globals()
-    #v[f"FN{cpt+1}"] = Fou("Noir",piece.colonne,piece.ligne,cpt+1)
-
-    #str = f"FN{cpt+1}"
-    #exec("%s = %d" % (str,Fou("Noir",piece.colonne,piece.ligne,cpt+1)))
     position[piece.colonne][piece.ligne]=Fou("Noir",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
@@ -661,16 +627,16 @@ def promoCavalierN(piece):
             if type(p)==Cavalier and p._couleur=="Noir":
                 cpt+=1
 
-    #v = globals()
-    #v[f"CN{cpt+1}"] = Cavalier("Noir",piece.colonne,piece.ligne,cpt+1)
-
-    #str = f"CN{cpt+1}"
-    #exec("%s = %d" % (str,Cavalier("Noir",piece.colonne,piece.ligne,cpt+1)))
+  
     position[piece.colonne][piece.ligne]=Cavalier("Noir",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
 
-# à faire pour chaque pièce :
+
+
+
+
+# pour chaque pièce :
 # def mouvementpossible (self,case) :
 # if dans les règles (pas de sortie de l'échiqiuer, bonne forme de déplacement, pas d'autre pièce sur le chemin):
 # return True
