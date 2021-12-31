@@ -88,19 +88,19 @@ message_echec= StringVar()
 message_echec.set("")
 
 prenom_blanc = StringVar()
-prenom_blanc.set('')
+prenom_blanc.set('Blanc')
 
 prenom_noir = StringVar()
-prenom_noir.set('')
+prenom_noir.set('Noir')
 
 prenom = StringVar()
-prenom.set(prenom_blanc.get())
+prenom.set("")
 
 duree_de_la_partie=0
 
 ## Images perdu
 
-ImageperduB = Image.open('defaite_des_blancs.png')
+ImageperduB = Image.open('defaite _des_blancs.png')
 ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
 python_imageperduB = ImageTk.PhotoImage(ImageperduB)
 
@@ -616,6 +616,8 @@ def open_popup_perdu(couleur):
         Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
 
         #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
+        #je l'ai corrigé (Lila)
+        #NB: n'ouvre jamais des images dans le programme, c'est ce qui faisait buger l'nterface, faut les déclarer tous en haut, pour qu'on charge les images seulement une fois
 
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
@@ -638,8 +640,14 @@ def pop_up_commencer():
         global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
-        prenom_blanc.set(entry_prenom_blanc.get())
-        prenom_noir.set(entry_prenom_noir.get())
+        if entry_prenom_blanc.get() == "":
+            prenom_blanc.set("Blanc")
+        else: 
+            prenom_blanc.set(entry_prenom_blanc.get())
+        if entry_prenom_noir.get() == "":
+            prenom_noir.set('Noir')
+        else: 
+            prenom_noir.set(entry_prenom_noir.get())
         duree_de_la_partie=time.time()
         Popup3.destroy()
 
@@ -746,6 +754,7 @@ def cmd_bouton_valider():
                     #elif choix_de_promotion=="Cavalier":
                         #promoCavalierB(result[2])
                 couleurA.set("Noir")
+                prenom.set(prenom_noir.get())
             else: #noirs
                 if KB1.Echec2():
                     message_echec.set("Les blancs sont en échec.")
@@ -765,6 +774,7 @@ def cmd_bouton_valider():
                     #elif choix_de_promotion=="Cavalier":
                         #promoCavalierN(result[2])
                 couleurA.set("Blanc")
+                prenom.set(prenom_blanc.get())
             LPOSITION=fonction_lecture(position)
             coup.set("")
             piece_a_bouger.set("")
