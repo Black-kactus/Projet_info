@@ -554,9 +554,6 @@ def promoTourB(piece):
     position[piece.colonne][piece.ligne]=Tour("Blanc",piece.colonne,piece.ligne,cpt+1,True)
     piece.colonne=-3
     piece.ligne=-3
-    print(position)
-    from new_interface import fonction_lecture
-    print(fonction_lecture(position))
     
 def promoFouB(piece):
     from board import position
