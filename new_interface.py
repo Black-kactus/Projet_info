@@ -325,6 +325,10 @@ def afficherPiece():
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def afficherPiecesPrises():
+    from board import prises_Noir, prises_Blanc
+    PIECESPRISESNOIR=fonction_lecture(prises_Noir)
+    PIECESPRISESBLANC=fonction_lecture(prises_Blanc)
+
     global LPIECESPRISES
     global LIMAGESPICESPRISES
     couleurBg = 'white'
