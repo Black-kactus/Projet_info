@@ -727,12 +727,13 @@ def cmd_bouton_valider():
     piece_bougee=piece_a_bouger.get()
     if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
+    elif (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if not(coup_special.get() in special):
+    elif not(coup_special.get() in special):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-
-    if message_erreur.get()=="":
+    
+    else:
+        #if message_erreur.get()=="":
         from board import position,KB1,KN1
         print("valider")
         from main import interpreteur
