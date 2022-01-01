@@ -37,7 +37,6 @@ def fonction_lecture_prises(prises):
     return(PRISES)
 
 def interpreteur_script(script):
-    import time
     script = script.split(' ')
     for i in range(len(script)):
         coup_script=script[i].split("-")
@@ -51,7 +50,7 @@ def interpreteur_script(script):
             cmd_bouton_abandonner()
         else:
             cmd_bouton_valider()
-            #time.sleep(5)
+            #sleep(5)
 
 
 root = Tk()
@@ -592,9 +591,8 @@ def open_popup_promo(piece,couleur):
 
 
 def open_popup_pat(couleur):
-    import time
     global duree_de_la_partie
-    duree_de_la_partie=time.time()-duree_de_la_partie
+    duree_de_la_partie=time()-duree_de_la_partie
     PopUp_pat= Toplevel()
     PopUp_pat.geometry("750x300")
     PopUp_pat.title("Pat")
@@ -606,11 +604,13 @@ def open_popup_pat(couleur):
     else:
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
+    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    Label(PopUp_pat, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
     
 def open_popup_perdu(couleur):
-    import time
     global duree_de_la_partie
-    duree_de_la_partie=time.time()-duree_de_la_partie
+    duree_de_la_partie=time()-duree_de_la_partie
     top= Toplevel()
     top.geometry("750x450")
     top.title("Perduuuu")
@@ -643,12 +643,14 @@ def open_popup_perdu(couleur):
         #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
 
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
+    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
     top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
     #personnaliser le message avec les prenoms
 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
-        import time
         global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
@@ -660,7 +662,7 @@ def pop_up_commencer():
             prenom_noir.set('Noir')
         else: 
             prenom_noir.set(entry_prenom_noir.get())
-        duree_de_la_partie=time.time()
+        duree_de_la_partie=time()
         Popup3.destroy()
 
     Popup3 = Toplevel()
