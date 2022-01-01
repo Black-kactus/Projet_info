@@ -259,14 +259,14 @@ class Roi(Fou,Tour):
         A=1
         a,b=True,True
         for i in range(1,max(self.colonne,7-self.colonne)+1): #lignes
-            if not(self.colonne+i>7) and position[self.colonne+i][self.ligne] != 0 and a:
+            if self.colonne+i<=7 and position[self.colonne+i][self.ligne] != 0 and a:
                 A=position[self.colonne+i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
                     print("lignes")#
                     return True
                 else:
                     a=False
-            if not(self.colonne-i<0) and position[self.colonne-i][self.ligne] != 0 and b: 
+            if self.colonne-i>=0 and position[self.colonne-i][self.ligne] != 0 and b: 
                 A= position[self.colonne-i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
                     print("lignes")
@@ -276,7 +276,7 @@ class Roi(Fou,Tour):
         A=1
         c,d=True,True
         for i in range(1,max(self.ligne,7-self.ligne)+1): #colonnes
-            if not(self.ligne+i>7) and position[self.colonne][self.ligne+i] != 0 and c:
+            if self.ligne+i<=7 and position[self.colonne][self.ligne+i] != 0 and c:
                 A=position[self.colonne][self.ligne+i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
                     print("colonne")
@@ -291,7 +291,7 @@ class Roi(Fou,Tour):
                 else:
                     d=False
         #Roi
-        if (not(self.ligne+1 > 7) and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (not(self.ligne-1 < 0) and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (not (self.colonne+1 > 7) and type(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and not(self.ligne-1 < 0) and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne+1 > 7) and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (not (self.colonne-1 < 0) and not(self.ligne+1 > 7) and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (not(self.colonne-1 < 0) and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (not(self.colonne+1 > 7) and not(self.ligne-1 < 0) and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
+        if (self.ligne+1 <= 7 and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (self.ligne-1 >= 0 and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (self.colonne+1 <= 7 and type(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (self.colonne-1 >= 0 and self.ligne-1 >= 0 and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (self.colonne+1 <= 7 and self.ligne+1 <= 7 and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (self.colonne-1 >= 0 and self.ligne+1 <= 7 and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (self.colonne-1 >= 0 and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (self.colonne+1 <= 7 and self.ligne-1 >= 0 and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
             print("roi")
             return True
 
@@ -312,13 +312,14 @@ class Roi(Fou,Tour):
                         L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
                         a=0
                         for case in L: #on teste tous les mouvements possibles du roi
-                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0: #si on reste dans l'échiquier
+                            if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0: #si on reste dans l'échiquier
                                 if position[case[0]][case[1]]!=0: #s'il y a une piece sur la case d'arrivée
                                     a=1
                                     mangee=position[case[0]][case[1]] #on garde tout en memoire au cas où on a besoin d'annuler le mouvement
                                     coordL=mangee.ligne
                                     coordC=mangee.colonne
-                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                #print(piece,case,self._couleur,self.Echec2(),mouvement(piece,case,self._couleur,"",nbcoup)[0])
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                     position=archive_pos[:] #annule le mouvement
                                     prises_Blanc=archive_prisesB[:]
                                     prises_Noir=archive_prisesN[:]
@@ -344,13 +345,13 @@ class Roi(Fou,Tour):
                             L=[[self.colonne,self.ligne + 1],[self.colonne - 1,self.ligne + 1],[self.colonne + 1,self.ligne + 1]]
                             a=0
                             for case in L:
-                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -374,13 +375,13 @@ class Roi(Fou,Tour):
                             L=[[self.colonne,self.ligne - 1],[self.colonne - 1,self.ligne - 1],[self.colonne + 1,self.ligne - 1]]                    
                             a=0
                             for case in L:
-                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -405,13 +406,13 @@ class Roi(Fou,Tour):
                         L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne - 1]]
                         a=0
                         for case in L:
-                            if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                            if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                 if position[case[0]][case[1]]!=0:
                                     a=1
                                     mangee=position[case[0]][case[1]]
                                     coordL=position[case[0]][case[1]].ligne
                                     coordC=position[case[0]][case[1]].colonne
-                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
                                     prises_Noir=archive_prisesN[:]
@@ -438,13 +439,13 @@ class Roi(Fou,Tour):
                             L=[[self.colonne+i,self.ligne+i],[self.colonne-i,self.ligne-i],[self.colonne+i,self.ligne-i],[self.colonne-i,self.ligne+i]]
                             a=0
                             for case in L:
-                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -470,13 +471,13 @@ class Roi(Fou,Tour):
                             L=[[self.colonne+i,self.ligne],[self.colonne-i,self.ligne]]
                             a=0
                             for case in L:
-                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -500,13 +501,13 @@ class Roi(Fou,Tour):
                             L=[[self.colonne,self.ligne+i],[self.colonne,self.ligne-i]]
                             a=0
                             for case in L:
-                                if case[0]<7 and case[0]>0 and case[1]<7 and case[1]>0:
+                                if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         coordL=position[case[0]][case[1]].ligne
                                         coordC=position[case[0]][case[1]].colonne
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]

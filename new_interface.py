@@ -6,6 +6,8 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
+from piece import Pion
+
 #probleme de prototypage
 
 # from panique import Bouton_Regles
@@ -560,7 +562,7 @@ def open_popup_promo(piece,couleur):
     PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
     PopUp_promo.iconbitmap(r'icone.ico')
-    PopUp_promo.geometry("750x350")
+    PopUp_promo.geometry("500x350")
     PopUp_promo.lift()
 
     ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
@@ -752,7 +754,7 @@ def cmd_bouton_valider():
                     if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Blanc")
                     #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                     #if choix_de_promotion=="Dame":
@@ -772,7 +774,7 @@ def cmd_bouton_valider():
                     if KB1.Echec_et_mat(nbcoup):
                         print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Noir")
                     #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                     #if choix_de_promotion=="Dame":
