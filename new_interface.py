@@ -27,6 +27,12 @@ def fonction_lecture(position):
                 LPOSITION[l].append(str(position[l][j]))
     return(LPOSITION)
 
+def fonction_lecture_prises(prises):
+    from piece import Piece
+    PRISES=[]
+    for p in prises:
+        PRISES.append(str(p))
+    return(PRISES)
 
 def interpreteur_script(script):
     import time
@@ -39,16 +45,23 @@ def interpreteur_script(script):
         elif len(coup_script)==2:
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
-        cmd_bouton_valider()
-        #time.sleep(5)
+        if coup_special.get()=="abandon":
+            cmd_bouton_abandonner()
+        else:
+            cmd_bouton_valider()
+            #time.sleep(5)
 
 
 root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
+s = ttk.Style()
+# s.configure(root, font=('Raleway', 10))
+# s.configure(root, font=('', 10))
+
 content = ttk.Frame(root, padding=(0,0,0,0))
-frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=100, height=100)
+frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
 
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
@@ -81,18 +94,42 @@ message_echec= StringVar()
 message_echec.set("")
 
 prenom_blanc = StringVar()
-prenom_blanc.set('')
+prenom_blanc.set('Blanc')
 
 prenom_noir = StringVar()
-prenom_noir.set('')
+prenom_noir.set('Noir')
 
 prenom = StringVar()
-prenom.set(prenom_blanc.get())
+prenom.set("")
 
 duree_de_la_partie=0
 
+## Images perdu
 
-##Images des pieces de l'échiquier
+ImageperduB = Image.open('defaite _des_blancs.png')
+ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
+python_imageperduB = ImageTk.PhotoImage(ImageperduB)
+
+ImageperduN = Image.open('defaite_des_noirs.png')
+ImageperduN = ImageperduN.resize((300,300), Image.ANTIALIAS)
+python_imageperduN = ImageTk.PhotoImage(ImageperduN)
+
+## Images des règles 
+
+ImageTableau = Image.open('tableau.jpg')
+ImageTableau = ImageTableau.resize((400,300), Image.ANTIALIAS)
+python_imageTableau = ImageTk.PhotoImage(ImageTableau)
+
+ImagePEP = Image.open('PEP.png')
+ImagePEP = ImagePEP.resize((200,200), Image.ANTIALIAS)
+python_imagePEP = ImageTk.PhotoImage(ImagePEP)
+
+ImageEchecMate = Image.open('checkmate.jpg')
+ImageEchecMate = ImageEchecMate.resize((300,200), Image.ANTIALIAS)
+python_imageEchecMate = ImageTk.PhotoImage(ImageEchecMate)
+
+
+## Images des pieces de l'échiquier
 
 
 ImgFouNoir = Image.open('fou_noir.png')
@@ -140,7 +177,7 @@ python_imageTB = ImageTk.PhotoImage(ImgTourBlanche)
 python_imageTN = ImageTk.PhotoImage(ImgTourNoire)
 python_imageVIDE = ImageTk.PhotoImage(ImgVide)
 
-##Images des icones des pieces prise
+## Images des icones des pieces prise
 
 resizeX = 30
 resizeY = 30
@@ -221,6 +258,37 @@ LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],
 LPIECESPRISES = [[1,1,0,1,0,1,1,0],[1,0,1,0,1,0,1,1],[1,0,1,1,1,0,1,1],[1,0,1,1,0,1,1,1]]
 LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python_imageDB2, python_imageRB2, python_imageFB2, python_imageCB2, python_imageTB2], [python_imageTN2, python_imageCN2, python_imageFN2, python_imageDN2, python_imageRN2, python_imageFN2, python_imageCN2, python_imageTN2] ]
 
+# def afficherPiece():
+#     global LPOSITION
+#     for i in range(len(LPOSITION)) : 
+#         for j in range(len(LPOSITION)):
+#             if (i+j)%2 == 0: couleur = 'black'
+#             else : couleur = "white"
+#             if couleurA.get() == "Noir":
+#                 ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+#             else : 
+#                 ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+#     if couleurA.get() == "Noir":
+#         for k in range(0,18,2):
+#             # L = ["","A",'B',"C","D","E","F",'G','H']
+#             L = ["","H","G",'F',"E","D","C","B",'A']
+#             ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#             ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#     else: 
+#         for k in range(0,18,2):
+#             L = ["","A",'B',"C","D","E","F",'G','H']
+#             # L = ["","H","G",'F',"E","D","C","B",'A']
+#             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+#             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+def BoutonGestClicgauche(evt, i, j):
+    # print('CGauche',i, j )
+    piece_a_bouger.set(chr(j+97)+str(8-i))
+
+def BoutonGestClicdroit(evt, i, j ):
+    # print('CDroit', i, j)
+    coup.set(chr(j+97)+str(8-i))
+
+BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
     global LPOSITION
     for i in range(len(LPOSITION)) : 
@@ -228,10 +296,27 @@ def afficherPiece():
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
             if couleurA.get() == "Noir":
-                ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+                Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER)
+                BoutonListe[i].insert(j,Bouton_piece)
+                Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+                def gestCG(evt, i=i,j=j):   
+                    return BoutonGestClicgauche(evt, 7-i,7-j)
+                def gestCD(evt, i=i, j= j):   
+                    return BoutonGestClicdroit(evt, 7-i,7-j)
             else : 
-                ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
-    
+                Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER)
+                BoutonListe[i].insert(j,Bouton_piece)
+                Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+
+                def gestCG(evt, i=i,j=j):   
+                     return BoutonGestClicgauche(evt, i,j)
+                def gestCD(evt, i=i, j= j):   
+                    return BoutonGestClicdroit(evt, i,j)
+            
+           
+            Bouton_piece.bind('<Button-1>', gestCG)
+            Bouton_piece.bind('<Button-3>', gestCD)
+
     if couleurA.get() == "Noir":
         for k in range(0,18,2):
             # L = ["","A",'B',"C","D","E","F",'G','H']
@@ -246,6 +331,10 @@ def afficherPiece():
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def afficherPiecesPrises():
+    from board import prises_Noir, prises_Blanc
+    PIECESPRISESNOIR=fonction_lecture_prises(prises_Noir)
+    PIECESPRISESBLANC=fonction_lecture_prises(prises_Blanc)
+
     global LPIECESPRISES
     global LIMAGESPICESPRISES
     couleurBg = 'white'
@@ -281,133 +370,230 @@ def actualiserPiecesPrises():
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
 
+#LILA modifie le code : je pense que ça marche pas a cause de la gestion des pop ups, donc je te propose qqch d'autre, et si ça te convient pasn au mieux ça te donne des idées, sinon tu peux supprimer sans souci
+# SAUVEGARDE DU CODE DE RAPHAEL, NE PS SUPPRIMER 
+
 choix_de_promotion = StringVar()
 choix_de_promotion.set("Indiquez la pièce.")
 
-def cmd_bouton_dameB(piece):
-    from piece import promoDameB
-    choix_de_promotion.set("Dame")
-    print("Dame")
-    promoDameB(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_dameB(piece):
+#     from piece import promoDameB
+#     choix_de_promotion.set("Dame")
+#     print("Dame")
+#     promoDameB(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_tourB(piece):
-    from piece import promoTourB
-    choix_de_promotion.set("Tour")
-    print("Tour")
-    promoTourB(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_tourB(piece):
+#     from piece import promoTourB
+#     choix_de_promotion.set("Tour")
+#     print("Tour")
+#     promoTourB(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_fouB(piece):
-    from piece import promoFouB
-    choix_de_promotion.set("Fou")
-    print("Fou")
-    promoFouB(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_fouB(piece):
+#     from piece import promoFouB
+#     choix_de_promotion.set("Fou")
+#     print("Fou")
+#     promoFouB(piece)
+#     PopUp_promo.destroy()
 
 
-def cmd_bouton_cavalierB(piece):
-    from piece import promoCavalierB
-    choix_de_promotion.set("Cavalier")
-    print("Cavalier")
-    promoCavalierB(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_cavalierB(piece):
+#     from piece import promoCavalierB
+#     choix_de_promotion.set("Cavalier")
+#     print("Cavalier")
+#     promoCavalierB(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_pionB(piece):
-    choix_de_promotion.set("Pion")
-    print("Pion")
-    PopUp_promo.destroy()
+# def cmd_bouton_pionB(piece):
+#     choix_de_promotion.set("Pion")
+#     print("Pion")
+#     PopUp_promo.destroy()
 
-def cmd_bouton_dameN(piece):
-    from piece import promoDameN
-    choix_de_promotion.set("Dame")
-    print("Dame")
-    promoDameN(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_dameN(piece):
+#     from piece import promoDameN
+#     choix_de_promotion.set("Dame")
+#     print("Dame")
+#     promoDameN(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_tourN(piece):
-    from piece import promoTourN
-    choix_de_promotion.set("Tour")
-    print("Tour")
-    promoTourN(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_tourN(piece):
+#     from piece import promoTourN
+#     choix_de_promotion.set("Tour")
+#     print("Tour")
+#     promoTourN(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_fouN(piece):
-    from piece import promoFouN
-    choix_de_promotion.set("Fou")
-    print("Fou")
-    promoFouN(piece)
-    PopUp_promo.destroy()
+# def cmd_bouton_fouN(piece):
+#     from piece import promoFouN
+#     choix_de_promotion.set("Fou")
+#     print("Fou")
+#     promoFouN(piece)
+#     PopUp_promo.destroy()
 
-def cmd_bouton_cavalierN(piece):
-    from piece import promoCavalierN
-    choix_de_promotion.set("Cavalier")
-    print("Cavalier")
-    promoCavalierN(piece)
-    PopUp_promo.destroy()
-    #là il va pas savoir ce que c'est piece
+# def cmd_bouton_cavalierN(piece):
+#     from piece import promoCavalierN
+#     choix_de_promotion.set("Cavalier")
+#     print("Cavalier")
+#     promoCavalierN(piece)
+#     PopUp_promo.destroy()
+#     #là il va pas savoir ce que c'est piece
 
-def cmd_bouton_pionN(piece):
-    choix_de_promotion.set("Pion")
-    print("Pion")
-    PopUp_promo.destroy()
+# def cmd_bouton_pionN(piece):
+#     choix_de_promotion.set("Pion")
+#     print("Pion")
+#     PopUp_promo.destroy()
+
+# def open_popup_promo(piece,couleur):
+#     PopUp_promo= Toplevel()
+#     PopUp_promo.geometry("750x350")
+#     PopUp_promo.title("Promotion de pion")
+#     PopUp_promo.iconbitmap(r'icone.ico')
+#     PopUp_promo.lift()
+#     Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
+#     if couleur=="Blanc":
+#         Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB(piece))
+#         Bouton_dame.pack()
+#         Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB(piece))
+#         Bouton_tour.pack()
+#         Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB(piece))
+#         Bouton_fou.pack()
+#         Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
+#         Bouton_cavalier.pack()
+#         Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB(piece))
+#         Bouton_pion.pack()
+#     else:
+#         Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN(piece))
+#         Bouton_dame.pack()
+#         Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN(piece))
+#         Bouton_tour.pack()
+#         Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN(piece))
+#         Bouton_fou.pack()
+#         Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
+#         Bouton_cavalier.pack()
+#         Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN(piece))
+#         Bouton_pion.pack()
+
+#         #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
+#         #parce que il sait pas a quoi correspond piece, ce qui explique peut etre pourquoi ça marche pas 
+
 
 def open_popup_promo(piece,couleur):
-    PopUp_promo= Toplevel(root)
-    PopUp_promo.geometry("750x350")
+
+    def cmd_bouton_dameB():
+        from piece import promoDameB
+        #global choix_de_promotion
+        #choix_de_promotion.set("Dame")
+        print("Dame")
+        promoDameB(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_tourB():
+        from piece import promoTourB
+        #global choix_de_promotion
+        #choix_de_promotion.set("Tour")
+        print("Tour")
+        promoTourB(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_fouB():
+        from piece import promoFouB
+        #global choix_de_promotion
+        #choix_de_promotion.set("Fou")
+        print("Fou")
+        promoFouB(piece)
+        PopUp_promo.destroy()
+
+
+    def cmd_bouton_cavalierB():
+        from piece import promoCavalierB
+        global choix_de_promotion
+        #choix_de_promotion.set("Cavalier")
+        print("Cavalier")
+        promoCavalierB(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_pionB():
+        #global choix_de_promotion
+        #choix_de_promotion.set("Pion")
+        print("Pion")
+        PopUp_promo.destroy()
+
+    def cmd_bouton_dameN():
+        from piece import promoDameN
+        #global choix_de_promotion
+        #choix_de_promotion.set("Dame")
+        print("Dame")
+        promoDameN(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_tourN():
+        from piece import promoTourN
+        #global choix_de_promotion
+        #choix_de_promotion.set("Tour")
+        print("Tour")
+        promoTourN(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_fouN():
+        from piece import promoFouN
+        #global choix_de_promotion
+        #choix_de_promotion.set("Fou")
+        print("Fou")
+        promoFouN(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_cavalierN():
+        from piece import promoCavalierN
+        #global choix_de_promotion
+        #choix_de_promotion.set("Cavalier")
+        print("Cavalier")
+        promoCavalierN(piece)
+        PopUp_promo.destroy()
+
+    def cmd_bouton_pionN():
+        #global choix_de_promotion
+        #choix_de_promotion.set("Pion")
+        print("Pion")
+        PopUp_promo.destroy()
+
+    PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
     PopUp_promo.iconbitmap(r'icone.ico')
+    PopUp_promo.geometry("750x350")
     PopUp_promo.lift()
-    Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
+
+    ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
     if couleur=="Blanc":
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB(piece))
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameB())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB(piece))
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourB())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB(piece))
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouB())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB(piece))
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN(piece))
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameN())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN(piece))
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourN())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN(piece))
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouN())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN(piece))
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
         Bouton_pion.pack()
 
-        #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
-        #parce que il sait pas a quoi correspond piece, ce qui explique peut etre pourquoi ça marche pas 
 
-
-def open_popup_perdu(couleur):
-    import time
-    global duree_de_la_partie
-    duree_de_la_partie=time.time()-duree_de_la_partie
-    top= Toplevel(root)
-    top.geometry("750x250")
-    top.title("Perduuuu")
-    top.iconbitmap(r'icone.ico')
-    top.lift()
-    Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
-    if couleur=="Noir":
-        Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
-    else:
-        Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
-    Label(top, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
-    #personnaliser le message avec les prenoms
 
 def open_popup_pat(couleur):
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
-    PopUp_pat= Toplevel(root)
+    PopUp_pat= Toplevel()
     PopUp_pat.geometry("750x300")
     PopUp_pat.title("Pat")
     PopUp_pat.iconbitmap(r'icone.ico')
@@ -419,6 +605,44 @@ def open_popup_pat(couleur):
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
     
+def open_popup_perdu(couleur):
+    import time
+    global duree_de_la_partie
+    duree_de_la_partie=time.time()-duree_de_la_partie
+    top= Toplevel()
+    top.geometry("750x450")
+    top.title("Perduuuu")
+    top.iconbitmap(r'icone.ico')
+    top.lift()
+    # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
+    if couleur=="Noir":
+        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
+        # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
+        
+        Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
+        Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
+
+        # img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
+        Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
+
+        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
+        #je l'ai corrigé (Lila)
+        #NB: n'ouvre jamais des images dans le programme, c'est ce qui faisait buger l'nterface, faut les déclarer tous en haut, pour qu'on charge les images seulement une fois
+
+    else:
+        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
+
+        Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
+        Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
+
+        # img = ImageTk.PhotoImage(file="defaite_des_blancs.png")
+
+        Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
+        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
+
+    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+    top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
+    #personnaliser le message avec les prenoms
 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
@@ -426,13 +650,19 @@ def pop_up_commencer():
         global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
-        prenom_blanc.set(entry_prenom_blanc.get())
-        prenom_noir.set(entry_prenom_noir.get())
+        if entry_prenom_blanc.get() == "":
+            prenom_blanc.set("Blanc")
+        else: 
+            prenom_blanc.set(entry_prenom_blanc.get())
+        if entry_prenom_noir.get() == "":
+            prenom_noir.set('Noir')
+        else: 
+            prenom_noir.set(entry_prenom_noir.get())
         duree_de_la_partie=time.time()
         Popup3.destroy()
 
     Popup3 = Toplevel()
-    Popup3.title('Options')
+    Popup3.title('Faites un choix')
     Popup3.iconbitmap(r'icone.ico')
 
     Popup3.geometry("200x100")
@@ -488,13 +718,17 @@ def cmd_bouton_son():
 def cmd_bouton_valider():
     lettres = "a,b,c,d,e,f,g,h"
     chiffres = "1,2,3,4,5,6,7,8"
+    special=["roque","ROQUE","abandon","","PEP"]
     position_ou_aller=coup.get()
     piece_bougee=piece_a_bouger.get()
-    if len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres):
+    if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres):
+    if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    else:
+    if not(coup_special.get() in special):
+        message_erreur.set("Syntaxe incorrecte. Retentez.")
+
+    if message_erreur.get()=="":
         from board import position,KB1,KN1
         print("valider")
         from main import interpreteur
@@ -505,21 +739,20 @@ def cmd_bouton_valider():
         if result[0]:
             #global LPOSITION
             LPOSITION=fonction_lecture(position)
-            ligne=coup.get()[1]
+            if not (coup_special.get() in ["ROQUE","roque","PEP"]):
+                ligne=coup.get()[1]
             nbcoup.set(str(int(nbcoup.get())+1))
-            coup.set("")
-            piece_a_bouger.set("")
+            
             message_erreur.set("")
-            coup_special.set("")
 
             if couleurA.get() == "Blanc":
                 if KN1.Echec2():
                     message_echec.set("Les noirs sont en échec.")
                     print("Echec noir")
-                    if KN1.Echec_et_mat():
+                    if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
-                if ligne=="8": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8": #promotion de pion
                     open_popup_promo(result[2],"Blanc")
                     #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                     #if choix_de_promotion=="Dame":
@@ -531,14 +764,15 @@ def cmd_bouton_valider():
                     #elif choix_de_promotion=="Cavalier":
                         #promoCavalierB(result[2])
                 couleurA.set("Noir")
+                prenom.set(prenom_noir.get())
             else: #noirs
                 if KB1.Echec2():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
-                    if KB1.Echec_et_mat():
+                    if KB1.Echec_et_mat(nbcoup):
                         print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
-                if ligne=="1": #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1": #promotion de pion
                     open_popup_promo(result[2],"Noir")
                     #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                     #if choix_de_promotion=="Dame":
@@ -550,7 +784,12 @@ def cmd_bouton_valider():
                     #elif choix_de_promotion=="Cavalier":
                         #promoCavalierN(result[2])
                 couleurA.set("Blanc")
+                prenom.set(prenom_blanc.get())
             LPOSITION=fonction_lecture(position)
+            print(LPOSITION) #
+            coup.set("")
+            piece_a_bouger.set("")
+            coup_special.set("")
             afficherPiece()
             actualiserPiecesPrises()
             afficherPiecesPrises()
@@ -564,6 +803,17 @@ def cmd_bouton_commencer():
     nbcoup.set("0")
     couleurA.set("Blanc")
     prenom.set(prenom_blanc.get())
+    coup.set("")
+    piece_a_bouger.set("")
+    coup_special.set("")
+    message_echec.set("")
+    script.set("")
+    message_echec.set("")
+    if prenom_blanc.get()== "":
+        print("oui")
+        prenom_blanc.set("Blanc")
+    if prenom_noir.get() =="":
+        prenom_noir.set("Noir")
     global LPOSITION
     global LPIECESPRISES
 
@@ -644,40 +894,35 @@ def cmd_bouton_regles():
     n.add(Onglet9_Fin, text='Fin de partie')
 
     # Onglet 1 : Regles
-    ch1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
-    ttk.Label(Onglet1_Regles, text= ch1 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+    # ch1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
+    ch1 = "\t\tLa partie d’échecs de Sofonisba Anguissola (1555)\n\nLe jeu d’échec est un jeu opposant deux joueurs de part et d’autre d’un échiquier composé de soixante-quatre cases, 32 cases blanches et 32 cases noires. Les joueurs jouent à tour de rôle en déplaçant l'une de leurs seize pièces (ou deux pièces en cas de roque), blanches pour le camp des blancs, noires pour le camp des noirs. Chaque joueur possède au départ un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un échec et mat, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier."
+    ttk.Label(Onglet1_Regles, image = python_imageTableau, background = 'white',text= ch1 ,relief="solid",anchor= CENTER, compound='top',  wraplength=480).grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
     
     #Onglet 2: Pion
-    ttk.Label(Onglet2_Pion, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 16, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet2_Pion, text= 'Les déplacements du pion se font verticalement, coup spécial : prise en passant \n mange en diagonale et promotion de pion',background = 'white',relief="solid",anchor=CENTER).grid(row = 16, column = 0, rowspan= 4, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet2_Pion, image= python_imageDF, text = "Les déplacements du pion se font verticalement, le pion est la seule pièce qui ne peut pas reculer. C’est aussi la seule pièce qui ne prend pas comme elle avance. Les pions avancent en effet d’une case sur la même colonne, si la case située devant eux est libre. Ils prennent sur l’une ou l’autre des deux cases situées devant eux en diagonale", compound = 'top', wraplength = "480", background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 3 : Fou
-    ttk.Label(Onglet3_Fou, image= python_imageDF,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet3_Fou, text= 'Les déplacements du fou se font diagonalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet3_Fou, image= python_imageDF, text = "Les déplacements du fou se font diagonalement, il peut se déplacer d'autant de cases qu'il veut. Chaque joueur dispose au départ d’un Fou sur une case noire et d’un Fou sur une case blanche. Ces Fous ne pourront jamais changer de couleur durant toute la partie." , compound= 'top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 4 : Tour
-    ttk.Label(Onglet4_Tour, image= python_imageDT,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet4_Tour, text= 'Les déplacements de la tour se font horizontalement et verticalement',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet4_Tour, wraplength="480",image= python_imageDT, text ="Les déplacements de la tour se font horizontalement et verticalement, elle se déplace d'autant de pièces qu'elle veut", compound ='top', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 5 : Cavalier
-    ttk.Label(Onglet5_Cavalier, image= python_imageDC,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet5_Cavalier, text= 'Les déplacements du cavalier se font en forme de L',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet5_Cavalier, image= python_imageDC, text = "Les déplacements du cavalier se font en forme de 'L'. Le cavalier ne peut être intercepté par aucune des pièces autour de lui, il saute jusqu'à sa case d'arrivée.", compound = 'top', background = 'white',relief="solid",anchor=CENTER, wraplength='480').grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 6: Dame
-    ttk.Label(Onglet6_Dame, image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet6_Dame, text= "La Dame peut se déplacer dans toutes les directions de l'espace",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-
+    ttk.Label(Onglet6_Dame, wraplength = '480', text = "La Dame peut se déplacer comme la Tour et le Fou: elle peut donc se déplacer verticalement, horizontalement et en diagonale, d’autant de cases qu’elle veut.", compound= 'top', image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    
     #Onglet 7 : Roi
-    ttk.Label(Onglet7_Roi, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet7_Roi, text= 'Le Roi peut se déplacer dans toutes les directions, mais seulement de 1',background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet7_Roi, image= python_imageDR, text = "Le Roi peut se déplacer dans toutes les directions, mais seulement de une case. Lorsqu’un Roi est attaqué par une pièce adverse, on dit qu’il est en échec. Un joueur n’a pas le droit de laisser son Roi en échec. Il n’a pas non plus le droit de déplacer son Roi sur une case où celui-ci sera attaqué (donc en échec).", compound ='top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 8 : Action spéciale
-    ttk.Label(Onglet8_ActionSpe, image= python_imageDR,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 18, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
-    ttk.Label(Onglet8_ActionSpe, text= "Expliquer le pat et la promotion",background = 'white',relief="solid",anchor=CENTER).grid(row = 18, column = 0, rowspan= 2, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ch2= "\t\t\t\tPrise en passant\nCoup spéciaux du pion :\n- Prise en passant : Lorsqu’un pion situé sur sa rangée de départ avance de deux cases et se retrouve à côté d’un pion adverse, alors l’adversaire peut, au coup suivant (et uniquement ce coup-là), prendre le pion qui vient d’avancer avec son pion comme si le pion adverse n’avait avancé que d’une case.\n- Promotion de pion: Lorsqu’un joueur avance un pion sur la dernière rangée, ou s’il prend avec un pion une pièce qui se trouve sur la dernière rangée, il doit le remplacer par une pièce de son choix (Dame, Tour, Fou ou Cavalier), de la même couleur, quelles que soient les pièces restantes sur l’échiquier. \nLe Roque: \nLorsque le Roi et cette Tour sont encore sur leurs cases initiales et qu’il n’y a plus de pièces entre eux, le joueur peut déplacer de deux cases le Roi vers la Tour, puis placer cette Tour sur la case juste à côté du Roi, de l’autre côté. Le roque peut être effectué sur l’aile roi (on parle alors de petit roque) ou sur l’aile dame (on parle alors de grand roque). Attention, si le roi est Roi est en échec, si une case qu’il doit traverser est attaquée ou si sa case d’arrivée est attaquée, alors le roque est interdit."
+    ttk.Label(Onglet8_ActionSpe, image= python_imagePEP, text = ch2, compound = 'top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 9 : Fin de partie 
-    ch2= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. "
-    ttk.Label(Onglet9_Fin, text= ch2 ,relief="solid",anchor=CENTER, wraplength=500, justify='center').grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
+    ch3 = "\n\nUne partie d’échec peut avoir trois résultats: le gain des Blancs, le gain des Noirs ou un match nul. \nLe gain survient lors d'un échec et mat, ie lorsque l'échec ne peut être paré ou bien lorsqu'un des joueurs abandonne. \nUne partie est nulle dans les cas suivants:\n- Par accord mutuel entre les deux joueurs\n- En cas de PAT: si l’un des joueurs n’a aucun coup légal mais que son Roi n’est pas en échec\n- En cas de matériel insuffisant pour permettre le mat\n- Si la même position survient trois fois sur l’échiquier\n- Si les deux joueurs ont joué chacun 50 coups consécutifs sans poussée de pion ni prise de pièce"
+    ttk.Label(Onglet9_Fin, text= ch3, image = python_imageEchecMate, compound = 'top',relief="solid",background = 'white',anchor=CENTER, wraplength=480).grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(20):
         Onglet1_Regles.columnconfigure(i,weight=1)
@@ -701,10 +946,35 @@ def cmd_bouton_regles():
         Onglet8_ActionSpe.rowconfigure(j,weight=1)
         Onglet9_Fin.rowconfigure(j,weight=1)
 
+def cmd_bouton_cmtjouer():
+    Popup4 = Toplevel()
+    Popup4.title('Comment jouer ?')
+    Popup4.iconbitmap(r'icone.ico')
+    Popup4.resizable(width=False, height=False)
+
+    Popup4.geometry("500x340")
+    Popup4.grid_columnconfigure(0, weight=1)
+    Popup4.grid_rowconfigure(0, weight=1)
+
+    content4 = ttk.Frame(Popup4, padding=(0,0,0,0))
+    content4.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    Label_Explication = ttk.Label(content4, text= "Utilisation du logiciel : ",relief="solid",anchor=CENTER)
+    Label_Explication.grid(column=0, row=0, columnspan=10, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+    
+    ch2= "1- Commencer la partie :\nAppuyez sur le bouton 'Nouvelle Partie' et choisissez ensuite qui joue les blancs ou les noirs. \n\n2- Entrer les coups:\nPour entrer les coups rien de plus simple! Il suffit d'indiquer les coordonnées de la pièces que vous vouler jouer, sous la forme 'a5' (colonne puis ligne) dans la 1e zone de saisie, puis d'entrer dans la deuxième zone de saisie l'endroit où vous voulez vous diriger. Si le coup est incorrect, le jeu l'indiquera.\n\n3- Coup spéciaux: Dans la zone de saisie 'Coup spécial', vous pouvez jouer :\n- Une prise en passant : 'PEP'\n- Un petit roque : 'roque'\n- Un grand roque : 'ROQUE'\n\n4- Fin de partie : \nLe jeu indiquera les échecs et l'échec et mat, dans ce cas la partie sera terminé. De plus, vous pouvez reconnaitre votre défaite, lorsque c'est votre tour, en appuyant sur le bouton 'Reconnaître sa cuisante défaite'."
+    ttk.Label(content4, text = ch2, wraplength = "480", background = 'white',relief="solid",anchor=CENTER).grid(row = 1, column = 0, rowspan= 8, columnspan= 10,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(0,8):
+        content4.columnconfigure(i,weight=1)
+
+    for j in range(0,4):
+        content4.rowconfigure(j,weight=1)
 
 def cmd_bouton_options():
     Popup2 = Toplevel()
     Popup2.title('Options')
+    Popup2.resizable(width=False, height=False)
     Popup2.iconbitmap(r'icone.ico')
 
     Popup2.geometry("300x200")
@@ -729,17 +999,22 @@ def cmd_bouton_options():
     Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)
     Bouton_Regles2.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
-    Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Bouton_CmtJouer= ttk.Button(content2, text= "Comment jouer ?",command= cmd_bouton_cmtjouer)
+    Bouton_CmtJouer.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
-    Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    # Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
+    # Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+    # Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
+    # Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(0,2):
         content2.columnconfigure(i,weight=1)
 
-    for j in range(0,12):
+    for j in range(0,10):
         content2.rowconfigure(j,weight=1)
+
+    
 
     
 #permet l'expension des boutons 

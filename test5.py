@@ -67,8 +67,39 @@ dico = {"FN1":python_imageFN, "FB1": python_imageFB, "FB2":python_imageFB, "FN2"
 def cmd_bouton_commencer():
     global LPOSITION
     LPOSITION = [["FN1","FB1"],["FB2","FN2"]]
-    
+    creerWidgets()
 
+ccListe = []
+def creerWidgets():
+    print("creer")
+    for i in range(10):
+        cc = Button(content, text= "Valider coup 1",command= cmd_bouton_commencer,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
+        ccListe.append(cc)
+        cc.grid(row=10, column=i)
+        def gest(evt, i=i):   
+            return ccGest(evt, i)
+        def gest2(evt, i=i):   
+            return ccGest2(evt, i)
+        cc.bind('<Button-1>', gest)
+        cc.bind('<Button-3>', gest2)
+    #...
+def ccGest(evt, ccNb):
+    print('Gauche', ccNb)
+    coup.set(str(ccNb))
+
+def ccGest2(evt, ccNb):
+    print('Droit', ccNb)
+    deplacement.set(str(ccNb))
+
+def BoutonGestClicgauche(evt, i, j):
+    print('CGauche',i, j )
+    coup.set(chr(j+97)+str(i+1))
+
+def BoutonGestClicdroit(evt, i, j ):
+    print('CDroit', i, j)
+    deplacement.set(chr(j+97)+str(i+1))
+
+BoutonListe = [[0 for i in range(2)]for j in range(2)]
 def cmd_bouton_afficher():
     global LPOSITION
     for i in range(len(Liste)) : 
@@ -76,7 +107,32 @@ def cmd_bouton_afficher():
             if (i+j)%2 == 0: couleur = 'black'
             else : couleur = "white"
             # ttk.Label(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid",anchor=CENTER).grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
-            Button(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid",anchor=CENTER).grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+            # Bouton_piece =Label(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid",anchor=CENTER, highlightcolor='red')
+            Bouton_piece =Button(content, image=dico[LPOSITION[i][j]],background = couleur,relief="solid",anchor=CENTER, highlightcolor='red', activebackground='red')
+            BoutonListe[i].insert(j,Bouton_piece)
+            Bouton_piece.grid(row = i, column = j, rowspan= 1, columnspan= 1,sticky=(N,S,E,W),pady=1, padx=1)
+            def gestCG(evt, i=i,j=j):   
+                 return BoutonGestClicgauche(evt, i,j)
+            def gestCD(evt, i=i, j= j):   
+                return BoutonGestClicdroit(evt, i,j)
+            Bouton_piece.bind('<Button-1>', gestCG)
+            Bouton_piece.bind('<Button-3>', gestCD)
+
+def creerWidgets():
+    print("creer")
+    for i in range(10):
+        cc = Button(content, text= "Valider coup 1",command= cmd_bouton_commencer,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
+        ccListe.append(cc)
+        cc.grid(row=10, column=i)
+        def gest(evt, i=i):   
+            return ccGest(evt, i)
+        def gest2(evt, i=i):   
+            return ccGest2(evt, i)
+        cc.bind('<Button-1>', gest)
+        cc.bind('<Button-3>', gest2)
+            
+
+            
 
 def cmd_bouton_commencer2():
     global LPOSITION
@@ -223,10 +279,10 @@ Deplacement_Entry.grid(column=1, row=5, columnspan=1, rowspan=2,sticky=(N,S,E,W)
 app.columnconfigure(0, weight=1)
 app.rowconfigure(0, weight=1)
 
-for i in range(2):
+for i in range(20):
     content.columnconfigure(i,weight=1)
 
-for j in range(2):
+for j in range(20):
     content.rowconfigure(j,weight=1)
 
 if __name__ == '__main__':

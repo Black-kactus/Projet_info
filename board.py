@@ -95,7 +95,7 @@ def ROQUEB(): #grand roque blanc
   if A or B : #attaques en chemin
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
   elif position[4][0]==KB1 and position[0][0]==TB1: #tout bon, roque
-    update_coord_piece(KB1,0,2)
+    update_coord_piece(KB1,0,2) #on met à jour les coordonnées des pièces
     position[2][0]=KB1
     update_coord_piece(TB1,0,3)
     position[3][0]=TB1
@@ -128,7 +128,7 @@ def ROQUEN(): #grand roque noir
   elif position[4][7]==KN1 and position[0][7]==TN1: #tout bon, roque
     update_coord_piece(KN1,7,2) #on met à jour les coordonnées des pièces
     position[2][7]=KN1
-    update_coord_piece(TN2,7,3)
+    update_coord_piece(TN1,7,3)
     position[3][7]=TN1
     position[4][7]=0 #on enlève les pièces de leur ancienne case
     position[0][7]=0
@@ -141,7 +141,7 @@ def ROQUEN(): #grand roque noir
 def roqueB(): #petit roque blanc
   global position
   global KB1,TB2
-  if KB1.echec==True or KB1.Move1 or TB2.Move1: #si echec ou déjà bougé
+  if KB1.echec==True or KB1.Move1 or TB2.Move1: #si a déjà été en échec ou déjà bougé
     return (False,"Vous ne pouvez plus roquer.")
   elif position[5][0]!=0 or position[6][0]!=0 : #si chemin pas dégegé
     return (False,"La case d'arrivée est déjà occupée.")
@@ -157,6 +157,7 @@ def roqueB(): #petit roque blanc
   position[6][0]=0
   update_coord_piece(KB1,l,c)
   if A or B: #si attaque sur le chemin
+    print("A",A,"B",B) #
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
   elif position[4][0]==KB1 and position[7][0]==TB2: #tout bon, roque
     update_coord_piece(KB1,0,6) #on met les coordonnées à jour
@@ -189,9 +190,10 @@ def roqueN(): #petit roque noir
   position[6][7]=0
   update_coord_piece(KN1,l,c)
   if A or B: #attaque sur le chemin
+    print("A",A,"B",B) #
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
   elif position[4][7]==KN1 and position[7][7]==TN2: #tout bon, roque
-    update_coord_piece(KN1,7,7)
+    update_coord_piece(KN1,7,6) #on met à jour les coordonnées des pièces
     position[6][7]=KN1
     update_coord_piece(TN2,7,5)
     position[5][7]=TN2
@@ -234,6 +236,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
       ligne=case[1]
       colonne=case[0]
       if ligne==piece.ligne and colonne==piece.colonne:
+        print(piece,case,"ligne:",ligne,"colonne:",colonne,"piece.ligne:",piece.ligne,"piece.colonne",piece.colonne)
         message_erreur="Votre pièce est déjà à cette position."
         return (False,message_erreur)
       else:
@@ -279,6 +282,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   piece.Move1=True
               update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
           else:
+            print("1")
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
             return (False,message_erreur)
 
@@ -389,9 +393,11 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
                   return (False,message_erreur)
           else:
+            print("2")
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
             return (False,message_erreur)
     else:
+      print("3")
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
   #if (a==Tour or a==Roi):
