@@ -406,6 +406,9 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
 
   return (True,0)
 
+
+
+
 def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
   ligne = case[1]
   colonne = case[0]
