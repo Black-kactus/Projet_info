@@ -775,7 +775,7 @@ def cmd_bouton_valider():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
                     if KB1.Echec_et_mat(nbcoup):
-                        print("Echec et mat.") ### afficher quelque part
+                        print("Echec et mat.") 
                         open_popup_perdu("Blanc")
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Noir")

@@ -236,7 +236,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
       ligne=case[1]
       colonne=case[0]
       if ligne==piece.ligne and colonne==piece.colonne:
-        print(piece,case,"ligne:",ligne,"colonne:",colonne,"piece.ligne:",piece.ligne,"piece.colonne",piece.colonne)
+        #print(piece,case,"piece.ligne:",piece.ligne,"piece.colonne",piece.colonne)
         message_erreur="Votre pièce est déjà à cette position."
         return (False,message_erreur)
       else:
