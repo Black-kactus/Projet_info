@@ -260,8 +260,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                   message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                   annuler_Mouvement(piece, ligne, colonne, possible_prise)
-                  #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                  #position[colonne][ligne]=possible_prise
                   return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 if (a==Tour or a==Roi):
@@ -279,8 +277,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
               if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                 message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                 annuler_Mouvement(piece, ligne, colonne, 0)
-                #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                #position[colonne][ligne]=0 #on annule le mouvement
                 return (False,message_erreur)
               if (a==Tour or a==Roi):
                   piece.Move1=True
@@ -304,8 +300,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KB1.Echec2(): #si clouage
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
-                    #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    #position[colonne][ligne]=0 #on annule le mouvement
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
               elif type_de_mouvement == "tout_droit_2":
@@ -318,8 +312,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KB1.Echec2(): #si clouage
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
-                    #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    #position[colonne][ligne]=0 #on annule le mouvement
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
                   piece._condition2 = int(nbcoup.get())
@@ -335,8 +327,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KB1.Echec2(): #si clouage ou en échec au coup d'avant
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, possible_prise)
-                    #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    #position[colonne][ligne]=possible_prise #on annule le mouvement
                     return (False,message_erreur)
                   eaten_Blanc(possible_prise)
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
@@ -355,8 +345,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KN1.Echec2(): #si clouage
                       message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                       annuler_Mouvement(piece, ligne, colonne, 0)
-                      #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                      #position[colonne][ligne]=0 #on annule le mouvement
                       return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
               elif type_de_mouvement == "tout_droit_2":
@@ -369,8 +357,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KN1.Echec2(): #si clouage
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
-                    #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    #position[colonne][ligne]=0 #on annule le mouvement
                     return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 piece._condition2 = int(nbcoup.get())
@@ -386,8 +372,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   if KN1.Echec2(): #si clouage
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, possible_prise)
-                    #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
-                    #position[colonne][ligne]=possible_prise #on annule le mouvement
                     return (False,message_erreur)
                   else:
                     eaten_Noir(possible_prise)#on ajoute la pièce à la liste des pièces mangées
@@ -418,8 +402,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KB1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            #position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
-            #position[colonne][ligne] = 0  # on annule le mouvement
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Blanc(position[piece.colonne - 1][piece.ligne])
@@ -435,8 +417,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KB1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            #position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
-            #position[colonne][ligne] = 0  # on annule le mouvement
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Blanc(position[piece.colonne + 1][piece.ligne]) #on l'ajoute aux prises des Blancs
@@ -457,8 +437,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KN1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            #position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
-            #position[colonne][ligne] = 0  # on annule le mouvement
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne - 1][piece.ligne])
@@ -473,8 +451,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KN1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            #position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
-            #position[colonne][ligne] = 0  # on annule le mouvement
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne + 1][piece.ligne])
