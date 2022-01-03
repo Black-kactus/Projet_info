@@ -309,9 +309,10 @@ class Roi(Fou,Tour):
                     ligne=self.ligne
                     colonne=self.colonne
                     if type(piece)==Roi:
-                        L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
-                        a=0
+                        L=[[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]
+                        #a=0 ?
                         for case in L: #on teste tous les mouvements possibles du roi
+                            a=0 
                             if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0: #si on reste dans l'échiquier
                                 if position[case[0]][case[1]]!=0: #s'il y a une piece sur la case d'arrivée
                                     a=1
@@ -342,9 +343,10 @@ class Roi(Fou,Tour):
 
                     elif type(piece)==Pion:
                         if piece._couleur=="Blanc":
-                            L=[[self.colonne,self.ligne + 1],[self.colonne - 1,self.ligne + 1],[self.colonne + 1,self.ligne + 1]]
-                            a=0
+                            L=[[colonne,ligne + 1],[colonne - 1,ligne + 1],[colonne + 1,ligne + 1]]
+                            #a=0
                             for case in L:
+                                a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
@@ -372,9 +374,10 @@ class Roi(Fou,Tour):
                                         position[case[0]][case[1]].ligne=coordL
                                         position[case[0]][case[1]].colonne=coordC
                         if piece._couleur=="Noir":
-                            L=[[self.colonne,self.ligne - 1],[self.colonne - 1,self.ligne - 1],[self.colonne + 1,self.ligne - 1]]                    
-                            a=0
+                            L=[[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]                    
+                            #a=0
                             for case in L:
+                                a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
@@ -403,9 +406,10 @@ class Roi(Fou,Tour):
                                         position[case[0]][case[1]].colonne=coordC
 
                     elif type(piece)==Cavalier:
-                        L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne - 1]]
-                        a=0
+                        L=[[colonne - 2,ligne + 1],[colonne - 2,ligne - 1],[colonne - 1,ligne + 2],[colonne - 1,ligne - 2],[colonne + 1,ligne + 2],[colonne + 1,ligne - 2],[colonne + 2,ligne + 1],[colonne + 2,ligne + 1],[colonne + 2,ligne - 1]]
+                        #a=0
                         for case in L:
+                            a=0
                             if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                 if position[case[0]][case[1]]!=0:
                                     a=1
@@ -435,10 +439,11 @@ class Roi(Fou,Tour):
 
                     if type(piece)==Fou or type(piece)==Dame:
                         A=1
-                        for i in range(1,max(self.colonne,7-self.colonne)+1):
-                            L=[[self.colonne+i,self.ligne+i],[self.colonne-i,self.ligne-i],[self.colonne+i,self.ligne-i],[self.colonne-i,self.ligne+i]]
-                            a=0
+                        for i in range(1,max(colonne,7-colonne)+1):
+                            L=[[colonne+i,ligne+i],[colonne-i,ligne-i],[colonne+i,ligne-i],[colonne-i,ligne+i]]
+                            #a=0
                             for case in L:
+                                a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
@@ -467,10 +472,11 @@ class Roi(Fou,Tour):
                                         position[case[0]][case[1]].colonne=coordC
                     
                     if type(piece)==Tour or type(piece)==Dame:
-                        for i in range(max(self.colonne,7-self.colonne), 8): #colonnes
-                            L=[[self.colonne+i,self.ligne],[self.colonne-i,self.ligne]]
-                            a=0
+                        for i in range(1,max(colonne,7-colonne)+1): #colonnes
+                            L=[[colonne+i,ligne],[colonne-i,ligne]]
+                            #a=0
                             for case in L:
+                                a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
@@ -497,10 +503,11 @@ class Roi(Fou,Tour):
                                         position[case[0]][case[1]]=mangee
                                         position[case[0]][case[1]].ligne=coordL
                                         position[case[0]][case[1]].colonne=coordC
-                        for i in range(max(self.ligne,7-self.ligne), 8): #lignes
-                            L=[[self.colonne,self.ligne+i],[self.colonne,self.ligne-i]]
-                            a=0
+                        for i in range(1,max(ligne,7-ligne)+1): #lignes
+                            L=[[colonne,ligne+i],[colonne,ligne-i]]
+                            #a=0
                             for case in L:
+                                a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
