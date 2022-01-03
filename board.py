@@ -282,7 +282,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   piece.Move1=True
               update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
           else:
-            print("1")
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
             return (False,message_erreur)
 
@@ -327,15 +326,17 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     return (False,message_erreur)
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
-                  possible_prise=position[colonne][ligne]
-                  position[colonne][ligne]=piece #on met à jour la liste position
-                  if KB1.Echec2(): #si clouage
+                  possible_prise=position[colonne][ligne] #on garde en mémoire la pièce mangée au cas où mvt pas possible (échec)
+                  position[colonne][ligne]=piece #on met la pièce sur sa nouvelle case
+                  if KB1.Echec2(): #si clouage ou en échec au coup d'avant
                     message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, possible_prise)
                     #position[piece.colonne][piece.ligne]=piece #on annule le mouvement
                     #position[colonne][ligne]=possible_prise #on annule le mouvement
                     return (False,message_erreur)
-                  eaten_Blanc(colonne, ligne)
+                  #eaten_Blanc(colonne, ligne)
+                  prises_Blanc.append(possible_prise)
+                  update_coord_piece(possible_prise, -1, -1) #on change les coordonnées de la pièce mangée
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
@@ -387,17 +388,17 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     #position[colonne][ligne]=possible_prise #on annule le mouvement
                     return (False,message_erreur)
                   else:
-                    eaten_Noir(colonne,ligne)#on ajoute la pièce à la liste des pièces mangées
+                    #eaten_Noir(colonne,ligne)
+                    prises_Noir.append(possible_prise) #on ajoute la pièce à la liste des pièces mangées
+                    update_coord_piece(possible_prise, -2, -2) #on change les coordonnées de la pièce mangée
                     update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
                   return (False,message_erreur)
           else:
-            print("2")
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
             return (False,message_erreur)
     else:
-      print("3")
       message_erreur="Vous ne pouvez pas déplacer une pièce de l'adversaire."
       return (False,message_erreur)
   #if (a==Tour or a==Roi):
