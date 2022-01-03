@@ -6,8 +6,6 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 
-from piece import Pion
-
 #probleme de prototypage
 
 # from panique import Bouton_Regles
@@ -31,12 +29,14 @@ def fonction_lecture(position):
 
 def fonction_lecture_prises(prises):
     from piece import Piece
-    PRISES=[]
+    PRISES = []
     for p in prises:
         PRISES.append(str(p))
-    return(PRISES)
+    return PRISES
+
 
 def interpreteur_script(script):
+    import time
     script = script.split(' ')
     for i in range(len(script)):
         coup_script=script[i].split("-")
@@ -50,7 +50,7 @@ def interpreteur_script(script):
             cmd_bouton_abandonner()
         else:
             cmd_bouton_valider()
-            #sleep(5)
+            #time.sleep(5)
 
 
 root = Tk()
@@ -240,10 +240,66 @@ dicopieceN= {"TN1":python_imageTN,"CN1":python_imageCN,"FN1":python_imageFN,"QN1
 dicopiecepionB = {"PB1": python_imagePB, "PB2":python_imagePB,"PB3":python_imagePB,"PB4":python_imagePB,"PB5":python_imagePB,"PB6":python_imagePB,"PB7":python_imagePB,"PB8":python_imagePB}
 dicopiecepionN = {"PN1":python_imagePN,"PN2":python_imagePN,"PN3":python_imagePN,"PN4":python_imagePN,"PN5":python_imagePN,"PN6":python_imagePN,"PN7":python_imagePN,"PN8":python_imagePN}
 
+dicopiecePromoDameB ={"QB2":python_imageDB,"QB3":python_imageDB,"QB4":python_imageDB,"QB5":python_imageDB,"QB6":python_imageDB,"QB7":python_imageDB,"QB8":python_imageDB,"QB9":python_imageDB}
+dicopiecePromoFouB ={"FB3":python_imageFB,"FB4":python_imageFB,"FB5":python_imageFB,"FB6":python_imageFB,"FB7":python_imageFB,"FB8":python_imageFB,"FB9":python_imageFB,"FB10":python_imageFB}
+dicopiecePromoTourB = {"TB3":python_imageTB,"TB4":python_imageTB,"TB5":python_imageTB,"TB6":python_imageTB,"TB7":python_imageTB,"TB8":python_imageTB,"TB9":python_imageTB,"TB10":python_imageTB}
+dicopiecePromoCavalierB ={"CB3":python_imageCB,"CB4":python_imageCB,"CB5":python_imageCB,"CB6":python_imageCB,"CB7":python_imageCB,"CB8":python_imageCB,"CB9":python_imageCB,"CB10":python_imageCB}
+
+dicopiecePromoDameN ={"QN2":python_imageDN,"QN3":python_imageDN,"QN4":python_imageDN,"QN5":python_imageDN,"QN6":python_imageDN,"QN7":python_imageDN,"QN8":python_imageDN,"QN9":python_imageDN}
+dicopiecePromoFouN ={"FN3":python_imageFN,"FN4":python_imageFN,"FN5":python_imageFN,"FN6":python_imageFN,"FN7":python_imageFN,"FN8":python_imageFN,"FN9":python_imageFN,"FN10":python_imageFN}
+dicopiecePromoTourN = {"TN3":python_imageTN,"TN4":python_imageTN,"TN5":python_imageTN,"TN6":python_imageTN,"TN7":python_imageTN,"TN8":python_imageTN,"TN9":python_imageTN,"TN10":python_imageTN}
+dicopiecePromoCavalierN ={"CN3":python_imageCN,"CN4":python_imageCN,"CN5":python_imageCN,"CN6":python_imageCN,"CN7":python_imageCN,"CN8":python_imageCN,"CN9":python_imageCN,"CN10":python_imageCN}
+
 dicopiece.update(dicopieceB)
 dicopiece.update(dicopieceN)
 dicopiece.update(dicopiecepionB)
 dicopiece.update(dicopiecepionN)
+
+dicopiece.update(dicopiecePromoDameB)
+dicopiece.update(dicopiecePromoFouB)
+dicopiece.update(dicopiecePromoTourB)
+dicopiece.update(dicopiecePromoCavalierB)
+
+dicopiece.update(dicopiecePromoDameN)
+dicopiece.update(dicopiecePromoFouN)
+dicopiece.update(dicopiecePromoTourN)
+dicopiece.update(dicopiecePromoCavalierN)
+
+
+#DICO POUR LA PROMOTION
+dicopiece2 = {0 : python_imageVIDE2}
+dicopieceB2 = {"TB1": python_imageTB2,"CB1": python_imageCB2,"FB1": python_imageFB2,"QB1":python_imageDB2,"KB1":python_imageRB2,"FB2":python_imageFB2,"CB2":python_imageCB2,"TB2":python_imageTB2}
+dicopieceN2= {"TN1":python_imageTN2,"CN1":python_imageCN2,"FN1":python_imageFN2,"QN1":python_imageDN2,"KN1":python_imageRN2,"FN2":python_imageFN2,"CN2":python_imageCN2,"TN2":python_imageTN2}
+dicopiecepionB2 = {"PB1": python_imagePB2, "PB2":python_imagePB2,"PB3":python_imagePB2,"PB4":python_imagePB2,"PB5":python_imagePB2,"PB6":python_imagePB2,"PB7":python_imagePB2,"PB8":python_imagePB2}
+dicopiecepionN2 = {"PN1":python_imagePN2,"PN2":python_imagePN2,"PN3":python_imagePN2,"PN4":python_imagePN2,"PN5":python_imagePN2,"PN6":python_imagePN2,"PN7":python_imagePN2,"PN8":python_imagePN2}
+
+dicopiecePromoDameB2 ={"QB2":python_imageDB2,"QB3":python_imageDB2,"QB4":python_imageDB2,"QB5":python_imageDB2,"QB6":python_imageDB2,"QB7":python_imageDB2,"QB8":python_imageDB2,"QB9":python_imageDB2}
+dicopiecePromoFouB2={"FB3":python_imageFB2,"FB4":python_imageFB2,"FB5":python_imageFB2,"FB6":python_imageFB2,"FB7":python_imageFB2,"FB8":python_imageFB2,"FB9":python_imageFB2,"FB10":python_imageFB2}
+dicopiecePromoTourB2 = {"TB3":python_imageTB2,"TB4":python_imageTB2,"TB5":python_imageTB2,"TB6":python_imageTB2,"TB7":python_imageTB2,"TB8":python_imageTB2,"TB9":python_imageTB2,"TB10":python_imageTB2}
+dicopiecePromoCavalierB2 ={"CB3":python_imageCB2,"CB4":python_imageCB2,"CB5":python_imageCB2,"CB6":python_imageCB2,"CB7":python_imageCB2,"CB8":python_imageCB2,"CB9":python_imageCB2,"CB10":python_imageCB2}
+
+dicopiecePromoDameN2 ={"QN2":python_imageDN2,"QN3":python_imageDN2,"QN4":python_imageDN2,"QN5":python_imageDN2,"QN6":python_imageDN2,"QN7":python_imageDN2,"QN8":python_imageDN2,"QN9":python_imageDN2}
+dicopiecePromoFouN2 ={"FN3":python_imageFN2,"FN4":python_imageFN2,"FN5":python_imageFN2,"FN6":python_imageFN2,"FN7":python_imageFN2,"FN8":python_imageFN2,"FN9":python_imageFN2,"FN10":python_imageFN2}
+dicopiecePromoTourN2 = {"TN3":python_imageTN2,"TN4":python_imageTN2,"TN5":python_imageTN2,"TN6":python_imageTN2,"TN7":python_imageTN2,"TN8":python_imageTN2,"TN9":python_imageTN2,"TN10":python_imageTN2}
+dicopiecePromoCavalierN2 ={"CN3":python_imageCN2,"CN4":python_imageCN2,"CN5":python_imageCN2,"CN6":python_imageCN2,"CN7":python_imageCN2,"CN8":python_imageCN2,"CN9":python_imageCN2,"CN10":python_imageCN2}
+
+dicopiece2.update(dicopieceB2)
+dicopiece2.update(dicopieceN2)
+dicopiece2.update(dicopiecepionB2)
+dicopiece2.update(dicopiecepionN2)
+
+dicopiece2.update(dicopiecePromoDameB2)
+dicopiece2.update(dicopiecePromoFouB2)
+dicopiece2.update(dicopiecePromoTourB2)
+dicopiece2.update(dicopiecePromoCavalierB2)
+
+dicopiece2.update(dicopiecePromoDameN2)
+dicopiece2.update(dicopiecePromoFouN2)
+dicopiece2.update(dicopiecePromoTourN2)
+dicopiece2.update(dicopiecePromoCavalierN2)
+
+
+
 
 #Creation des indices horizontaux de l'échiquier
 # for i in range(0,18,2):
@@ -332,26 +388,57 @@ def afficherPiece():
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
 def afficherPiecesPrises():
-    from board import prises_Noir, prises_Blanc
-    PIECESPRISESNOIR=fonction_lecture_prises(prises_Noir)
-    PIECESPRISESBLANC=fonction_lecture_prises(prises_Blanc)
-
     global LPIECESPRISES
     global LIMAGESPICESPRISES
     couleurBg = 'white'
     couleurBg2 = 'black'
-    for i in range(8):
-        if LPIECESPRISES[0][i] == 0: ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image = LIMAGESPICESPRISES[1][i]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        else : ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+
+    from board import prises_Noir, prises_Blanc
+    LPIECESPRISESNOIRES = fonction_lecture_prises(prises_Noir)
+    LPIECESPRISESBLANC = fonction_lecture_prises(prises_Blanc)
+    print(LPIECESPRISESBLANC)
+    # for i in range(8):
+        # if LPIECESPRISES[0][i] == 0: ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image = LIMAGESPICESPRISES[1][i]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # else : ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
         
-        if LPIECESPRISES[1][i] == 0:  ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = python_imagePN2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        else :  ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # if LPIECESPRISES[1][i] == 0:  ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = python_imagePN2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # else :  ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
 
-        if LPIECESPRISES[2][i] == 0 : ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background= couleurBg, image = python_imagePB2).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        else: ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image = python_imageVIDE2, background =couleurBg).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # if LPIECESPRISES[2][i] == 0 : ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background= couleurBg, image = python_imagePB2).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # else: ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image = python_imageVIDE2, background =couleurBg).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
 
-        if LPIECESPRISES[3][i] == 0 :  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background=couleurBg,image = LIMAGESPICESPRISES[0][i]).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        else:  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image= python_imageVIDE2, background = couleurBg).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # if LPIECESPRISES[3][i] == 0 :  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background=couleurBg,image = LIMAGESPICESPRISES[0][i]).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        # else:  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image= python_imageVIDE2, background = couleurBg).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+
+    NbpiecesmangesN = len(LPIECESPRISESNOIRES)
+    for i in range (NbpiecesmangesN):
+        if i <8:
+                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image =dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        else: 
+                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+i-8,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+    
+    for k in range (NbpiecesmangesN,16):
+        if k <8:
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+k,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        else: 
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+k-8,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+
+    NbpiecesmangesB = len(LPIECESPRISESBLANC)
+    for j in range (NbpiecesmangesB):
+        if j <8:
+                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg, image =dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+j,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        else: 
+                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg, image = dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+j-8,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+    
+    for l in range (NbpiecesmangesB,16):
+        if l <8:
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg).grid(column=20+l,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+        else: 
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+l-8,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+     
+     
+    
+
        
 def actualiserPiecesPrises():
     global LPOSITION
@@ -483,24 +570,24 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
         from piece import promoDameB
-        #global choix_de_promotion
-        #choix_de_promotion.set("Dame")
+        global choix_de_promotion
+        choix_de_promotion.set("Dame")
         print("Dame")
         promoDameB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_tourB():
         from piece import promoTourB
-        #global choix_de_promotion
-        #choix_de_promotion.set("Tour")
+        global choix_de_promotion
+        choix_de_promotion.set("Tour")
         print("Tour")
         promoTourB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_fouB():
         from piece import promoFouB
-        #global choix_de_promotion
-        #choix_de_promotion.set("Fou")
+        global choix_de_promotion
+        choix_de_promotion.set("Fou")
         print("Fou")
         promoFouB(piece)
         PopUp_promo.destroy()
@@ -509,90 +596,92 @@ def open_popup_promo(piece,couleur):
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
         global choix_de_promotion
-        #choix_de_promotion.set("Cavalier")
+        choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionB():
-        #global choix_de_promotion
-        #choix_de_promotion.set("Pion")
+        global choix_de_promotion
+        choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
     def cmd_bouton_dameN():
         from piece import promoDameN
-        #global choix_de_promotion
-        #choix_de_promotion.set("Dame")
+        global choix_de_promotion
+        choix_de_promotion.set("Dame")
         print("Dame")
         promoDameN(piece)
         PopUp_promo.destroy()
+        #ce que fait la fonction, c'est donner une nouvelle valeur à choix de promotion, sans l'utiliser après, c'est normal? 
 
     def cmd_bouton_tourN():
         from piece import promoTourN
-        #global choix_de_promotion
-        #choix_de_promotion.set("Tour")
+        global choix_de_promotion
+        choix_de_promotion.set("Tour")
         print("Tour")
         promoTourN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_fouN():
         from piece import promoFouN
-        #global choix_de_promotion
-        #choix_de_promotion.set("Fou")
+        global choix_de_promotion
+        choix_de_promotion.set("Fou")
         print("Fou")
         promoFouN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
-        #global choix_de_promotion
-        #choix_de_promotion.set("Cavalier")
+        global choix_de_promotion
+        choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
-        #global choix_de_promotion
-        #choix_de_promotion.set("Pion")
+        global choix_de_promotion
+        choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
     PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
     PopUp_promo.iconbitmap(r'icone.ico')
-    PopUp_promo.geometry("500x350")
+    PopUp_promo.geometry("750x350")
     PopUp_promo.lift()
 
     ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
     if couleur=="Blanc":
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameB())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourB())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouB())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB())
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameN())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourN())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouN())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN())
         Bouton_pion.pack()
 
 
 
 def open_popup_pat(couleur):
+    import time
     global duree_de_la_partie
-    duree_de_la_partie=time()-duree_de_la_partie
+    duree_de_la_partie=time.time()-duree_de_la_partie
     PopUp_pat= Toplevel()
     PopUp_pat.geometry("750x300")
     PopUp_pat.title("Pat")
@@ -604,13 +693,11 @@ def open_popup_pat(couleur):
     else:
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
-    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
-    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
-    Label(PopUp_pat, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
     
 def open_popup_perdu(couleur):
+    import time
     global duree_de_la_partie
-    duree_de_la_partie=time()-duree_de_la_partie
+    duree_de_la_partie=time.time()-duree_de_la_partie
     top= Toplevel()
     top.geometry("750x450")
     top.title("Perduuuu")
@@ -620,7 +707,7 @@ def open_popup_perdu(couleur):
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
         # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
-        
+
         Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
 
@@ -643,14 +730,12 @@ def open_popup_perdu(couleur):
         #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
 
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
-    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
-    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
-    Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
     top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
     #personnaliser le message avec les prenoms
 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
+        import time
         global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
@@ -662,7 +747,7 @@ def pop_up_commencer():
             prenom_noir.set('Noir')
         else: 
             prenom_noir.set(entry_prenom_noir.get())
-        duree_de_la_partie=time()
+        duree_de_la_partie=time.time()
         Popup3.destroy()
 
     Popup3 = Toplevel()
@@ -727,13 +812,12 @@ def cmd_bouton_valider():
     piece_bougee=piece_a_bouger.get()
     if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    elif (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
+    if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    elif not(coup_special.get() in special):
+    if not(coup_special.get() in special):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
-    
-    else:
-        #if message_erreur.get()=="":
+
+    if message_erreur.get()=="":
         from board import position,KB1,KN1
         print("valider")
         from main import interpreteur
@@ -757,7 +841,7 @@ def cmd_bouton_valider():
                     if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8": #promotion de pion
                     open_popup_promo(result[2],"Blanc")
                     #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                     #if choix_de_promotion=="Dame":
@@ -775,9 +859,9 @@ def cmd_bouton_valider():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
                     if KB1.Echec_et_mat(nbcoup):
-                        print("Echec et mat.") 
+                        print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1": #promotion de pion
                     open_popup_promo(result[2],"Noir")
                     #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                     #if choix_de_promotion=="Dame":
@@ -791,7 +875,6 @@ def cmd_bouton_valider():
                 couleurA.set("Blanc")
                 prenom.set(prenom_blanc.get())
             LPOSITION=fonction_lecture(position)
-            print(LPOSITION) #
             coup.set("")
             piece_a_bouger.set("")
             coup_special.set("")
