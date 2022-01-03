@@ -268,16 +268,8 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   piece.Move1=True
                 if CouleurQuiJoue=='Blanc':
                   eaten_Blanc(possible_prise)
-                  print(prises_Blanc)
-                  #prises_Blanc.append(possible_prise) #on met à jour la liste des prises
-                  #possible_prise.colonne=-1 #on change les coordonées de la pièce mangée
-                  #possible_prise.ligne=-1
                 else: #noirs
                   eaten_Noir(possible_prise)
-                  print(prises_Noir)
-                  #prises_Noir.append(possible_prise)
-                  #possible_prise.colonne=-2 #on change les coordonées de la pièce mangée
-                  #possible_prise.ligne=-2
               else:
                 message_erreur="Il y a déjà une de vos pièces sur cette case."
                 return (False,message_erreur)
@@ -347,10 +339,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     #position[colonne][ligne]=possible_prise #on annule le mouvement
                     return (False,message_erreur)
                   eaten_Blanc(possible_prise)
-                  print(prises_Blanc)
-                  #eaten_Blanc(colonne, ligne)
-                  #prises_Blanc.append(possible_prise)
-                  #update_coord_piece(possible_prise, -1, -1) #on change les coordonnées de la pièce mangée
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
@@ -403,10 +391,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                     return (False,message_erreur)
                   else:
                     eaten_Noir(possible_prise)#on ajoute la pièce à la liste des pièces mangées
-                    print(prises_Noir)
-                    #eaten_Noir(colonne,ligne)
-                    #prises_Noir.append(possible_prise) #on ajoute la pièce à la liste des pièces mangées
-                    #update_coord_piece(possible_prise, -2, -2) #on change les coordonnées de la pièce mangée
                     update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
@@ -456,7 +440,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Blanc(position[piece.colonne + 1][piece.ligne]) #on l'ajoute aux prises des Blancs
-            print(prises_Blanc)
             position[piece.colonne + 1][piece.ligne] = 0  # on enlève le pion adversaire du board
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
@@ -479,7 +462,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne - 1][piece.ligne])
-            print(prises_Noir)
             position[piece.colonne - 1][piece.ligne] = 0
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
@@ -496,7 +478,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne + 1][piece.ligne])
-            print(prises_Noir)
             position[piece.colonne + 1][piece.ligne] = 0
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
