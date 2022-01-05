@@ -1,6 +1,5 @@
 #La véritable fenêtre d'interface 
 
-
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
@@ -14,6 +13,8 @@ from time import *
 # from board import position
 # from piece import*
 # from new_interface import Entry_pieceabouger
+
+#Fonction : permet d'importer le tableau qui contient la position des pièces 
 def fonction_lecture(position):
     #from board import position
     from piece import Piece
@@ -27,6 +28,7 @@ def fonction_lecture(position):
                 LPOSITION[l].append(str(position[l][j]))
     return(LPOSITION)
 
+#Fonction : permet de renvoyer un tableau de pièces prises par les blancs ou par les noirs 
 def fonction_lecture_prises(prises):
     from piece import Piece
     PRISES = []
@@ -34,7 +36,7 @@ def fonction_lecture_prises(prises):
         PRISES.append(str(p))
     return PRISES
 
-
+#Fonction : permet d'interpréter des scripts 
 def interpreteur_script(script):
     import time
     script = script.split(' ')
@@ -52,11 +54,12 @@ def interpreteur_script(script):
             cmd_bouton_valider()
             #time.sleep(5)
 
-
+# Mise en place de la fenêtre d'interface principale
 root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
+#Permet de gérer le style des boutons
 s = ttk.Style()
 s.theme_use('classic')
 # s.configure(root, font=('Raleway', 10))
@@ -64,7 +67,6 @@ s.theme_use('classic')
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
-
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 # Variables de Tkinter
@@ -106,7 +108,7 @@ prenom.set("")
 
 duree_de_la_partie=0
 
-## Images perdu
+## Images de la pop up perdu
 
 ImageperduB = Image.open('defaite _des_blancs.png')
 ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
@@ -132,7 +134,6 @@ python_imageEchecMate = ImageTk.PhotoImage(ImageEchecMate)
 
 
 ## Images des pieces de l'échiquier
-
 
 ImgFouNoir = Image.open('fou_noir.png')
 ImgFouBlanc = Image.open('fou_blanc.png')
@@ -235,6 +236,9 @@ python_imageDR = ImageTk.PhotoImage(ImgDRoi)
 python_imageDC = ImageTk.PhotoImage(ImgDCavalier)
 
 
+
+#Dictionnaire dicopiece pour les pièces sur l'échiquier: 
+# fait le lien entre des objets tkinter et les notations du code   
 dicopiece = {0 : python_imageVIDE}
 dicopieceB = {"TB1": python_imageTB,"CB1": python_imageCB,"FB1": python_imageFB,"QB1":python_imageDB,"KB1":python_imageRB,"FB2":python_imageFB,"CB2":python_imageCB,"TB2":python_imageTB}
 dicopieceN= {"TN1":python_imageTN,"CN1":python_imageCN,"FN1":python_imageFN,"QN1":python_imageDN,"KN1":python_imageRN,"FN2":python_imageFN,"CN2":python_imageCN,"TN2":python_imageTN}
@@ -267,7 +271,8 @@ dicopiece.update(dicopiecePromoTourN)
 dicopiece.update(dicopiecePromoCavalierN)
 
 
-#DICO POUR LA PROMOTION
+#Dictionnaire dicopiece2 pour la promotion 
+
 dicopiece2 = {0 : python_imageVIDE2}
 dicopieceB2 = {"TB1": python_imageTB2,"CB1": python_imageCB2,"FB1": python_imageFB2,"QB1":python_imageDB2,"KB1":python_imageRB2,"FB2":python_imageFB2,"CB2":python_imageCB2,"TB2":python_imageTB2}
 dicopieceN2= {"TN1":python_imageTN2,"CN1":python_imageCN2,"FN1":python_imageFN2,"QN1":python_imageDN2,"KN1":python_imageRN2,"FN2":python_imageFN2,"CN2":python_imageCN2,"TN2":python_imageTN2}
@@ -298,9 +303,6 @@ dicopiece2.update(dicopiecePromoDameN2)
 dicopiece2.update(dicopiecePromoFouN2)
 dicopiece2.update(dicopiecePromoTourN2)
 dicopiece2.update(dicopiecePromoCavalierN2)
-
-
-
 
 #Creation des indices horizontaux de l'échiquier
 # for i in range(0,18,2):
@@ -338,14 +340,18 @@ LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python
 #             # L = ["","H","G",'F',"E","D","C","B",'A']
 #             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 #             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+
+#Fonction : gère l'évènement clic gauche sur les pièces de l'échiquer
 def BoutonGestClicgauche(evt, i, j):
     # print('CGauche',i, j )
     piece_a_bouger.set(chr(j+97)+str(8-i))
 
+#Fonction : gère l'évènement clic droit sur les pièces de l'échiquer
 def BoutonGestClicdroit(evt, i, j ):
     # print('CDroit', i, j)
     coup.set(chr(j+97)+str(8-i))
 
+#Fonction : gère l'affichage des pièces sur l'échiquier 
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
     global LPOSITION
@@ -357,6 +363,8 @@ def afficherPiece():
                 Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER)
                 BoutonListe[i].insert(j,Bouton_piece)
                 Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
+                
+                #Gestion des clics gauche et droits sur les images des pièces 
                 def gestCG(evt, i=i,j=j):   
                     return BoutonGestClicgauche(evt, 7-i,7-j)
                 def gestCD(evt, i=i, j= j):   
@@ -366,11 +374,11 @@ def afficherPiece():
                 BoutonListe[i].insert(j,Bouton_piece)
                 Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
 
+                #Gestion des clics gauche et droit sur les images des pièces 
                 def gestCG(evt, i=i,j=j):   
                      return BoutonGestClicgauche(evt, i,j)
                 def gestCD(evt, i=i, j= j):   
                     return BoutonGestClicdroit(evt, i,j)
-            
            
             Bouton_piece.bind('<Button-1>', gestCG)
             Bouton_piece.bind('<Button-3>', gestCD)
@@ -388,6 +396,7 @@ def afficherPiece():
             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
+#Fonction : gère l'affichage des pièces prises 
 def afficherPiecesPrises():
     global LPIECESPRISES
     global LIMAGESPICESPRISES
@@ -438,9 +447,8 @@ def afficherPiecesPrises():
                 ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+l-8,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
      
      
-    
 
-       
+#Ancienne Fonction : gère l'actualisation des pièces prises 
 def actualiserPiecesPrises():
     global LPOSITION
     global LPIECESPRISES
@@ -566,7 +574,7 @@ choix_de_promotion.set("Indiquez la pièce.")
 #         #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
 #         #parce que il sait pas a quoi correspond piece, ce qui explique peut etre pourquoi ça marche pas 
 
-
+#Pop up: gère le cas de la promotion de pion
 def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
@@ -678,7 +686,7 @@ def open_popup_promo(piece,couleur):
         Bouton_pion.pack()
 
 
-
+#Pop up : gère le cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
     import time
     global duree_de_la_partie
@@ -694,7 +702,8 @@ def open_popup_pat(couleur):
     else:
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
-    
+
+#Pop up : si la partie est finie
 def open_popup_perdu(couleur):
     import time
     global duree_de_la_partie
@@ -734,6 +743,7 @@ def open_popup_perdu(couleur):
     top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
     #personnaliser le message avec les prenoms
 
+#Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
         import time
@@ -751,6 +761,7 @@ def pop_up_commencer():
         duree_de_la_partie=time.time()
         Popup3.destroy()
 
+    #Mise en place de la fenêtre pop up 
     Popup3 = Toplevel()
     Popup3.title('Faites un choix')
     Popup3.iconbitmap(r'icone.ico')
@@ -761,6 +772,8 @@ def pop_up_commencer():
 
     content3 = ttk.Frame(Popup3, padding=(0,0,0,0))
     content3.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    #Mise en place des widgets 
 
     entry_prenom_blanc = StringVar()
     entry_prenom_blanc.set("")
@@ -785,7 +798,8 @@ def pop_up_commencer():
 
     Bouton_CompilerScript= ttk.Button(content3, text= "Lancer la partie",command= cmd_lancer_bouton_prenom)
     Bouton_CompilerScript.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-
+    
+    #Poids des colonnes et des lignes 
     for i in range(0,2):
         content3.columnconfigure(i,weight=1)
 
@@ -797,14 +811,14 @@ def pop_up_commencer():
     Popup3.grab_set()               #empeche ttes actions avec la fenetre principale
     root.wait_window(Popup3)        #Arrete le script principal tant que la fenetre n'est pas fermée
 
-#### Fonctions de boutons
-
+#Fonction de boutons abandonnés : 
 def cmd_bouton_visuel():
     pass
 
 def cmd_bouton_son():
     pass
 
+# Fonction du bouton valider: gère la validation du coup
 def cmd_bouton_valider():
     lettres = "a,b,c,d,e,f,g,h"
     chiffres = "1,2,3,4,5,6,7,8"
@@ -886,9 +900,12 @@ def cmd_bouton_valider():
             message_erreur.set(result[1])
             #print(message_erreur.get())
 
-
+# Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
+    #appel pop up permettant de choisir les couleurs
     pop_up_commencer()
+
+    #initialisation des variables tkinter 
     nbcoup.set("0")
     couleurA.set("Blanc")
     prenom.set(prenom_blanc.get())
@@ -898,22 +915,27 @@ def cmd_bouton_commencer():
     message_echec.set("")
     script.set("")
     message_echec.set("")
+
     if prenom_blanc.get()== "":
-        print("oui")
+        # print("oui")
         prenom_blanc.set("Blanc")
     if prenom_noir.get() =="":
         prenom_noir.set("Noir")
+    
+    #Initialisation du tableau de position et des pièces prises 
     global LPOSITION
     global LPIECESPRISES
 
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     LPIECESPRISES = [[1 for i in range(8)] for j in range(4)]
 
+    #On affiche les pièces, on actualise les pièces prises, puis on les affiche 
     afficherPiece()
     actualiserPiecesPrises()
     afficherPiecesPrises()
     # print("commencer")
 
+#Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perd
 def cmd_bouton_abandonner():
     print("abandonner")
     if couleurA.get()=="Blanc":
@@ -921,21 +943,26 @@ def cmd_bouton_abandonner():
     else:
         open_popup_perdu("Noir")
 
+#Ancien bouton test utilisé pour voir si l'implémentation visuelle marche
 def cmd_bouton_test():
     global LPOSITION
     LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
     print("test")
     message_erreur.set("bye bitch")
 
-def cmd_bouton_pieces_perdues():
-    pass
+# def cmd_bouton_pieces_perdues():
+#     pass
 
+#Fonction du bouton complier script : permet de compiler un script 
 def cmd_bouton_Compiler_script():
     script_compile=script.get() #
     script.set("") #
     interpreteur_script(script_compile)
 
+#Fonction du bouton règle : permet d'afficher une pop up explicative
 def cmd_bouton_regles():
+    
+    #Mise en place de la fenêtre pop up
     Popup = Toplevel()
     Popup.title('Règles de jeu')
     Popup.iconbitmap(r'icone.ico')
@@ -945,7 +972,8 @@ def cmd_bouton_regles():
     Popup.grid_rowconfigure(0, weight=1)
     Popup.lift()
 
-    n = ttk.Notebook(Popup)   # Création du système d'onglets
+    # Création du système d'onglets
+    n = ttk.Notebook(Popup)   
     n.columnconfigure(0, weight=1)
     n.rowconfigure(0, weight=1)
     n.grid(column=0, row=0,sticky= NSEW)
@@ -1013,6 +1041,7 @@ def cmd_bouton_regles():
     ch3 = "\n\nUne partie d’échec peut avoir trois résultats: le gain des Blancs, le gain des Noirs ou un match nul. \nLe gain survient lors d'un échec et mat, ie lorsque l'échec ne peut être paré ou bien lorsqu'un des joueurs abandonne. \nUne partie est nulle dans les cas suivants:\n- Par accord mutuel entre les deux joueurs\n- En cas de PAT: si l’un des joueurs n’a aucun coup légal mais que son Roi n’est pas en échec\n- En cas de matériel insuffisant pour permettre le mat\n- Si la même position survient trois fois sur l’échiquier\n- Si les deux joueurs ont joué chacun 50 coups consécutifs sans poussée de pion ni prise de pièce"
     ttk.Label(Onglet9_Fin, text= ch3, image = python_imageEchecMate, compound = 'top',relief="solid",background = 'white',anchor=CENTER, wraplength=480).grid(column=0, row=0, columnspan=20, rowspan=20,sticky=(N,S,E,W),pady=1, padx=1)
 
+    #On gère le poids des colonnes et des lignes dans les onglets 
     for i in range(20):
         Onglet1_Regles.columnconfigure(i,weight=1)
         Onglet2_Pion.columnconfigure(i,weight=1)
@@ -1035,6 +1064,7 @@ def cmd_bouton_regles():
         Onglet8_ActionSpe.rowconfigure(j,weight=1)
         Onglet9_Fin.rowconfigure(j,weight=1)
 
+#Fonction du bouton comment jouer : joue le role d'un README
 def cmd_bouton_cmtjouer():
     Popup4 = Toplevel()
     Popup4.title('Comment jouer ?')
@@ -1060,6 +1090,7 @@ def cmd_bouton_cmtjouer():
     for j in range(0,4):
         content4.rowconfigure(j,weight=1)
 
+#Fonction du bouton options: permet d'accéder aux règles, au README adapté, à la compilation de script
 def cmd_bouton_options():
     Popup2 = Toplevel()
     Popup2.title('Options')
@@ -1118,6 +1149,8 @@ for j in range(0,18):
 
 #on peut facilement retirer les bordures en retirant relief
 largeur = 8
+
+#Tous les labels, entry et boutons
 
 Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
 Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1187,6 +1220,7 @@ Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pad
 # Label_piecesperdues= ttk.Label(content, text= "Pièces perdues",relief="solid",anchor=CENTER)
 # Label_piecesperdues.grid(column=20, row=13, columnspan = largeur, rowspan=1 ,sticky=(N,S,E,W))
 
+# permet de faire une boucle visuelle 
 root.mainloop()
 
 # dicopieceB = {"TB1":"","CB1":"","FB1":"","QB1":"","KB1":"","FB2":"","CB2":"","TB2":""}
