@@ -1,4 +1,5 @@
 class Piece():
+
     def __init__(self, couleur, colonne, ligne, numero):
         self._couleur = couleur
         self.ligne = ligne
@@ -34,19 +35,28 @@ class Piece():
     # numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
 
 
+
+
+
 class Fou(Piece):
+
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 3
 
+
     def mouvement_possible(self, colonne, ligne):  # indique si le fou peut bouger jusqu'à la case indiquée
         from board import position
+
         if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # sortie de l'échiquier
             return False
+
         elif colonne == self.colonne and ligne == self.ligne:  # si le fou ne bouge pas
             return True
+
         else:
             k=abs(colonne-self.colonne)
+
             if k != abs(ligne-self.ligne):
                 return False #pas le bon motif de déplacement
             
@@ -69,20 +79,29 @@ class Fou(Piece):
                 for i in range(1, -(k - 1)):
                     if position[self.colonne + i][self.ligne - i] != 0:  # s'il y a une autre piece en travers du chemin
                         return False   
+        
         return True
 
+
+
+
 class Tour(Piece):
+
     def __init__(self, couleur, colonne, ligne, numero,Move1=False):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 5
-        self.Move1=Move1
+        self.Move1=Move1 #indique si la tour a déjà bougé (utile pour le roque)
+
 
     def mouvement_possible(self, colonne, ligne):  # indique si la tour peut bouger jusqu'à la case indiquée
         from board import position
+        
         if ((ligne != self.ligne) and (colonne != self.colonne)) or ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
             return False
+
         elif colonne == self.colonne and ligne == self.ligne:  # si la tour ne bouge pas
             return True
+
         elif ligne == self.ligne:  # si la tour bouge en horizontal
             if colonne > self.colonne:  # si la tour va vers la droite
                 for c in range(self.colonne+1, colonne):
@@ -92,6 +111,7 @@ class Tour(Piece):
                 for c in range(colonne+1, self.colonne):
                     if position[c][ligne] != 0:  # s'il y a une autre piece en travers du chemin  ##2
                         return False
+
         elif colonne == self.colonne:  # si la tour bouge en vertical
             if ligne > self.ligne:  # si la tour va vers le haut
                 for l in range(self.ligne+1, ligne):
@@ -101,91 +121,117 @@ class Tour(Piece):
                 for l in range(ligne+1, self.ligne):
                     if position[colonne][l] != 0:  # s'il y a une autre piece en travers du chemin  ##4
                         return False
+
         return True
 
+
+
+
 class Dame(Fou,Tour):
+
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 9
 
     def mouvement_possible(self,colonne,ligne):
-            if Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne):
+            if Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne): #peut bouger comme le fou et la tour
                 return True
             else :
                 return False
 
 
+
+
 class Cavalier(Piece):
+
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 3
 
     def mouvement_possible(self, colonne, ligne):  # indique si le cavalier peut bouger jusqu'à la case indiquée
-        from board import position
-        if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # sortie de l'échiquier
-            return False
-        elif (colonne == self.colonne - 2 and ligne == self.ligne + 1) or (colonne == self.colonne - 2 and ligne == self.ligne - 1) or (colonne == self.colonne - 1 and ligne == self.ligne + 2) or (colonne == self.colonne - 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 1 and ligne == self.ligne + 2) or (colonne == self.colonne + 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 2 and ligne == self.ligne + 1) or (colonne == self.colonne + 2 and ligne == self.ligne - 1) or (colonne == self.colonne and ligne == self.ligne) :  # bon "motif" de déplacement ou cavalier ne bouge pas
+        #liste des cases d'arrivée possibles (y compris la case de départ) :
+        L=[[self.colonne - 2,self.ligne + 1], [self.colonne - 2, self.ligne - 1],[self.colonne - 1, self.ligne + 2], [self.colonne - 1, self.ligne - 2], [self.colonne + 1, self.ligne + 2], [self.colonne + 1, self.ligne - 2], [self.colonne + 2, self.ligne + 1], [self.colonne + 2, self.ligne - 1], [self.colonne, self.ligne]]
+        if [colonne,ligne] in L and (ligne<=7 and ligne>=0 and colonne<=7 and colonne>=0): #bon déplacement et reste dans l'échiquier
             return True
-        else: #pas bon déplacement
+        else:
             return False
+
+
 
 
 class Pion(Piece):
+
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 1
-        self._condition2 = 5
+        self._condition2 = 5 # sert à la prise en passant (vérifie que le pion a bougé de 2 cases au bon endroit)
 
     def mouvement_possible(self, colonne, ligne):  # indique si le pion peut bouger jusqu'à la case indiquée
         from board import position
+
         if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # pas le bon "motif" de déplacement ou sortie de l'échiquier
             return (False,0)
+
         elif colonne == self.colonne and ligne == self.ligne:  # si le pion ne bouge pas
             return (True,"statique")
-        elif colonne != self.colonne and ligne == self.ligne: #mouvement horizontal
+
+        elif colonne != self.colonne and ligne == self.ligne: # mouvement horizontal
             return (False,0)
+
         else:
-            if colonne == self.colonne: #mouvement vertical
+
+            if colonne == self.colonne: # mouvement vertical
+
                 if ligne == (self.ligne + 1) and self._couleur == "Blanc" :
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit")
                     else:
                         return (False,0)
+
                 elif self.ligne == 1 and ligne == 3 and self._couleur == "Blanc": # premier mouvement du pion
                     if position[colonne][ligne - 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
                     else:
                         return (False,0)
+
                 elif ligne == (self.ligne - 1) and self._couleur == "Noir":
                     if position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit")
                     else:
                         return (False,0)
+
                 elif ligne == 4 and self.ligne == 6 and self._couleur == "Noir": # premier mouvement du pion
                     if position[colonne][ligne + 1] == 0 and position[colonne][ligne] == 0:  # s'il n'y a pas de piece sur la case d'arrivée
                         return (True,"tout_droit_2")
                     else:
                         return (False,0)
-                else:
-                    return (False,0)
-            elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1):# mouvement diagonal
-                if ligne == (self.ligne + 1) and self._couleur == "Blanc":
-                    return (True,"diagonale")
 
-                elif ligne == (self.ligne - 1) and self._couleur == "Noir":
+                else:
+                    return (False,0)
+
+            elif colonne == (self.colonne + 1) or colonne == (self.colonne - 1): # mouvement diagonal
+                if (ligne == (self.ligne + 1) and self._couleur == "Blanc") or (ligne == (self.ligne - 1) and self._couleur == "Noir"):
                     return (True,"diagonale")
                 else:
                     return (False,0)
+
             else:
                 return (False,0)
 
 
+
+
+
+
 class Roi(Fou,Tour):
+
+
     def __init__(self, couleur, colonne, ligne, numero, echec=False):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
         self.echec=echec
-        self.Move1=False
+        self.Move1=False # sert à savoir si le roi a déjà bougé (utile pour roque)
+
 
     def mouvement_possible(self,colonne,ligne):
             if (Fou(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne) or Tour(self._couleur, self.colonne, self.ligne, self._numero).mouvement_possible(colonne,ligne)) and (abs(ligne-self.ligne<=1) and abs(colonne-self.colonne<=1)):
@@ -193,74 +239,84 @@ class Roi(Fou,Tour):
             else :
                 return False
 
-    def Echec1(self): #attention : complexité élevée
+
+    # Fonctions pour l'échec et l'échec et mat
+
+    def Echec1(self): # complexité très élevée
         from board import position
         for piece in position:
             if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
                 return True
         return False
     
-    def Echec2(self):
+
+    def Echec2(self): # meilleure complexité
         from board import position
-        #diagonales
+
+        # Pièce qui bouge en diagonale : Dame ou Fou
         A=1
         a,b,c,d=True,True,True,True
+
         for i in range(1,min(max(self.colonne,7-self.colonne),max(self.ligne,7-self.ligne))+1):
+
             if not(self.colonne+i>7) and not(self.ligne+i>7) and position[self.colonne+i][self.ligne+i] != 0 and a:
                 A= position[self.colonne+i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago")#
                     return True
                 else:
                     a=False
+
             if not(self.ligne-i<0) and not(self.colonne-i<0) and position[self.colonne-i][self.ligne-i] != 0 and b:
                 A= position[self.colonne-i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago")#
                     return True
                 else:
                     b=False
+
             if self.colonne+i<=7 and self.ligne-i>=0 and position[self.colonne+i][self.ligne-i] != 0 and c:
                 A=position[self.colonne+i][self.ligne-i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago")#
                     return True
                 else:
                     c= False
+
             if not(self.colonne-i<0) and not(self.ligne+i>7) and position[self.colonne-i][self.ligne+i] != 0 and d:   
                 A=position[self.colonne-i][self.ligne+i]
                 if (type(A)==Fou or type(A)==Dame) and A._couleur!=self._couleur:
                     self.echec=True
-                    print("diago")#
                     return True
                 else:
                     d = False
-                
-        #Pion
+
+
+        # Pion
         if self._couleur=="Blanc" and self.ligne!=7:
             if (self.colonne!=7 and type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (self.colonne!=0 and type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
-                print("pion")#
                 return True
+
         elif self._couleur=="Noir" and self.ligne!=0:
             if (self.colonne!=7 and type(position[self.colonne+1][self.ligne-1])==Pion and position[self.colonne+1][self.ligne-1]._couleur=="Blanc") or (self.colonne!=0 and type(position[self.colonne-1][self.ligne-1])==Pion and position[self.colonne-1][self.ligne-1]._couleur=="Blanc") :
-                print("pion")#
                 return True
 
-        #cavalier
+
+        # Cavalier
         L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne - 1]]
-        #if (not(self.colonne - 2 < 0) and not(self.ligne + 1 > 7) and type(position[self.colonne - 2][self.ligne + 1])==Cavalier and position[self.colonne - 2][self.ligne + 1]._couleur != self._couleur) or (not(self.colonne - 2 < 0) and not(self.ligne - 1 <  0) and type(position[self.colonne - 2][self.ligne - 1]) == Cavalier and position[self.colonne - 2][self.ligne - 1]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne + 2 > 7) and type(position[self.colonne - 1][self.ligne + 2])==Cavalier and position[self.colonne - 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne - 1 < 0) and not(self.ligne - 2 < 0) and type(position[self.colonne - 1][self.ligne - 2])==Cavalier and position[self.colonne - 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne + 2 > 7) and type(position[self.colonne + 1][self.ligne + 2])==Cavalier and position[self.colonne + 1][self.ligne + 2]._couleur!=self._couleur) or (not(self.colonne + 1 > 7) and not(self.ligne - 2 < 0) and type(position[self.colonne + 1][self.ligne - 2])==Cavalier and position[self.colonne + 1][self.ligne - 2]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne + 1 > 7) and type(position[self.colonne + 2][self.ligne + 1])==Cavalier and position[self.colonne + 2][self.ligne + 1]._couleur!=self._couleur) or (not(self.colonne + 2 > 7) and not(self.ligne - 1 < 0) and type(position[self.colonne + 2][self.ligne - 1])==Cavalier and position[self.colonne + 2][self.ligne - 1]._couleur!=self._couleur) :
         for case in L:
             if case[0]>=0 and case[0]<=7 and case[1]>=0 and case[1]<=7 and type(position[case[0]][case[1]])==Cavalier and position[case[0]][case[1]]._couleur != self._couleur:
-                print("cavalier") #
                 return True
 
-        #colonnes/lignes
+
+        # Pièces qui bouge à l'horizontale ou à la verticale : Dame ou Tour
+
+            # Mouvement horizontal :
         A=1
         a,b=True,True
-        for i in range(1,max(self.colonne,7-self.colonne)+1): #lignes
+
+        for i in range(1,max(self.colonne,7-self.colonne)+1):
+
             if self.colonne+i<=7 and position[self.colonne+i][self.ligne] != 0 and a:
                 A=position[self.colonne+i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
@@ -268,6 +324,7 @@ class Roi(Fou,Tour):
                     return True
                 else:
                     a=False
+
             if self.colonne-i>=0 and position[self.colonne-i][self.ligne] != 0 and b: 
                 A= position[self.colonne-i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
@@ -275,9 +332,13 @@ class Roi(Fou,Tour):
                     return True
                 else:
                     b=False
+
+
+            # Mouvement vertical :
         A=1
         c,d=True,True
-        for i in range(1,max(self.ligne,7-self.ligne)+1): #colonnes
+        for i in range(1,max(self.ligne,7-self.ligne)+1): 
+
             if self.ligne+i<=7 and position[self.colonne][self.ligne+i] != 0 and c:
                 A=position[self.colonne][self.ligne+i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
@@ -285,6 +346,7 @@ class Roi(Fou,Tour):
                     return True
                 else:
                     c=False
+
             if not(self.ligne-i<0) and position[self.colonne][self.ligne-i] != 0 and d:
                 A=position[self.colonne][self.ligne-i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
@@ -292,9 +354,10 @@ class Roi(Fou,Tour):
                     return True
                 else:
                     d=False
-        #Roi
+
+
+        # Roi
         L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
-        #if (self.ligne+1 <= 7 and type(position[self.colonne][self.ligne+1])==Roi and position[self.colonne][self.ligne+1]._couleur!=self._couleur) or (self.ligne-1 >= 0 and type(position[self.colonne][self.ligne-1])==Roi and position[self.colonne][self.ligne-1]._couleur!=self._couleur) or (self.colonne+1 <= 7 and type(position[self.colonne+1][self.ligne])==Roi and position[self.colonne+1][self.ligne]._couleur!=self._couleur) or (self.colonne-1 >= 0 and self.ligne-1 >= 0 and type(position[self.colonne-1][self.ligne-1])==Roi and position[self.colonne-1][self.ligne-1]._couleur!=self._couleur) or (self.colonne+1 <= 7 and self.ligne+1 <= 7 and type(position[self.colonne+1][self.ligne+1])==Roi and position[self.colonne+1][self.ligne+1]._couleur!=self._couleur) or (self.colonne-1 >= 0 and self.ligne+1 <= 7 and type(position[self.colonne-1][self.ligne+1])==Roi and position[self.colonne-1][self.ligne+1]._couleur!=self._couleur) or (self.colonne-1 >= 0 and type(position[self.colonne-1][self.ligne])==Roi and position[self.colonne-1][self.ligne]._couleur!=self._couleur) or (self.colonne+1 <= 7 and self.ligne-1 >= 0 and type(position[self.colonne+1][self.ligne-1])==Roi and position[self.colonne+1][self.ligne-1]._couleur!=self._couleur):
         for case in L:
             if case[0]>=0 and case[0]<=7 and case[1]>=0 and case[1]<=7 and type(position[case[0]][case[1]])==Roi and position[case[0]][case[1]]._couleur != self._couleur:
                 print("roi")
@@ -303,62 +366,57 @@ class Roi(Fou,Tour):
         return False
     
 
+
     def Echec_et_mat(self,nbcoup):
-        from board import position,mouvement,prises_Blanc,prises_Noir
-        archive_pos=position[:] #on enregistre les positions car la fonction mouvement change la liste position
-        archive_prisesB=prises_Blanc[:]
-        archive_prisesN=prises_Noir[:]
-        ligne=self.ligne
-        colonne=self.colonne
+        from board import position,mouvement,prises_Blanc,prises_Noir,prise_en_passant
+
         for c in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
             for piece in c:
                 if piece!=0 and piece._couleur == self._couleur: #si on trouve une piece de notre couleur, alors on essaye de la bouger
+                    archive_pos=position[:] #on enregistre les positions des pièces car la fonction mouvement change la liste position
+                    archive_prisesB=prises_Blanc[:]
+                    archive_prisesN=prises_Noir[:]
+                    ligne=piece.ligne
+                    colonne=piece.colonne
+
                     if type(piece)==Roi:
+
                         L=[[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]
                         for case in L: #on teste tous les mouvements possibles du roi
+                            
                             a=0 
                             if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0: #si on reste dans l'échiquier
+                                
                                 if position[case[0]][case[1]]!=0: #s'il y a une piece sur la case d'arrivée
                                     a=1
                                     mangee=position[case[0]][case[1]] #on garde tout en mémoire pour annuler le mouvement
-                                    #coordL=mangee.ligne
-                                    #coordC=mangee.colonne
-                                #print(piece,case,self._couleur,self.Echec2(),mouvement(piece,case,self._couleur,"",nbcoup)[0])
+                                    
                                 if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si le mouvement est possible, pas mat
                                     position=archive_pos[:] #annule le mouvement
                                     self.ligne=ligne
                                     self.colonne=colonne
+                                    
                                     if a==1:
-                                        position[case[0]][case[1]]=mangee #on annule le mouvement
-                                        prises_Blanc=archive_prisesB[:]
+                                        prises_Blanc=archive_prisesB[:] #on annule le mouvement
                                         prises_Noir=archive_prisesN[:]
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
-                                        #position[case[0]][case[1]].ligne=coordL
-                                        #position[case[0]][case[1]].colonne=coordC
                                     return False
-                                position=archive_pos[:] #annule le mouvement
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]]=mangee
-                                    mangee.ligne=case[1]
-                                    mangee.colonne=case[0]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                        #prise en passant
+
 
                     elif type(piece)==Pion:
+
                         if piece._couleur=="Blanc":
+
                             L=[[colonne,ligne + 1],[colonne - 1,ligne + 1],[colonne + 1,ligne + 1]]
                             for case in L:
                                 a=0
+
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
-                                        #coordL=position[case[0]][case[1]].ligne
-                                        #coordC=position[case[0]][case[1]].colonne
+                                        
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
@@ -370,23 +428,32 @@ class Roi(Fou,Tour):
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         return False
-                                    position=archive_pos[:]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+
+                            if piece.ligne==4:
+                                for i in range(8):
+                                    mangee=position[i][5]
+                                    if prise_en_passant(piece, [i,5], self._couleur, nbcoup) [0]:
+                                        piece.ligne=4
+                                        piece.colonne=colonne
+                                        position[colonne][4]=piece
+                                        position[i][5]=mangee
+                                        mangee.colonne=i
+                                        mangee.ligne=5
+                                        prises_Blanc=archive_prisesB[:]
+                                        return False
+                                    
+
                         if piece._couleur=="Noir":
+
                             L=[[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]
                             for case in L:
                                 a=0
+
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
+
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                         position=archive_pos[:] #on 
                                         prises_Blanc=archive_prisesB[:]
@@ -398,24 +465,34 @@ class Roi(Fou,Tour):
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         return False
-                                    position=archive_pos[:]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                            
+                            if piece.ligne==3: # prise en passant
+                                for i in range(8):
+                                    mangee=position[i][2]
+                                    if prise_en_passant(piece, [i,2], self._couleur, nbcoup) [0]:
+                                        piece.ligne=3
+                                        piece.colonne=colonne
+                                        position[colonne][3]=piece
+                                        position[i][2]=mangee
+                                        mangee.colonne=i
+                                        mangee.ligne=2
+                                        prises_Noir=archive_prisesN[:]
+                                        return False
+
+
 
                     elif type(piece)==Cavalier:
+
                         L=[[colonne - 2,ligne + 1],[colonne - 2,ligne - 1],[colonne - 1,ligne + 2],[colonne - 1,ligne - 2],[colonne + 1,ligne + 2],[colonne + 1,ligne - 2],[colonne + 2,ligne + 1],[colonne + 2,ligne + 1],[colonne + 2,ligne - 1]]
                         for case in L:
+                            
                             a=0
                             if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
+
                                 if position[case[0]][case[1]]!=0:
                                     a=1
                                     mangee=position[case[0]][case[1]]
+
                                 if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                     position=archive_pos[:]
                                     prises_Blanc=archive_prisesB[:]
@@ -427,27 +504,23 @@ class Roi(Fou,Tour):
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
                                     return False
-                                position=archive_pos[:]
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]]=mangee
-                                    mangee.ligne=case[1]
-                                    mangee.colonne=case[0]
+                                
 
                     if type(piece)==Fou or type(piece)==Dame:
+                        
                         A=1
                         for i in range(1,max(colonne,7-colonne)+1):
                             L=[[colonne+i,ligne+i],[colonne-i,ligne-i],[colonne+i,ligne-i],[colonne-i,ligne+i]]
+                            
                             for case in L:
                                 a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
+                                    
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
+                                    
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : # si mouvement possible, pas mat
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -458,26 +531,24 @@ class Roi(Fou,Tour):
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         return False
-                                    position=archive_pos[:]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
                     
                     if type(piece)==Tour or type(piece)==Dame:
-                        for i in range(1,max(colonne,7-colonne)+1): #colonnes
+                        
+                        # Mouvement horizontal
+
+                        for i in range(1,max(colonne,7-colonne)+1):
                             L=[[colonne+i,ligne],[colonne-i,ligne]]
+                            
                             for case in L:
                                 a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
+                                    
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
+                                    
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : 
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
@@ -488,23 +559,20 @@ class Roi(Fou,Tour):
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         return False
-                                    position=archive_pos[:]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
-                        for i in range(1,max(ligne,7-ligne)+1): #lignes
+
+                        # Mouvement vertical
+                                    
+                        for i in range(1,max(ligne,7-ligne)+1):
                             L=[[colonne,ligne+i],[colonne,ligne-i]]
+                            
                             for case in L:
                                 a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
+                                   
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
+                                    
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                         position=archive_pos[:]
                                         prises_Blanc=archive_prisesB[:]
@@ -516,19 +584,17 @@ class Roi(Fou,Tour):
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         return False
-                                    position=archive_pos[:]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
         return True
 
         
         
+
+
+
+
+# Fonctions pour la promotion de pion
+
 def promoDameB(piece):
     from board import position
     cpt=0
@@ -554,6 +620,7 @@ def promoTourB(piece):
     piece.colonne=-3
     piece.ligne=-3
     
+
 def promoFouB(piece):
     from board import position
     cpt=0
@@ -565,6 +632,7 @@ def promoFouB(piece):
     position[piece.colonne][piece.ligne]=Fou("Blanc",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3
     piece.ligne=-3
+
 
 def promoCavalierB(piece):
     from board import position
@@ -591,6 +659,7 @@ def promoDameN(piece):
     piece.colonne=-3
     piece.ligne=-3
 
+
 def promoTourN(piece):
     from board import position
     cpt=0
@@ -603,6 +672,7 @@ def promoTourN(piece):
     piece.colonne=-3
     piece.ligne=-3
     
+
 def promoFouN(piece):
     from board import position
     cpt=0
@@ -615,6 +685,7 @@ def promoFouN(piece):
     piece.colonne=-3
     piece.ligne=-3
 
+
 def promoCavalierN(piece):
     from board import position
     cpt=0
@@ -622,7 +693,6 @@ def promoCavalierN(piece):
         for p in colonne:
             if type(p)==Cavalier and p._couleur=="Noir":
                 cpt+=1
-
   
     position[piece.colonne][piece.ligne]=Cavalier("Noir",piece.colonne,piece.ligne,cpt+1)
     piece.colonne=-3

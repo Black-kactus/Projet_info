@@ -1,5 +1,5 @@
-blancs : Deep Blue (ordinateur)
-noirs : Gary Kasparov
+Blancs : Deep Blue (ordinateur)
+Noirs : Gary Kasparov
 
 légende : 
 1. e2-e4 c7-c5 veut dire que le premier coup des blancs est de bouger de e2 à e4, ce à quoi les noirs répondent en bougeant de c7 à c5
@@ -21,7 +21,7 @@ Partie 1 (1996):
 12. b1-c3 d5-d6 
 13. c3-b5 d6-e7 
 14. f3-e5 h5-e2 
-15. d1-e2 (e8-g8 and h8_f8)(roque)
+15. d1-e2 (e8-g8 and h8-f8)(roque)
 16. a1-c1 a8-c8 
 17. e3-g5 a5-b6 
 18. g5-f6 g7-f6 
@@ -43,7 +43,7 @@ Partie 1 (1996):
 34. g1-h2 d3-f2 
 35. d6-f7 h8-g7 
 36. f7-g5 g7-h6 
-37. c7-h7 Gary abandonne
+37. c7-h7 (Gary abandonne)
 
 
 
@@ -126,7 +126,8 @@ g2-g3
 e5-d3 
 c1-c7 
 g8-e8 
-b7-d6 
+b7-d6
+ 
 e8-e1
 g1-h2 
 d3-f2 

@@ -510,136 +510,27 @@ def actualiserPiecesPrises():
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
 
-#LILA modifie le code : je pense que ça marche pas a cause de la gestion des pop ups, donc je te propose qqch d'autre, et si ça te convient pasn au mieux ça te donne des idées, sinon tu peux supprimer sans souci
-# SAUVEGARDE DU CODE DE RAPHAEL, NE PS SUPPRIMER 
-
-choix_de_promotion = StringVar()
-choix_de_promotion.set("Indiquez la pièce.")
-
-# def cmd_bouton_dameB(piece):
-#     from piece import promoDameB
-#     choix_de_promotion.set("Dame")
-#     print("Dame")
-#     promoDameB(piece)
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_tourB(piece):
-#     from piece import promoTourB
-#     choix_de_promotion.set("Tour")
-#     print("Tour")
-#     promoTourB(piece)
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_fouB(piece):
-#     from piece import promoFouB
-#     choix_de_promotion.set("Fou")
-#     print("Fou")
-#     promoFouB(piece)
-#     PopUp_promo.destroy()
 
 
-# def cmd_bouton_cavalierB(piece):
-#     from piece import promoCavalierB
-#     choix_de_promotion.set("Cavalier")
-#     print("Cavalier")
-#     promoCavalierB(piece)
-#     PopUp_promo.destroy()
 
-# def cmd_bouton_pionB(piece):
-#     choix_de_promotion.set("Pion")
-#     print("Pion")
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_dameN(piece):
-#     from piece import promoDameN
-#     choix_de_promotion.set("Dame")
-#     print("Dame")
-#     promoDameN(piece)
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_tourN(piece):
-#     from piece import promoTourN
-#     choix_de_promotion.set("Tour")
-#     print("Tour")
-#     promoTourN(piece)
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_fouN(piece):
-#     from piece import promoFouN
-#     choix_de_promotion.set("Fou")
-#     print("Fou")
-#     promoFouN(piece)
-#     PopUp_promo.destroy()
-
-# def cmd_bouton_cavalierN(piece):
-#     from piece import promoCavalierN
-#     choix_de_promotion.set("Cavalier")
-#     print("Cavalier")
-#     promoCavalierN(piece)
-#     PopUp_promo.destroy()
-#     #là il va pas savoir ce que c'est piece
-
-# def cmd_bouton_pionN(piece):
-#     choix_de_promotion.set("Pion")
-#     print("Pion")
-#     PopUp_promo.destroy()
-
-# def open_popup_promo(piece,couleur):
-#     PopUp_promo= Toplevel()
-#     PopUp_promo.geometry("750x350")
-#     PopUp_promo.title("Promotion de pion")
-#     PopUp_promo.iconbitmap(r'icone.ico')
-#     PopUp_promo.lift()
-#     Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?", font=('Helvetica 12 bold')).pack(pady=10)
-#     if couleur=="Blanc":
-#         Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB(piece))
-#         Bouton_dame.pack()
-#         Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB(piece))
-#         Bouton_tour.pack()
-#         Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB(piece))
-#         Bouton_fou.pack()
-#         Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB(piece))
-#         Bouton_cavalier.pack()
-#         Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB(piece))
-#         Bouton_pion.pack()
-#     else:
-#         Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN(piece))
-#         Bouton_dame.pack()
-#         Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN(piece))
-#         Bouton_tour.pack()
-#         Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN(piece))
-#         Bouton_fou.pack()
-#         Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN(piece))
-#         Bouton_cavalier.pack()
-#         Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN(piece))
-#         Bouton_pion.pack()
-
-#         #normalement dans les commande tu mets pas d'argument sinon ça va pas marcher
-#         #parce que il sait pas a quoi correspond piece, ce qui explique peut etre pourquoi ça marche pas 
 
 #Pop up: gère le cas de la promotion de pion
 def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
         from piece import promoDameB
-        global choix_de_promotion
-        choix_de_promotion.set("Dame")
         print("Dame")
         promoDameB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_tourB():
         from piece import promoTourB
-        global choix_de_promotion
-        choix_de_promotion.set("Tour")
         print("Tour")
         promoTourB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_fouB():
         from piece import promoFouB
-        global choix_de_promotion
-        choix_de_promotion.set("Fou")
         print("Fou")
         promoFouB(piece)
         PopUp_promo.destroy()
@@ -647,55 +538,39 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
-        from board import position
-        global choix_de_promotion
-        choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierB(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionB():
-        global choix_de_promotion
-        choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
     def cmd_bouton_dameN():
         from piece import promoDameN
-        global choix_de_promotion
-        choix_de_promotion.set("Dame")
         print("Dame")
         promoDameN(piece)
         PopUp_promo.destroy()
-        #ce que fait la fonction, c'est donner une nouvelle valeur à choix de promotion, sans l'utiliser après, c'est normal? 
 
     def cmd_bouton_tourN():
         from piece import promoTourN
-        global choix_de_promotion
-        choix_de_promotion.set("Tour")
         print("Tour")
         promoTourN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_fouN():
         from piece import promoFouN
-        global choix_de_promotion
-        choix_de_promotion.set("Fou")
         print("Fou")
         promoFouN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
-        global choix_de_promotion
-        choix_de_promotion.set("Cavalier")
         print("Cavalier")
         promoCavalierN(piece)
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
-        global choix_de_promotion
-        choix_de_promotion.set("Pion")
         print("Pion")
         PopUp_promo.destroy()
 
@@ -764,28 +639,18 @@ def open_popup_perdu(couleur):
 
         Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
-
-        # img = ImageTk.PhotoImage(file="defaite_des_noirs.png")
         Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
-
-        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
-        #je l'ai corrigé (Lila)
-        #NB: n'ouvre jamais des images dans le programme, c'est ce qui faisait buger l'nterface, faut les déclarer tous en haut, pour qu'on charge les images seulement une fois
 
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
 
         Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
-
-        # img = ImageTk.PhotoImage(file="defaite_des_blancs.png")
-
         Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
-        #j'ai essayé de rajouter une image, n'hésitez pas à corriger car l'image s'ouvre en trop grand
 
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
-    top.mainloop() #j'ai mis ça pour afficher l'image mais ça fait bugger le temps je crois ??
-    #personnaliser le message avec les prenoms
+    top.mainloop() 
+    
 
 #Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
 def pop_up_commencer():
@@ -867,8 +732,10 @@ def cmd_bouton_valider():
     lettres = "a,b,c,d,e,f,g,h"
     chiffres = "1,2,3,4,5,6,7,8"
     special=["roque","ROQUE","abandon","","PEP"]
+
     position_ou_aller=coup.get()
     piece_bougee=piece_a_bouger.get()
+
     if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
     if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
@@ -884,9 +751,11 @@ def cmd_bouton_valider():
 
         result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
         print(result)
+
         if result[0]:
             #global LPOSITION
             LPOSITION=fonction_lecture(position)
+
             if not (coup_special.get() in ["ROQUE","roque","PEP"]):
                 ligne=coup.get()[1]
             nbcoup.set(str(int(nbcoup.get())+1))
@@ -895,6 +764,7 @@ def cmd_bouton_valider():
             message_echec.set("")
 
             if couleurA.get() == "Blanc":
+
                 if KN1.Echec2():
                     #breakpoint()
                     message_echec.set("Les noirs sont en échec.")
@@ -902,27 +772,34 @@ def cmd_bouton_valider():
                     if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
+
                 else:
                     message_echec.set("")
+
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Blanc")
-        
+
                 couleurA.set("Noir")
                 prenom.set(prenom_noir.get())
-            else: #noirs
+
+            else: # les noirs jouent 
+
                 if KB1.Echec2():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
                     if KB1.Echec_et_mat(nbcoup):
                         print("Echec et mat.") 
                         open_popup_perdu("Blanc")
+
                 else:
                     message_echec.set("")
+
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Noir")
-                    
+
                 couleurA.set("Blanc")
                 prenom.set(prenom_blanc.get())
+
             LPOSITION=fonction_lecture(position)
             coup.set("")
             piece_a_bouger.set("")
@@ -930,9 +807,13 @@ def cmd_bouton_valider():
             afficherPiece()
             actualiserPiecesPrises()
             afficherPiecesPrises()
+
+
         elif result[0]==False:
             message_erreur.set(result[1])
             #print(message_erreur.get())
+
+
 
 # Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
