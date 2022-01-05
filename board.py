@@ -258,7 +258,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 possible_prise=position[colonne][ligne]
                 position[colonne][ligne]=piece #on met à jour la liste position
                 if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
-                  message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                  message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                   annuler_Mouvement(piece, ligne, colonne, possible_prise)
                   return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
@@ -275,7 +275,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
               position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
               position[colonne][ligne]=piece #on met à jour la liste position
               if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
-                message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                 annuler_Mouvement(piece, ligne, colonne, 0)
                 return (False,message_erreur)
               if (a==Tour or a==Roi):
@@ -298,7 +298,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
                   if KB1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
@@ -310,7 +310,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
                   if KB1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
                     return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -325,7 +325,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   possible_prise=position[colonne][ligne] #on garde en mémoire la pièce mangée au cas où mvt pas possible (échec)
                   position[colonne][ligne]=piece #on met la pièce sur sa nouvelle case
                   if KB1.Echec2(): #si clouage ou en échec au coup d'avant
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, possible_prise)
                     return (False,message_erreur)
                   eaten_Blanc(possible_prise)
@@ -343,7 +343,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
                   if KN1.Echec2(): #si clouage
-                      message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                      message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                       annuler_Mouvement(piece, ligne, colonne, 0)
                       return (False,message_erreur)
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -355,7 +355,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
                   if KN1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, 0)
                     return (False,message_erreur)
                 update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
@@ -370,7 +370,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   possible_prise=position[colonne][ligne]
                   position[colonne][ligne]=piece #on met à jour la liste position
                   if KN1.Echec2(): #si clouage
-                    message_erreur="Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec."
+                    message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
                     annuler_Mouvement(piece, ligne, colonne, possible_prise)
                     return (False,message_erreur)
                   else:
@@ -402,7 +402,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KB1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
+            return (False, "Impossible de bouger à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Blanc(position[piece.colonne - 1][piece.ligne])
             print((prises_Blanc))
@@ -410,21 +410,23 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         else:
-          return (False, "PEP only possible directly after move pion N.")
+          return (False, "PEP doit se faire juste après avoir bougé le pion N.")
+          #return (False, "PEP only possible directly after move pion N.")
       if type(position[piece.colonne + 1][piece.ligne]) == Pion and position[piece.colonne + 1][piece.ligne]._couleur != CouleurQuiJoue:
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KB1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
+            return (False, "Impossible de bouger à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Blanc(position[piece.colonne + 1][piece.ligne]) #on l'ajoute aux prises des Blancs
             position[piece.colonne + 1][piece.ligne] = 0  # on enlève le pion adversaire du board
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         else:
-          return (False, "PEP only possible directly after move pion N.")
+          return (False, "PEP doit se faire juste après avoir bougé le pion N.")
+          #return (False, "PEP only possible directly after move pion N.")
       else:
         return (False,"PEP impossible car pion noir au mauvais endroit.")
     else:
@@ -437,28 +439,31 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KN1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
+            return (False, "Impossible de bouger à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne - 1][piece.ligne])
             position[piece.colonne - 1][piece.ligne] = 0
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         else:
-          return (False, "PEP only possible directly after move pion B.")
+          return (False, "PEP doit se faire juste après avoir bougé le pion B.")
+          #return (False, "PEP only possible directly after move pion B.")
       if type(position[colonne + 1][ligne]) == Pion and position[colonne + 1][ligne]._couleur != CouleurQuiJoue:
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
           if KN1.Echec2(): #si clouage
             annuler_Mouvement(piece, ligne, colonne, 0)
-            return (False, "Vous ne pouvez pas bouger votre pièce à cet endroit sans mettre votre roi en échec.")
+            return (False, "Impossible de bouger à cet endroit sans mettre votre roi en échec.")
           else:
             eaten_Noir(position[piece.colonne + 1][piece.ligne])
             position[piece.colonne + 1][piece.ligne] = 0
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         else:
-          return (False, "PEP only possible directly after move pion B.")
+          return (False, "PEP doit se faire juste après avoir bougé le pion B.")
+          #return (False, "PEP only possible directly after move pion B.")
+                  
       else:
         return (False,"PEP impossible car pion blanc au mauvais endroit.")
     else:
