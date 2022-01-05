@@ -311,8 +311,8 @@ class Roi(Fou,Tour):
         archive_prisesN=prises_Noir[:]
         ligne=self.ligne
         colonne=self.colonne
-        for colonne in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
-            for piece in colonne:
+        for C in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
+            for piece in C:
                 if piece!=0 and piece._couleur == self._couleur: #si on trouve une piece de notre couleur, alors on essaye de la bouger
                     if type(piece)==Roi:
                         L=[[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]

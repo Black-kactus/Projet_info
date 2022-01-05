@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
+from piece import Piece,Pion
 
 #probleme de prototypage
 
@@ -37,6 +38,37 @@ def fonction_lecture_prises(prises):
     return PRISES
 
 #Fonction : permet d'interpréter des scripts 
+
+#def interpreteur_script(script):
+    #import time
+    #global i
+    #if i==0:
+        #script = script.split(' ')
+    # for i in range(len(script)):
+    #if i < len(script):
+        #if len(coup_script)==1: #par ex [roque]
+            #piece_a_bouger.set("")
+            #coup.set("")
+            #coup_special.set(coup_script[0])
+            #print(coup_special.get())
+        #elif len(coup_script)==2: #par ex [d1,d2]
+            #piece_a_bouger.set(coup_script[0])
+            #coup.set(coup_script[1])
+            #coup_special.set('')
+        #elif len(coup_script)==3: #par ex [d1,d2,PEP]
+            #piece_a_bouger.set(coup_script[0])
+            #coup.set(coup_script[1])
+            #coup_special.set(coup_script[2])
+
+        #if coup_special.get()=="abandon":
+            #cmd_bouton_abandonner()
+        #else:
+            #i= i+1
+            #root.after(1, interpreteur_script(script))
+            #time.sleep(1)
+            # time.sleep(1)
+            #root.after(1000, cmd_bouton_valider)
+
 def interpreteur_script(script):
     import time
     script = script.split(' ')
@@ -61,7 +93,8 @@ def interpreteur_script(script):
             cmd_bouton_abandonner()
         else:
             cmd_bouton_valider()
-            time.sleep(1)
+            #time.sleep(5)
+            #time.sleep(1)
 
 # Mise en place de la fenêtre d'interface principale
 root = Tk()
@@ -666,7 +699,7 @@ def open_popup_promo(piece,couleur):
     PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
     PopUp_promo.iconbitmap(r'icone.ico')
-    PopUp_promo.geometry("750x350")
+    PopUp_promo.geometry("500x350")
     PopUp_promo.lift()
 
     ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
@@ -864,7 +897,9 @@ def cmd_bouton_valider():
                     if KN1.Echec_et_mat(nbcoup):
                         print("Echec et mat.")
                         open_popup_perdu("Noir")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8": #promotion de pion
+                else:
+                    message_echec.set("")
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Blanc")
                     #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
                     #if choix_de_promotion=="Dame":
@@ -884,7 +919,9 @@ def cmd_bouton_valider():
                     if KB1.Echec_et_mat(nbcoup):
                         print("Echec et mat.") ### afficher quelque part
                         open_popup_perdu("Blanc")
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1": #promotion de pion
+                else:
+                    message_echec.set("")
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Noir")
                     #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
                     #if choix_de_promotion=="Dame":
@@ -962,8 +999,12 @@ def cmd_bouton_test():
 #     pass
 
 #Fonction du bouton complier script : permet de compiler un script 
+i = 0
 def cmd_bouton_Compiler_script():
     script_compile=script.get() #
+    #global i
+    #i = 0
+    #Popup2.destroy()
     interpreteur_script(script_compile)
     script.set("")
 
