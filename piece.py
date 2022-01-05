@@ -347,6 +347,7 @@ class Roi(Fou,Tour):
                                     mangee.colonne=case[0]
                                     prises_Blanc=archive_prisesB[:]
                                     prises_Noir=archive_prisesN[:]
+                        #prise en passant
 
                     elif type(piece)==Pion:
                         if piece._couleur=="Blanc":
