@@ -103,7 +103,7 @@ root.iconbitmap(r'icone.ico')
 
 #Permet de gérer le style des boutons
 s = ttk.Style()
-#s.theme_use('classic')
+s.theme_use('classic')
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
 
