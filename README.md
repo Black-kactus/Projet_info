@@ -9,6 +9,8 @@ https://docs.python.org/3/library/tk.html
 
 Meilleure documentation tkinter https://tkdocs.com/tutorial/grid.html#morefeatures
 
+créer executable : https://www.mathweb.fr/euclide/2019/02/01/creer-un-executable-sous-windows-a-partir-dun-programme-python/
+
 
 Pour l'interpreteur :
 #T,C,F,Q,K,P = tour, cavalier, fou, reine(queen), roi(king), pion
