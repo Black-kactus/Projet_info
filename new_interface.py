@@ -892,9 +892,11 @@ def cmd_bouton_valider():
             nbcoup.set(str(int(nbcoup.get())+1))
             
             message_erreur.set("")
+            message_echec.set("")
 
             if couleurA.get() == "Blanc":
                 if KN1.Echec2():
+                    #breakpoint()
                     message_echec.set("Les noirs sont en échec.")
                     print("Echec noir")
                     if KN1.Echec_et_mat(nbcoup):

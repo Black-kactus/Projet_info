@@ -125,7 +125,6 @@ class Cavalier(Piece):
         if ligne > 7 or colonne > 7 or ligne < 0 or colonne < 0:  # sortie de l'échiquier
             return False
         elif (colonne == self.colonne - 2 and ligne == self.ligne + 1) or (colonne == self.colonne - 2 and ligne == self.ligne - 1) or (colonne == self.colonne - 1 and ligne == self.ligne + 2) or (colonne == self.colonne - 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 1 and ligne == self.ligne + 2) or (colonne == self.colonne + 1 and ligne == self.ligne - 2) or (colonne == self.colonne + 2 and ligne == self.ligne + 1) or (colonne == self.colonne + 2 and ligne == self.ligne - 1) or (colonne == self.colonne and ligne == self.ligne) :  # bon "motif" de déplacement ou cavalier ne bouge pas
-            print("bah là c'est bon")
             return True
         else: #pas bon déplacement
             return False
@@ -311,8 +310,8 @@ class Roi(Fou,Tour):
         archive_prisesN=prises_Noir[:]
         ligne=self.ligne
         colonne=self.colonne
-        for C in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
-            for piece in C:
+        for c in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
+            for piece in c:
                 if piece!=0 and piece._couleur == self._couleur: #si on trouve une piece de notre couleur, alors on essaye de la bouger
                     if type(piece)==Roi:
                         L=[[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]
@@ -381,7 +380,7 @@ class Roi(Fou,Tour):
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
                         if piece._couleur=="Noir":
-                            L=[[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]                    
+                            L=[[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]
                             for case in L:
                                 a=0
                                 if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0:
