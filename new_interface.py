@@ -103,7 +103,7 @@ root.iconbitmap(r'icone.ico')
 
 #Permet de gérer le style des boutons
 s = ttk.Style()
-s.theme_use('classic')
+#s.theme_use('classic')
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
 
@@ -396,6 +396,7 @@ def BoutonGestClicdroit(evt, i, j ):
 #Fonction : gère l'affichage des pièces sur l'échiquier 
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
+    print("bonjour")
     global LPOSITION
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
@@ -646,6 +647,7 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
+        from board import position
         global choix_de_promotion
         choix_de_promotion.set("Cavalier")
         print("Cavalier")
@@ -705,26 +707,26 @@ def open_popup_promo(piece,couleur):
 
     ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
     if couleur=="Blanc":
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameB())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameB())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourB())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourB())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouB())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouB())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierB())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionB())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
         Bouton_pion.pack()
     else:
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command= cmd_bouton_dameN())
+        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameN())
         Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command= cmd_bouton_tourN())
+        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourN())
         Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command= cmd_bouton_fouN())
+        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouN())
         Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command= cmd_bouton_cavalierN())
+        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
         Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command= cmd_bouton_pionN())
+        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
         Bouton_pion.pack()
 
 
@@ -902,15 +904,7 @@ def cmd_bouton_valider():
                     message_echec.set("")
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Blanc")
-                    #from piece import promoDameB,promoTourB,promoFouB,promoCavalierB
-                    #if choix_de_promotion=="Dame":
-                        #promoDameB(result[2])
-                    #elif choix_de_promotion=="Tour":
-                        #promoTourB(result[2])
-                    #elif choix_de_promotion=="Fou":
-                        #promoFouB(result[2])
-                    #elif choix_de_promotion=="Cavalier":
-                        #promoCavalierB(result[2])
+        
                 couleurA.set("Noir")
                 prenom.set(prenom_noir.get())
             else: #noirs
@@ -918,21 +912,13 @@ def cmd_bouton_valider():
                     message_echec.set("Les blancs sont en échec.")
                     print("Echec blanc")
                     if KB1.Echec_et_mat(nbcoup):
-                        print("Echec et mat.") ### afficher quelque part
+                        print("Echec et mat.") 
                         open_popup_perdu("Blanc")
                 else:
                     message_echec.set("")
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                     open_popup_promo(result[2],"Noir")
-                    #from piece import promoDameN,promoTourN,promoFouN,promoCavalierN
-                    #if choix_de_promotion=="Dame":
-                        #promoDameN(result[2])
-                    #elif choix_de_promotion=="Tour":
-                        #promoTourN(result[2])
-                    #elif choix_de_promotion=="Fou":
-                        #promoFouN(result[2])
-                    #elif choix_de_promotion=="Cavalier":
-                        #promoCavalierN(result[2])
+                    
                 couleurA.set("Blanc")
                 prenom.set(prenom_blanc.get())
             LPOSITION=fonction_lecture(position)
