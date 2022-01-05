@@ -101,14 +101,15 @@ root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
+#Permet de gérer le style des boutons
+s = ttk.Style()
+s.theme_use('classic')
+# s.configure(root, font=('Raleway', 10))
+# s.configure(root, font=('', 10))
+
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
 content.grid(column=0, row=0, sticky=(N, S, E, W))
-
-#Permet de gérer le style des boutons
-s = ttk.Style()
-# s.configure(root, font=('Raleway', 10))
-# s.configure(root, font=('', 10))
 
 # Variables de Tkinter
 piece_a_bouger = StringVar()
