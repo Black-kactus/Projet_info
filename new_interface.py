@@ -58,6 +58,7 @@ root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
 s = ttk.Style()
+s.theme_use('classic')
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
 
