@@ -42,17 +42,26 @@ def interpreteur_script(script):
     script = script.split(' ')
     for i in range(len(script)):
         coup_script=script[i].split("-")
-        if len(coup_script)==1:
+
+        if len(coup_script)==1: #par ex [roque]
+            piece_a_bouger.set("")
+            coup.set("")
             coup_special.set(coup_script[0])
             print(coup_special.get())
-        elif len(coup_script)==2:
+        elif len(coup_script)==2: #par ex [d1,d2]
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
+            coup_special.set('')
+        elif len(coup_script)==3: #par ex [d1,d2,PEP]
+            piece_a_bouger.set(coup_script[0])
+            coup.set(coup_script[1])
+            coup_special.set(coup_script[2])
+
         if coup_special.get()=="abandon":
             cmd_bouton_abandonner()
         else:
             cmd_bouton_valider()
-            #time.sleep(5)
+            time.sleep(1)
 
 # Mise en place de la fenêtre d'interface principale
 root = Tk()
@@ -795,8 +804,8 @@ def pop_up_commencer():
     Entry_Joueur2= ttk.Entry(content3, textvariable= entry_prenom_noir)
     Entry_Joueur2.grid(column=1,row=4, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_CompilerScript= ttk.Button(content3, text= "Lancer la partie",command= cmd_lancer_bouton_prenom)
-    Bouton_CompilerScript.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Bouton_LancerPartie= ttk.Button(content3, text= "Lancer la partie",command= cmd_lancer_bouton_prenom)
+    Bouton_LancerPartie.grid(column=0,row=6, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
     
     #Poids des colonnes et des lignes 
     for i in range(0,2):
@@ -831,7 +840,7 @@ def cmd_bouton_valider():
     if not(coup_special.get() in special):
         message_erreur.set("Syntaxe incorrecte. Retentez.")
 
-    if message_erreur.get()=="":
+    else:
         from board import position,KB1,KN1
         print("valider")
         from main import interpreteur
@@ -955,8 +964,8 @@ def cmd_bouton_test():
 #Fonction du bouton complier script : permet de compiler un script 
 def cmd_bouton_Compiler_script():
     script_compile=script.get() #
-    script.set("") #
     interpreteur_script(script_compile)
+    script.set("")
 
 #Fonction du bouton règle : permet d'afficher une pop up explicative
 def cmd_bouton_regles():
