@@ -254,6 +254,7 @@ class Roi(Fou,Tour):
         from board import position
 
         # Pièce qui bouge en diagonale : Dame ou Fou
+
         A=1
         a,b,c,d=True,True,True,True
 
@@ -293,6 +294,7 @@ class Roi(Fou,Tour):
 
 
         # Pion
+
         if self._couleur=="Blanc" and self.ligne!=7:
             if (self.colonne!=7 and type(position[self.colonne+1][self.ligne+1])==Pion and position[self.colonne+1][self.ligne+1]._couleur=="Noir")or (self.colonne!=0 and type(position[self.colonne-1][self.ligne+1])==Pion and position[self.colonne-1][self.ligne+1]._couleur=="Noir") :
                 return True
@@ -303,6 +305,7 @@ class Roi(Fou,Tour):
 
 
         # Cavalier
+
         L=[[self.colonne - 2,self.ligne + 1],[self.colonne - 2,self.ligne - 1],[self.colonne - 1,self.ligne + 2],[self.colonne - 1,self.ligne - 2],[self.colonne + 1,self.ligne + 2],[self.colonne + 1,self.ligne - 2],[self.colonne + 2,self.ligne + 1],[self.colonne + 2,self.ligne - 1]]
         for case in L:
             if case[0]>=0 and case[0]<=7 and case[1]>=0 and case[1]<=7 and type(position[case[0]][case[1]])==Cavalier and position[case[0]][case[1]]._couleur != self._couleur:
@@ -320,7 +323,6 @@ class Roi(Fou,Tour):
             if self.colonne+i<=7 and position[self.colonne+i][self.ligne] != 0 and a:
                 A=position[self.colonne+i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("lignes")#
                     return True
                 else:
                     a=False
@@ -328,7 +330,6 @@ class Roi(Fou,Tour):
             if self.colonne-i>=0 and position[self.colonne-i][self.ligne] != 0 and b: 
                 A= position[self.colonne-i][self.ligne]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("lignes")
                     return True
                 else:
                     b=False
@@ -342,7 +343,6 @@ class Roi(Fou,Tour):
             if self.ligne+i<=7 and position[self.colonne][self.ligne+i] != 0 and c:
                 A=position[self.colonne][self.ligne+i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("colonne")
                     return True
                 else:
                     c=False
@@ -350,13 +350,13 @@ class Roi(Fou,Tour):
             if not(self.ligne-i<0) and position[self.colonne][self.ligne-i] != 0 and d:
                 A=position[self.colonne][self.ligne-i]
                 if (type(A)==Tour or type(A)==Dame) and A._couleur!=self._couleur:
-                    print("colonne")
                     return True
                 else:
                     d=False
 
 
         # Roi
+
         L=[[self.colonne,self.ligne+1],[self.colonne,self.ligne-1],[self.colonne+1,self.ligne],[self.colonne-1,self.ligne-1],[self.colonne+1,self.ligne+1],[self.colonne-1,self.ligne+1],[self.colonne-1,self.ligne],[self.colonne+1,self.ligne-1]]
         for case in L:
             if case[0]>=0 and case[0]<=7 and case[1]>=0 and case[1]<=7 and type(position[case[0]][case[1]])==Roi and position[case[0]][case[1]]._couleur != self._couleur:
@@ -395,30 +395,18 @@ class Roi(Fou,Tour):
                                     print(position,"1")
                                     position=archive_pos[:] #annule le mouvement
                                     print(position,"2")
-                                    self.ligne=ligne
-                                    self.colonne=colonne
+                                    piece.ligne=ligne
+                                    piece.colonne=colonne
                                     
                                     if a==1:
                                         prises_Blanc=archive_prisesB[:] #on annule le mouvement
                                         prises_Noir=archive_prisesN[:]
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
-                                        #position[case[0]][case[1]].ligne=coordL
-                                        #position[case[0]][case[1]].colonne=coordC
+
                                     print(position,"3")
                                     return False
-                                print(position,"4")
-                                position=archive_pos[:] #annule le mouvement
-                                print(position,"5")
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]]=mangee
-                                    mangee.ligne=case[1]
-                                    mangee.colonne=case[0]
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                        #prise en passant
+                                
 
                     elif type(piece)==Pion:
 
@@ -439,25 +427,18 @@ class Roi(Fou,Tour):
                                         print(position,"7")
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
-                                        self.ligne=ligne
-                                        self.colonne=colonne
+                                        piece.ligne=ligne
+                                        piece.colonne=colonne
+                                        
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
+
                                         print(position,"8")
                                         return False
-                                    print(position,"9")
-                                    position=archive_pos[:]
-                                    print(position,"10")
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
+
                         if piece._couleur=="Noir":
 
                             L=[[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]
@@ -471,29 +452,19 @@ class Roi(Fou,Tour):
 
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                         print(position,"11")
-                                        position=archive_pos[:] #on
+                                        position=archive_pos[:]
                                         print(position,"12")
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
-                                        self.ligne=ligne
-                                        self.colonne=colonne
+                                        piece.ligne=ligne
+                                        piece.colonne=colonne
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         print(position,"13")
                                         return False
-                                    print(position,"14")
-                                    position=archive_pos[:]
-                                    print(position,"15")
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
 
                     elif type(piece)==Cavalier:
 
@@ -513,25 +484,16 @@ class Roi(Fou,Tour):
                                     print(position,"17")
                                     prises_Blanc=archive_prisesB[:]
                                     prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
+                                    piece.ligne=ligne
+                                    piece.colonne=colonne
+                                    
                                     if a==1:
                                         position[case[0]][case[1]]=mangee
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
                                     print(position,"18")
                                     return False
-                                print(position,"19")
-                                position=archive_pos[:]
-                                print(position,"20")
-                                prises_Blanc=archive_prisesB[:]
-                                prises_Noir=archive_prisesN[:]
-                                self.ligne=ligne
-                                self.colonne=colonne
-                                if a==1:
-                                    position[case[0]][case[1]]=mangee
-                                    mangee.ligne=case[1]
-                                    mangee.colonne=case[0]
+
 
                     if type(piece)==Fou or type(piece)==Dame:
                         
@@ -546,6 +508,7 @@ class Roi(Fou,Tour):
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
+                                    
                                     if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
                                         print(position,"21")
                                         print(archive_pos,"archive")
@@ -555,23 +518,14 @@ class Roi(Fou,Tour):
                                         prises_Noir=archive_prisesN[:]
                                         self.ligne=ligne
                                         self.colonne=colonne
+
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         print(position,"23")
                                         return False
-                                    print(position,"24")
-                                    position=archive_pos[:]
-                                    print(position,"25")
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
                     
                     if type(piece)==Tour or type(piece)==Dame:
                         
@@ -587,32 +541,26 @@ class Roi(Fou,Tour):
                                     if position[case[0]][case[1]]!=0:
                                         a=1
                                         mangee=position[case[0]][case[1]]
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #and not(self.Echec2())
+                                    
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] :
                                         print(position,"26")
                                         position=archive_pos[:]
                                         print(position,"27")
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
-                                        self.ligne=ligne
-                                        self.colonne=colonne
+                                        piece.ligne=ligne
+                                        piece.colonne=colonne
+
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
                                         print(position,"28")
                                         return False
-                                    print(position,"29")
-                                    position=archive_pos[:]
-                                    print(position,"30")
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
-                        for i in range(1,max(ligne,7-ligne)+1): #lignes
+                                    
+                        # Mouvement vertical
+
+                        for i in range(1,max(ligne,7-ligne)+1):
                             L=[[colonne,ligne+i],[colonne,ligne-i]]
                             
                             for case in L:
@@ -629,25 +577,17 @@ class Roi(Fou,Tour):
                                         print(position,"32")
                                         prises_Blanc=archive_prisesB[:]
                                         prises_Noir=archive_prisesN[:]
-                                        self.ligne=ligne
-                                        self.colonne=colonne
+                                        piece.ligne=ligne
+                                        piece.colonne=colonne
+
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
+
                                         print(position,"32")
                                         return False
-                                    print(position,"33")
-                                    position=archive_pos[:]
-                                    print(position,"34")
-                                    prises_Blanc=archive_prisesB[:]
-                                    prises_Noir=archive_prisesN[:]
-                                    self.ligne=ligne
-                                    self.colonne=colonne
-                                    if a==1:
-                                        position[case[0]][case[1]]=mangee
-                                        mangee.ligne=case[1]
-                                        mangee.colonne=case[0]
+                                    
         return True
 
         
