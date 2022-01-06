@@ -103,9 +103,10 @@ root.iconbitmap(r'icone.ico')
 
 #Permet de gérer le style des boutons
 s = ttk.Style()
-theme = 1
-if theme == 0: 
-    s.theme_use('classic')
+theme = 0
+# if theme == 0: 
+#     s.theme_use('clam')
+#CHERCHER le bon theme qui correspond à celui par défaut
 
 def choix_theme():
     global theme
