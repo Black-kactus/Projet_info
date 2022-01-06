@@ -66,7 +66,7 @@ class Fou(Piece):
                             return False
 
             elif (colonne == self.colonne - k and ligne == self.ligne - k):  # si le fou bouge sur la diagonale de haut droite à bas gauche (/)
-                for i in range(1, -(k - 1)):
+                for i in range(1, k):
                     if position[self.colonne - i][self.ligne - i] != 0:  # s'il y a une autre piece en travers du chemin
                         return False
 
@@ -76,7 +76,7 @@ class Fou(Piece):
                         return False
 
             else:  # si le fou bouge sur la diagonale de haut gauche à bas droit (\)
-                for i in range(1, -(k - 1)):
+                for i in range(1, k):
                     if position[self.colonne + i][self.ligne - i] != 0:  # s'il y a une autre piece en travers du chemin
                         return False   
         
