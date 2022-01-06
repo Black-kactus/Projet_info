@@ -12,3 +12,7 @@ from time import *
 minute=strftime('%H %M %S', gmtime(4242))
 duree_minute=minute[:3] + 'h ' + minute[3:6] +'mn ' + minute[6:] + ' s'
 print(duree_minute)
+
+
+L=[["a","b","c","d"],["e","f","g","h",],["i","j","k","l"],["m","n","o","p"]]
+
