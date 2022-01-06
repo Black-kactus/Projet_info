@@ -103,7 +103,25 @@ root.iconbitmap(r'icone.ico')
 
 #Permet de gérer le style des boutons
 s = ttk.Style()
-#s.theme_use('classic')
+theme = 1
+if theme == 0: 
+    s.theme_use('classic')
+
+def choix_theme():
+    global theme
+    if theme == 0:
+        s.theme_use('classic')
+        theme = 1
+        print("0")
+    elif theme == 1: 
+        s.theme_use('winnative')
+        theme = 2
+    elif theme == 2: 
+        s.theme_use('clam')
+        theme = 3
+    elif theme == 3:
+        s.theme_use('default')
+        theme = 0
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
 
@@ -1076,8 +1094,8 @@ def cmd_bouton_options():
     Bouton_CmtJouer= ttk.Button(content2, text= "Comment jouer ?",command= cmd_bouton_cmtjouer)
     Bouton_CmtJouer.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    # Bouton_Visuels= ttk.Button(content2, text= "Changer les pièces :)",command= cmd_bouton_visuel)
-    # Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Bouton_Visuels= ttk.Button(content2, text= "Changer le style d'affichage :)",command= choix_theme)
+    Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     # Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
     # Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
