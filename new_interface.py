@@ -791,6 +791,11 @@ def cmd_bouton_valider():
 
                     else:
                         message_echec.set("")
+                    
+                    if not(KN1.Echec2) and KN1.Echec_et_mat():
+                        print("Pat")
+                        afficherPiece()
+                        open_popup_pat("Noir")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Blanc")
@@ -810,6 +815,11 @@ def cmd_bouton_valider():
 
                     else:
                         message_echec.set("")
+
+                    if not(KB1.Echec2) and KB1.Echec_et_mat():
+                        print("Pat")
+                        afficherPiece()
+                        open_popup_pat("Blanc")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Noir")
