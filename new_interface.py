@@ -610,12 +610,18 @@ def open_popup_pat(couleur):
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
+
+    global PeutJouer
+    PeutJouer=False #pour empêcher de continuer la partie
+
     PopUp_pat= Toplevel()
     PopUp_pat.geometry("750x300")
     PopUp_pat.title("Pat")
     PopUp_pat.iconbitmap(r'icone.ico')
     PopUp_pat.lift()
+
     Label(PopUp_pat, text= "Partie nulle", font=('Helvetica 35 bold')).pack(pady=10)
+
     if couleur=="Noir":
         Label(PopUp_pat, text= "Les Noirs sont pat", font=('Helvetica 15')).pack()
     else:
@@ -627,12 +633,18 @@ def open_popup_perdu(couleur):
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
+
+    global PeutJouer
+    PeutJouer=False #pour empêcher de continuer la partie
+
     top= Toplevel()
     top.geometry("750x450")
     top.title("Perduuuu")
     top.iconbitmap(r'icone.ico')
     top.lift()
+
     # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
+
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
         # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
@@ -729,96 +741,105 @@ def cmd_bouton_son():
 
 # Fonction du bouton valider: gère la validation du coup
 def cmd_bouton_valider():
-    lettres = "a,b,c,d,e,f,g,h"
-    chiffres = "1,2,3,4,5,6,7,8"
-    special=["roque","ROQUE","abandon","","PEP"]
+    global PeutJouer
+    if PeutJouer:
 
-    position_ou_aller=coup.get()
-    piece_bougee=piece_a_bouger.get()
+        lettres = "a,b,c,d,e,f,g,h"
+        chiffres = "1,2,3,4,5,6,7,8"
+        special=["roque","ROQUE","abandon","","PEP"]
 
-    if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
-        message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
-        message_erreur.set("Syntaxe incorrecte. Retentez.")
-    if not(coup_special.get() in special):
-        message_erreur.set("Syntaxe incorrecte. Retentez.")
+        position_ou_aller=coup.get()
+        piece_bougee=piece_a_bouger.get()
 
-    else:
-        from board import position,KB1,KN1
-        print("valider")
-        from main import interpreteur
-        global LPOSITION
+        if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
+            message_erreur.set("Syntaxe incorrecte. Retentez.")
+        if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
+            message_erreur.set("Syntaxe incorrecte. Retentez.")
+        if not(coup_special.get() in special):
+            message_erreur.set("Syntaxe incorrecte. Retentez.")
 
-        result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
-        print(result)
+        else:
+            from board import position,KB1,KN1
+            print("valider")
+            from main import interpreteur
+            global LPOSITION
 
-        if result[0]:
-            #global LPOSITION
-            LPOSITION=fonction_lecture(position)
+            result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
+            print(result)
 
-            if not (coup_special.get() in ["ROQUE","roque","PEP"]):
-                ligne=coup.get()[1]
-            nbcoup.set(str(int(nbcoup.get())+1))
-            
-            message_erreur.set("")
-            message_echec.set("")
+            if result[0]:
+                #global LPOSITION
+                LPOSITION=fonction_lecture(position)
 
-            if couleurA.get() == "Blanc":
+                if not (coup_special.get() in ["ROQUE","roque","PEP"]):
+                    ligne=coup.get()[1]
+                nbcoup.set(str(int(nbcoup.get())+1))
+                
+                message_erreur.set("")
+                message_echec.set("")
 
-                if KN1.Echec2():
-                    #breakpoint()
-                    message_echec.set("Les noirs sont en échec.")
-                    print("Echec noir")
-                    if KN1.Echec_et_mat(nbcoup):
-                        print("Echec et mat.")
-                        open_popup_perdu("Noir")
+                if couleurA.get() == "Blanc":
 
-                else:
-                    message_echec.set("")
+                    if KN1.Echec2():
+                        #breakpoint()
+                        message_echec.set("Les noirs sont en échec.")
+                        print("Echec noir")
+                        if KN1.Echec_et_mat(nbcoup):
+                            print("Echec et mat.")
+                            afficherPiece()
+                            open_popup_perdu("Noir")
 
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
-                    open_popup_promo(result[2],"Blanc")
+                    else:
+                        message_echec.set("")
 
-                couleurA.set("Noir")
-                prenom.set(prenom_noir.get())
+                    if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
+                        open_popup_promo(result[2],"Blanc")
 
-            else: # les noirs jouent 
+                    couleurA.set("Noir")
+                    prenom.set(prenom_noir.get())
 
-                if KB1.Echec2():
-                    message_echec.set("Les blancs sont en échec.")
-                    print("Echec blanc")
-                    if KB1.Echec_et_mat(nbcoup):
-                        print("Echec et mat.") 
-                        open_popup_perdu("Blanc")
+                else: # les noirs jouent 
 
-                else:
-                    message_echec.set("")
+                    if KB1.Echec2():
+                        message_echec.set("Les blancs sont en échec.")
+                        print("Echec blanc")
+                        if KB1.Echec_et_mat(nbcoup):
+                            print("Echec et mat.")
+                            afficherPiece() 
+                            open_popup_perdu("Blanc")
 
-                if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
-                    open_popup_promo(result[2],"Noir")
+                    else:
+                        message_echec.set("")
 
-                couleurA.set("Blanc")
-                prenom.set(prenom_blanc.get())
+                    if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
+                        open_popup_promo(result[2],"Noir")
 
-            LPOSITION=fonction_lecture(position)
-            coup.set("")
-            piece_a_bouger.set("")
-            coup_special.set("")
-            afficherPiece()
-            actualiserPiecesPrises()
-            afficherPiecesPrises()
+                    couleurA.set("Blanc")
+                    prenom.set(prenom_blanc.get())
 
-
-        elif result[0]==False:
-            message_erreur.set(result[1])
-            #print(message_erreur.get())
+                LPOSITION=fonction_lecture(position)
+                coup.set("")
+                piece_a_bouger.set("")
+                coup_special.set("")
+                afficherPiece()
+                actualiserPiecesPrises()
+                afficherPiecesPrises()
 
 
+            elif result[0]==False:
+                message_erreur.set(result[1])
+                #print(message_erreur.get())
+
+
+PeutJouer=False #pour empêcher les joueurs de jouer hors partie
 
 # Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
     #appel pop up permettant de choisir les couleurs
     pop_up_commencer()
+
+    global PeutJouer
+    PeutJouer=True
 
     #initialisation des variables tkinter 
     nbcoup.set("0")
