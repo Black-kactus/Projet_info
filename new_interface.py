@@ -103,7 +103,7 @@ root.iconbitmap(r'icone.ico')
 
 #Permet de gérer le style des boutons
 s = ttk.Style()
-s.theme_use('classic')
+#s.theme_use('classic')
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
 
@@ -786,6 +786,7 @@ def cmd_bouton_valider():
                         print("Echec noir")
                         if KN1.Echec_et_mat(nbcoup):
                             print("Echec et mat.")
+                            message_echec.set("Les noirs sont en échec et mat.")
                             afficherPiece()
                             open_popup_perdu("Noir")
 
@@ -794,6 +795,7 @@ def cmd_bouton_valider():
                     
                     if not(KN1.Echec2) and KN1.Echec_et_mat():
                         print("Pat")
+                        message_echec.set("Les noirs sont en pat.")
                         afficherPiece()
                         open_popup_pat("Noir")
 
@@ -810,6 +812,7 @@ def cmd_bouton_valider():
                         print("Echec blanc")
                         if KB1.Echec_et_mat(nbcoup):
                             print("Echec et mat.")
+                            message_echec.set("Les blancs sont en échec et mat.")
                             afficherPiece() 
                             open_popup_perdu("Blanc")
 
@@ -818,6 +821,7 @@ def cmd_bouton_valider():
 
                     if not(KB1.Echec2) and KB1.Echec_et_mat():
                         print("Pat")
+                        message_echec.set("Les blancs sont en pat.")
                         afficherPiece()
                         open_popup_pat("Blanc")
 
