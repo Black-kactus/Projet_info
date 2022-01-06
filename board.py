@@ -78,9 +78,11 @@ def eat_Piece(piece, colonne, ligne):
   position[colonne][ligne] = piece  # on met à jour la liste position
 
 
-def annuler_Mouvement(piece, ligne, colonne, arg):
-  position[piece.colonne][piece.ligne] = piece  # on annule le mouvement
+def annuler_Mouvement(piece, ligne, colonne, coordC,coordL, arg):
+  position[coordC][coordL] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
+  piece.colonne=coordC
+  piece.ligne=coordL
 
 
 
@@ -293,13 +295,16 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 position[piece.colonne][piece.ligne]=0 # on enlève la pièce de son ancienne case
                 possible_prise=position[colonne][ligne]
                 position[colonne][ligne]=piece # on met à jour la liste position
+                coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                coordL=piece.ligne
+                update_coord_piece(piece, ligne, colonne) # on met à jour les coordonnées de la pièce
 
                 if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                   message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                  annuler_Mouvement(piece, ligne, colonne, possible_prise)
+                  annuler_Mouvement(piece, ligne, colonne, coordC,coordL, possible_prise)
                   return (False,message_erreur)
 
-                update_coord_piece(piece, ligne, colonne) # on met à jour les coordonnées de la pièce
+                ##
                 if (a==Tour or a==Roi):
                   piece.Move1=True
                 if CouleurQuiJoue=='Blanc':
@@ -314,15 +319,17 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
             else: #s'il n'y a pas d'autre pièce sur la case
               position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
               position[colonne][ligne]=piece #on met à jour la liste position
+              coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+              coordL=piece.ligne
+              update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
               if (CouleurQuiJoue == "Blanc" and KB1.Echec2()) or (CouleurQuiJoue=="Noir" and KN1.Echec2()): #si clouage
                 message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                annuler_Mouvement(piece, ligne, colonne, 0)
+                annuler_Mouvement(piece, ligne, colonne, coordC,coordL, 0)
                 return (False,message_erreur)
 
               if (a==Tour or a==Roi):
                   piece.Move1=True
-              update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
           
           else:
             message_erreur="Vous ne pouvez pas déplacer la pièce à cet endroit là."
@@ -347,13 +354,15 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
                   
                   if KB1.Echec2(): #si clouage
                     message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                    annuler_Mouvement(piece, ligne, colonne, 0)
+                    annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
                     return (False,message_erreur)
 
-                  update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
 
               elif type_de_mouvement == "tout_droit_2":
 
@@ -364,13 +373,15 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
                   if KB1.Echec2(): #si clouage
                     message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                    annuler_Mouvement(piece, ligne, colonne, 0)
+                    annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
                     return (False,message_erreur)
 
-                  update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
                   piece._condition2 = int(nbcoup.get())
 
               else: # mouvement en diagonale
@@ -383,14 +394,16 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne] #on garde en mémoire la pièce mangée au cas où mvt pas possible (échec)
                   position[colonne][ligne]=piece #on met la pièce sur sa nouvelle case
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
                   if KB1.Echec2(): #si clouage ou en échec au coup d'avant
                     message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                    annuler_Mouvement(piece, ligne, colonne, possible_prise)
+                    annuler_Mouvement(piece, ligne, colonne, coordC, coordL, possible_prise)
                     return (False,message_erreur)
 
                   eaten_Blanc(possible_prise)
-                  update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
 
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
@@ -408,13 +421,15 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
                   if KN1.Echec2(): #si clouage
                       message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                      annuler_Mouvement(piece, ligne, colonne, 0)
+                      annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
                       return (False,message_erreur)
 
-                  update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
 
               elif type_de_mouvement == "tout_droit_2":
 
@@ -425,13 +440,15 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                 else:
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   position[colonne][ligne]=piece #on met à jour la liste position
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
                   if KN1.Echec2(): #si clouage
                     message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                    annuler_Mouvement(piece, ligne, colonne, 0)
+                    annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
                     return (False,message_erreur)
 
-                update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
                 piece._condition2 = int(nbcoup.get())
 
               else: # mouvement diagonal
@@ -444,15 +461,16 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
                   position[piece.colonne][piece.ligne]=0 #on enlève la pièce de son ancienne case
                   possible_prise=position[colonne][ligne]
                   position[colonne][ligne]=piece #on met à jour la liste position
+                  coordC=piece.colonne #on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+                  coordL=piece.ligne
+                  update_coord_piece(piece, ligne, colonne) #on met à jour les coordonnées de la pièce
 
                   if KN1.Echec2(): #si clouage
                     message_erreur="Impossible de bouger à cet endroit sans mettre votre roi en échec."
-                    annuler_Mouvement(piece, ligne, colonne, possible_prise)
+                    annuler_Mouvement(piece, ligne, colonne, coordC, coordL, possible_prise)
                     return (False,message_erreur)
 
-                  else:
-                    eaten_Noir(possible_prise)#on ajoute la pièce à la liste des pièces mangées
-                    update_coord_piece(piece, ligne, colonne)#on met à jour les coordonnées de la pièce
+                  eaten_Noir(possible_prise)#on ajoute la pièce à la liste des pièces mangées
 
                 else:
                   message_erreur="Il y a déjà une de vos pièces sur cette case."
