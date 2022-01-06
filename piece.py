@@ -369,10 +369,11 @@ class Roi(Fou,Tour):
 
     def Echec_et_mat(self,nbcoup):
         from board import position,mouvement,prises_Blanc,prises_Noir,prise_en_passant
-        archive_pos=tuple(position) #on enregistre les positions des pièces car la fonction mouvement change la liste position
-        archive_prisesB=tuple(prises_Blanc)
-        archive_prisesN=tuple(prises_Noir)
-        print("archive_pos ini",archive_pos)
+        #archive_pos=tuple(tuple(position)) #on enregistre les positions des pièces car la fonction mouvement change la liste position
+        #archive_prisesB=tuple(prises_Blanc)
+        #archive_prisesN=tuple(prises_Noir)
+        #print("archive_pos ini",archive_pos)
+        
 
         for c in position: #on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
             for piece in c:
@@ -387,25 +388,34 @@ class Roi(Fou,Tour):
                             
                             a=0 
                             if case[0]<=7 and case[0]>=0 and case[1]<=7 and case[1]>=0: #si on reste dans l'échiquier
-                                
+                                #print(archive_pos,"archive pré 1")
+
                                 if position[case[0]][case[1]]!=0: #s'il y a une piece sur la case d'arrivée
                                     a=1
                                     mangee=position[case[0]][case[1]] #on garde tout en mémoire pour annuler le mouvement
-                                    
-                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si le mouvement est possible, pas mat
-                                    print(position,"1")
-                                    position=list(archive_pos) #annule le mouvement
-                                    print(position,"2")
+                                    #print(archive_pos,"archive pré 2")
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2(): #si le mouvement est possible, pas mat
+                                    #print(position,"1")
+                                    #position=list(archive_pos) #annule le mouvement
+                                    #print(archive_pos,"arch_pos post")
+                                    #print(position,"2")
                                     piece.ligne=ligne
                                     piece.colonne=colonne
+                                    position[colonne][ligne]=piece
+                                    position[case[0]][case[1]]=0
                                     
                                     if a==1:
-                                        prises_Blanc=list(archive_prisesB) #on annule le mouvement
-                                        prises_Noir=list(archive_prisesN)
+                                        #prises_Blanc=list(archive_prisesB) #on annule le mouvement
+                                        #prises_Noir=list(archive_prisesN)
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
+                                        position[case[0]][case[1]]=mangee
+                                        if self._couleur=="Blanc":
+                                            prises_Blanc.pop()
+                                        else:
+                                            prises_Noir.pop()
 
-                                    print(position,"3")
+                                    #print(position,"3")
                                     return False
                                 
 
@@ -422,21 +432,24 @@ class Roi(Fou,Tour):
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                         
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
-                                        print(position,"6")
-                                        position=list(archive_pos)
-                                        print(position,"7")
-                                        prises_Blanc=list(archive_prisesB)
-                                        prises_Noir=list(archive_prisesN)
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2() : #si mouvement possible, pas mat
+                                        # print(position,"6")
+                                        # position=list(archive_pos)
+                                        # print(position,"7")
+                                        # prises_Blanc=list(archive_prisesB)
+                                        # prises_Noir=list(archive_prisesN)
                                         piece.ligne=ligne
                                         piece.colonne=colonne
+                                        position[colonne][ligne]=piece
+                                        position[case[0]][case[1]]=0
                                         
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
+                                            prises_Blanc.pop()
 
-                                        print(position,"8")
+                                        #print(position,"8")
                                         return False
                                     
 
@@ -451,19 +464,24 @@ class Roi(Fou,Tour):
                                         a=1
                                         mangee=position[case[0]][case[1]]
 
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
-                                        print(position,"11")
-                                        position=list(archive_pos)
-                                        print(position,"12")
-                                        prises_Blanc=list(archive_prisesB)
-                                        prises_Noir=list(archive_prisesN)
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2() : #si mouvement possible, pas mat
+                                        # print(position,"11")
+                                        # position=list(archive_pos)
+                                        # print(position,"12")
+                                        # prises_Blanc=list(archive_prisesB)
+                                        # prises_Noir=list(archive_prisesN)
                                         piece.ligne=ligne
                                         piece.colonne=colonne
+                                        position[colonne][ligne]=piece
+                                        position[case[0]][case[1]]=0
+
+
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
-                                        print(position,"13")
+                                            prises_Noir.pop()
+                                        #print(position,"13")
                                         return False
                                     
 
@@ -479,20 +497,26 @@ class Roi(Fou,Tour):
                                     a=1
                                     mangee=position[case[0]][case[1]]
 
-                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
-                                    print(position,"16")
-                                    position=list(archive_pos)
-                                    print(position,"17")
-                                    prises_Blanc=list(archive_prisesB)
-                                    prises_Noir=list(archive_prisesN)
+                                if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2() : #si mouvement possible, pas mat
+                                    # print(position,"16")
+                                    # position=list(archive_pos)
+                                    # print(position,"17")
+                                    # prises_Blanc=list(archive_prisesB)
+                                    # prises_Noir=list(archive_prisesN)
                                     piece.ligne=ligne
                                     piece.colonne=colonne
+                                    position[colonne][ligne]=piece
+                                    position[case[0]][case[1]]=0
                                     
                                     if a==1:
                                         position[case[0]][case[1]]=mangee
                                         mangee.ligne=case[1]
                                         mangee.colonne=case[0]
-                                    print(position,"18")
+                                        if self._couleur=="Blanc":
+                                            prises_Blanc.pop()
+                                        else:
+                                            prises_Noir.pop()
+                                    #print(position,"18")
                                     return False
 
 
@@ -510,21 +534,27 @@ class Roi(Fou,Tour):
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                     
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
-                                        print(position,"21")
-                                        print(archive_pos,"archive")
-                                        position=list(archive_pos)
-                                        print(position,"22")
-                                        prises_Blanc=list(archive_prisesB)
-                                        prises_Noir=list(archive_prisesN)
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2(): #si mouvement possible, pas mat
+                                        # print(position,"21")
+                                        # print(archive_pos,"archive")
+                                        # position=list(archive_pos)
+                                        # print(position,"22")
+                                        # prises_Blanc=list(archive_prisesB)
+                                        # prises_Noir=list(archive_prisesN)
                                         self.ligne=ligne
                                         self.colonne=colonne
+                                        position[colonne][ligne]=piece
+                                        position[case[0]][case[1]]=0
 
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
-                                        print(position,"23")
+                                            if self._couleur=="Blanc":
+                                                prises_Blanc.pop()
+                                            else:
+                                                prises_Noir.pop()
+                                        #print(position,"23")
                                         return False
                                     
                     
@@ -543,20 +573,23 @@ class Roi(Fou,Tour):
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                     
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] :
-                                        print(position,"26")
-                                        position=list(archive_pos)
-                                        print(position,"27")
-                                        prises_Blanc=list(archive_prisesB)
-                                        prises_Noir=list(archive_prisesN)
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2():
+                                        #position=list(archive_pos)
+                                        #prises_Blanc=list(archive_prisesB)
+                                        #prises_Noir=list(archive_prisesN)
                                         piece.ligne=ligne
                                         piece.colonne=colonne
+                                        position[colonne][ligne]=piece
+                                        position[case[0]][case[1]]=0
 
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
-                                        print(position,"28")
+                                            if self._couleur=="Blanc":
+                                                prises_Blanc.pop()
+                                            else:
+                                                prises_Noir.pop()
                                         return False
                                     
                         # Mouvement vertical
@@ -572,21 +605,24 @@ class Roi(Fou,Tour):
                                         a=1
                                         mangee=position[case[0]][case[1]]
                                     
-                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] : #si mouvement possible, pas mat
-                                        print(position,"31")
-                                        position=list(archive_pos)
-                                        print(position,"32")
-                                        prises_Blanc=list(archive_prisesB)
-                                        prises_Noir=list(archive_prisesN)
+                                    if mouvement(piece,case,self._couleur,"",nbcoup)[0] and self.Echec2(): #si mouvement possible, pas mat
+                                        # position=list(archive_pos)
+                                        # prises_Blanc=list(archive_prisesB)
+                                        # prises_Noir=list(archive_prisesN)
                                         piece.ligne=ligne
                                         piece.colonne=colonne
+                                        position[colonne][ligne]=piece
+                                        position[case[0]][case[1]]=0
 
                                         if a==1:
                                             position[case[0]][case[1]]=mangee
                                             mangee.ligne=case[1]
                                             mangee.colonne=case[0]
+                                            if self._couleur=="Blanc":
+                                                prises_Blanc.pop()
+                                            else:
+                                                prises_Noir.pop()
 
-                                        print(position,"32")
                                         return False
                                     
         return True

@@ -850,7 +850,7 @@ def cmd_bouton_commencer():
     afficherPiecesPrises()
     # print("commencer")
 
-#Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perd
+#Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perdu
 def cmd_bouton_abandonner():
     print("abandonner")
     if couleurA.get()=="Blanc":

@@ -15,4 +15,11 @@ print(duree_minute)
 
 
 L=[["a","b","c","d"],["e","f","g","h",],["i","j","k","l"],["m","n","o","p"]]
-
+archive_L=tuple(L)
+archive_L=tuple(archive_L)
+archive2=tuple(archive_L[:])
+L[3][2]=5
+print(L)
+L=list(archive_L)
+print(L)
+print(archive_L,archive2)
