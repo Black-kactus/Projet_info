@@ -735,7 +735,7 @@ def open_popup_perdu(couleur):
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
         Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
 
-    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
     # top.mainloop() 
     if coup_special.get() in ["","PEP"]:
             coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
