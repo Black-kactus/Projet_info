@@ -602,6 +602,7 @@ def open_popup_promo(piece,couleur):
 
     Labeltext = ttk.Label(content4, text= "En quoi voulez-vous changer votre pion ?", ANCHOR=CENTER)
     Labeltext.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
     if couleur=="Blanc":
         Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameB())
         Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -613,6 +614,7 @@ def open_popup_promo(piece,couleur):
         Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
         Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
         Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
     else:
         Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameN())
         Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -664,7 +666,7 @@ def open_popup_pat(couleur):
 
         if coup_special.get() in ["","PEP"]:
             coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
-        else:
+        elif coup_special.get() != "abandon":
             coups_Blancs = coups_Blancs + coup_special.get()
 
     else:
@@ -676,7 +678,7 @@ def open_popup_pat(couleur):
 
         if coup_special.get() in ["","PEP"]:
             coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
-        else:
+        elif coup_special.get() != "abandon":
             coups_Noirs = coups_Noirs + coup_special.get()
 
     # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
@@ -733,7 +735,7 @@ def open_popup_perdu(couleur):
 
         if coup_special.get() in ["","PEP"]:
             coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
-        else:
+        elif coup_special.get() != "abandon":
             coups_Blancs = coups_Blancs + coup_special.get()
 
     else:
@@ -745,7 +747,7 @@ def open_popup_perdu(couleur):
 
         if coup_special.get() in ["","PEP"]:
             coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
-        else:
+        elif coup_special.get() != "abandon":
             coups_Noirs = coups_Noirs + coup_special.get()
 
     # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
@@ -926,7 +928,7 @@ def cmd_bouton_valider():
                     global coups_Blancs
                     if coup_special.get() in ["","PEP"]:
                         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
-                    else:
+                    elif coup_special.get() != "abandon":
                         coups_Blancs = coups_Blancs + coup_special.get() + "\n"
 
 
@@ -960,7 +962,7 @@ def cmd_bouton_valider():
 
                     if coup_special.get() in ["","PEP"]:
                         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
-                    else:
+                    elif coup_special.get() != "abandon":
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
 
                 LPOSITION=fonction_lecture(position)
@@ -1027,9 +1029,15 @@ def cmd_bouton_commencer():
 def cmd_bouton_abandonner():
     print("abandonner")
     message_echec.set("Partie terminée")
+
+    global coups_Blancs, coups_Noirs
+
     if couleurA.get()=="Blanc":
+        coups_Blancs = coups_Blancs + "abandon"
         open_popup_perdu("Blanc")
+
     else:
+        coups_Noirs = coups_Noirs + "abandon"
         open_popup_perdu("Noir")
 
 #Ancien bouton test utilisé pour voir si l'implémentation visuelle marche
