@@ -15,6 +15,12 @@ from piece import Piece,Pion
 # from piece import*
 # from new_interface import Entry_pieceabouger
 
+
+# Enregistre les coups joués depuis le début
+
+coups_Noirs="Coups joués par les noirs :\n"
+coups_Blancs="Coups joués par les blancs :\n"
+
 #Fonction : permet d'importer le tableau qui contient la position des pièces 
 def fonction_lecture(position):
     #from board import position
@@ -626,6 +632,8 @@ def open_popup_promo(piece,couleur):
 
 #Pop up : gère le cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
+    global coups_Noirs,coups_Blancs
+
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
@@ -642,13 +650,45 @@ def open_popup_pat(couleur):
     Label(PopUp_pat, text= "Partie nulle", font=('Helvetica 35 bold')).pack(pady=10)
 
     if couleur=="Noir":
+        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
+        Label(PopUp_pat, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
         Label(PopUp_pat, text= "Les Noirs sont pat", font=('Helvetica 15')).pack()
+        Label(PopUp_pat, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
+
+        if coup_special.get() in ["","PEP"]:
+            coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
+        else:
+            coups_Blancs = coups_Blancs + coup_special.get()
+
     else:
+        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
+        Label(PopUp_pat, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
         Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
+        Label(PopUp_pat, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
+
+
+        if coup_special.get() in ["","PEP"]:
+            coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
+        else:
+            coups_Noirs = coups_Noirs + coup_special.get()
+
     Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
+    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
+    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    Label(PopUp_pat, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
+
+    Label(PopUp_pat, text= coups_Blancs, font=('Helvetica 10')).pack() # afficher correctement
+    Label(PopUp_pat, text= coups_Noirs, font=('Helvetica 10')).pack() # afficher correctement
+
+    print(coups_Blancs) #
+    print(coups_Noirs) #
+
+    PopUp_pat.mainloop() 
 
 #Pop up : si la partie est finie
 def open_popup_perdu(couleur):
+    global coups_Blancs, coups_Noirs
+
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
@@ -672,6 +712,11 @@ def open_popup_perdu(couleur):
         Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
         Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
 
+        if coup_special.get() in ["","PEP"]:
+            coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
+        else:
+            coups_Blancs = coups_Blancs + coup_special.get()
+
     else:
         ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
 
@@ -679,8 +724,24 @@ def open_popup_perdu(couleur):
         Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
         Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
 
-    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+        if coup_special.get() in ["","PEP"]:
+            coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
+        else:
+            coups_Noirs = coups_Noirs + coup_special.get()
+
+    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
+    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
+
+    Label(top, text= coups_Blancs, font=('Helvetica 10')).pack() # afficher correctement
+    Label(top, text= coups_Noirs, font=('Helvetica 10')).pack() # afficher correctement
+    
+    print(coups_Blancs) #
+    print(coups_Noirs) #
+
     top.mainloop() 
+
     
 
 #Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
@@ -824,6 +885,13 @@ def cmd_bouton_valider():
                     couleurA.set("Noir")
                     prenom.set(prenom_noir.get())
 
+                    global coups_Blancs
+                    if coup_special.get() in ["","PEP"]:
+                        coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
+                    else:
+                        coups_Blancs = coups_Blancs + coup_special.get() + "\n"
+
+
                 else: # les noirs jouent 
 
                     if KB1.Echec2():
@@ -850,6 +918,13 @@ def cmd_bouton_valider():
                     couleurA.set("Blanc")
                     prenom.set(prenom_blanc.get())
 
+                    global coups_Noirs
+
+                    if coup_special.get() in ["","PEP"]:
+                        coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
+                    else:
+                        coups_Noirs = coups_Noirs + coup_special.get() + "\n"
+
                 LPOSITION=fonction_lecture(position)
                 coup.set("")
                 piece_a_bouger.set("")
@@ -862,6 +937,14 @@ def cmd_bouton_valider():
             elif result[0]==False:
                 message_erreur.set(result[1])
                 #print(message_erreur.get())
+            
+            # if message_erreur=="":
+            #     if couleurA.get()=="Blanc":
+            #         global coups_Noirs
+            #         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + "\n"
+            #     else:
+            #         global coups_Blancs
+            #         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + "\n"
 
 
 PeutJouer=False #pour empêcher les joueurs de jouer hors partie
