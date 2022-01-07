@@ -599,30 +599,41 @@ def open_popup_promo(piece,couleur):
     PopUp_promo.geometry("500x350")
     PopUp_promo.lift()
 
-    ttk.Label(PopUp_promo, text= "En quoi voulez-vous changer votre pion ?").pack(pady=10)
-    if couleur=="Blanc":
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameB())
-        Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourB())
-        Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouB())
-        Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
-        Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
-        Bouton_pion.pack()
-    else:
-        Bouton_dame= ttk.Button(PopUp_promo, text= "Dame",command=lambda: cmd_bouton_dameN())
-        Bouton_dame.pack()
-        Bouton_tour= ttk.Button(PopUp_promo, text= "Tour",command=lambda: cmd_bouton_tourN())
-        Bouton_tour.pack()
-        Bouton_fou= ttk.Button(PopUp_promo, text= "Fou",command=lambda: cmd_bouton_fouN())
-        Bouton_fou.pack()
-        Bouton_cavalier= ttk.Button(PopUp_promo, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
-        Bouton_cavalier.pack()
-        Bouton_pion= ttk.Button(PopUp_promo, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
-        Bouton_pion.pack()
+    PopUp_promo.grid_columnconfigure(0, weight=1)
+    PopUp_promo.grid_rowconfigure(0, weight=1)
 
+    content4 = ttk.Frame(PopUp_promo, padding=(0,0,0,0))
+    content4.grid(column=0, row=0, sticky=(N, S, E, W))
+
+    Labeltext = ttk.Label(content4, text= "En quoi voulez-vous changer votre pion ?", ANCHOR=CENTER)
+    Labeltext.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+    if couleur=="Blanc":
+        Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameB())
+        Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_tour= ttk.Button(content4, text= "Tour",command=lambda: cmd_bouton_tourB())
+        Bouton_tour.grid(column=0, row=4, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_fou= ttk.Button(content4, text= "Fou",command=lambda: cmd_bouton_fouB())
+        Bouton_fou.grid(column=0, row=6, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
+        Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
+        Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+    else:
+        Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameN())
+        Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_tour= ttk.Button(content4, text= "Tour",command=lambda: cmd_bouton_tourN())
+        Bouton_tour.grid(column=0, row=4, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_fou= ttk.Button(content4, text= "Fou",command=lambda: cmd_bouton_fouN())
+        Bouton_fou.grid(column=0, row=6, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
+        Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
+        Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+    for i in range(2):
+        content4.columnconfigure(i, weight=1)
+    for j in range(12):
+        content4.rowconfigure(j, weight=1)
 
 #Pop up : gère le cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
