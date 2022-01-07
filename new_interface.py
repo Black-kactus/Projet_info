@@ -6,6 +6,9 @@ from PIL import ImageTk, Image
 from time import *
 from main import fonction_attente
 from piece import Piece,Pion
+import winsound
+
+
 
 #probleme de prototypage
 
@@ -123,14 +126,14 @@ root.iconbitmap(r'icone.ico')
 #Permet de gérer le style des boutons
 s = ttk.Style()
 theme = 0
-# if theme == 0: 
-#     s.theme_use('clam')
-#CHERCHER le bon theme qui correspond à celui par défaut
 
+# print(s.theme_use())
+
+#Fonction : permet de changer le thème de tkinter, pour contrer le problème d'affichage sur différents système d'exploitation cf MAC OS
 def choix_theme():
     global theme
     if theme == 0:
-        s.theme_use('classic')
+        s.theme_use('default')
         theme = 1
         print("0")
     elif theme == 1: 
@@ -140,7 +143,7 @@ def choix_theme():
         s.theme_use('clam')
         theme = 3
     elif theme == 3:
-        s.theme_use('default')
+        s.theme_use('vista')
         theme = 0
 # s.configure(root, font=('Raleway', 10))
 # s.configure(root, font=('', 10))
@@ -187,6 +190,7 @@ prenom = StringVar()
 prenom.set("")
 
 duree_de_la_partie=0
+music = False
 
 ## Images de la pop up perdu
 
@@ -547,9 +551,15 @@ def actualiserPiecesPrises():
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
 
-
-
-
+#Fonction gère le son 
+duree = 1
+def cmd_bouton_bruitage():
+    global music
+    if music: 
+        winsound.PlaySound('Whoush.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
+        time.sleep(duree) 
+        winsound.PlaySound(None, 0)
+        print("bruitage")
 
 #Pop up: gère le cas de la promotion de pion
 def open_popup_promo(piece,couleur):
@@ -843,7 +853,11 @@ def cmd_bouton_visuel():
     pass
 
 def cmd_bouton_son():
-    pass
+    global music
+    if music: 
+        music = False
+    else: 
+        music = True
 
 # Fonction du bouton valider: gère la validation du coup
 def cmd_bouton_valider():
@@ -962,6 +976,7 @@ def cmd_bouton_valider():
                 afficherPiece()
                 actualiserPiecesPrises()
                 afficherPiecesPrises()
+                cmd_bouton_bruitage()
 
 
             elif result[0]==False:
@@ -1212,18 +1227,15 @@ def cmd_bouton_options():
     Bouton_Visuels= ttk.Button(content2, text= "Changer le style d'affichage :)",command= choix_theme)
     Bouton_Visuels.grid(column=0,row=8, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    # Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
-    # Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
+    Bouton_son.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(0,2):
         content2.columnconfigure(i,weight=1)
 
-    for j in range(0,10):
+    for j in range(0,12):
         content2.rowconfigure(j,weight=1)
 
-    
-
-    
 #permet l'expension des boutons 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
