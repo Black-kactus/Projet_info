@@ -123,6 +123,8 @@ root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
+# root.geometry("1100x500")
+
 #Permet de gérer le style des boutons
 s = ttk.Style()
 theme = 0
@@ -490,45 +492,34 @@ def afficherPiecesPrises():
     from board import prises_Noir, prises_Blanc
     LPIECESPRISESNOIRES = fonction_lecture_prises(prises_Noir)
     LPIECESPRISESBLANC = fonction_lecture_prises(prises_Blanc)
-    # print(LPIECESPRISESBLANC)
-    # for i in range(8):
-        # if LPIECESPRISES[0][i] == 0: ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image = LIMAGESPICESPRISES[1][i]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        # else : ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        
-        # if LPIECESPRISES[1][i] == 0:  ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = python_imagePN2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        # else :  ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+i,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-
-        # if LPIECESPRISES[2][i] == 0 : ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background= couleurBg, image = python_imagePB2).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        # else: ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image = python_imageVIDE2, background =couleurBg).grid(column=20+i,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-
-        # if LPIECESPRISES[3][i] == 0 :  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid",background=couleurBg,image = LIMAGESPICESPRISES[0][i]).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
-        # else:  ttk.Label(content, textvariable= "", anchor= CENTER, relief="solid", image= python_imageVIDE2, background = couleurBg).grid(column=20+i,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
 
     NbpiecesmangesN = len(LPIECESPRISESNOIRES)
+    colonne = 2
+    ligne = 1
     for i in range (NbpiecesmangesN):
         if i <8:
-                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image =dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image =dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+2*i,row=12, columnspan=colonne, rowspan = ligne,sticky=(N,S,E,W))
         else: 
-                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+i-8,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg2, image = dicopiece2[LPIECESPRISESNOIRES[i]]).grid(column=20+2*(i-8),row=13, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
     
     for k in range (NbpiecesmangesN,16):
         if k <8:
-                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+k,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+2*k,row=12, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
         else: 
-                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+k-8,row=13, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg2).grid(column=20+2*(k-8),row=13, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
 
     NbpiecesmangesB = len(LPIECESPRISESBLANC)
     for j in range (NbpiecesmangesB):
         if j <8:
-                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg, image =dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+j,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg, image =dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+2*j,row=14, columnspan=colonne, rowspan = ligne,sticky=(N,S,E,W))
         else: 
-                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg, image = dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+j-8,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid", background=couleurBg, image = dicopiece2[LPIECESPRISESBLANC[j]]).grid(column=20+2*(j-8),row=15, columnspan=colonne, rowspan =ligne,sticky=(N,S,E,W))
     
     for l in range (NbpiecesmangesB,16):
         if l <8:
-                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg).grid(column=20+l,row=14, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg).grid(column=20+2*l,row=14, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
         else: 
-                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+l-8,row=15, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
+                ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+2*(l-8),row=15, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
      
      
 
@@ -1240,16 +1231,17 @@ def cmd_bouton_options():
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
     
-for i in range(0,28):
+for i in range(0,36):
     content.columnconfigure(i,weight=1)
 
 for j in range(0,18):
     content.rowconfigure(j,weight=1)
 
 #on peut facilement retirer les bordures en retirant relief
-largeur = 8
+largeur = 16
 
 #Tous les labels, entry et boutons
+longueurColonne = 4
 
 Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
 Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1304,8 +1296,8 @@ Bouton_Options.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,
 Bouton_Abandonner= ttk.Button(content, text= "Reconnaître sa cuisante défaite",command= cmd_bouton_abandonner)
 Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Label_actualiseerreur= ttk.Label(content, textvariable= message_erreur, anchor= CENTER, relief="solid", foreground = 'orange', background='white')
-Label_actualiseerreur.grid(column=20,row=11, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_actualiseerreur= ttk.Label(content, textvariable= message_erreur, anchor = CENTER, justify = CENTER, relief="solid", foreground = 'orange', background='white')
+Label_actualiseerreur.grid(column=20,row=11, columnspan=largeur, sticky=(N,S,E,W), rowspan=1,pady=1, padx=1)
 
 Lechec = ttk.Label(content, textvariable= message_echec,relief="solid",anchor=CENTER, foreground='red')
 Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
