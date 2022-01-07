@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="26b69a5f-fdcf-4a78-ac1b-e794ee4e15ab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/piece.py" beforeDir="false" afterPath="$PROJECT_DIR$/piece.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,5 +202,9 @@
       <screen x="0" y="22" width="1440" height="829" />
     </state>
     <state x="306" y="61" key="SettingsEditor/0.22.1440.829@0.22.1440.829" timestamp="1636554138970" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1641597607118">
+      <screen x="0" y="22" width="1440" height="829" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.22.1440.829@0.22.1440.829" timestamp="1641597607118" />
   </component>
 </project>
