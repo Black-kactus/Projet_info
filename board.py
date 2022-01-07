@@ -505,7 +505,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
         if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
-          coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+          coordC = piece.colonne # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
           coordL = piece.ligne
           update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
           
@@ -517,7 +517,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             #eaten_Blanc(position[piece.colonne - 1][piece.ligne])
             eaten_Blanc(position[coordC - 1][coordL])
             print("prises blanches", prises_Blanc)
-            position[piece.colonne - 1][piece.ligne] = 0  # on enlève le pion adversaire du board
+            position[coordC - 1][coordL] = 0  # on enlève le pion adversaire du board
             #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
@@ -538,8 +538,8 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
           
           else:
-            eaten_Blanc(position[piece.colonne + 1][piece.ligne]) #on l'ajoute aux prises des Blancs
-            position[piece.colonne + 1][piece.ligne] = 0  # on enlève le pion adversaire du board
+            eaten_Blanc(position[coordC + 1][coordL]) #on l'ajoute aux prises des Blancs
+            position[coordC + 1][coordL] = 0  # on enlève le pion adversaire du board
             #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
@@ -572,8 +572,8 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
           
           else:
-            eaten_Noir(position[piece.colonne - 1][piece.ligne])
-            position[piece.colonne - 1][piece.ligne] = 0
+            eaten_Noir(position[coordC - 1][coordL])
+            position[coordC - 1][coordL] = 0
             #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
@@ -595,16 +595,14 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
       
           else:
-            eaten_Noir(position[piece.colonne + 1][piece.ligne])
-            position[piece.colonne + 1][piece.ligne] = 0
+            eaten_Noir(position[coordC + 1][coordL])
+            position[coordC + 1][coordL] = 0
             #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
         else:
           return (False, "PEP doit se faire juste après avoir bougé le pion B.")
-          #return (False, "PEP only possible directly after move pion B.")
-      
-                  
+
       else:
         return (False,"PEP impossible car le pion blanc \nest au mauvais endroit.")
     
