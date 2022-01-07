@@ -644,7 +644,7 @@ def open_popup_promo(piece,couleur):
 #Pop up : gère le cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
     global coups_Noirs,coups_Blancs
-
+    message_echec.set("Partie terminée")
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
@@ -699,7 +699,7 @@ def open_popup_pat(couleur):
 #Pop up : si la partie est finie
 def open_popup_perdu(couleur):
     global coups_Blancs, coups_Noirs
-
+    message_echec.set("Partie terminée")
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
@@ -742,13 +742,14 @@ def open_popup_perdu(couleur):
     else:
             coups_Noirs = coups_Noirs + coup_special.get()
 
-    Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
+
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
     Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
 
     Label(top, text= coups_Blancs, font=('Helvetica 10')).pack() # afficher correctement
-    Label(top, text= coups_Noirs, font=('Helvetica 10')).pack() # afficher correctement
+
     
     print(coups_Blancs) #
     print(coups_Noirs) #
