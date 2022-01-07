@@ -244,9 +244,10 @@ class Roi(Fou,Tour):
 
     def Echec1(self): # complexité très élevée
         from board import position
-        for piece in position:
-            if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
-                return True
+        for c in position:
+            for piece in c:
+                if piece !=0 and piece._couleur == self._couleur and piece.mouvement_possible(self.colonne,self.ligne):
+                    return True
         return False
     
 
