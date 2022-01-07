@@ -78,11 +78,11 @@ def eat_Piece(piece, colonne, ligne):
   position[colonne][ligne] = piece  # on met à jour la liste position
 
 
-def annuler_Mouvement(piece, ligne, colonne, coordC,coordL, arg):
+def annuler_Mouvement(piece, ligne, colonne, coordC, coordL, arg):
   position[coordC][coordL] = piece  # on annule le mouvement
   position[colonne][ligne] = arg  # on annule le mouvement
-  piece.colonne=coordC
-  piece.ligne=coordL
+  piece.colonne = coordC
+  piece.ligne = coordL
 
 
 
@@ -505,36 +505,42 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
         if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+          coordL = piece.ligne
+          update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
           
           if KB1.Echec2(): #si clouage
-            annuler_Mouvement(piece, ligne, colonne, 0)
+            annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
           
           else:
-            eaten_Blanc(position[piece.colonne - 1][piece.ligne])
-            print("prises blanches",prises_Blanc)
+            #eaten_Blanc(position[piece.colonne - 1][piece.ligne])
+            eaten_Blanc(position[coordC - 1][coordL])
+            print("prises blanches", prises_Blanc)
             position[piece.colonne - 1][piece.ligne] = 0  # on enlève le pion adversaire du board
-            update_coord_piece(piece, ligne, colonne)
+            #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
         else:
           return (False, "PEP doit se faire juste après avoir bougé le pion N.")
-          #return (False, "PEP only possible directly after move pion N.")
 
       if type(position[piece.colonne + 1][piece.ligne]) == Pion and position[piece.colonne + 1][piece.ligne]._couleur != CouleurQuiJoue:
         
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+          coordL = piece.ligne
+          update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
           
           if KB1.Echec2(): #si clouage
-            annuler_Mouvement(piece, ligne, colonne, 0)
+            annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
           
           else:
             eaten_Blanc(position[piece.colonne + 1][piece.ligne]) #on l'ajoute aux prises des Blancs
             position[piece.colonne + 1][piece.ligne] = 0  # on enlève le pion adversaire du board
-            update_coord_piece(piece, ligne, colonne)
+            #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
         else:
@@ -557,15 +563,18 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
         if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+          coordL = piece.ligne
+          update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
           
           if KN1.Echec2(): #si clouage
-            annuler_Mouvement(piece, ligne, colonne, 0)
+            annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
           
           else:
             eaten_Noir(position[piece.colonne - 1][piece.ligne])
             position[piece.colonne - 1][piece.ligne] = 0
-            update_coord_piece(piece, ligne, colonne)
+            #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
         else:
@@ -577,15 +586,18 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1 :
           position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
           position[colonne][ligne] = piece  # on la met sur la nouvelle case
+          coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
+          coordL = piece.ligne
+          update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
          
           if KN1.Echec2(): #si clouage
-            annuler_Mouvement(piece, ligne, colonne, 0)
+            annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
             return (False, "Impossible de bouger à cet endroit \nsans mettre votre roi en échec.")
       
           else:
             eaten_Noir(position[piece.colonne + 1][piece.ligne])
             position[piece.colonne + 1][piece.ligne] = 0
-            update_coord_piece(piece, ligne, colonne)
+            #update_coord_piece(piece, ligne, colonne)
             return (True, 0)
         
         else:
