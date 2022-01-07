@@ -196,11 +196,11 @@ music = False
 
 ## Images de la pop up perdu
 
-ImageperduB = Image.open('defaite _des_blancs.png')
+ImageperduB = Image.open('defaite _des_blancsT.png')
 ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
 python_imageperduB = ImageTk.PhotoImage(ImageperduB)
 
-ImageperduN = Image.open('defaite_des_noirs.png')
+ImageperduN = Image.open('defaite_des_noirsT.png')
 ImageperduN = ImageperduN.resize((300,300), Image.ANTIALIAS)
 python_imageperduN = ImageTk.PhotoImage(ImageperduN)
 
@@ -656,8 +656,9 @@ def open_popup_promo(piece,couleur):
 
 #Pop up : gère le cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
-    global coups_Noirs,coups_Blancs
+    global coups_Blancs, coups_Noirs
     message_echec.set("Partie terminée")
+
     import time
     global duree_de_la_partie
     duree_de_la_partie=time.time()-duree_de_la_partie
@@ -665,19 +666,25 @@ def open_popup_pat(couleur):
     global PeutJouer
     PeutJouer=False #pour empêcher de continuer la partie
 
-    PopUp_pat= Toplevel()
-    PopUp_pat.geometry("750x300")
-    PopUp_pat.title("Pat")
-    PopUp_pat.iconbitmap(r'icone.ico')
-    PopUp_pat.lift()
+    PopupPat= Toplevel()
+    PopupPat.title("Perduuuu")
+    PopupPat.grid_columnconfigure(0, weight=1)
+    PopupPat.grid_rowconfigure(0, weight=1)
+    PopupPat.iconbitmap(r'icone.ico')
+    PopupPat.lift()
 
-    Label(PopUp_pat, text= "Partie nulle", font=('Helvetica 35 bold')).pack(pady=10)
+    contentPat = ttk.Frame(PopupPat, padding=(0,0,0,0))
+    contentPat.grid(column=0, row=0, sticky=(N, S, E, W))
 
+    # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
+    couleurBg= "white"
     if couleur=="Noir":
-        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
-        Label(PopUp_pat, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
-        Label(PopUp_pat, text= "Les Noirs sont pat", font=('Helvetica 15')).pack()
-        Label(PopUp_pat, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
+        ch = str("Egalité !")
+        # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
+
+        Label(contentPat, text= ch , font=('Helvetica 25 bold'), background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=5)
+        Label(contentPat, text= "Les Noirs sont pat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPat, image = python_imageperduN,background=couleurBg).grid(column=0, row=12, columnspan=20, rowspan=8 ,sticky=(N,S,E,W),pady=1, padx=1)
 
         if coup_special.get() in ["","PEP"]:
             coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
@@ -685,29 +692,37 @@ def open_popup_pat(couleur):
             coups_Blancs = coups_Blancs + coup_special.get()
 
     else:
-        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
-        Label(PopUp_pat, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
-        Label(PopUp_pat, text= "Les Blancs sont pat", font=('Helvetica 15')).pack()
-        Label(PopUp_pat, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
+        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get()+".")
 
+        Label(contentPat, text= ch , font=('Helvetica 35 bold'),background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPat, text= "Les Blancs sont pat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPat, image = python_imageperduB,background=couleurBg).grid(column=0, row=12, columnspan=20, rowspan=8 ,sticky=(N,S,E,W),pady=1, padx=1)
 
         if coup_special.get() in ["","PEP"]:
             coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
         else:
             coups_Noirs = coups_Noirs + coup_special.get()
 
-    Label(PopUp_pat, text= "Durée de la partie : "+str(duree_de_la_partie)+" s", font=('Helvetica 10')).pack()
-    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie))
+    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
+    # top.mainloop() 
+    
+    #Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
+    #RAPH on a push en meme temps
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
-    Label(PopUp_pat, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
+    Label(contentPat,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+    
+    Label(contentPat, background=couleurBg,text= coups_Blancs, font=('Helvetica 10')).grid(column=0, row=6, columnspan=10, rowspan= 6,sticky=(N,S,E,W),pady=1, padx=1)
+    Label(contentPat, background=couleurBg,text= coups_Noirs, font=('Helvetica 10')).grid(column=10, row=6, columnspan=10, rowspan= 6 ,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Label(PopUp_pat, text= coups_Blancs, font=('Helvetica 10')).pack() # afficher correctement
-    Label(PopUp_pat, text= coups_Noirs, font=('Helvetica 10')).pack() # afficher correctement
+    for i in range(0,20):
+        contentPat.columnconfigure(i,weight=1)
 
-    print(coups_Blancs) #
-    print(coups_Noirs) #
+    for j in range(0,20):
+        contentPat.rowconfigure(j,weight=1)
+    
 
-    PopUp_pat.mainloop() 
+    # PopUp_pat.mainloop() 
 
 #Pop up : si la partie est finie
 def open_popup_perdu(couleur):
@@ -720,21 +735,25 @@ def open_popup_perdu(couleur):
     global PeutJouer
     PeutJouer=False #pour empêcher de continuer la partie
 
-    top= Toplevel()
-    top.geometry("750x450")
-    top.title("Perduuuu")
-    top.iconbitmap(r'icone.ico')
-    top.lift()
+    PopupPerdu= Toplevel()
+    PopupPerdu.title("Perduuuu")
+    PopupPerdu.grid_columnconfigure(0, weight=1)
+    PopupPerdu.grid_rowconfigure(0, weight=1)
+    PopupPerdu.iconbitmap(r'icone.ico')
+    PopupPerdu.lift()
+
+    contentPerdu = ttk.Frame(PopupPerdu, padding=(0,0,0,0))
+    contentPerdu.grid(column=0, row=0, sticky=(N, S, E, W))
 
     # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
-
+    couleurBg= "white"
     if couleur=="Noir":
-        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get())
+        ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get()+".")
         # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
 
-        Label(top, text= ch , font=('Helvetica 25 bold')).pack(pady=10)
-        Label(top, text= "Les Blancs ont gagné", font=('Helvetica 15')).pack()
-        Label(top, image = python_imageperduN).pack(side = "bottom", fill = "both", expand = "yes")
+        Label(contentPerdu, text= ch , font=('Helvetica 25 bold'), background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=5)
+        Label(contentPerdu, text= "Les Noirs sont en échec et mat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPerdu, image = python_imageperduN,background=couleurBg).grid(column=0, row=12, columnspan=20, rowspan=8 ,sticky=(N,S,E,W),pady=1, padx=1)
 
         if coup_special.get() in ["","PEP"]:
             coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
@@ -742,32 +761,39 @@ def open_popup_perdu(couleur):
             coups_Blancs = coups_Blancs + coup_special.get()
 
     else:
-        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get())
+        ch = str(prenom_blanc.get()) + " a perdu. Bravo à " + str(prenom_noir.get()+".")
 
-        Label(top, text= ch , font=('Helvetica 35 bold')).pack(pady=10)
-        Label(top, text= "Les Noirs ont gagné", font=('Helvetica 15')).pack()
-        Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
+        Label(contentPerdu, text= ch , font=('Helvetica 35 bold'),background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPerdu, text= "Les Blancs sont en échec et mat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+        Label(contentPerdu, image = python_imageperduB,background=couleurBg).grid(column=0, row=12, columnspan=20, rowspan=8 ,sticky=(N,S,E,W),pady=1, padx=1)
+
+        if coup_special.get() in ["","PEP"]:
+            coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
+        else:
+            coups_Noirs = coups_Noirs + coup_special.get()
 
     # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
     # top.mainloop() 
-    if coup_special.get() in ["","PEP"]:
-            coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get()
-    else:
-            coups_Noirs = coups_Noirs + coup_special.get()
-
-    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+    
+    #Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
     #RAPH on a push en meme temps
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
-    Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
-
-    Label(top, text= coups_Blancs, font=('Helvetica 10')).pack() # afficher correctement
-
+    Label(contentPerdu,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
-    print(coups_Blancs) #
-    print(coups_Noirs) #
+    Label(contentPerdu, background=couleurBg,text= coups_Blancs, font=('Helvetica 10')).grid(column=0, row=6, columnspan=10, rowspan= 6,sticky=(N,S,E,W),pady=1, padx=1)
+    Label(contentPerdu, background=couleurBg,text= coups_Noirs, font=('Helvetica 10')).grid(column=10, row=6, columnspan=10, rowspan= 6 ,sticky=(N,S,E,W),pady=1, padx=1)
 
-    top.mainloop() 
+    for i in range(0,20):
+        contentPerdu.columnconfigure(i,weight=1)
+
+    for j in range(0,20):
+        contentPerdu.rowconfigure(j,weight=1)
+    
+    # print(coups_Blancs) #
+    # print(coups_Noirs) #
+
+    # top.mainloop() 
 
     
 
@@ -1206,7 +1232,7 @@ def cmd_bouton_options():
     Entry_Script= ttk.Entry(content2, textvariable= script)
     Entry_Script.grid(column=1,row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command=lambda: cmd_bouton_Compiler_script)
+    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command= cmd_bouton_Compiler_script)
     Bouton_CompilerScript.grid(column=0,row=4, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)
