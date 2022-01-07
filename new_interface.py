@@ -419,8 +419,8 @@ def afficherPiece():
 
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
-            if (i+j)%2 == 0: couleur = 'black'
-            else : couleur = "white"
+            if (i+j)%2 == 0: couleur = 'white'
+            else : couleur = "black"
             if couleurA.get() == "Noir":
                 Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER)
                 BoutonListe[i].insert(j,Bouton_piece)
