@@ -744,7 +744,7 @@ def open_popup_perdu(couleur):
 
     # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
-
+    #RAPH on a push en meme temps
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
     Label(top, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).pack()
 
