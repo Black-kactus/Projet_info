@@ -379,8 +379,10 @@ def afficherPiece():
 
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
+
             if (i+j)%2 == 0: couleur = 'white'
             else : couleur = "black"
+            
             if couleurA.get() == "Noir":
                 Bouton_piece = ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER)
                 BoutonListe[i].insert(j,Bouton_piece)
@@ -410,6 +412,7 @@ def afficherPiece():
             L = ["","H","G",'F',"E","D","C","B",'A']
             ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
+    
     else: 
         for k in range(0,18,2):
             L = ["","A",'B',"C","D","E","F",'G','H']
@@ -507,7 +510,6 @@ def open_popup_promo(piece,couleur):
         promoFouB(piece)
         PopUp_promo.destroy()
 
-
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
         print("Cavalier")
@@ -549,6 +551,7 @@ def open_popup_promo(piece,couleur):
     PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
     PopUp_promo.iconbitmap(r'icone.ico')
+
     PopUp_promo.geometry("500x350")
     PopUp_promo.lift()
 
@@ -562,26 +565,36 @@ def open_popup_promo(piece,couleur):
     Labeltext.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
     if couleur=="Blanc":
+
         Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameB())
         Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_tour= ttk.Button(content4, text= "Tour",command=lambda: cmd_bouton_tourB())
         Bouton_tour.grid(column=0, row=4, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_fou= ttk.Button(content4, text= "Fou",command=lambda: cmd_bouton_fouB())
         Bouton_fou.grid(column=0, row=6, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
         Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
         Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
     else:
+
         Bouton_dame= ttk.Button(content4, text= "Dame",command=lambda: cmd_bouton_dameN())
         Bouton_dame.grid(column=0, row=2, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_tour= ttk.Button(content4, text= "Tour",command=lambda: cmd_bouton_tourN())
         Bouton_tour.grid(column=0, row=4, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_fou= ttk.Button(content4, text= "Fou",command=lambda: cmd_bouton_fouN())
         Bouton_fou.grid(column=0, row=6, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
         Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
+
         Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
         Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
@@ -604,8 +617,10 @@ def open_popup_pat(couleur):
 
     PopupPat= Toplevel()
     PopupPat.title("Perduuuu")
+
     PopupPat.grid_columnconfigure(0, weight=1)
     PopupPat.grid_rowconfigure(0, weight=1)
+
     PopupPat.iconbitmap(r'icone.ico')
     PopupPat.lift()
 
@@ -641,6 +656,7 @@ def open_popup_pat(couleur):
 
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+
     Label(contentPat,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
     Label(contentPat, background=couleurBg,text= coups_Blancs, font=('Helvetica 10')).grid(column=0, row=6, columnspan=10, rowspan= 6,sticky=(N,S,E,W),pady=1, padx=1)
@@ -665,8 +681,10 @@ def open_popup_perdu(couleur):
 
     PopupPerdu= Toplevel()
     PopupPerdu.title("Perduuuu")
+
     PopupPerdu.grid_columnconfigure(0, weight=1)
     PopupPerdu.grid_rowconfigure(0, weight=1)
+
     PopupPerdu.iconbitmap(r'icone.ico')
     PopupPerdu.lift()
 
@@ -814,8 +832,10 @@ def cmd_bouton_valider():
 
         if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
+
         if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
+
         if not(coup_special.get() in special):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
@@ -832,6 +852,7 @@ def cmd_bouton_valider():
 
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]):
                     ligne=coup.get()[1]
+
                 nbcoup.set(str(int(nbcoup.get())+1))
                 
                 message_erreur.set("")
@@ -866,6 +887,7 @@ def cmd_bouton_valider():
                     global coups_Blancs
                     if coup_special.get() in ["","PEP"]:
                         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
+
                     elif coup_special.get() != "abandon":
                         coups_Blancs = coups_Blancs + coup_special.get() + "\n"
 
@@ -873,9 +895,12 @@ def cmd_bouton_valider():
                 else: # les noirs jouent 
 
                     if KB1.Echec2():
+
                         message_echec.set("Les blancs sont en échec.")
                         print("Echec blanc")
+
                         if KB1.Echec_et_mat(nbcoup):
+
                             print("Echec et mat.")
                             message_echec.set("Les blancs sont en échec et mat.")
                             afficherPiece() 
@@ -885,6 +910,7 @@ def cmd_bouton_valider():
                         message_echec.set("")
 
                     if not(KB1.Echec2) and KB1.Echec_et_mat():
+
                         print("Pat")
                         message_echec.set("Les blancs sont en pat.")
                         afficherPiece()
@@ -900,7 +926,9 @@ def cmd_bouton_valider():
 
                     if coup_special.get() in ["","PEP"]:
                         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
+
                     elif coup_special.get() != "abandon":
+
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
 
                 LPOSITION=fonction_lecture(position)
@@ -924,7 +952,7 @@ PeutJouer=False #pour empêcher les joueurs de jouer hors partie
 
 # Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
-    
+
     #appel pop up permettant de choisir les couleurs
     pop_up_commencer()
 
