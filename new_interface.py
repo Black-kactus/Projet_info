@@ -691,7 +691,7 @@ def open_popup_perdu(couleur):
         Label(top, image = python_imageperduB).pack(side = "bottom", fill = "both", expand = "yes")
 
     Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
-    top.mainloop() 
+    # top.mainloop() 
     
 
 #Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
@@ -918,6 +918,7 @@ def cmd_bouton_commencer():
 #Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perdu
 def cmd_bouton_abandonner():
     print("abandonner")
+    message_echec.set("Partie terminée")
     if couleurA.get()=="Blanc":
         open_popup_perdu("Blanc")
     else:
