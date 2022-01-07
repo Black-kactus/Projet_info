@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
-from main import fonction_attente
+#from main import fonction_attente
 from piece import Piece,Pion
 
 #probleme de prototypage
@@ -44,43 +44,16 @@ def fonction_lecture_prises(prises):
         PRISES.append(str(p))
     return PRISES
 
+
 #Fonction : permet d'interpréter des scripts 
 
-#def interpreteur_script(script):
-    #import time
-    #global i
-    #if i==0:
-        #script = script.split(' ')
-    # for i in range(len(script)):
-    #if i < len(script):
-        #if len(coup_script)==1: #par ex [roque]
-            #piece_a_bouger.set("")
-            #coup.set("")
-            #coup_special.set(coup_script[0])
-            #print(coup_special.get())
-        #elif len(coup_script)==2: #par ex [d1,d2]
-            #piece_a_bouger.set(coup_script[0])
-            #coup.set(coup_script[1])
-            #coup_special.set('')
-        #elif len(coup_script)==3: #par ex [d1,d2,PEP]
-            #piece_a_bouger.set(coup_script[0])
-            #coup.set(coup_script[1])
-            #coup_special.set(coup_script[2])
-
-        #if coup_special.get()=="abandon":
-            #cmd_bouton_abandonner()
-        #else:
-            #i= i+1
-            #root.after(1, interpreteur_script(script))
-            #time.sleep(1)
-            # time.sleep(1)
-            #root.after(1000, cmd_bouton_valider)
-
-attente=False # pour le script
+#attente=False # pour le script
 
 def interpreteur_script(script):
-    import time
+    #import time
+
     script = script.split(' ')
+
     for i in range(len(script)):
         coup_script=script[i].split("-")
 
@@ -107,12 +80,14 @@ def interpreteur_script(script):
 
             cmd_bouton_abandonner()
         else:
-            #time.sleep(10)
-            
+            #sleep(5)
+
             #from main import fonction_attente
-            #fonction_attente()
+            #global attente
+            #attente=fonction_attente()
 
             cmd_bouton_valider()
+
 
 
 # Mise en place de la fenêtre d'interface principale
@@ -435,6 +410,7 @@ def BoutonGestClicdroit(evt, i, j ):
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
     global LPOSITION
+
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
             if (i+j)%2 == 0: couleur = 'black'
@@ -486,7 +462,7 @@ def afficherPiecesPrises():
     from board import prises_Noir, prises_Blanc
     LPIECESPRISESNOIRES = fonction_lecture_prises(prises_Noir)
     LPIECESPRISESBLANC = fonction_lecture_prises(prises_Blanc)
-    print(LPIECESPRISESBLANC)
+    print("LPIECESPRISESBLANC", LPIECESPRISESBLANC)
     # for i in range(8):
         # if LPIECESPRISES[0][i] == 0: ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image = LIMAGESPICESPRISES[1][i]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
         # else : ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
@@ -850,8 +826,9 @@ def cmd_bouton_valider():
     global PeutJouer
     global attente
 
-    if attente:
-        sleep(5)
+    # if attente:
+    #     import time
+    #     time.sleep(5)
 
     if PeutJouer:
 
@@ -956,25 +933,22 @@ def cmd_bouton_valider():
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
 
                 LPOSITION=fonction_lecture(position)
+                print(LPOSITION)
                 coup.set("")
                 piece_a_bouger.set("")
                 coup_special.set("")
+
                 afficherPiece()
                 actualiserPiecesPrises()
                 afficherPiecesPrises()
 
+                
 
             elif result[0]==False:
                 message_erreur.set(result[1])
                 #print(message_erreur.get())
             
-            # if message_erreur=="":
-            #     if couleurA.get()=="Blanc":
-            #         global coups_Noirs
-            #         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + "\n"
-            #     else:
-            #         global coups_Blancs
-            #         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + "\n"
+            
 
 
 PeutJouer=False #pour empêcher les joueurs de jouer hors partie
@@ -1200,7 +1174,7 @@ def cmd_bouton_options():
     Entry_Script= ttk.Entry(content2, textvariable= script)
     Entry_Script.grid(column=1,row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command=lambda: cmd_bouton_Compiler_script)
+    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command= cmd_bouton_Compiler_script)
     Bouton_CompilerScript.grid(column=0,row=4, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)
