@@ -18,3 +18,8 @@ def interpreteur(coup, piece_a_bouger, couleurA, coup_special, nbcoup):
         
     move = mouvement(position[colonne_A][ligne_A],[colonne_P,ligne_P],couleurA,coup_special,nbcoup)
     return (move[0],move[1],position[colonne_P][ligne_P])
+
+
+def fonction_attente():
+    global attente
+    attente=True

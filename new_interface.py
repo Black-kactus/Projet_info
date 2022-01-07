@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
+from main import fonction_attente
 from piece import Piece,Pion
 
 #probleme de prototypage
@@ -75,6 +76,8 @@ def fonction_lecture_prises(prises):
             # time.sleep(1)
             #root.after(1000, cmd_bouton_valider)
 
+attente=False # pour le script
+
 def interpreteur_script(script):
     import time
     script = script.split(' ')
@@ -85,22 +88,32 @@ def interpreteur_script(script):
             piece_a_bouger.set("")
             coup.set("")
             coup_special.set(coup_script[0])
-            print(coup_special.get())
+
         elif len(coup_script)==2: #par ex [d1,d2]
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
             coup_special.set('')
+
         elif len(coup_script)==3: #par ex [d1,d2,PEP]
             piece_a_bouger.set(coup_script[0])
             coup.set(coup_script[1])
             coup_special.set(coup_script[2])
 
         if coup_special.get()=="abandon":
+            #time.sleep(5)
+            
+            #from main import fonction_attente
+            #fonction_attente()
+
             cmd_bouton_abandonner()
         else:
+            #time.sleep(10)
+            
+            #from main import fonction_attente
+            #fonction_attente()
+
             cmd_bouton_valider()
-            #time.sleep(5)
-            #time.sleep(1)
+
 
 # Mise en place de la fenêtre d'interface principale
 root = Tk()
@@ -421,7 +434,6 @@ def BoutonGestClicdroit(evt, i, j ):
 #Fonction : gère l'affichage des pièces sur l'échiquier 
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
-    print("bonjour")
     global LPOSITION
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
@@ -833,6 +845,11 @@ def cmd_bouton_son():
 # Fonction du bouton valider: gère la validation du coup
 def cmd_bouton_valider():
     global PeutJouer
+    global attente
+
+    if attente:
+        sleep(5)
+
     if PeutJouer:
 
         lettres = "a,b,c,d,e,f,g,h"
@@ -872,7 +889,6 @@ def cmd_bouton_valider():
                 if couleurA.get() == "Blanc":
 
                     if KN1.Echec2():
-                        #breakpoint()
                         message_echec.set("Les noirs sont en échec.")
                         print("Echec noir")
                         if KN1.Echec_et_mat(nbcoup):
@@ -1180,7 +1196,7 @@ def cmd_bouton_options():
     Entry_Script= ttk.Entry(content2, textvariable= script)
     Entry_Script.grid(column=1,row=2, columnspan=1, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command= cmd_bouton_Compiler_script)
+    Bouton_CompilerScript= ttk.Button(content2, text= "Compiler le script",command=lambda: cmd_bouton_Compiler_script)
     Bouton_CompilerScript.grid(column=0,row=4, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     Bouton_Regles2= ttk.Button(content2, text= "Règles du jeu",command= cmd_bouton_regles)

@@ -188,7 +188,6 @@ def roqueB():
   update_coord_piece(KB1,l,c)
 
   if A or B: #si attaque sur le chemin
-    print("A",A,"B",B) #
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
   elif position[4][0]==KB1 and position[7][0]==TB2: #tout bon, roque
@@ -228,7 +227,6 @@ def roqueN():
   update_coord_piece(KN1,l,c)
 
   if A or B: #attaque sur le chemin
-    print("A",A,"B",B) #
     return (False,"Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
   elif position[4][7]==KN1 and position[7][7]==TN2: #tout bon, roque
@@ -270,7 +268,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
 
   elif piece==0:
     message_erreur=("Vous n'avez pas de pièce à cet endroit.")
-    #print("Vous n'avez pas de pièce à cet endroit.")
     return (False,message_erreur)
 
   else:
@@ -279,7 +276,6 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
       ligne=case[1]
       colonne=case[0]
       if ligne==piece.ligne and colonne==piece.colonne:
-        #print(piece,case,"piece.ligne:",piece.ligne,"piece.colonne",piece.colonne)
         message_erreur="Votre pièce est déjà à cette position."
         return (False,message_erreur)
 
@@ -516,7 +512,7 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
           
           else:
             eaten_Blanc(position[piece.colonne - 1][piece.ligne])
-            print((prises_Blanc))
+            print(prises_Blanc)
             position[piece.colonne - 1][piece.ligne] = 0  # on enlève le pion adversaire du board
             update_coord_piece(piece, ligne, colonne)
             return (True, 0)
