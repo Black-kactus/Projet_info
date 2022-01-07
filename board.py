@@ -383,7 +383,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
               else: # mouvement en diagonale
 
                 if position[colonne][ligne]==0:#s'il n'y a pas de pièce sur la case
-                    message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
+                    message_erreur="Vous ne pouvez déplacer votre pion \nen diagonale que pour manger une pièce."
                     return (False,message_erreur)
 
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
@@ -450,7 +450,7 @@ def mouvement(piece,case,CouleurQuiJoue,coup_special,nbcoup): #case = liste des 
               else: # mouvement diagonal
 
                 if position[colonne][ligne]==0: #s'il n'y a pas de pièce sur la case
-                  message_erreur="Vous ne pouvez déplacer votre pion en diagonale que pour manger une pièce."
+                  message_erreur="Vous ne pouvez déplacer votre pion \nen diagonale que pour manger une pièce."
                   return (False,message_erreur)
 
                 elif position[colonne][ligne]._couleur!=CouleurQuiJoue: #si la pièce est de la couleur opposée, on la mange
