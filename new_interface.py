@@ -10,9 +10,7 @@ import winsound
 
 
 
-#probleme de prototypage
 
-# from panique import Bouton_Regles
 
 # # #pour récupérer la liste des positions
 # from board import position
@@ -98,13 +96,9 @@ root = Tk()
 root.title("Jeu d'échec - Lila ~ Lou ~ Raphaël")
 root.iconbitmap(r'icone.ico')
 
-# root.geometry("1100x500")
-
 #Permet de gérer le style des boutons
 s = ttk.Style()
 theme = 0
-
-# print(s.theme_use())
 
 #Fonction : permet de changer le thème de tkinter, pour contrer le problème d'affichage sur différents système d'exploitation cf MAC OS
 def choix_theme():
@@ -122,8 +116,6 @@ def choix_theme():
     elif theme == 3:
         s.theme_use('vista')
         theme = 0
-# s.configure(root, font=('Raleway', 10))
-# s.configure(root, font=('', 10))
 
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
@@ -365,13 +357,6 @@ dicopiece2.update(dicopiecePromoFouN2)
 dicopiece2.update(dicopiecePromoTourN2)
 dicopiece2.update(dicopiecePromoCavalierN2)
 
-#Creation des indices horizontaux de l'échiquier
-# for i in range(0,18,2):
-#     L = ["","A",'B',"C","D","E","F",'G','H']
-#     ttk.Label(content, text= str(int(9-i/2)),relief="solid",anchor=CENTER).grid(column=0, row=i, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-#     ttk.Label(content, text= L[int(i/2)],relief="solid",anchor=CENTER).grid(column=i, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-
-
 
 #Liste des positions renvoyées par Raph
 LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
@@ -379,37 +364,12 @@ LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],
 LPIECESPRISES = [[1,1,0,1,0,1,1,0],[1,0,1,0,1,0,1,1],[1,0,1,1,1,0,1,1],[1,0,1,1,0,1,1,1]]
 LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python_imageDB2, python_imageRB2, python_imageFB2, python_imageCB2, python_imageTB2], [python_imageTN2, python_imageCN2, python_imageFN2, python_imageDN2, python_imageRN2, python_imageFN2, python_imageCN2, python_imageTN2] ]
 
-# def afficherPiece():
-#     global LPOSITION
-#     for i in range(len(LPOSITION)) : 
-#         for j in range(len(LPOSITION)):
-#             if (i+j)%2 == 0: couleur = 'black'
-#             else : couleur = "white"
-#             if couleurA.get() == "Noir":
-#                 ttk.Label(content, image=dicopiece[LPOSITION[7-j][i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
-#             else : 
-#                 ttk.Label(content, image=dicopiece[LPOSITION[j][7-i]],background = couleur,relief="solid",anchor=CENTER).grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
-#     if couleurA.get() == "Noir":
-#         for k in range(0,18,2):
-#             # L = ["","A",'B',"C","D","E","F",'G','H']
-#             L = ["","H","G",'F',"E","D","C","B",'A']
-#             ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-#             ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-#     else: 
-#         for k in range(0,18,2):
-#             L = ["","A",'B',"C","D","E","F",'G','H']
-#             # L = ["","H","G",'F',"E","D","C","B",'A']
-#             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-#             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-
 #Fonction : gère l'évènement clic gauche sur les pièces de l'échiquer
 def BoutonGestClicgauche(evt, i, j):
-    # print('CGauche',i, j )
     piece_a_bouger.set(chr(j+97)+str(8-i))
 
 #Fonction : gère l'évènement clic droit sur les pièces de l'échiquer
 def BoutonGestClicdroit(evt, i, j ):
-    # print('CDroit', i, j)
     coup.set(chr(j+97)+str(8-i))
 
 #Fonction : gère l'affichage des pièces sur l'échiquier 
@@ -447,14 +407,12 @@ def afficherPiece():
 
     if couleurA.get() == "Noir":
         for k in range(0,18,2):
-            # L = ["","A",'B',"C","D","E","F",'G','H']
             L = ["","H","G",'F',"E","D","C","B",'A']
             ttk.Label(content, text= str(int(k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             ttk.Label(content, text= L[int((k)/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
     else: 
         for k in range(0,18,2):
             L = ["","A",'B',"C","D","E","F",'G','H']
-            # L = ["","H","G",'F',"E","D","C","B",'A']
             ttk.Label(content, text= str(int(9-k/2)),relief="solid",anchor=CENTER).grid(column=0, row=k, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
             ttk.Label(content, text= L[int(k/2)],relief="solid",anchor=CENTER).grid(column=k, row=0, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
@@ -518,7 +476,7 @@ def actualiserPiecesPrises():
                 LPIECESPRISES[i][j] = 0
                 #si la piece est mangée on marque 0
 
-#Fonction gère le son 
+#Fonction de la gestion du son 
 duree = 1
 def cmd_bouton_bruitage():
     global music
@@ -528,7 +486,7 @@ def cmd_bouton_bruitage():
         winsound.PlaySound(None, 0)
         print("bruitage")
 
-#Pop up: gère le cas de la promotion de pion
+#Pop up: gestion du cas de la promotion de pion
 def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
@@ -632,7 +590,7 @@ def open_popup_promo(piece,couleur):
     for j in range(12):
         content4.rowconfigure(j, weight=1)
 
-#Pop up : gère le cas où la partie est nulle (cas du pat)
+#Pop up : gestion du cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
     global coups_Blancs, coups_Noirs
     message_echec.set("Partie terminée")
@@ -658,7 +616,6 @@ def open_popup_pat(couleur):
     couleurBg= "white"
     if couleur=="Noir":
         ch = str("Egalité !")
-        # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
 
         Label(contentPat, text= ch , font=('Helvetica 25 bold'), background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=5)
         Label(contentPat, text= "Les Noirs sont pat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -681,12 +638,8 @@ def open_popup_pat(couleur):
         elif coup_special.get() != "abandon":
             coups_Noirs = coups_Noirs + coup_special.get()
 
-    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
-    # top.mainloop() 
-    
-    #Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
-    #RAPH on a push en meme temps
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
     Label(contentPat,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
@@ -698,9 +651,6 @@ def open_popup_pat(couleur):
 
     for j in range(0,20):
         contentPat.rowconfigure(j,weight=1)
-    
-
-    # PopUp_pat.mainloop() 
 
 #Pop up : si la partie est finie
 def open_popup_perdu(couleur):
@@ -723,11 +673,10 @@ def open_popup_perdu(couleur):
     contentPerdu = ttk.Frame(PopupPerdu, padding=(0,0,0,0))
     contentPerdu.grid(column=0, row=0, sticky=(N, S, E, W))
 
-    # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
     couleurBg= "white"
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get()+".")
-        # ch = str(prenom_noir.get()) + " a perdu LOL, looser!. Bravo à " + str(prenom_blanc.get())
+       
 
         Label(contentPerdu, text= ch , font=('Helvetica 25 bold'), background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=5)
         Label(contentPerdu, text= "Les Noirs sont en échec et mat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -750,12 +699,8 @@ def open_popup_perdu(couleur):
         elif coup_special.get() != "abandon":
             coups_Noirs = coups_Noirs + coup_special.get()
 
-    # Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack()
-    # top.mainloop() 
-    
-    #Label(top, text= "Durée de la partie : "+str(round(duree_de_la_partie))+" s", font=('Helvetica 10')).pack() # durée en secondes
+
     secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
-    #RAPH on a push en meme temps
     duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
     Label(contentPerdu,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
@@ -767,12 +712,6 @@ def open_popup_perdu(couleur):
 
     for j in range(0,20):
         contentPerdu.rowconfigure(j,weight=1)
-    
-    # print(coups_Blancs) #
-    # print(coups_Noirs) #
-
-    # top.mainloop() 
-
     
 
 #Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
@@ -847,6 +786,7 @@ def pop_up_commencer():
 def cmd_bouton_visuel():
     pass
 
+#Fonction du choix si le son est activé ou désactivé
 def cmd_bouton_son():
     global music
     if music: 
@@ -854,7 +794,7 @@ def cmd_bouton_son():
     else: 
         music = True
 
-# Fonction du bouton valider: gère la validation du coup
+#Fonction du bouton valider: gestion de la validation du coup
 def cmd_bouton_valider():
     global PeutJouer
     global attente
@@ -881,7 +821,6 @@ def cmd_bouton_valider():
 
         else:
             from board import position,KB1,KN1
-            # print("valider")
             from main import interpreteur
             global LPOSITION
 
@@ -889,7 +828,6 @@ def cmd_bouton_valider():
             print(result)
 
             if result[0]:
-                #global LPOSITION
                 LPOSITION=fonction_lecture(position)
 
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]):
@@ -976,11 +914,8 @@ def cmd_bouton_valider():
                 afficherPiecesPrises()
                 cmd_bouton_bruitage()
 
-                
-
             elif result[0]==False:
                 message_erreur.set(result[1])
-                #print(message_erreur.get())
             
             
 
@@ -989,6 +924,7 @@ PeutJouer=False #pour empêcher les joueurs de jouer hors partie
 
 # Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
+    
     #appel pop up permettant de choisir les couleurs
     pop_up_commencer()
 
@@ -1007,7 +943,6 @@ def cmd_bouton_commencer():
     message_echec.set("")
 
     if prenom_blanc.get()== "":
-        # print("oui")
         prenom_blanc.set("Blanc")
     if prenom_noir.get() =="":
         prenom_noir.set("Noir")
@@ -1023,7 +958,6 @@ def cmd_bouton_commencer():
     afficherPiece()
     actualiserPiecesPrises()
     afficherPiecesPrises()
-    # print("commencer")
 
 #Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perdu
 def cmd_bouton_abandonner():
@@ -1039,16 +973,6 @@ def cmd_bouton_abandonner():
     else:
         coups_Noirs = coups_Noirs + "abandon"
         open_popup_perdu("Noir")
-
-#Ancien bouton test utilisé pour voir si l'implémentation visuelle marche
-def cmd_bouton_test():
-    global LPOSITION
-    LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1",0,0,"PB5",0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
-    print("test")
-    message_erreur.set("bye bitch")
-
-# def cmd_bouton_pieces_perdues():
-#     pass
 
 #Fonction du bouton complier script : permet de compiler un script 
 i = 0
@@ -1257,22 +1181,18 @@ Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, p
 Bouton_commencer = Button(content, text= "Nouvelle Partie",command= cmd_bouton_commencer,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-##
 Label_couleurquijoue = ttk.Label(content, text= "Personne qui joue",relief="solid",anchor=CENTER)
 Label_couleurquijoue.grid(column=20, row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_couleuractualise= ttk.Label(content, textvariable= couleurA, anchor= CENTER, relief="solid")
 Label_couleuractualise2= ttk.Label(content, textvariable= prenom, anchor= CENTER, relief="solid")
 Label_couleuractualise2.grid(column=20+int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
-##
- 
-##
+
 Label_Nbcoup = ttk.Label(content, text= "Coup n°",relief="solid",anchor=CENTER)
 Label_Nbcoup.grid(column=20 + int(largeur/2), row=2, columnspan=int(largeur/4), rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_coup_actualise= ttk.Label(content, textvariable= nbcoup, anchor = CENTER, relief = "solid")
 Label_coup_actualise.grid(column=20 +3*int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
-## 
 
 Lpieceabouger = ttk.Label(content, text= "Pièce à bouger",relief="solid",anchor=CENTER)
 Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1288,9 +1208,6 @@ Entry_coup.grid(column=20,row=7, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),
 
 Bouton_valider= ttk.Button(content, text= "Valider",command= cmd_bouton_valider)
 Bouton_valider.grid(column=20,row=9, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
-
-# Bouton_test= ttk.Button(content, text= "Bouton TEST",command= cmd_bouton_test)
-# Bouton_test.grid(column=20,row=15, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Label_CoupSpecial= ttk.Label(content, text= "Coup spécial",relief="solid",anchor=CENTER)
 Label_CoupSpecial.grid(column=20, row=8, columnspan=int(largeur/2), rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1313,11 +1230,6 @@ Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pad
 
 # permet de faire une boucle visuelle 
 root.mainloop()
-
-# dicopieceB = {"TB1":"","CB1":"","FB1":"","QB1":"","KB1":"","FB2":"","CB2":"","TB2":""}
-# dicopieceN= {"TN1":"","CN1":"","FN1":"","QN1":"","KN1":"","FN2":"","CN2":"","TN2":""}
-# dicopiecepionB = {"PB1":"","PB2":"","PB3":"","PB4":"","PB5":"","PB6":"","PB7":"","PB8":""}
-# dicopiecepionN = {"PN1":"","PN2":"","PN3":"","PN4":"","PN5":"","PN6":"","PN7":"","PN8":""}
 
 
 
