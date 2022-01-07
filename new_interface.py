@@ -490,7 +490,7 @@ def afficherPiecesPrises():
     from board import prises_Noir, prises_Blanc
     LPIECESPRISESNOIRES = fonction_lecture_prises(prises_Noir)
     LPIECESPRISESBLANC = fonction_lecture_prises(prises_Blanc)
-    print(LPIECESPRISESBLANC)
+    # print(LPIECESPRISESBLANC)
     # for i in range(8):
         # if LPIECESPRISES[0][i] == 0: ttk.Label(content, anchor= CENTER, relief="solid", background= couleurBg2, image = LIMAGESPICESPRISES[1][i]).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
         # else : ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2, background = couleurBg2).grid(column=20+i,row=12, columnspan=1, rowspan = 1 ,sticky=(N,S,E,W))
@@ -885,7 +885,7 @@ def cmd_bouton_valider():
 
         else:
             from board import position,KB1,KN1
-            print("valider")
+            # print("valider")
             from main import interpreteur
             global LPOSITION
 
@@ -1301,12 +1301,6 @@ Entry_CoupSpecial.grid(column=20 + int(largeur/2),row=8, columnspan=int(largeur/
 Bouton_Options= ttk.Button(content, text= "Options",command= cmd_bouton_options)
 Bouton_Options.grid(column=20,row=16, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-# Label_Script= ttk.Label(content, text= "Script",relief="solid",anchor=CENTER)
-# Label_Script.grid(column=20, row=15, columnspan=2, rowspan=1 ,sticky=(N,S,E,W),pady=1, padx=1)
-
-# Entry_Script= ttk.Entry(content, textvariable= script)
-# Entry_Script.grid(column=22,row=15, columnspan=int(largeur/2), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
-
 Bouton_Abandonner= ttk.Button(content, text= "Reconnaître sa cuisante défaite",command= cmd_bouton_abandonner)
 Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
@@ -1316,8 +1310,6 @@ Label_actualiseerreur.grid(column=20,row=11, columnspan=largeur, rowspan=1,stick
 Lechec = ttk.Label(content, textvariable= message_echec,relief="solid",anchor=CENTER, foreground='red')
 Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-# Label_piecesperdues= ttk.Label(content, text= "Pièces perdues",relief="solid",anchor=CENTER)
-# Label_piecesperdues.grid(column=20, row=13, columnspan = largeur, rowspan=1 ,sticky=(N,S,E,W))
 
 # permet de faire une boucle visuelle 
 root.mainloop()
