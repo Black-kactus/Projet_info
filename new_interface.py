@@ -913,10 +913,10 @@ def cmd_bouton_valider():
                     prenom.set(prenom_noir.get())
 
                     global coups_Blancs
-                    if coup_special.get() in ["","PEP"]:
+                    if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
                         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
 
-                    elif coup_special.get() != "abandon":
+                    elif message_erreur.get()=="" and coup_special.get() != "abandon":
                         coups_Blancs = coups_Blancs + coup_special.get() + "\n"
 
 
@@ -975,11 +975,10 @@ def cmd_bouton_valider():
 
                     global coups_Noirs
 
-                    if coup_special.get() in ["","PEP"]:
+                    if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
                         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
 
-                    elif coup_special.get() != "abandon":
-
+                    elif message_erreur.get()=="" and coup_special.get() != "abandon":
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
 
                 LPOSITION=fonction_lecture(position)
@@ -1047,10 +1046,26 @@ def cmd_bouton_abandonner():
 
     if couleurA.get()=="Blanc":
         coups_Blancs = coups_Blancs + "abandon"
+
+        noirs_coups=coups_Noirs[::-1] #enlever le dernier coup de coups_noirs
+        i=noirs_coups.find("\n")
+        coups_Noirs=coups_Noirs[:len(coups_Noirs)-i-1]
+        noirs_coups=coups_Noirs[::-1]
+        i=noirs_coups.find(" ")
+        coups_Noirs=coups_Noirs[:len(coups_Noirs)-i-1]
+
         open_popup_perdu("Blanc")
 
     else:
         coups_Noirs = coups_Noirs + "abandon"
+
+        blancs_coups=coups_Blancs[::-1] #enlever le dernier coup de coups_noirs
+        i=blancs_coups.find("\n")
+        coups_Blancs=coups_Blancs[:len(coups_Blancs)-i-1]
+        blancs_coups=coups_Blancs[::-1]
+        i=blancs_coups.find(" ")
+        coups_Blancs=coups_Blancs[:len(coups_Blancs)-i-1]
+
         open_popup_perdu("Noir")
 
 #Fonction du bouton complier script : permet de compiler un script 
