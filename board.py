@@ -513,7 +513,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
 
           else:
             eaten_Blanc(position[coordC - 1][coordL])
-            print("prises blanches", prises_Blanc)
             position[coordC - 1][coordL] = 0  # on enlève le pion adversaire du board
             return (True, 0)
 

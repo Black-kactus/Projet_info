@@ -496,56 +496,66 @@ def open_popup_promo(piece,couleur):
         from piece import promoDameB
         print("Dame")
         promoDameB(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_tourB():
         from piece import promoTourB
         print("Tour")
         promoTourB(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_fouB():
         from piece import promoFouB
         print("Fou")
         promoFouB(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
         print("Cavalier")
         promoCavalierB(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_pionB():
         print("Pion")
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_dameN():
         from piece import promoDameN
         print("Dame")
         promoDameN(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_tourN():
         from piece import promoTourN
         print("Tour")
         promoTourN(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_fouN():
         from piece import promoFouN
         print("Fou")
         promoFouN(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
         print("Cavalier")
         promoCavalierN(piece)
+        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
         print("Pion")
+        afficherPiece()
         PopUp_promo.destroy()
 
     PopUp_promo= Toplevel()
@@ -561,7 +571,7 @@ def open_popup_promo(piece,couleur):
     content4 = ttk.Frame(PopUp_promo, padding=(0,0,0,0))
     content4.grid(column=0, row=0, sticky=(N, S, E, W))
 
-    Labeltext = ttk.Label(content4, text= "En quoi voulez-vous changer votre pion ?", ANCHOR=CENTER)
+    Labeltext = ttk.Label(content4, text= "En quoi voulez-vous changer votre pion ?", anchor=CENTER)
     Labeltext.grid(column=0, row=0, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
     if couleur=="Blanc":
