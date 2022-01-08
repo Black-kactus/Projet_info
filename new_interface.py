@@ -164,11 +164,11 @@ music = False
 ## Images de la pop up perdu
 
 ImageperduB = Image.open('defaite _des_blancsT.png')
-ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
+ImageperduB = ImageperduB.resize((200,200), Image.ANTIALIAS)
 python_imageperduB = ImageTk.PhotoImage(ImageperduB)
 
 ImageperduN = Image.open('defaite_des_noirsT.png')
-ImageperduN = ImageperduN.resize((300,300), Image.ANTIALIAS)
+ImageperduN = ImageperduN.resize((200,200), Image.ANTIALIAS)
 python_imageperduN = ImageTk.PhotoImage(ImageperduN)
 
 ## Images des règles 
