@@ -388,7 +388,7 @@ class Roi(Fou,Tour):
                                     a = 1
                                     mangee=position[case[0]][case[1]]  # on garde tout en mémoire pour annuler le mouvement
                                 
-                                if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si le mouvement est possible, pas mat
+                                if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si le mouvement est possible, pas mat
                                     piece.ligne = ligne
                                     piece.colonne = colonne
                                     position[colonne][ligne] = piece
@@ -419,7 +419,7 @@ class Roi(Fou,Tour):
                                         a = 1
                                         mangee = position[case[0]][case[1]]
                                         
-                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si mouvement possible, pas mat
+                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
                                         piece.ligne = ligne
                                         piece.colonne = colonne
                                         position[colonne][ligne] = piece
@@ -445,7 +445,7 @@ class Roi(Fou,Tour):
                                         a = 1
                                         mangee = position[case[0]][case[1]]
 
-                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si mouvement possible, pas mat
+                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
                                         piece.ligne = ligne
                                         piece.colonne = colonne
                                         position[colonne][ligne] = piece
@@ -472,7 +472,7 @@ class Roi(Fou,Tour):
                                     a = 1
                                     mangee = position[case[0]][case[1]]
 
-                                if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si mouvement possible, pas mat
+                                if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
                                     piece.ligne = ligne
                                     piece.colonne = colonne
                                     position[colonne][ligne] = piece
@@ -503,7 +503,7 @@ class Roi(Fou,Tour):
                                         a = 1
                                         mangee = position[case[0]][case[1]]
                                     
-                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si mouvement possible, pas mat
+                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
                                         self.ligne = ligne
                                         self.colonne = colonne
                                         position[colonne][ligne] = piece
@@ -535,7 +535,7 @@ class Roi(Fou,Tour):
                                         a = 1
                                         mangee = position[case[0]][case[1]]
                                     
-                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):
+                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] :
                                         piece.ligne=ligne
                                         piece.colonne=colonne
                                         position[colonne][ligne]=piece
@@ -564,7 +564,7 @@ class Roi(Fou,Tour):
                                         a = 1
                                         mangee = position[case[0]][case[1]]
                                     
-                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] and not(self.Echec2()):  # si mouvement possible, pas mat
+                                    if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
                                         piece.ligne = ligne
                                         piece.colonne = colonne
                                         position[colonne][ligne] = piece

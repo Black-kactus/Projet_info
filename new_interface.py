@@ -882,7 +882,7 @@ def cmd_bouton_valider():
                     else:
                         message_echec.set("")
                     
-                    if not(KN1.Echec2) and KN1.Echec_et_mat():
+                    if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
                         print("Pat")
                         message_echec.set("Les noirs sont en pat.")
                         afficherPiece()
@@ -890,6 +890,24 @@ def cmd_bouton_valider():
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Blanc")
+                        #
+                        if KN1.Echec2():
+                            message_echec.set("Les noirs sont en échec.")
+                            print("Echec noir")
+                            if KN1.Echec_et_mat(nbcoup):
+                                print("Echec et mat.")
+                                message_echec.set("Les noirs sont en échec et mat.")
+                                afficherPiece()
+                                open_popup_perdu("Noir")
+
+                        else:
+                            message_echec.set("")
+                        
+                        if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
+                            print("Pat")
+                            message_echec.set("Les noirs sont en pat.")
+                            afficherPiece()
+                            open_popup_pat("Noir")
 
                     couleurA.set("Noir")
                     prenom.set(prenom_noir.get())
@@ -919,7 +937,7 @@ def cmd_bouton_valider():
                     else:
                         message_echec.set("")
 
-                    if not(KB1.Echec2) and KB1.Echec_et_mat():
+                    if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
 
                         print("Pat")
                         message_echec.set("Les blancs sont en pat.")
@@ -928,6 +946,29 @@ def cmd_bouton_valider():
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Noir")
+                        #
+                        if KB1.Echec2():
+
+                            message_echec.set("Les blancs sont en échec.")
+                            print("Echec blanc")
+
+                            if KB1.Echec_et_mat(nbcoup):
+
+                                print("Echec et mat.")
+                                message_echec.set("Les blancs sont en échec et mat.")
+                                afficherPiece() 
+                                open_popup_perdu("Blanc")
+
+                        else:
+                            message_echec.set("")
+
+                        if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
+
+                            print("Pat")
+                            message_echec.set("Les blancs sont en pat.")
+                            afficherPiece()
+                            open_popup_pat("Blanc")
+                        #
 
                     couleurA.set("Blanc")
                     prenom.set(prenom_blanc.get())
