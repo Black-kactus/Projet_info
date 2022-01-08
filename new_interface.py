@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 from time import *
 #from main import fonction_attente
 from piece import Piece,Pion
-#import winsound
+import winsound
 
 
 
