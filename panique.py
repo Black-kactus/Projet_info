@@ -1,4 +1,5 @@
-# La véritable fenêtre d'interface 
+#Ancien fichier : gestion de l'interface (version de sauvegarde)
+
 # ajout de pop up
 # ajout de label avec erreur actualisé 
 # implémentation du retournement de plateau dans le jeu!

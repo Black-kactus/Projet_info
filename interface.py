@@ -1,3 +1,5 @@
+#Ancien fichier : gestion de l'interface
+
 import tkinter as tk
 from typing import Text
 
