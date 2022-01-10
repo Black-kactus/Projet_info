@@ -443,7 +443,7 @@ class Roi(Fou,Tour):
                         L = [[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]
                         for case in L: #on teste tous les mouvements possibles du roi
                             
-                            if not(self.test_echec_mat(piece,colonne,ligne,case,nbcoup)):
+                            if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                 return False
 
                     elif type(piece) == Pion:
@@ -452,7 +452,7 @@ class Roi(Fou,Tour):
 
                             L = [[colonne,ligne + 1],[colonne - 1,ligne + 1],[colonne + 1,ligne + 1]]
                             for case in L:
-                                if not(self.test_echec_mat(piece,colonne,ligne,case,nbcoup)):
+                                if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                     return False
                                     
 
@@ -460,7 +460,7 @@ class Roi(Fou,Tour):
 
                             L = [[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]
                             for case in L:
-                                if not(self.test_echec_mat(piece,colonne,ligne,case,nbcoup)):
+                                if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                     return False
                                     
 
@@ -468,7 +468,7 @@ class Roi(Fou,Tour):
 
                         L = [[colonne - 2,ligne + 1],[colonne - 2,ligne - 1],[colonne - 1,ligne + 2],[colonne - 1,ligne - 2],[colonne + 1,ligne + 2],[colonne + 1,ligne - 2],[colonne + 2,ligne + 1],[colonne + 2,ligne + 1],[colonne + 2,ligne - 1]]
                         for case in L:
-                            if not(self.test_echec_mat(piece,colonne,ligne,case,nbcoup)):
+                            if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                 return False
 
 
