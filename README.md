@@ -14,8 +14,11 @@ Pour l'interpreteur :
 #N,B = noir, blanc
 position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,PN3,FN1],[QB1,PB4,0,0,0,0,PN4,QN1],[KB1,PB5,0,0,0,0,PN5,KN1],[FB2,PB6,0,0,0,0,PN6,FN2],[CB2,PB7,0,0,0,0,PN7,CN2],[TB2,PB8,0,0,0,0,PN8,TN2]]
 
+
+
+
 Pour faire fonctionner le programme, vous devoir avoir un dossier contenant :
-- avec les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir  /  defaite_des_blancs, defaite_des_noirs. /  dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
+- avec les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir   /   defaite_des_blancs, defaite_des_noirs  /   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
 - les fichiers python board, piece, main, new_interface 
 - le fichier son ——, le fichier Scipts.txt. 
 
