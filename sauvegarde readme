@@ -1,0 +1,17 @@
+
+https://fr.jeffprod.com/blog/2014/comment-programmer-un-jeu-dechecs/
+
+https://fr.wikipedia.org/wiki/R%C3%A8gles_du_jeu_d%27%C3%A9checs
+
+https://docs.python.org/3/library/tk.html
+
+Meilleure documentation tkinter https://tkdocs.com/tutorial/grid.html#morefeatures
+
+créer executable : https://www.mathweb.fr/euclide/2019/02/01/creer-un-executable-sous-windows-a-partir-dun-programme-python/
+
+Pour l'interpreteur :
+#T,C,F,Q,K,P = tour, cavalier, fou, reine(queen), roi(king), pion
+#N,B = noir, blanc
+
+
+
