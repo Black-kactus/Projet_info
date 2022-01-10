@@ -28,13 +28,13 @@ def fonction_lecture(position):
     #from board import position
     from piece import Piece
     LPOSITION=[]
-    for l in range(len(position)):
+    for c in range(len(position)):
         LPOSITION.append([])
         for j in range(8):
-            if position[l][j]==0:
-                LPOSITION[l].append(0)
+            if position[c][j]==0:
+                LPOSITION[c].append(0)
             else:
-                LPOSITION[l].append(str(position[l][j]))
+                LPOSITION[c].append(str(position[c][j]))
     return(LPOSITION)
 
 #Fonction : permet de renvoyer un tableau de pièces prises par les blancs ou par les noirs 
@@ -827,7 +827,7 @@ def cmd_bouton_son():
 #Fonction du bouton valider: gestion de la validation du coup
 def cmd_bouton_valider():
     global PeutJouer
-    global attente
+    #global attente
 
     # if attente:
     #     import time
@@ -845,10 +845,10 @@ def cmd_bouton_valider():
         if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
-        if (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
+        elif (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
-        if not(coup_special.get() in special):
+        elif not(coup_special.get() in special):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
         else:
@@ -861,6 +861,10 @@ def cmd_bouton_valider():
 
             if result[0]:
                 LPOSITION=fonction_lecture(position)
+                afficherPiece()
+                actualiserPiecesPrises()
+                afficherPiecesPrises()
+                cmd_bouton_bruitage()
 
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]):
                     ligne=coup.get()[1]
@@ -878,7 +882,6 @@ def cmd_bouton_valider():
                         if KN1.Echec_et_mat(nbcoup):
                             print("Echec et mat.")
                             message_echec.set("Les noirs sont en échec et mat.")
-                            afficherPiece()
                             open_popup_perdu("Noir")
 
                     else:
@@ -887,11 +890,14 @@ def cmd_bouton_valider():
                     if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
                         print("Pat")
                         message_echec.set("Les noirs sont en pat.")
-                        afficherPiece()
                         open_popup_pat("Noir")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Blanc")
+                        LPOSITION=fonction_lecture(position)
+                        afficherPiece()
+                        actualiserPiecesPrises()
+                        afficherPiecesPrises()
                         #
                         if KN1.Echec2():
                             message_echec.set("Les noirs sont en échec.")
@@ -899,7 +905,6 @@ def cmd_bouton_valider():
                             if KN1.Echec_et_mat(nbcoup):
                                 print("Echec et mat.")
                                 message_echec.set("Les noirs sont en échec et mat.")
-                                afficherPiece()
                                 open_popup_perdu("Noir")
 
                         else:
@@ -908,7 +913,6 @@ def cmd_bouton_valider():
                         if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
                             print("Pat")
                             message_echec.set("Les noirs sont en pat.")
-                            afficherPiece()
                             open_popup_pat("Noir")
 
                     couleurA.set("Noir")
@@ -930,45 +934,40 @@ def cmd_bouton_valider():
                         print("Echec blanc")
 
                         if KB1.Echec_et_mat(nbcoup):
-
                             print("Echec et mat.")
                             message_echec.set("Les blancs sont en échec et mat.")
-                            afficherPiece() 
                             open_popup_perdu("Blanc")
 
                     else:
                         message_echec.set("")
 
                     if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
-
                         print("Pat")
                         message_echec.set("Les blancs sont en pat.")
-                        afficherPiece()
                         open_popup_pat("Blanc")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
                         open_popup_promo(result[2],"Noir")
+                        LPOSITION=fonction_lecture(position)
+                        afficherPiece()
+                        actualiserPiecesPrises()
+                        afficherPiecesPrises()
                         #
                         if KB1.Echec2():
-
                             message_echec.set("Les blancs sont en échec.")
                             print("Echec blanc")
 
                             if KB1.Echec_et_mat(nbcoup):
-
                                 print("Echec et mat.")
                                 message_echec.set("Les blancs sont en échec et mat.")
-                                afficherPiece() 
                                 open_popup_perdu("Blanc")
 
                         else:
                             message_echec.set("")
 
                         if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
-
                             print("Pat")
                             message_echec.set("Les blancs sont en pat.")
-                            afficherPiece()
                             open_popup_pat("Blanc")
                         #
 
@@ -989,10 +988,10 @@ def cmd_bouton_valider():
                 piece_a_bouger.set("")
                 coup_special.set("")
 
-                afficherPiece()
-                actualiserPiecesPrises()
-                afficherPiecesPrises()
-                cmd_bouton_bruitage()
+                # afficherPiece()
+                # actualiserPiecesPrises()
+                # afficherPiecesPrises()
+                # cmd_bouton_bruitage()
 
             elif result[0]==False:
                 message_erreur.set(result[1])
