@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 from time import *
 #from main import fonction_attente
 from piece import Piece,Pion
-#import winsound
+import winsound #bibliothèque de gestion du son
 
 
 
@@ -164,11 +164,11 @@ music = False
 ## Images de la pop up perdu
 
 ImageperduB = Image.open('defaite _des_blancsT.png')
-ImageperduB = ImageperduB.resize((300,300), Image.ANTIALIAS)
+ImageperduB = ImageperduB.resize((200,200), Image.ANTIALIAS)
 python_imageperduB = ImageTk.PhotoImage(ImageperduB)
 
 ImageperduN = Image.open('defaite_des_noirsT.png')
-ImageperduN = ImageperduN.resize((300,300), Image.ANTIALIAS)
+ImageperduN = ImageperduN.resize((200,200), Image.ANTIALIAS)
 python_imageperduN = ImageTk.PhotoImage(ImageperduN)
 
 ## Images des règles 
@@ -1202,7 +1202,7 @@ def cmd_bouton_cmtjouer():
     Label_Explication = ttk.Label(content4, text= "Utilisation du logiciel : ",relief="solid",anchor=CENTER)
     Label_Explication.grid(column=0, row=0, columnspan=10, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
     
-    ch2= "1- Commencer la partie :\nAppuyez sur le bouton 'Nouvelle Partie' et choisissez ensuite qui joue les blancs ou les noirs. \n\n2- Entrer les coups:\nPour entrer les coups rien de plus simple! Il suffit d'indiquer les coordonnées de la pièces que vous vouler jouer, sous la forme 'a5' (colonne puis ligne) dans la 1e zone de saisie, puis d'entrer dans la deuxième zone de saisie l'endroit où vous voulez vous diriger. Si le coup est incorrect, le jeu l'indiquera.\n\n3- Coup spéciaux: Dans la zone de saisie 'Coup spécial', vous pouvez jouer :\n- Une prise en passant : 'PEP'\n- Un petit roque : 'roque'\n- Un grand roque : 'ROQUE'\n\n4- Fin de partie : \nLe jeu indiquera les échecs et l'échec et mat, dans ce cas la partie sera terminé. De plus, vous pouvez reconnaitre votre défaite, lorsque c'est votre tour, en appuyant sur le bouton 'Reconnaître sa cuisante défaite'."
+    ch2= "1- Commencer la partie :\nAppuyez sur le bouton 'Nouvelle Partie' et choisissez ensuite qui joue les blancs ou les noirs. \n\n2- Entrer les coups:\nPour entrer les coups rien de plus simple! Il suffit soit de cliquer (clic gauche) sur la pièce que vous vous déplacer et de cliquer (clic droit) à l'endroit où vous voulez la déplacer, ou bien, pour les plus puristes du clavier, d'indiquer les coordonnées de la pièces que vous vouler jouer, sous la forme 'a5' (colonne puis ligne) dans la 1e zone de saisie, puis d'entrer dans la deuxième zone de saisie l'endroit où vous voulez vous diriger. Si le coup est incorrect, le jeu l'indiquera.\n\n3- Coup spéciaux: Dans la zone de saisie 'Coup spécial', vous pouvez jouer :\n- Une prise en passant : 'PEP'\n- Un petit roque : 'roque'\n- Un grand roque : 'ROQUE'\n\n4- Fin de partie : \nLe jeu indiquera les échecs et l'échec et mat, dans ce cas la partie sera terminé. De plus, vous pouvez reconnaitre votre défaite, lorsque c'est votre tour, en appuyant sur le bouton 'Reconnaître sa cuisante défaite'."
     ttk.Label(content4, text = ch2, wraplength = "480", background = 'white',relief="solid",anchor=CENTER).grid(row = 1, column = 0, rowspan= 8, columnspan= 10,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(0,8):

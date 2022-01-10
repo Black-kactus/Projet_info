@@ -1,3 +1,6 @@
+#Ancien fichier : gestion de l'interface (version la plus améliorée des tests)
+
+
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk

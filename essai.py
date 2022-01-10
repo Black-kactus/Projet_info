@@ -1,4 +1,6 @@
+#Ancien fichier : gestion de l'interface (à l'aide d'un code de référence)
 # Import des noms du module
+
 from tkinter import *
 # Création d'un objet "fenêtre"
 fenetre = Tk()

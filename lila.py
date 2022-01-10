@@ -1,4 +1,4 @@
-#fenetre essai
+#Ancien fichier : gestion de l'interface
 
 from tkinter import *
 from tkinter import ttk
