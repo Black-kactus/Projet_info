@@ -501,8 +501,10 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_tourB():
         from piece import promoTourB
+        from board import position
         print("Tour")
         promoTourB(piece)
+        LPOSITION=fonction_lecture(position)
         afficherPiece()
         PopUp_promo.destroy()
 
