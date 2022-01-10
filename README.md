@@ -1,3 +1,27 @@
+[![forthebadge](https://forthebadge.com/images/badges/cc-0.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-tkinter.svg)](https://forthebadge.com)
+
+# Sleep Well : the smart alarm-clock app
+
+Sleep Well aims at developing a smart alarm clock for iPhones that monitors your breathing rhythm while you sleep to determine your sleep cycles.
+
+## Technologies
+- JS
+- CSS 
+- React
+
+## Contribute to the project
+
+Sleep Well is an open source project. Feel free to fork the source and contribute with your own features.
+
+## Authors
+
+Our code squad : Francis & Stéphane
+
+## Licensing
+
+This project was built under the Creative Commons licence.
+## Jeu d'échec programmé en python. 
+
 Pour faire fonctionner le programme, vous devez avoir avoir un dossier contenant :
 - les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir   /   defaite_des_blancsT, defaite_des_noirsT  /   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion / checkmate
 - les fichiers python board.py, piece.py, main.py, new_interface.py 
@@ -13,3 +37,5 @@ Ce bouton vous permet de :
 - connaître les commandes spéciales du jeu dans "Comment jouer ?"
 - changer le style d'affichage si vous avez un système OS par exemple, sur lequel le thème aqua tkinter ne permet pas d'utiliser certaines fonctionnalités
 - activer/désactiver le son
+
+Ce projet a été réalisé par Lila @, Lou et Raphaël en CPES 2 - Sciences. 
