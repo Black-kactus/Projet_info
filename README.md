@@ -1,5 +1,5 @@
-Pour faire fonctionner le programme, vous devoir avoir un dossier contenant :
-- avec les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir   /   defaite_des_blancs, defaite_des_noirs  /   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
+Pour faire fonctionner le programme, vous devez avoir avoir un dossier contenant :
+- les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir   /   defaite_des_blancs, defaite_des_noirs  /   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
 - les fichiers python board.py, piece.py, main.py, new_interface.py 
 - le fichier Scripts.txt pour avoir les scripts de certains coups spéciaux 
 
