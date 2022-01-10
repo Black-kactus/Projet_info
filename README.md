@@ -1,6 +1,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/cc-0.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) 
 
-# Jeu d'échec programmé en python. 
+# Jeu d'Echecs programmé en python. 
 
 ## Installation :
 Pour faire fonctionner le programme, vous devez avoir avoir un dossier contenant :
