@@ -16,9 +16,9 @@ position=[[TB1,PB1,0,0,0,0,PN1,TN1],[CB1,PB2,0,0,0,0,PN2,CN1],[FB1,PB3,0,0,0,0,P
 
 Pour faire fonctionner le programme, vous devoir avoir un dossier contenant :
 -avec les images nécessaires :
-   - cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir
-   - defaite_des_blancs, defaite_des_noirs
-   - dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
+   cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir
+   defaite_des_blancs, defaite_des_noirs
+   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion
 -les fichiers python board, piece, main, new_interface 
 -le fichier son ——, le fichier Scipts.txt. 
 
