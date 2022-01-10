@@ -860,11 +860,7 @@ def cmd_bouton_valider():
             print(result)
 
             if result[0]:
-                LPOSITION=fonction_lecture(position)
-                afficherPiece()
-                actualiserPiecesPrises()
-                afficherPiecesPrises()
-                cmd_bouton_bruitage()
+                
 
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]):
                     ligne=coup.get()[1]
@@ -988,10 +984,10 @@ def cmd_bouton_valider():
                 piece_a_bouger.set("")
                 coup_special.set("")
 
-                # afficherPiece()
-                # actualiserPiecesPrises()
-                # afficherPiecesPrises()
-                # cmd_bouton_bruitage()
+                afficherPiece()
+                actualiserPiecesPrises()
+                afficherPiecesPrises()
+                cmd_bouton_bruitage()
 
             elif result[0]==False:
                 message_erreur.set(result[1])
