@@ -425,7 +425,10 @@ class Roi(Fou,Tour):
 
 
 
-    def Echec_et_mat(self,nbcoup): #implémentation "intelligente"
+    # Fonctions pour repérer l'échec et mat :
+
+        # Implémentation "intelligente"
+    def Echec_et_mat(self,nbcoup): 
         from board import position, prises_Blanc, prises_Noir
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
@@ -536,11 +539,9 @@ class Roi(Fou,Tour):
 
 
 
+    # Implémentation naïve de la fonction Echec_et_mat
 
-
-
-
-    def Echec_et_mat_naif(self, nbcoup): # implémentation naïve
+    def Echec_et_mat_naif(self, nbcoup): 
         from board import position, mouvement, prises_Blanc, prises_Noir 
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
