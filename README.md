@@ -9,7 +9,8 @@ Pour faire fonctionner le programme, vous devez avoir avoir un dossier contenant
 - le fichier Scripts.txt pour avoir les scripts de certains coups spéciaux 
 
 ## Utilisation: 
-Une fois le programme new_interface.py lancé, il affiche une fenêtre d’interface sur laquelle vous pouvez jouer. Cliquez sur "Nouvelle Partie", puis rentrez le nom des joueur.e.s et cliquez sur "Lancer la Partie". Pour jouer, entrez la pièce à jouer dans "Pièce à bouger" (ou effectuez un clic gauche sur la case correspondante) puis sa case d’arrivée dans "Coup à jouer" (ou effectuez un clic droit sur la case correspondante) et appuyer sur valider. Si le coup est possible, il s'effectue et c'est au tour de l'autre joueur.e, sinon, un message d'erreur s'affiche et c'est toujours à votre tour de jouer. 
+Une fois le programme new_interface.py lancé, il affiche une fenêtre d’interface sur laquelle vous pouvez jouer. Cliquez sur "Nouvelle Partie", puis rentrez le nom des joueur.e.s et cliquez sur "Lancer la Partie". Pour jouer, entrez la pièce à jouer dans "Pièce à bouger" (ou effectuez un clic gauche sur la case correspondante) puis sa case d’arrivée dans "Coup à jouer" (ou effectuez un clic droit sur la case correspondante), si besoin le coup spécial à réaliser (roque ou prise en passant) dans "Coup spécial" et appuyer sur valider. Si le coup est possible, il s'effectue et c'est au tour de l'autre joueur.e, sinon, un message d'erreur s'affiche et c'est toujours à votre tour de jouer. 
+Pour valider une promotion de pion, recliquer une seconde fois sur le bouton valider après avoir choisi sa nouvelle pièce.
 
 Pour plus de détails, cliquez sur "Options": 
 
