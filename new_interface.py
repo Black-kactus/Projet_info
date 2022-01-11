@@ -884,20 +884,7 @@ def cmd_bouton_valider():
                         open_popup_promo(result[2],"Blanc")
                         afficherPiece()
                         afficherPiecesPrises()
-                        
-                        if KN1.Echec2(): # après avoir fait la promotion, on revérifie si on est en échec
-                            message_echec.set("Les noirs sont en échec.")
-
-                            if KN1.Echec_et_mat(nbcoup):
-                                message_echec.set("Les noirs sont en échec et mat.")
-                                open_popup_perdu("Noir")
-
-                        else:
-                            message_echec.set("")
-                        
-                        if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
-                            message_echec.set("Les noirs sont en pat.")
-                            open_popup_pat("Noir")
+                    
 
                     couleurA.set("Noir")
                     prenom.set(prenom_noir.get())
@@ -937,19 +924,6 @@ def cmd_bouton_valider():
                         afficherPiece()
                         afficherPiecesPrises()
                         
-                        if KB1.Echec2():
-                            message_echec.set("Les blancs sont en échec.")
-
-                            if KB1.Echec_et_mat(nbcoup):
-                                message_echec.set("Les blancs sont en échec et mat.")
-                                open_popup_perdu("Blanc")
-
-                        else:
-                            message_echec.set("")
-
-                        if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
-                            message_echec.set("Les blancs sont en pat.")
-                            open_popup_pat("Blanc")
 
                     couleurA.set("Blanc")
                     prenom.set(prenom_blanc.get())
