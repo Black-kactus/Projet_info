@@ -5,7 +5,10 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
 from piece import Piece,Pion
-import winsound #bibliothèque de gestion du son
+from sys import platform
+
+if platform == "win32":
+    import winsound #bibliothèque de gestion du son de windows
 
 
 # Enregistre les coups joués depuis le début
@@ -89,6 +92,7 @@ def choix_theme():
         s.theme_use('vista')
         theme = 0
 
+#Mise en place interface graphique
 content = ttk.Frame(root, padding=(0,0,0,0))
 frame = ttk.Frame(content, borderwidth=0, relief="ridge", width=200, height=200)
 content.grid(column=0, row=0, sticky=(N, S, E, W))
@@ -132,6 +136,9 @@ prenom.set("")
 
 duree_de_la_partie = 0
 music = False
+
+texte_son = StringVar()
+texte_son.set("Activer le son")
 
 ## Images de la pop up perdu
 
@@ -296,7 +303,7 @@ dicopiece.update(dicopiecePromoTourN)
 dicopiece.update(dicopiecePromoCavalierN)
 
 
-#Dictionnaire dicopiece2 pour la promotion 
+#Dictionnaire dicopiece2 pour les pièces prises
 
 dicopiece2 = {0 : python_imageVIDE2}
 dicopieceB2 = {"TB1": python_imageTB2,"CB1": python_imageCB2,"FB1": python_imageFB2,"QB1":python_imageDB2,"KB1":python_imageRB2,"FB2":python_imageFB2,"CB2":python_imageCB2,"TB2":python_imageTB2}
@@ -432,16 +439,17 @@ def afficherPiecesPrises():
                 ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+2*(l-8),row=15, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
      
 
-
-
 #Fonction de la gestion du son 
-duree = 1
+duree = 0.05
 def cmd_bouton_bruitage():
     global music
-    if music: 
-        winsound.PlaySound('Whoush.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
-        time.sleep(duree) 
-        winsound.PlaySound(None, 0)
+    if platform == "win32":
+        if music: 
+            winsound.PlaySound('chess.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
+            sleep(duree) 
+            winsound.PlaySound(None, 0)
+    else :
+        texte_son.set("Son que sous windows!")
 
 
 #Pop up: gestion du cas de la promotion de pion
@@ -759,11 +767,10 @@ def cmd_bouton_son():
     global music
     if music: 
         music = False
+        texte_son.set("Activer le son")
     else: 
         music = True
-
-
-
+        texte_son.set("Désactiver le son")
 
 valider_promo=False #booléen qui sert à pouvoir valider sa promotion de pion
 
@@ -965,8 +972,6 @@ def cmd_bouton_valider():
             elif result[0]==False: #si le mouvement n'est pas possible
                 message_erreur.set(result[1])
             
-            
-
 
 PeutJouer=False # booléen qui sert à empêcher les joueurs de jouer après la fin de la partie
 
@@ -1118,7 +1123,7 @@ def cmd_bouton_regles():
     ttk.Label(Onglet6_Dame, wraplength = '480', text = "La Dame peut se déplacer comme la Tour et le Fou: elle peut donc se déplacer verticalement, horizontalement et en diagonale, d’autant de cases qu’elle veut.", compound= 'top', image= python_imageDD,background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
     
     #Onglet 7 : Roi
-    ttk.Label(Onglet7_Roi, image= python_imageDR, text = "Le Roi peut se déplacer dans toutes les directions, mais seulement de une case. Lorsqu’un Roi est attaqué par une pièce adverse, on dit qu’il est en échec. Un joueur n’a pas le droit de laisser son Roi en échec. Il n’a pas non plus le droit de déplacer son Roi sur une case où celui-ci sera attaqué (donc en échec).", compound ='top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
+    ttk.Label(Onglet7_Roi, image= python_imageDR, text = "Le Roi peut se déplacer dans toutes les directions, mais seulement d'une seule case. Lorsqu’un Roi est attaqué par une pièce adverse, on dit qu’il est en échec. Un joueur n’a pas le droit de laisser son Roi en échec. Il n’a pas non plus le droit de déplacer son Roi sur une case où celui-ci sera attaqué (donc en échec).", compound ='top', wraplength = '480', background = 'white',relief="solid",anchor=CENTER).grid(row = 0, column = 0, rowspan= 20, columnspan= 20,sticky=(N,S,E,W),pady=1, padx=1)
 
     #Onglet 8 : Action spéciale
     ch2= "\t\t\t\tPrise en passant\nCoup spéciaux du pion :\n- Prise en passant : Lorsqu’un pion situé sur sa rangée de départ avance de deux cases et se retrouve à côté d’un pion adverse, alors l’adversaire peut, au coup suivant (et uniquement ce coup-là), prendre le pion qui vient d’avancer avec son pion comme si le pion adverse n’avait avancé que d’une case.\n- Promotion de pion: Lorsqu’un joueur avance un pion sur la dernière rangée, ou s’il prend avec un pion une pièce qui se trouve sur la dernière rangée, il doit le remplacer par une pièce de son choix (Dame, Tour, Fou ou Cavalier), de la même couleur, quelles que soient les pièces restantes sur l’échiquier. \nLe Roque: \nLorsque le Roi et cette Tour sont encore sur leurs cases initiales et qu’il n’y a plus de pièces entre eux, le joueur peut déplacer de deux cases le Roi vers la Tour, puis placer cette Tour sur la case juste à côté du Roi, de l’autre côté. Le roque peut être effectué sur l’aile roi (on parle alors de petit roque) ou sur l’aile dame (on parle alors de grand roque). Attention, si le roi est Roi est en échec, si une case qu’il doit traverser est attaquée ou si sa case d’arrivée est attaquée, alors le roque est interdit."
@@ -1213,7 +1218,7 @@ def cmd_bouton_options():
     Bouton_Visuels= ttk.Button(content2, text= "Changer le style d'affichage :)",command= choix_theme)
     Bouton_Visuels.grid(column=0,row=10, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
-    Bouton_son= ttk.Button(content2, text= "Activer/Desactiver le son",command= cmd_bouton_son)
+    Bouton_son= ttk.Button(content2, textvariable=texte_son,command= cmd_bouton_son)
     Bouton_son.grid(column=0,row=12, columnspan=2, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(0,2):
@@ -1222,7 +1227,7 @@ def cmd_bouton_options():
     for j in range(0,12):
         content2.rowconfigure(j,weight=1)
 
-#permet l'expension des boutons 
+#Code qui permet l'expension des boutons 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
     
@@ -1232,14 +1237,14 @@ for i in range(0,36):
 for j in range(0,18):
     content.rowconfigure(j,weight=1)
 
-#on peut facilement retirer les bordures en retirant relief
 largeur = 16
-
-#Tous les labels, entry et boutons
 longueurColonne = 4
 
-Lvide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
-Lvide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
+
+#Tous les labels, entry et boutons de la fenêtre principale
+
+Label_vide = ttk.Label(content, text= "",relief="solid",anchor=CENTER)
+Label_vide.grid(column=18, row=0, columnspan=2, rowspan=18,sticky=(N,S,E,W),pady=1, padx=1)
 
 Bouton_commencer = Button(content, text= "Nouvelle Partie",command= cmd_bouton_commencer,relief="solid",highlightbackground="red", activebackground="grey",highlightcolor="red",background="white")
 Bouton_commencer.grid(column=20, row=0, columnspan=largeur, rowspan=2,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1257,8 +1262,8 @@ Label_Nbcoup.grid(column=20 + int(largeur/2), row=2, columnspan=int(largeur/4), 
 Label_coup_actualise= ttk.Label(content, textvariable= nbcoup, anchor = CENTER, relief = "solid")
 Label_coup_actualise.grid(column=20 +3*int(largeur/4),row=2, columnspan=int(largeur/4), rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
-Lpieceabouger = ttk.Label(content, text= "Pièce à bouger",relief="solid",anchor=CENTER)
-Lpieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
+Label_pieceabouger = ttk.Label(content, text= "Pièce à bouger",relief="solid",anchor=CENTER)
+Label_pieceabouger.grid(column=20, row=4, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 Entry_pieceabouger= ttk.Entry(content, textvariable= piece_a_bouger)
 Entry_pieceabouger.grid(column=20,row=5, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
@@ -1287,9 +1292,8 @@ Bouton_Abandonner.grid(column=20,row=17, columnspan=largeur, rowspan=1,sticky=(N
 Label_actualiseerreur= ttk.Label(content, textvariable= message_erreur, anchor = CENTER, justify = CENTER, relief="solid", foreground = 'orange', background='white')
 Label_actualiseerreur.grid(column=20,row=11, columnspan=largeur, sticky=(N,S,E,W), rowspan=1,pady=1, padx=1)
 
-Lechec = ttk.Label(content, textvariable= message_echec,relief="solid",anchor=CENTER, foreground='red')
-Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
-
+Label_echec = ttk.Label(content, textvariable= message_echec,relief="solid",anchor=CENTER, foreground='red')
+Label_echec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pady=1, padx=1)
 
 # permet de faire une boucle visuelle 
 root.mainloop()
