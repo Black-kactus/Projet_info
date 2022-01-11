@@ -219,10 +219,10 @@ class Pion(Piece):
 class Roi(Fou,Tour):
 
 
-    def __init__(self, couleur, colonne, ligne, numero, echec=False):
+    def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
         self._valeur = 0
-        self.echec = echec
+        self.echec = False # sert à savoir si le roi a déjà été en échec (utile pour roque)
         self.Move1 = False  # sert à savoir si le roi a déjà bougé (utile pour roque)
 
 
@@ -234,7 +234,7 @@ class Roi(Fou,Tour):
 
 
 
-    # Fonctions pour l'échec et l'échec et mat
+    # Fonctions pour repérer l'échec et l'échec et mat
 
         # Fonctions pour l'échec
 
@@ -361,6 +361,7 @@ class Roi(Fou,Tour):
     
 
 
+    # Repérage de l'échec et mat :
 
     #Fonctions auxiliaires pour l'implémentation intelligente de Echec_et_mat
 
