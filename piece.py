@@ -863,15 +863,3 @@ def promoCavalierN(piece):
     position[piece.colonne][piece.ligne] = Cavalier("Noir", piece.colonne, piece.ligne, cpt+1)
     piece.colonne = -3
     piece.ligne = -3
-
-
-
-
-# pour chaque pièce :
-# def mouvementpossible (self,case) :
-    # if dans les règles (pas de sortie de l'échiqiuer, bonne forme de déplacement, pas d'autre pièce sur le chemin):
-    #   return True
-    # elif piece ne bouge pas:
-    #   return True
-    # else:
-    #   return False
