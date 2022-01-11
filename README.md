@@ -14,7 +14,7 @@ Une fois le programme new_interface.py lancé, il affiche une fenêtre d’inter
 Pour jouer, entrez la pièce à jouer dans "Pièce à bouger" (ou effectuez un clic gauche sur la case correspondante) puis sa case d’arrivée dans "Coup à jouer" (ou effectuez un clic droit sur la case correspondante), si besoin le coup spécial à réaliser (roque ou prise en passant) dans "Coup spécial" et appuyer sur valider. 
 
 Si le coup est possible, il s'effectue et c'est au tour de l'autre joueur.e, sinon, un message d'erreur s'affiche et c'est toujours à votre tour de jouer. 
-Pour valider une promotion de pion, recliquer une seconde fois sur le bouton valider après avoir choisi sa nouvelle pièce.
+Pour valider une promotion de pion, recliquez une seconde fois sur le bouton valider après avoir choisi sa nouvelle pièce.
 
 Pour plus de détails, cliquez sur "Options": 
 
