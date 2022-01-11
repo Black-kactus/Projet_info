@@ -7,6 +7,7 @@ Pour faire fonctionner le programme, vous devez avoir avoir un dossier contenant
 - les images nécessaires : cavalier_blanc, roi_blanc, reine_blanche, fou_blanc, tour_blanche, pion_blanc, cavalier_noir, roi_noir, reine_noire, fou_noir, tour_noire, pion_noir   /   defaite_des_blancsT, defaite_des_noirsT  /   dep_roi, dep_tour, dep_dame, dep_fou, dep_cavalier, dep_pion / tableau, vide, checkmate, icone
 - les fichiers python board.py, piece.py, main.py, new_interface.py 
 - le fichier Scripts.txt pour avoir les scripts de certains coups spéciaux 
+- le ficher Sripts Kasparov vs Deep Blue qui contient le script de la première partie de 1996 qui les a vu s'affronter
 
 ## Utilisation: 
 Une fois le programme new_interface.py lancé, il affiche une fenêtre d’interface sur laquelle vous pouvez jouer. Cliquez sur "Nouvelle Partie", puis rentrez le nom des joueur.e.s et cliquez sur "Lancer la Partie". 
