@@ -65,13 +65,13 @@ def eaten_Noir(argument):  # les noirs mangent une pièce
   argument.ligne = -2
 
 
-def eaten_Blanc(argument):
+def eaten_Blanc(argument): # les blancs mangent une pièce
   prises_Blanc.append(argument)  # on ajoute la pièce à la liste des pièces mangées
   argument.colonne = -1  # on change les coordonées de la pièce mangée
   argument.ligne = -1
 
 
-def move_Piece(piece, colonne, ligne):
+def move_Piece(piece, colonne, ligne): # pour bouger une pièce
   position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
   position[colonne][ligne] = piece  # on met à jour la liste position
 
