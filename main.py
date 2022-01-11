@@ -1,3 +1,5 @@
+# Fonction qui transforme les entrées de l'utilisateur en données lisibles par la fonction mouvement
+
 def interpreteur(coup, piece_a_bouger, couleurA, coup_special, nbcoup):
 
     from board import mouvement,position
@@ -18,10 +20,4 @@ def interpreteur(coup, piece_a_bouger, couleurA, coup_special, nbcoup):
         
     move = mouvement(position[colonne_depart][ligne_depart], [colonne_arrivee,ligne_arrivee], couleurA, coup_special, nbcoup)
     return (move[0], move[1], position[colonne_arrivee][ligne_arrivee])
-
-
-
-# def fonction_attente():
-#     # global attente
-#     # attente=True
-#     return True
+    #renvoie (le mouvement est-il possible?, message d'erreur éventuel, pièce qu'on vient de bouger)
