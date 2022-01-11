@@ -317,8 +317,6 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
             else:  # s'il n'y a pas d'autre pièce sur la case
               move_Piece(piece, colonne, ligne)
-              #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-              #position[colonne][ligne] = piece  # on met à jour la liste position
               coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
               coordL = piece.ligne
               update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -353,8 +351,6 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
                 else:
                   move_Piece(piece, colonne, ligne)
-                  #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                  #position[colonne][ligne] = piece  # on met à jour la liste position
                   coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
                   coordL = piece.ligne
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -373,8 +369,6 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
                 else:
                   move_Piece(piece, colonne, ligne)
-                  #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                  #position[colonne][ligne] = piece  # on met à jour la liste position
                   coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
                   coordL = piece.ligne
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -422,8 +416,6 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
                 else:
                   move_Piece(piece, colonne, ligne)
-                  #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                  #position[colonne][ligne] = piece  # on met à jour la liste position
                   coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
                   coordL = piece.ligne
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -442,8 +434,6 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
                 else:
                   move_Piece(piece, colonne, ligne)
-                  #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-                  #position[colonne][ligne] = piece  # on met à jour la liste position
                   coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
                   coordL = piece.ligne
                   update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -512,8 +502,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
 
         if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1:  # si on fait la PEP juste après le coup de l'adversaire qui met son pion au bon endroit
           move_Piece(piece, colonne, ligne)
-          #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          #position[colonne][ligne] = piece  # on la met sur la nouvelle case
           coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
           coordL = piece.ligne
           update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -534,8 +522,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
 
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1:  #si la PEP est juste après le coup de l'adversaire qui met son pion au bon endroit
           move_Piece(piece, colonne, ligne)
-          #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          #position[colonne][ligne] = piece  # on la met sur la nouvelle case
           coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
           coordL = piece.ligne
           update_coord_piece(piece, ligne, colonne)  # on met à jour les coordonnées de la pièce
@@ -567,8 +553,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
 
         if position[piece.colonne - 1][piece.ligne]._condition2 == int(nbcoup.get())-1:  #si la PEP est juste après le coup de l'adversaire qui met son pion au bon endroit
           move_Piece(piece, colonne, ligne)
-          #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          #position[colonne][ligne] = piece  # on la met sur la nouvelle case
           coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
           coordL = piece.ligne
           update_coord_piece(piece, ligne, colonne)
@@ -589,8 +573,6 @@ def prise_en_passant(piece, case, CouleurQuiJoue, nbcoup):
 
         if position[piece.colonne + 1][piece.ligne]._condition2 == int(nbcoup.get())-1:  # si la PEP est juste après le coup de l'adversaire qui met son pion au bon endroit
           move_Piece(piece, colonne, ligne)
-          #position[piece.colonne][piece.ligne] = 0  # on enlève la pièce de son ancienne case
-          #position[colonne][ligne] = piece  # on la met sur la nouvelle case
           coordC = piece.colonne  # on enregistre les anciennes coordonnéees au cas où on aurait besoin d'annuler le mvt
           coordL = piece.ligne
           update_coord_piece(piece, ligne, colonne)
