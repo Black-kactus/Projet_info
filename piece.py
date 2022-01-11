@@ -242,7 +242,7 @@ class Roi(Fou,Tour):
 
     # Fonctions pour l'échec et l'échec et mat
 
-    def Echec1(self):  # complexité très élevée
+    def Echec1(self):  # implémentation naïve
         from board import position
         for c in position:
             for piece in c:
@@ -251,7 +251,7 @@ class Roi(Fou,Tour):
         return False
     
 
-    def Echec2(self):  # meilleure complexité
+    def Echec2(self):  # implémentation "intelligente"
         from board import position
 
         # Pièce qui bouge en diagonale : Dame ou Fou
@@ -368,6 +368,8 @@ class Roi(Fou,Tour):
 
 
 
+    #Fonctions auxiliaires pour l'implémentation intelligente de Echec_et_mat
+
     def test_echec_mat_pas_bloque(self,piece,colonne,ligne,case,nbcoup):
         from board import position,mouvement,prises_Blanc,prises_Noir
         a = 0
@@ -378,12 +380,12 @@ class Roi(Fou,Tour):
                 mangee=position[case[0]][case[1]]  # on garde tout en mémoire pour annuler le mouvement
             
             if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si le mouvement est possible, pas mat
-                piece.ligne = ligne
+                piece.ligne = ligne # on annule le mouvement
                 piece.colonne = colonne
                 position[colonne][ligne] = piece
                 position[case[0]][case[1]] = 0
                 
-                if a == 1:
+                if a == 1: #si on a mangé une pièce, on annule aussi son mouvement
                     mangee.ligne = case[1]
                     mangee.colonne = case[0]
                     position[case[0]][case[1]] = mangee
@@ -407,8 +409,8 @@ class Roi(Fou,Tour):
                 mangee = position[case[0]][case[1]]
             
             if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
-                self.ligne = ligne
-                self.colonne = colonne
+                piece.ligne = ligne
+                piece.colonne = colonne
                 position[colonne][ligne] = piece
                 position[case[0]][case[1]] = 0
 
@@ -422,14 +424,14 @@ class Roi(Fou,Tour):
                         prises_Noir.pop()
                 return False,False    
 
-            if a==1: #si une piece sur le chemin, on arrête la boucle
-                return(False,True)  
+            elif a==1: #si une piece sur le chemin, on arrête la boucle car la pièce ne pourra de toute façon pas se déplacer plus loin
+                return(True,True)  
 
         return True,False
 
 
 
-    def Echec_et_mat_1(self,nbcoup): #implémentation "intelligente"
+    def Echec_et_mat(self,nbcoup): #implémentation "intelligente"
         from board import position, prises_Blanc, prises_Noir
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
@@ -441,8 +443,8 @@ class Roi(Fou,Tour):
                     if type(piece) == Roi:
 
                         L = [[colonne,ligne+1],[colonne,ligne-1],[colonne+1,ligne],[colonne-1,ligne-1],[colonne+1,ligne+1],[colonne-1,ligne+1],[colonne-1,ligne],[colonne+1,ligne-1]]
+                        
                         for case in L: #on teste tous les mouvements possibles du roi
-                            
                             if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                 return False
 
@@ -474,27 +476,31 @@ class Roi(Fou,Tour):
 
                     if type(piece) == Fou or type(piece) == Dame:
                         for i in range(1, max(colonne, 7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[0]):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
 
                         for i in range(1, max(colonne, 7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne-i],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne-i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
                         
                         for i in range(1, max(colonne, 7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne-i],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne-i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
                         
                         for i in range(1, max(colonne, 7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne+i],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne+i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
                         
                     
@@ -502,30 +508,34 @@ class Roi(Fou,Tour):
                         
                         # Mouvement horizontal
                         for i in range(1,max(colonne,7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
 
                         for i in range(1,max(colonne,7-colonne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
                             
                                     
                         # Mouvement vertical
 
                         for i in range(1, max(ligne, 7-ligne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne+i],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne+i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break
 
                         for i in range(1, max(ligne, 7-ligne)+1):
-                            if not(self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne-i],nbcoup)):
+                            test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne-i],nbcoup)
+                            if not(test[0]):
                                 return False
-                            if self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)[1]:
+                            if test[1]:
                                 break  
                                     
         return True
@@ -536,7 +546,7 @@ class Roi(Fou,Tour):
 
 
 
-    def Echec_et_mat(self, nbcoup): #implémentation naïve
+    def Echec_et_mat_1(self, nbcoup): # implémentation naïve
         from board import position, mouvement, prises_Blanc, prises_Noir 
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
@@ -672,8 +682,8 @@ class Roi(Fou,Tour):
                                         mangee = position[case[0]][case[1]]
                                     
                                     if mouvement(piece, case, self._couleur, "", nbcoup)[0] :  # si mouvement possible, pas mat
-                                        self.ligne = ligne
-                                        self.colonne = colonne
+                                        piece.ligne = ligne #
+                                        piece.colonne = colonne #
                                         position[colonne][ligne] = piece
                                         position[case[0]][case[1]] = 0
 
