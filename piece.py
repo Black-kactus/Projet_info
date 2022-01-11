@@ -2,9 +2,9 @@ class Piece():
 
     def __init__(self, couleur, colonne, ligne, numero):
         self._couleur = couleur
-        self.ligne = ligne
-        self.colonne = colonne
-        self._numero = numero
+        self.ligne = ligne # coordonées dans la liste position de board (ou -1,-1 si mangée par les blancs et -2,-2 si mangée par les noirs)
+        self.colonne = colonne 
+        self._numero = numero # numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
 
     def __str__(self):
         nom = ""
@@ -27,14 +27,7 @@ class Piece():
             nom = "T" + nom
         return nom
         # on a un nom du type "PN3" pour le pion noir 3
-
-    # attributs de chaque piece :
-    # couleur
-    # coordonées sur le board (ou -1,-1 si mangée par les blancs et -2,-2 si mangée par les noirs)
-    # valeur
-    # numéro de piece (ex : 1 pour le pion 1 ou le cavalier 1..)
-
-
+    
 
 
 
@@ -42,7 +35,7 @@ class Fou(Piece):
 
     def __init__(self, couleur, colonne, ligne, numero):
         super().__init__(couleur, colonne, ligne, numero)
-        self._valeur = 3
+        self._valeur = 3 # valeur (pion : 1, cavalier : 3, fou : 3, tour : 5, dame : 9)
 
 
     def mouvement_possible(self, colonne, ligne):  # indique si le fou peut bouger jusqu'à la case indiquée
@@ -240,7 +233,10 @@ class Roi(Fou,Tour):
                 return False
 
 
+
     # Fonctions pour l'échec et l'échec et mat
+
+        # Fonctions pour l'échec
 
     def Echec1(self):  # implémentation naïve
         from board import position
@@ -262,7 +258,7 @@ class Roi(Fou,Tour):
         for i in range(1, min(max(self.colonne, 7-self.colonne), max(self.ligne, 7-self.ligne))+1):
 
             if not(self.colonne+i > 7) and not(self.ligne+i > 7) and position[self.colonne+i][self.ligne+i] != 0 and a:
-                A = position[self.colonne+i][self.ligne+i]
+                A = position[self.colonne+i][self.ligne+i] # diagonale de bas gauche à haut droit (/)
                 if (type(A) == Fou or type(A) == Dame) and A._couleur != self._couleur:
                     self.echec = True
                     return True
@@ -270,7 +266,7 @@ class Roi(Fou,Tour):
                     a = False
 
             if not(self.ligne-i < 0) and not(self.colonne-i < 0) and position[self.colonne-i][self.ligne-i] != 0 and b:
-                A = position[self.colonne-i][self.ligne-i]
+                A = position[self.colonne-i][self.ligne-i] # diagonale de haut droite à bas gauche (/)
                 if (type(A)==Fou or type(A) == Dame) and A._couleur != self._couleur:
                     self.echec = True
                     return True
@@ -278,7 +274,7 @@ class Roi(Fou,Tour):
                     b = False
 
             if self.colonne+i <= 7 and self.ligne-i >= 0 and position[self.colonne+i][self.ligne-i] != 0 and c:
-                A = position[self.colonne+i][self.ligne-i]
+                A = position[self.colonne+i][self.ligne-i] # diagonale de haut gauche à bas droit (\)
                 if (type(A) == Fou or type(A) == Dame) and A._couleur != self._couleur:
                     self.echec = True
                     return True
@@ -286,7 +282,7 @@ class Roi(Fou,Tour):
                     c = False
 
             if not(self.colonne-i < 0) and not(self.ligne+i > 7) and position[self.colonne-i][self.ligne+i] != 0 and d:
-                A = position[self.colonne-i][self.ligne+i]
+                A = position[self.colonne-i][self.ligne+i] # diagonale de bas droit à haut gauche (\)
                 if (type(A) == Fou or type(A) == Dame) and A._couleur != self._couleur:
                     self.echec = True
                     return True
@@ -316,20 +312,19 @@ class Roi(Fou,Tour):
         # Pièces qui bouge à l'horizontale ou à la verticale : Dame ou Tour
 
             # Mouvement horizontal :
-        A = 1
         a, b = True, True
 
         for i in range(1, max(self.colonne, 7-self.colonne)+1):
 
             if self.colonne+i <= 7 and position[self.colonne+i][self.ligne] != 0 and a:
-                A = position[self.colonne+i][self.ligne]
+                A = position[self.colonne+i][self.ligne] # vers la droite
                 if (type(A) == Tour or type(A) == Dame) and A._couleur != self._couleur:
                     return True
                 else:
                     a = False
 
             if self.colonne-i >= 0 and position[self.colonne-i][self.ligne] != 0 and b:
-                A = position[self.colonne-i][self.ligne]
+                A = position[self.colonne-i][self.ligne] # vers la gauche
                 if (type(A) == Tour or type(A) == Dame) and A._couleur != self._couleur:
                     return True
                 else:
@@ -337,19 +332,18 @@ class Roi(Fou,Tour):
 
 
             # Mouvement vertical :
-        A = 1
         c, d = True, True
         for i in range(1, max(self.ligne, 7-self.ligne)+1):
 
             if self.ligne+i <= 7 and position[self.colonne][self.ligne+i] != 0 and c:
-                A = position[self.colonne][self.ligne+i]
+                A = position[self.colonne][self.ligne+i] # vers le haut
                 if (type(A) == Tour or type(A) == Dame) and A._couleur != self._couleur:
                     return True
                 else:
                     c = False
 
             if not(self.ligne-i < 0) and position[self.colonne][self.ligne-i] != 0 and d:
-                A = position[self.colonne][self.ligne-i]
+                A = position[self.colonne][self.ligne-i] # vers le bas
                 if (type(A) == Tour or type(A)==Dame) and A._couleur!=self._couleur:
                     return True
                 else:
@@ -370,7 +364,7 @@ class Roi(Fou,Tour):
 
     #Fonctions auxiliaires pour l'implémentation intelligente de Echec_et_mat
 
-    def test_echec_mat_pas_bloque(self,piece,colonne,ligne,case,nbcoup):
+    def test_echec_mat_pas_bloque(self,piece,colonne,ligne,case,nbcoup): #regarde si le mouvement d'un pion, cavalier ou roi est possible
         from board import position,mouvement,prises_Blanc,prises_Noir
         a = 0
         if case[0] <= 7 and case[0] >= 0 and case[1] <= 7 and case[1] >= 0:  # si on reste dans l'échiquier
@@ -399,7 +393,7 @@ class Roi(Fou,Tour):
 
 
 
-    def test_echec_mat_bloque(self,piece,colonne,ligne,case,nbcoup):
+    def test_echec_mat_bloque(self,piece,colonne,ligne,case,nbcoup): #regarde si le mouvement d'une tour, dame ou fou est possible
         from board import position,mouvement,prises_Blanc,prises_Noir
         a = 0
         if case[0] <= 7 and case[0] >= 0 and case[1] <= 7 and case[1] >= 0:
@@ -451,52 +445,52 @@ class Roi(Fou,Tour):
                     elif type(piece) == Pion:
 
                         if piece._couleur == "Blanc":
-
                             L = [[colonne,ligne + 1],[colonne - 1,ligne + 1],[colonne + 1,ligne + 1]]
-                            for case in L:
+                            
+                            for case in L: #on teste tous les mouvements possibles du pion blanc
                                 if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                     return False
                                     
 
                         if piece._couleur=="Noir":
-
                             L = [[colonne,ligne - 1],[colonne - 1,ligne - 1],[colonne + 1,ligne - 1]]
-                            for case in L:
+                            
+                            for case in L: #on teste tous les mouvements possibles du pion noir
                                 if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                     return False
                                     
 
                     elif type(piece) == Cavalier:
-
                         L = [[colonne - 2,ligne + 1],[colonne - 2,ligne - 1],[colonne - 1,ligne + 2],[colonne - 1,ligne - 2],[colonne + 1,ligne + 2],[colonne + 1,ligne - 2],[colonne + 2,ligne + 1],[colonne + 2,ligne + 1],[colonne + 2,ligne - 1]]
-                        for case in L:
+                        
+                        for case in L: #on teste tous les mouvements possibles du cavalier
                             if not(self.test_echec_mat_pas_bloque(piece,colonne,ligne,case,nbcoup)):
                                 return False
 
 
                     if type(piece) == Fou or type(piece) == Dame:
-                        for i in range(1, max(colonne, 7-colonne)+1):
+                        for i in range(1, max(colonne, 7-colonne)+1): # diagonale de bas gauche à haut droit (/)
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne+i],nbcoup)
                             if not(test[0]):
                                 return False
                             if test[1]:
                                 break
 
-                        for i in range(1, max(colonne, 7-colonne)+1):
+                        for i in range(1, max(colonne, 7-colonne)+1): # diagonale de haut droit à bas gauche (/)
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne-i],nbcoup)
                             if not(test[0]):
                                 return False
                             if test[1]:
                                 break
                         
-                        for i in range(1, max(colonne, 7-colonne)+1):
+                        for i in range(1, max(colonne, 7-colonne)+1): # diagonale de haut gauche à bas droit (\)
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne-i],nbcoup)
                             if not(test[0]):
                                 return False
                             if test[1]:
                                 break
                         
-                        for i in range(1, max(colonne, 7-colonne)+1):
+                        for i in range(1, max(colonne, 7-colonne)+1): # diagonale de bas droit à haut gauche (\)
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne+i],nbcoup)
                             if not(test[0]):
                                 return False
@@ -507,14 +501,14 @@ class Roi(Fou,Tour):
                     if type(piece) == Tour or type(piece) == Dame:
                         
                         # Mouvement horizontal
-                        for i in range(1,max(colonne,7-colonne)+1):
+                        for i in range(1,max(colonne,7-colonne)+1): # vers la droite
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne+i,ligne],nbcoup)
                             if not(test[0]):
                                 return False
                             if test[1]:
                                 break
 
-                        for i in range(1,max(colonne,7-colonne)+1):
+                        for i in range(1,max(colonne,7-colonne)+1): # vers la gauche
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne-i,ligne],nbcoup)
                             if not(test[0]):
                                 return False
@@ -524,14 +518,14 @@ class Roi(Fou,Tour):
                                     
                         # Mouvement vertical
 
-                        for i in range(1, max(ligne, 7-ligne)+1):
+                        for i in range(1, max(ligne, 7-ligne)+1): # vers le haut
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne+i],nbcoup)
                             if not(test[0]):
                                 return False
                             if test[1]:
                                 break
 
-                        for i in range(1, max(ligne, 7-ligne)+1):
+                        for i in range(1, max(ligne, 7-ligne)+1): # vers le bas
                             test=self.test_echec_mat_bloque(piece,colonne,ligne,[colonne,ligne-i],nbcoup)
                             if not(test[0]):
                                 return False
@@ -546,7 +540,7 @@ class Roi(Fou,Tour):
 
 
 
-    def Echec_et_mat_1(self, nbcoup): # implémentation naïve
+    def Echec_et_mat_naif(self, nbcoup): # implémentation naïve
         from board import position, mouvement, prises_Blanc, prises_Noir 
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
@@ -875,9 +869,9 @@ def promoCavalierN(piece):
 
 # pour chaque pièce :
 # def mouvementpossible (self,case) :
-# if dans les règles (pas de sortie de l'échiqiuer, bonne forme de déplacement, pas d'autre pièce sur le chemin):
-# return True
-# elif piece ne bouge pas:
-# return True
-# else:
-# return False
+    # if dans les règles (pas de sortie de l'échiqiuer, bonne forme de déplacement, pas d'autre pièce sur le chemin):
+    #   return True
+    # elif piece ne bouge pas:
+    #   return True
+    # else:
+    #   return False

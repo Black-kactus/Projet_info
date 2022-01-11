@@ -1,7 +1,8 @@
 from piece import Cavalier, Dame, Fou, Pion, Roi, Tour
 
-#échiquier=[a[1,2,3,4,5,6,7,8],b[1,2,3,4,5,6,7,8],c[1,2,3,4,5,6,7,8],d[1,2,3,4,5,6,7,8],e[1,2,3,4,5,6,7,8],f[1,2,3,4,5,6,7,8],g[1,2,3,4,5,6,7,8],h[1,2,3,4,5,6,7,8]]
-#echiquier en liste de listes L[0][5] pour dire qu'on est en A6 par exemple
+#échiquier=[colonne a[1,2,3,4,5,6,7,8], colonne b[1,2,3,4,5,6,7,8], colonne c[1,2,3,4,5,6,7,8], colonne d[1,2,3,4,5,6,7,8], colonne e[1,2,3,4,5,6,7,8], colonne f[1,2,3,4,5,6,7,8], colonne g[1,2,3,4,5,6,7,8], colonne h[1,2,3,4,5,6,7,8]]
+#echiquier en liste de listes position[0][5] pour dire qu'on est en A6 par exemple
+
 
 # Initialisation du plateau et des pièces:
 
@@ -78,8 +79,8 @@ def eat_Piece(piece, colonne, ligne):
 
 
 def annuler_Mouvement(piece, ligne, colonne, coordC, coordL, arg):
-  position[coordC][coordL] = piece  # on annule le mouvement
-  position[colonne][ligne] = arg  # on annule le mouvement
+  position[coordC][coordL] = piece  # on remet la pièce à ses anciennes coordonnées
+  position[colonne][ligne] = arg  # on remet ce qu'il y avait sur la case d'arrivée
   piece.colonne = coordC
   piece.ligne = coordL
 
@@ -91,9 +92,10 @@ def annuler_Mouvement(piece, ligne, colonne, coordC, coordL, arg):
   # Grand roque blanc :
 
 def ROQUEB():
-  if KB1.echec == True or KB1.Move1 or TB2.Move1:  # déjà échec ou bougé
+  if KB1.echec == True or KB1.Move1 or TB2.Move1:  # si le roi a déjà été en échec ou si le roi ou la tour a déjà bougé
     return (False, "Vous ne pouvez plus roquer.")
-  elif position[3][0] != 0 or position[2][0] != 0 or position[1][0] != 0:  # chemin pas libre
+
+  elif position[3][0] != 0 or position[2][0] != 0 or position[1][0] != 0:  # il y a des pièces sur le chemin
     return (False, "Il y a des pièces sur le chemin.")
 
   position[3][0] = KN1  # on regarde si le roi sera attaqué sur le chemin du roque
@@ -110,10 +112,10 @@ def ROQUEB():
   position[2][0] = 0
   update_coord_piece(KN1, l, c)
 
-  if A or B:  # attaques en chemin
+  if A or B:  # si attaques en chemin
     return (False, "Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
-  elif position[4][0] == KB1 and position[0][0] == TB1:  # tout bon, roque
+  elif position[4][0] == KB1 and position[0][0] == TB1:  # tout bon, on peut roquer
     update_coord_piece(KB1, 0, 2)  # on met à jour les coordonnées des pièces
     position[2][0] = KB1
     update_coord_piece(TB1, 0, 3)
@@ -129,12 +131,13 @@ def ROQUEB():
   # Grand roque noir :
 
 def ROQUEN():
-  if KN1.echec == True or KN1.Move1 or TN2.Move1:
+  if KN1.echec == True or KN1.Move1 or TN2.Move1: # si le roi a déjà été en échec ou si le roi ou la tour a déjà bougé
     return (False, "Vous ne pouvez plus roquer.")
-  elif position[3][7] != 0 or position[2][7] != 0 or position[1][7] != 0:
+
+  elif position[3][7] != 0 or position[2][7] != 0 or position[1][7] != 0:  # il y a des pièces sur le chemin
     return (False, "Il y a des pièces sur le chemin.")
 
-  position[3][7] = KN1
+  position[3][7] = KN1 # on regarde si le roi sera attaqué sur le chemin du roque
   l = KN1.ligne
   c = KN1.colonne
   update_coord_piece(KN1, 7, 3)
@@ -148,10 +151,10 @@ def ROQUEN():
   position[2][7] = 0
   update_coord_piece(KN1, l, c)
 
-  if A or B:
+  if A or B: # si attaques en chemin
     return (False, "Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
-  elif position[4][7] == KN1 and position[0][7] == TN1:  # tout bon, roque
+  elif position[4][7] == KN1 and position[0][7] == TN1:  # tout bon, on peut roquer
     update_coord_piece(KN1, 7, 2)  # on met à jour les coordonnées des pièces
     position[2][7] = KN1
     update_coord_piece(TN1, 7, 3)
@@ -167,12 +170,13 @@ def ROQUEN():
   # Petit roque blanc
 
 def roqueB():
-  if KB1.echec == True or KB1.Move1 or TB2.Move1:  # si a déjà été en échec ou déjà bougé
+  if KB1.echec == True or KB1.Move1 or TB2.Move1:  # si le roi a déjà été en échec ou si le roi ou la tour a déjà bougé
     return (False, "Vous ne pouvez plus roquer.")
-  elif position[5][0] != 0 or position[6][0] != 0:  # si chemin pas dégegé
+
+  elif position[5][0] != 0 or position[6][0] != 0:  # il y a des pièces sur le chemin
     return (False, "La case d'arrivée est déjà occupée.")
 
-  position[5][0] = KB1
+  position[5][0] = KB1 # on regarde si le roi sera attaqué sur le chemin du roque
   l = KB1.ligne
   c = KB1.colonne
   update_coord_piece(KB1, 0, 5)
@@ -186,10 +190,10 @@ def roqueB():
   position[6][0] = 0
   update_coord_piece(KB1, l, c)
 
-  if A or B:  # si attaque sur le chemin
+  if A or B:  # si attaques sur le chemin
     return (False, "Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
-  elif position[4][0] == KB1 and position[7][0] == TB2:  # tout bon, roque
+  elif position[4][0] == KB1 and position[7][0] == TB2:  # tout bon, on peut roquer
     update_coord_piece(KB1, 0, 6)  # on met les coordonnées à jour
     position[6][0] = KB1
     update_coord_piece(TB2, 0, 5)
@@ -206,12 +210,13 @@ def roqueB():
   # Petit roque noir
 
 def roqueN():
-  if KN1.echec == True or KN1.Move1 or TN2.Move1:  # déjà échec ou bougé
+  if KN1.echec == True or KN1.Move1 or TN2.Move1:  # si le roi a déjà été en échec ou si le roi ou la tour a déjà bougé
     return (False, "Vous ne pouvez plus roquer.")
-  elif position[5][7] != 0 or position[6][7] != 0:  # chemin pas libre
+
+  elif position[5][7] != 0 or position[6][7] != 0:  # il y a des pièces sur le chemin
     return (False, "La case d'arrivée est déjà occupée.")
 
-  position[5][7] = KN1
+  position[5][7] = KN1 # on regarde si le roi sera attaqué sur le chemin du roque
   l = KN1.ligne
   c = KN1.colonne
   update_coord_piece(KN1, 7, 5)
@@ -225,10 +230,10 @@ def roqueN():
   position[6][7] = 0
   update_coord_piece(KN1, l, c)
 
-  if A or B:  # attaque sur le chemin
+  if A or B:  # si attaques sur le chemin
     return (False, "Vous ne pouvez pas roquer sans mettre votre roi en échec.")
 
-  elif position[4][7] == KN1 and position[7][7] == TN2:  # tout bon, roque
+  elif position[4][7] == KN1 and position[7][7] == TN2:  # tout bon, on peut roquer
     update_coord_piece(KN1, 7, 6)  # on met à jour les coordonnées des pièces
     position[6][7] = KN1
     update_coord_piece(TN2, 7, 5)
@@ -246,9 +251,9 @@ def roqueN():
 
 # Fonction qui regarde si le mouvement est possible et si oui bouge les pièces
 
-def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = liste des 2 coordonées de la case : [colonne,ligne]
+def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = liste des 2 coordonées de la case d'arrivée : [colonne,ligne]
 
-  if coup_special != "":
+  if coup_special != "": #si on fait un roque ou une PEP
 
     if coup_special == "roque":  # petit roque
       if CouleurQuiJoue == "Blanc":  # blancs
@@ -271,18 +276,19 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
 
   else:
     if piece._couleur == CouleurQuiJoue:
-      a = type(piece)
+      categorie = type(piece)
       ligne = case[1]
       colonne = case[0]
+
       if ligne == piece.ligne and colonne == piece.colonne:
         message_erreur = "Votre pièce est déjà à cette position."
         return (False, message_erreur)
 
       else:
 
-        if a!=Pion:
+        if categorie!=Pion:
 
-          if piece.mouvement_possible(colonne, ligne):
+          if piece.mouvement_possible(colonne, ligne): #si le déplacement jusqu'à cette case est possible
 
             if position[colonne][ligne] != 0:  # s'il y a déjà une pièce sur la case
 
@@ -299,8 +305,9 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
                   annuler_Mouvement(piece, ligne, colonne, coordC, coordL, possible_prise)
                   return (False, message_erreur)
 
-                if (a == Tour or a == Roi):
+                if (categorie == Tour or categorie == Roi):
                   piece.Move1 = True
+
                 if CouleurQuiJoue == 'Blanc':
                   eaten_Blanc(possible_prise)
                 else:  # noirs
@@ -322,7 +329,7 @@ def mouvement(piece, case, CouleurQuiJoue, coup_special, nbcoup):  # case = list
                 annuler_Mouvement(piece, ligne, colonne, coordC, coordL, 0)
                 return (False, message_erreur)
 
-              if (a == Tour or a == Roi):
+              if (categorie == Tour or categorie == Roi):
                   piece.Move1 = True
 
           else:

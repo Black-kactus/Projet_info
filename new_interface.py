@@ -4,18 +4,8 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from time import *
-#from main import fonction_attente
 from piece import Piece,Pion
 import winsound #bibliothèque de gestion du son
-
-
-
-
-
-# # #pour récupérer la liste des positions
-# from board import position
-# from piece import*
-# from new_interface import Entry_pieceabouger
 
 
 # Enregistre les coups joués depuis le début
@@ -25,8 +15,6 @@ coups_Blancs="Coups joués par les blancs :\n"
 
 #Fonction : permet d'importer le tableau qui contient la position des pièces 
 def fonction_lecture(position):
-    #from board import position
-    from piece import Piece
     LPOSITION=[]
     for c in range(len(position)):
         LPOSITION.append([])
@@ -47,12 +35,7 @@ def fonction_lecture_prises(prises):
 
 
 #Fonction : permet d'interpréter des scripts 
-
-#attente=False # pour le script
-
 def interpreteur_script(script):
-    #import time
-
     script = script.split(' ')
 
     for i in range(len(script)):
@@ -74,19 +57,9 @@ def interpreteur_script(script):
             coup_special.set(coup_script[2])
 
         if coup_special.get()=="abandon":
-            #time.sleep(5)
-            
-            #from main import fonction_attente
-            #fonction_attente()
-
             cmd_bouton_abandonner()
+
         else:
-            #sleep(5)
-
-            #from main import fonction_attente
-            #global attente
-            #attente=fonction_attente()
-
             cmd_bouton_valider()
 
 
@@ -106,7 +79,6 @@ def choix_theme():
     if theme == 0:
         s.theme_use('default')
         theme = 1
-        print("0")
     elif theme == 1: 
         s.theme_use('winnative')
         theme = 2
@@ -158,7 +130,7 @@ prenom_noir.set('Noir')
 prenom = StringVar()
 prenom.set("")
 
-duree_de_la_partie=0
+duree_de_la_partie = 0
 music = False
 
 ## Images de la pop up perdu
@@ -358,9 +330,8 @@ dicopiece2.update(dicopiecePromoTourN2)
 dicopiece2.update(dicopiecePromoCavalierN2)
 
 
-#Liste des positions renvoyées par Raph
-LPOSITION= [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
-# LPIECESPRISES = [[1,1,0,1,0,1,1,0],[1,0,1,0,1,0,1,1],[1,0,1,1,1,0,1,1],[1,0,1,1,0,1,1,1]]
+#Listes des positions
+LPOSITION = [["TB1","PB1",0,0,0,0,"PN1","TN1"],["CB1","PB2",0,0,0,0,"PN2","CN1"],["FB1","PB3",0,0,0,0,"PN3","FN1"],["QB1","PB4",0,0,0,0,"PN4","QN1"],["KB1","PB5",0,0,0,0,"PN5","KN1"],["FB2","PB6",0,0,0,0,"PN6","FN2"],["CB2","PB7",0,0,0,0,"PN7","CN2"],["TB2","PB8",0,0,0,0,"PN8","TN2"]]
 LPIECESPRISES = [[1,1,0,1,0,1,1,0],[1,0,1,0,1,0,1,1],[1,0,1,1,1,0,1,1],[1,0,1,1,0,1,1,1]]
 LIMAGESPICESPRISES = [[python_imageTB2, python_imageCB2, python_imageFB2, python_imageDB2, python_imageRB2, python_imageFB2, python_imageCB2, python_imageTB2], [python_imageTN2, python_imageCN2, python_imageFN2, python_imageDN2, python_imageRN2, python_imageFN2, python_imageCN2, python_imageTN2] ]
 
@@ -390,7 +361,7 @@ def afficherPiece():
                 BoutonListe[i].insert(j,Bouton_piece)
                 Bouton_piece.grid(row = 2*i+2, column = 2*j+2, rowspan= 2, columnspan= 2,sticky=(N,S,E,W),pady=1, padx=1)
                 
-                #Gestion des clics gauche et droits sur les images des pièces 
+                #Gestion des clics gauche et droit sur les images des pièces 
                 def gestCG(evt, i=i,j=j):   
                     return BoutonGestClicgauche(evt, 7-i,7-j)
                 def gestCD(evt, i=i, j= j):   
@@ -460,26 +431,8 @@ def afficherPiecesPrises():
         else: 
                 ttk.Label(content, anchor= CENTER, relief="solid",image = python_imageVIDE2,background = couleurBg).grid(column=20+2*(l-8),row=15, columnspan=colonne, rowspan = ligne ,sticky=(N,S,E,W))
      
-     
 
-#Ancienne Fonction : gère l'actualisation des pièces prises 
-def actualiserPiecesPrises():
-    global LPOSITION
-    global LPIECESPRISES
 
-    Lconcordance = [["TN1","CN1","FN1","QN1","KN1","FN2","CN2","TN2"],["PN1","PN2","PN3","PN4","PN5","PN6","PN7","PN8"],["PB1","PB2","PB3","PB4","PB5","PB6","PB7","PB8"],["TB1","CB1","FB1","QB1","KB1","FB2","CB2","TB2"]]
-    for i in range(4):
-        for j in range(8):
-            dedans = False 
-            for k in range(8):
-                if Lconcordance[i][j] in LPOSITION[k]: 
-                    dedans = True
-            if dedans :
-                LPIECESPRISES[i][j] = 1
-                #si la piece n'est pas mangée on marque 1 (ie si elle est toujours dans LPOSITION)
-            else : 
-                LPIECESPRISES[i][j] = 0
-                #si la piece est mangée on marque 0
 
 #Fonction de la gestion du son 
 duree = 1
@@ -489,64 +442,62 @@ def cmd_bouton_bruitage():
         winsound.PlaySound('Whoush.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
         time.sleep(duree) 
         winsound.PlaySound(None, 0)
-        print("bruitage")
+
 
 #Pop up: gestion du cas de la promotion de pion
 def open_popup_promo(piece,couleur):
 
-    def cmd_bouton_dameB():
+    def cmd_bouton_dameB(): #promotion en dame blanche
         from piece import promoDameB
         promoDameB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_tourB():
+    def cmd_bouton_tourB(): #promotion en tour blanche
         from piece import promoTourB
         promoTourB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_fouB():
+    def cmd_bouton_fouB(): #promotion en fou blanc
         from piece import promoFouB
         promoFouB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_cavalierB():
+    def cmd_bouton_cavalierB(): #promotion en cavalier blanc
         from piece import promoCavalierB
         promoCavalierB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_pionB():
+    def cmd_bouton_pion(): #on garde un pion
         PopUp_promo.destroy()
 
-    def cmd_bouton_dameN():
+    def cmd_bouton_dameN(): #promotion en dame noire
         from piece import promoDameN
         promoDameN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_tourN():
+    def cmd_bouton_tourN(): #promotion en tour noire
         from piece import promoTourN
         promoTourN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_fouN():
+    def cmd_bouton_fouN(): #promotion en fou noir
         from piece import promoFouN
         promoFouN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_cavalierN():
+    def cmd_bouton_cavalierN(): #promotion en cavalier noir
         from piece import promoCavalierN
         promoCavalierN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
-    def cmd_bouton_pionN():
-        PopUp_promo.destroy()
 
     PopUp_promo= Toplevel()
     PopUp_promo.title("Promotion de pion")
@@ -578,7 +529,7 @@ def open_popup_promo(piece,couleur):
         Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierB())
         Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
-        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionB())
+        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pion())
         Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
     else:
@@ -595,7 +546,7 @@ def open_popup_promo(piece,couleur):
         Bouton_cavalier= ttk.Button(content4, text= "Cavalier",command=lambda: cmd_bouton_cavalierN())
         Bouton_cavalier.grid(column=0, row=8, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
-        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pionN())
+        Bouton_pion= ttk.Button(content4, text= "Garder un pion",command=lambda: cmd_bouton_pion())
         Bouton_pion.grid(column=0, row=10, columnspan=2, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
 
     for i in range(2):
@@ -603,19 +554,19 @@ def open_popup_promo(piece,couleur):
     for j in range(12):
         content4.rowconfigure(j, weight=1)
 
+
 #Pop up : gestion du cas où la partie est nulle (cas du pat)
 def open_popup_pat(couleur):
     global coups_Blancs, coups_Noirs
     message_echec.set("Partie terminée")
 
-    import time
     global duree_de_la_partie
-    duree_de_la_partie=time.time()-duree_de_la_partie
+    duree_de_la_partie = time() - duree_de_la_partie
 
     global PeutJouer
     PeutJouer=False #pour empêcher de continuer la partie
 
-    PopupPat= Toplevel()
+    PopupPat = Toplevel()
     PopupPat.title("Perduuuu")
 
     PopupPat.grid_columnconfigure(0, weight=1)
@@ -628,7 +579,7 @@ def open_popup_pat(couleur):
     contentPat.grid(column=0, row=0, sticky=(N, S, E, W))
 
     # Label(top, text= "T'as perdu LOL, looser !", font=('Helvetica 35 bold')).pack(pady=10)
-    couleurBg= "white"
+    couleurBg = "white"
     if couleur=="Noir":
         ch = str("Egalité !")
 
@@ -654,8 +605,8 @@ def open_popup_pat(couleur):
             coups_Noirs = coups_Noirs + coup_special.get()
 
 
-    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
-    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    minutes = strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée au format h/mn/s
+    duree_minute = minutes[:3] + 'h ' + minutes[3:6] +'mn ' + minutes[6:] + ' s'
 
     Label(contentPat,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
@@ -668,13 +619,14 @@ def open_popup_pat(couleur):
     for j in range(0,20):
         contentPat.rowconfigure(j,weight=1)
 
-#Pop up : si la partie est finie
+
+#Pop up : si la partie est finie (Echec et mat ou abandon)
 def open_popup_perdu(couleur):
     global coups_Blancs, coups_Noirs
     message_echec.set("Partie terminée")
-    import time
+
     global duree_de_la_partie
-    duree_de_la_partie=time.time()-duree_de_la_partie
+    duree_de_la_partie = time() - duree_de_la_partie
 
     global PeutJouer
     PeutJouer=False #pour empêcher de continuer la partie
@@ -695,7 +647,6 @@ def open_popup_perdu(couleur):
     if couleur=="Noir":
         ch = str(prenom_noir.get()) + " a perdu. Bravo à " + str(prenom_blanc.get()+".")
        
-
         Label(contentPerdu, text= ch , font=('Helvetica 25 bold'), background=couleurBg).grid(column=0, row=0, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=5)
         Label(contentPerdu, text= "Les Noirs sont en échec et mat.", font=('Helvetica 15'),background=couleurBg).grid(column=0, row=2, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
         Label(contentPerdu, image = python_imageperduN,background=couleurBg).grid(column=0, row=12, columnspan=20, rowspan=8 ,sticky=(N,S,E,W),pady=1, padx=1)
@@ -718,8 +669,8 @@ def open_popup_perdu(couleur):
             coups_Noirs = coups_Noirs + coup_special.get()
 
 
-    secondes=strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
-    duree_minute=secondes[:3] + 'h ' + secondes[3:6] +'mn ' + secondes[6:] + ' s'
+    minutes = strftime('%H %M %S', gmtime(duree_de_la_partie)) # durée en h/mn/s
+    duree_minute = minutes[:3] + 'h ' + minutes[3:6] +'mn ' + minutes[6:] + ' s'
     Label(contentPerdu,background=couleurBg, text= "Durée de la partie : "+duree_minute, font=('Helvetica 10')).grid(column=0, row=4, columnspan=20, rowspan=2 ,sticky=(N,S,E,W),pady=1, padx=1)
     
     Label(contentPerdu, background=couleurBg,text= coups_Blancs, font=('Helvetica 10')).grid(column=0, row=6, columnspan=10, rowspan= 6,sticky=(N,S,E,W),pady=1, padx=1)
@@ -735,7 +686,6 @@ def open_popup_perdu(couleur):
 #Pop up du bouton commencer permettant de choisir qui joue les blancs/les noirs 
 def pop_up_commencer():
     def cmd_lancer_bouton_prenom():
-        import time
         global duree_de_la_partie
         global prenom_noir
         global prenom_blanc
@@ -747,7 +697,7 @@ def pop_up_commencer():
             prenom_noir.set('Noir')
         else: 
             prenom_noir.set(entry_prenom_noir.get())
-        duree_de_la_partie=time.time()
+        duree_de_la_partie=time()
         Popup3.destroy()
 
     #Mise en place de la fenêtre pop up 
@@ -813,22 +763,20 @@ def cmd_bouton_son():
         music = True
 
 
-valider_promo=False
+
+
+valider_promo=False #booléen qui sert à pouvoir valider sa promotion de pion
+
 #Fonction du bouton valider: gestion de la validation du coup
 def cmd_bouton_valider():
     global PeutJouer
     global valider_promo
     global coups_Blancs,coups_Noirs
-    from board import position,KB1,KN1
-
-    #global attente
-
-    # if attente:
-    #     import time
-    #     time.sleep(5)
+    from board import KB1,KN1
 
     if PeutJouer:
 
+        #Vérification de la syntaxe (voir plus loin)
         lettres = "a,b,c,d,e,f,g,h"
         chiffres = "1,2,3,4,5,6,7,8"
         special=["roque","ROQUE","abandon","","PEP"]
@@ -836,7 +784,7 @@ def cmd_bouton_valider():
         position_ou_aller=coup.get()
         piece_bougee=piece_a_bouger.get()
 
-        if valider_promo: #si on vient de faire une promotion de pion
+        if valider_promo: #si on vient de faire une promotion de pion, on reclique sur le bouton valider pour savoir si on est en échec
                 
             message_erreur.set("")
             message_echec.set("")
@@ -849,21 +797,16 @@ def cmd_bouton_valider():
                     if KB1.Echec_et_mat(nbcoup):
                         message_echec.set("Les blancs sont en échec et mat.")
                         open_popup_perdu("Blanc")
-
                     
                 if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
                     message_echec.set("Les blancs sont en pat.")
                     open_popup_pat("Blanc")
 
-
                 coups_Noirs = coups_Noirs + "promotion de pion\n"
-
-
 
             else: # les noirs jouent 
 
                 if KN1.Echec2():
-
                     message_echec.set("Les noirs sont en échec.")
 
                     if KN1.Echec_et_mat(nbcoup):
@@ -875,7 +818,6 @@ def cmd_bouton_valider():
                     open_popup_pat("Noir")
 
                 coups_Blancs = coups_Blancs + "promotion de pion\n"
-
         
             coup.set("")
             piece_a_bouger.set("")
@@ -884,6 +826,7 @@ def cmd_bouton_valider():
             valider_promo=False
 
 
+            #On vérifie la syntaxe des coups rentrés :
 
         elif (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
@@ -894,17 +837,15 @@ def cmd_bouton_valider():
         elif not(coup_special.get() in special):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
-        else:
+        else: #si la syntaxe est bonne
             from main import interpreteur
-            global LPOSITION
 
             result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
 
-            if result[0]:
-                
+            if result[0]: #si le mouvement est possible
 
                 if not (coup_special.get() in ["ROQUE","roque","PEP"]):
-                    ligne=coup.get()[1]
+                    ligne=coup.get()[1] #on enregistre la ligne d'arrivée pour le cas de la promotion de pion
 
                 nbcoup.set(str(int(nbcoup.get())+1))
                 
@@ -919,17 +860,15 @@ def cmd_bouton_valider():
                         if KN1.Echec_et_mat(nbcoup):
                             message_echec.set("Les noirs sont en échec et mat.")
                             afficherPiece()
-                            actualiserPiecesPrises()
                             afficherPiecesPrises()
                             open_popup_perdu("Noir")
 
                     else:
                         message_echec.set("")
                     
-                    if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
+                    if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup): #le roi n'est pas en échec mais on ne peut bouger aucune pièce sans le mettre en échec
                         message_echec.set("Les noirs sont en pat.")
                         afficherPiece()
-                        actualiserPiecesPrises()
                         afficherPiecesPrises()
                         open_popup_pat("Noir")
 
@@ -937,17 +876,13 @@ def cmd_bouton_valider():
                         valider_promo=True
                         open_popup_promo(result[2],"Blanc")
                         afficherPiece()
-                        actualiserPiecesPrises()
                         afficherPiecesPrises()
-                        #
-                        if KN1.Echec2():
+                        
+                        if KN1.Echec2(): # après avoir fait la promotion, on revérifie si on est en échec
                             message_echec.set("Les noirs sont en échec.")
 
                             if KN1.Echec_et_mat(nbcoup):
                                 message_echec.set("Les noirs sont en échec et mat.")
-                                afficherPiece()
-                                actualiserPiecesPrises()
-                                afficherPiecesPrises()
                                 open_popup_perdu("Noir")
 
                         else:
@@ -955,15 +890,14 @@ def cmd_bouton_valider():
                         
                         if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
                             message_echec.set("Les noirs sont en pat.")
-                            afficherPiece()
-                            actualiserPiecesPrises()
-                            afficherPiecesPrises()
                             open_popup_pat("Noir")
 
                     couleurA.set("Noir")
                     prenom.set(prenom_noir.get())
 
-                    if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
+                    #On enregistre les coups joués tout au long de la partie :
+
+                    if message_erreur.get()=="" and coup_special.get() in ["","PEP"]: 
                         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
 
                     elif message_erreur.get()=="" and coup_special.get() != "abandon":
@@ -973,13 +907,11 @@ def cmd_bouton_valider():
                 else: # les noirs jouent 
 
                     if KB1.Echec2():
-
                         message_echec.set("Les blancs sont en échec.")
 
                         if KB1.Echec_et_mat(nbcoup):
                             message_echec.set("Les blancs sont en échec et mat.")
                             afficherPiece()
-                            actualiserPiecesPrises()
                             afficherPiecesPrises()
                             open_popup_perdu("Blanc")
 
@@ -989,7 +921,6 @@ def cmd_bouton_valider():
                     if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
                         message_echec.set("Les blancs sont en pat.")
                         afficherPiece()
-                        actualiserPiecesPrises()
                         afficherPiecesPrises()
                         open_popup_pat("Blanc")
 
@@ -997,17 +928,13 @@ def cmd_bouton_valider():
                         valider_promo=True
                         open_popup_promo(result[2],"Noir")
                         afficherPiece()
-                        actualiserPiecesPrises()
                         afficherPiecesPrises()
-                        #
+                        
                         if KB1.Echec2():
                             message_echec.set("Les blancs sont en échec.")
 
                             if KB1.Echec_et_mat(nbcoup):
                                 message_echec.set("Les blancs sont en échec et mat.")
-                                afficherPiece()
-                                actualiserPiecesPrises()
-                                afficherPiecesPrises()
                                 open_popup_perdu("Blanc")
 
                         else:
@@ -1015,39 +942,34 @@ def cmd_bouton_valider():
 
                         if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
                             message_echec.set("Les blancs sont en pat.")
-                            afficherPiece()
-                            actualiserPiecesPrises()
-                            afficherPiecesPrises()
                             open_popup_pat("Blanc")
-                        #
 
                     couleurA.set("Blanc")
                     prenom.set(prenom_blanc.get())
 
-
+                    #On enregistre les coups joués:
                     if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
                         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
 
                     elif message_erreur.get()=="" and coup_special.get() != "abandon":
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
-
                 
                 coup.set("")
                 piece_a_bouger.set("")
                 coup_special.set("")
 
                 afficherPiece()
-                actualiserPiecesPrises()
                 afficherPiecesPrises()
                 cmd_bouton_bruitage()
 
-            elif result[0]==False:
+            elif result[0]==False: #si le mouvement n'est pas possible
                 message_erreur.set(result[1])
             
             
 
 
-PeutJouer=False #pour empêcher les joueurs de jouer hors partie
+PeutJouer=False # booléen qui sert à empêcher les joueurs de jouer après la fin de la partie
+
 
 # Fonction du bouton commencer, gère la mise en place de la partie
 def cmd_bouton_commencer():
@@ -1083,8 +1005,8 @@ def cmd_bouton_commencer():
 
     #On affiche les pièces, on actualise les pièces prises, puis on les affiche 
     afficherPiece()
-    actualiserPiecesPrises()
     afficherPiecesPrises()
+
 
 #Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perdu
 def cmd_bouton_abandonner():
@@ -1095,7 +1017,7 @@ def cmd_bouton_abandonner():
     if couleurA.get()=="Blanc":
         coups_Blancs = coups_Blancs + "abandon"
 
-        noirs_coups=coups_Noirs[::-1] #enlever le dernier coup de coups_noirs
+        noirs_coups=coups_Noirs[::-1] #enlever le dernier coup de coups_noirs qui est "-"
         i=noirs_coups.find("\n")
         coups_Noirs=coups_Noirs[:len(coups_Noirs)-i-1]
         noirs_coups=coups_Noirs[::-1]
@@ -1107,7 +1029,7 @@ def cmd_bouton_abandonner():
     else:
         coups_Noirs = coups_Noirs + "abandon"
 
-        blancs_coups=coups_Blancs[::-1] #enlever le dernier coup de coups_noirs
+        blancs_coups=coups_Blancs[::-1] #enlever le dernier coup de coups_blancs qui est "-"
         i=blancs_coups.find("\n")
         coups_Blancs=coups_Blancs[:len(coups_Blancs)-i-1]
         blancs_coups=coups_Blancs[::-1]
@@ -1116,15 +1038,13 @@ def cmd_bouton_abandonner():
 
         open_popup_perdu("Noir")
 
+
 #Fonction du bouton complier script : permet de compiler un script 
-i = 0
 def cmd_bouton_Compiler_script():
-    script_compile=script.get() #
-    #global i
-    #i = 0
-    #Popup2.destroy()
+    script_compile=script.get()
     interpreteur_script(script_compile)
     script.set("")
+
 
 #Fonction du bouton règle : permet d'afficher une pop up explicative
 def cmd_bouton_regles():
@@ -1257,6 +1177,7 @@ def cmd_bouton_cmtjouer():
     for j in range(0,4):
         content4.rowconfigure(j,weight=1)
 
+
 #Fonction du bouton options: permet d'accéder aux règles, au README adapté, à la compilation de script
 def cmd_bouton_options():
     Popup2 = Toplevel()
@@ -1372,8 +1293,3 @@ Lechec.grid(column=20, row=3, columnspan=largeur, rowspan=1,sticky=(N,S,E,W),pad
 
 # permet de faire une boucle visuelle 
 root.mainloop()
-
-
-
-
-
