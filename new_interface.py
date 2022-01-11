@@ -375,7 +375,9 @@ def BoutonGestClicdroit(evt, i, j ):
 #Fonction : gère l'affichage des pièces sur l'échiquier 
 BoutonListe = [[0 for i in range(8)]for j in range(8)]
 def afficherPiece():
+    from board import position
     global LPOSITION
+    LPOSITION=fonction_lecture(position)
 
     for i in range(len(LPOSITION)) : 
         for j in range(len(LPOSITION)):
@@ -494,70 +496,56 @@ def open_popup_promo(piece,couleur):
 
     def cmd_bouton_dameB():
         from piece import promoDameB
-        print("Dame")
         promoDameB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_tourB():
         from piece import promoTourB
-        from board import position
-        print("Tour")
         promoTourB(piece)
-        LPOSITION=fonction_lecture(position)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_fouB():
         from piece import promoFouB
-        print("Fou")
         promoFouB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierB():
         from piece import promoCavalierB
-        print("Cavalier")
         promoCavalierB(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_pionB():
-        print("Pion")
-        afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_dameN():
         from piece import promoDameN
-        print("Dame")
         promoDameN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_tourN():
         from piece import promoTourN
-        print("Tour")
         promoTourN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_fouN():
         from piece import promoFouN
-        print("Fou")
         promoFouN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_cavalierN():
         from piece import promoCavalierN
-        print("Cavalier")
         promoCavalierN(piece)
         afficherPiece()
         PopUp_promo.destroy()
 
     def cmd_bouton_pionN():
-        print("Pion")
-        afficherPiece()
         PopUp_promo.destroy()
 
     PopUp_promo= Toplevel()
@@ -824,9 +812,15 @@ def cmd_bouton_son():
     else: 
         music = True
 
+
+valider_promo=False
 #Fonction du bouton valider: gestion de la validation du coup
 def cmd_bouton_valider():
     global PeutJouer
+    global valider_promo
+    global coups_Blancs,coups_Noirs
+    from board import position,KB1,KN1
+
     #global attente
 
     # if attente:
@@ -842,7 +836,56 @@ def cmd_bouton_valider():
         position_ou_aller=coup.get()
         piece_bougee=piece_a_bouger.get()
 
-        if (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
+        if valider_promo: #si on vient de faire une promotion de pion
+                
+            message_erreur.set("")
+            message_echec.set("")
+
+            if couleurA.get() == "Blanc":
+
+                if KB1.Echec2():
+                    message_echec.set("Les blancs sont en échec.")
+                        
+                    if KB1.Echec_et_mat(nbcoup):
+                        message_echec.set("Les blancs sont en échec et mat.")
+                        open_popup_perdu("Blanc")
+
+                    
+                if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
+                    message_echec.set("Les blancs sont en pat.")
+                    open_popup_pat("Blanc")
+
+
+                coups_Noirs = coups_Noirs + "promotion de pion\n"
+
+
+
+            else: # les noirs jouent 
+
+                if KN1.Echec2():
+
+                    message_echec.set("Les noirs sont en échec.")
+
+                    if KN1.Echec_et_mat(nbcoup):
+                        message_echec.set("Les noirs sont en échec et mat.")
+                        open_popup_perdu("Noir")
+
+                if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
+                    message_echec.set("Les noirs sont en pat.")
+                    open_popup_pat("Noir")
+
+                coups_Blancs = coups_Blancs + "promotion de pion\n"
+
+        
+            coup.set("")
+            piece_a_bouger.set("")
+            coup_special.set("")
+
+            valider_promo=False
+
+
+
+        elif (coup_special.get() in ["","PEP"]) and (len(position_ou_aller)!=2 or (position_ou_aller[0] not in lettres) or (position_ou_aller[1] not in chiffres)):
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
         elif (coup_special.get() in ["","PEP"]) and (len(piece_bougee)!=2 or (piece_bougee[0] not in lettres) or (piece_bougee[1] not in chiffres)):
@@ -852,12 +895,10 @@ def cmd_bouton_valider():
             message_erreur.set("Syntaxe incorrecte. Retentez.")
 
         else:
-            from board import position,KB1,KN1
             from main import interpreteur
             global LPOSITION
 
             result=interpreteur(coup,piece_a_bouger,couleurA.get(),coup_special.get(),nbcoup)
-            print(result)
 
             if result[0]:
                 
@@ -874,47 +915,54 @@ def cmd_bouton_valider():
 
                     if KN1.Echec2():
                         message_echec.set("Les noirs sont en échec.")
-                        print("Echec noir")
+
                         if KN1.Echec_et_mat(nbcoup):
-                            print("Echec et mat.")
                             message_echec.set("Les noirs sont en échec et mat.")
+                            afficherPiece()
+                            actualiserPiecesPrises()
+                            afficherPiecesPrises()
                             open_popup_perdu("Noir")
 
                     else:
                         message_echec.set("")
                     
                     if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
-                        print("Pat")
                         message_echec.set("Les noirs sont en pat.")
+                        afficherPiece()
+                        actualiserPiecesPrises()
+                        afficherPiecesPrises()
                         open_popup_pat("Noir")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="8" and type(result[2])==Pion: #promotion de pion
+                        valider_promo=True
                         open_popup_promo(result[2],"Blanc")
-                        LPOSITION=fonction_lecture(position)
                         afficherPiece()
                         actualiserPiecesPrises()
                         afficherPiecesPrises()
                         #
                         if KN1.Echec2():
                             message_echec.set("Les noirs sont en échec.")
-                            print("Echec noir")
+
                             if KN1.Echec_et_mat(nbcoup):
-                                print("Echec et mat.")
                                 message_echec.set("Les noirs sont en échec et mat.")
+                                afficherPiece()
+                                actualiserPiecesPrises()
+                                afficherPiecesPrises()
                                 open_popup_perdu("Noir")
 
                         else:
                             message_echec.set("")
                         
                         if not(KN1.Echec2()) and KN1.Echec_et_mat(nbcoup):
-                            print("Pat")
                             message_echec.set("Les noirs sont en pat.")
+                            afficherPiece()
+                            actualiserPiecesPrises()
+                            afficherPiecesPrises()
                             open_popup_pat("Noir")
 
                     couleurA.set("Noir")
                     prenom.set(prenom_noir.get())
 
-                    global coups_Blancs
                     if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
                         coups_Blancs = coups_Blancs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
 
@@ -927,50 +975,55 @@ def cmd_bouton_valider():
                     if KB1.Echec2():
 
                         message_echec.set("Les blancs sont en échec.")
-                        print("Echec blanc")
 
                         if KB1.Echec_et_mat(nbcoup):
-                            print("Echec et mat.")
                             message_echec.set("Les blancs sont en échec et mat.")
+                            afficherPiece()
+                            actualiserPiecesPrises()
+                            afficherPiecesPrises()
                             open_popup_perdu("Blanc")
 
                     else:
                         message_echec.set("")
 
                     if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
-                        print("Pat")
                         message_echec.set("Les blancs sont en pat.")
+                        afficherPiece()
+                        actualiserPiecesPrises()
+                        afficherPiecesPrises()
                         open_popup_pat("Blanc")
 
                     if not (coup_special.get() in ["ROQUE","roque","PEP"]) and ligne=="1" and type(result[2])==Pion: #promotion de pion
+                        valider_promo=True
                         open_popup_promo(result[2],"Noir")
-                        LPOSITION=fonction_lecture(position)
                         afficherPiece()
                         actualiserPiecesPrises()
                         afficherPiecesPrises()
                         #
                         if KB1.Echec2():
                             message_echec.set("Les blancs sont en échec.")
-                            print("Echec blanc")
 
                             if KB1.Echec_et_mat(nbcoup):
-                                print("Echec et mat.")
                                 message_echec.set("Les blancs sont en échec et mat.")
+                                afficherPiece()
+                                actualiserPiecesPrises()
+                                afficherPiecesPrises()
                                 open_popup_perdu("Blanc")
 
                         else:
                             message_echec.set("")
 
                         if not(KB1.Echec2()) and KB1.Echec_et_mat(nbcoup):
-                            print("Pat")
                             message_echec.set("Les blancs sont en pat.")
+                            afficherPiece()
+                            actualiserPiecesPrises()
+                            afficherPiecesPrises()
                             open_popup_pat("Blanc")
                         #
 
                     couleurA.set("Blanc")
                     prenom.set(prenom_blanc.get())
 
-                    global coups_Noirs
 
                     if message_erreur.get()=="" and coup_special.get() in ["","PEP"]:
                         coups_Noirs = coups_Noirs + piece_a_bouger.get() + "-" + coup.get() + " " + coup_special.get() + "\n"
@@ -978,8 +1031,7 @@ def cmd_bouton_valider():
                     elif message_erreur.get()=="" and coup_special.get() != "abandon":
                         coups_Noirs = coups_Noirs + coup_special.get() + "\n"
 
-                LPOSITION=fonction_lecture(position)
-                print(LPOSITION)
+                
                 coup.set("")
                 piece_a_bouger.set("")
                 coup_special.set("")
@@ -1036,7 +1088,6 @@ def cmd_bouton_commencer():
 
 #Fonction du bouton abandonner : ouvre la pop up 'perdu' si on perdu
 def cmd_bouton_abandonner():
-    print("abandonner")
     message_echec.set("Partie terminée")
 
     global coups_Blancs, coups_Noirs

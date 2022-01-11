@@ -429,7 +429,7 @@ class Roi(Fou,Tour):
 
 
 
-    def Echec_et_mat(self,nbcoup):
+    def Echec_et_mat_1(self,nbcoup): #implémentation "intelligente"
         from board import position, prises_Blanc, prises_Noir
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
@@ -536,7 +536,7 @@ class Roi(Fou,Tour):
 
 
 
-    def Echec_et_mat1(self, nbcoup):
+    def Echec_et_mat(self, nbcoup): #implémentation naïve
         from board import position, mouvement, prises_Blanc, prises_Noir 
 
         for c in position:  # on regarde chaque piece encore sur le plateau, pour cela on parcours la liste position
